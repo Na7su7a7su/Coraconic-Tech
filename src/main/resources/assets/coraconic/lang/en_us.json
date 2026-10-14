@@ -1,0 +1,13 @@
+{
+  "itemGroup.coraconic": "Example Mod Tab",
+  "block.coraconic.example_block": "Example Block",
+  "item.coraconic.example_item": "Example Item",
+
+  "coraconic.configuration.title": "Coraconic Tech Configs",
+  "coraconic.configuration.section.coraconic.common.toml": "Coraconic Tech Configs",
+  "coraconic.configuration.section.coraconic.common.toml.title": "Coraconic Tech Configs",
+  "coraconic.configuration.items": "Item List",
+  "coraconic.configuration.logDirtBlock": "Log Dirt Block",
+  "coraconic.configuration.magicNumberIntroduction": "Magic Number Text",
+  "coraconic.configuration.magicNumber": "Magic Number"
+}
