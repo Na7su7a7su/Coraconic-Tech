@@ -1,7 +1,7 @@
 {
-  "itemGroup.coraconic": "Example Mod Tab",
-  "block.coraconic.example_block": "Example Block",
-  "item.coraconic.example_item": "Example Item",
+  "item.coraconic.hcv2":"hcv2",
+  "item.coraconic.tin_ingot":"Tin Ingot",
+  "item.coraconic.lead_ingot":"Lead Ingot",
 
   "coraconic.configuration.title": "Coraconic Tech Configs",
   "coraconic.configuration.section.coraconic.common.toml": "Coraconic Tech Configs",
