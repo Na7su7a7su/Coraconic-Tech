@@ -14,6 +14,7 @@ public class ModItems {
     public static final DeferredItem<Item> LEAD_INGOT = ITEMS.register("lead_ingot", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COMMONMETAL_CORE = ITEMS.register("commonmetal_core", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> CORACONIC_INGOT = ITEMS.register("coraconic_ingot", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> AVIRACONIC_INGOT = ITEMS.register("aviraconic_ingot", () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
