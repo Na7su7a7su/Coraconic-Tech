@@ -2,6 +2,8 @@
   "item.coraconic.hcv2":"hcv2",
   "item.coraconic.tin_ingot":"Tin Ingot",
   "item.coraconic.lead_ingot":"Lead Ingot",
+  "item.coraconic.coraconic_ingot":"Coraconic Ingot",
+  "item.coraconic.commonmetal_core":"Commen-Metal Core",
 
   "coraconic.configuration.title": "Coraconic Tech Configs",
   "coraconic.configuration.section.coraconic.common.toml": "Coraconic Tech Configs",

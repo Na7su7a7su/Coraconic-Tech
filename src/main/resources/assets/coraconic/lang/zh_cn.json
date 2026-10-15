@@ -1,17 +1,15 @@
 {
-  "itemGroup.coraconic": "核龙科技",
-  "block.coraconic.example_block": "核龙科技 方块",
-  "item.coraconic.example_item": "核龙科技 物品",
+    "item.coraconic.hcv2":"hcv2",
+    "item.coraconic.tin_ingot":"锡锭",
+    "item.coraconic.lead_ingot":"铅锭",
+    "item.coraconic.coraconic_ingot":"核龙金属锭",
+    "item.coraconic.commonmetal_core":"常金属核心",
 
-  "item.coraconic.hcv2":"hcv2",
-  "item.coraconic.tin_ingot":"锡锭",
-  "item.coraconic.lead_ingot":"铅锭",
-
-  "coraconic.configuration.title": "核龙科技 Configs",
-  "coraconic.configuration.section.coraconic.common.toml": "核龙科技 Configs",
-  "coraconic.configuration.section.coraconic.common.toml.title": "核龙科技 Configs",
-  "coraconic.configuration.items": "Item List",
-  "coraconic.configuration.logDirtBlock": "Log Dirt Block",
-  "coraconic.configuration.magicNumberIntroduction": "Magic Number Text",
-  "coraconic.configuration.magicNumber": "Magic Number"
+    "coraconic.configuration.title": "核龙科技 Configs",
+    "coraconic.configuration.section.coraconic.common.toml": "核龙科技 Configs",
+    "coraconic.configuration.section.coraconic.common.toml.title": "核龙科技 Configs",
+    "coraconic.configuration.items": "Item List",
+    "coraconic.configuration.logDirtBlock": "Log Dirt Block",
+    "coraconic.configuration.magicNumberIntroduction": "Magic Number Text",
+    "coraconic.configuration.magicNumber": "Magic Number"
 }
