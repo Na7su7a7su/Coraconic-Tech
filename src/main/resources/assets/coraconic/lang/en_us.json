@@ -5,6 +5,10 @@
   "item.coraconic.coraconic_ingot":"Coraconic Ingot",
   "item.coraconic.aviraconic_ingot":"Aviraconic Ingot",
   "item.coraconic.commonmetal_core":"Commen-Metal Core",
+    "item.coraconic.coraconic_core":"Coraconic Core",
+    "item.coraconic.aviraconic_core":"Aviraconic Core",
+    "itemGroup.coraconic_tech":"Coraconic Tech",
+
 
   "coraconic.configuration.title": "Coraconic Tech Configs",
   "coraconic.configuration.section.coraconic.common.toml": "Coraconic Tech Configs",

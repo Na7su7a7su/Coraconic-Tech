@@ -5,6 +5,9 @@
     "item.coraconic.coraconic_ingot":"核龙金属锭",
     "item.coraconic.aviraconic_ingot":"腾龙金属锭",
     "item.coraconic.commonmetal_core":"常金属核心",
+    "item.coraconic.coraconic_core":"核龙金属核心",
+    "item.coraconic.aviraconic_core":"腾龙金属核心",
+    "itemGroup.coraconic_tech":"核龙科技",
 
     "coraconic.configuration.title": "核龙科技 Configs",
     "coraconic.configuration.section.coraconic.common.toml": "核龙科技 Configs",
