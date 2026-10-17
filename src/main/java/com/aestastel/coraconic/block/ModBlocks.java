@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -40,6 +41,10 @@ public class ModBlocks {
     "lead_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
   );
+
+  public static void register(IEventBus eventBus) {
+    BLOCK.register(eventBus);
+  }
 
   public static <T extends Block> void registerBlockItems(
     String name,

@@ -1,5 +1,6 @@
 package com.aestastel.coraconic;
 
+import com.aestastel.coraconic.block.ModBlocks;
 import com.aestastel.coraconic.item.ModCreativeModeTabs;
 import com.aestastel.coraconic.item.ModItems;
 import com.mojang.logging.LogUtils;
@@ -56,6 +57,7 @@ public class CoraconicTech {
     modEventBus.addListener(this::commonSetup);
 
     ModItems.register(modEventBus);
+    ModBlocks.register(modEventBus);
 
     // Register the Deferred Register to the mod event bus so blocks get registered
     BLOCKS.register(modEventBus);
