@@ -12,15 +12,27 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
+/**
+ * 数据生成入口：集中注册所有非游戏内容生成器。
+ *
+ * <p>Data generation entry point: registers all non-game-content providers.
+ */
 @EventBusSubscriber(modid = CoraconicTech.MODID)
 public class DataGenerators {
 
+  /**
+   * 在数据生成事件中注册客户端与服务端生成器。
+   *
+   * <p>Registers client- and server-side providers during the data generation event.
+   */
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
     DataGenerator generator = event.getGenerator();
     PackOutput output = generator.getPackOutput();
     ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
+    // 客户端生成器：方块状态、方块模型与物品模型。
+    // Client providers: block states, block models, and item models.
     generator.addProvider(
       event.includeClient(),
       new ModBlockStatesProvider(output, existingFileHelper)
@@ -30,6 +42,8 @@ public class DataGenerators {
       new ModItemsProvider(output, existingFileHelper)
     );
 
+    // 方块标签先生成，物品标签通过 contentsGetter 依赖其内容。
+    // Block tags are generated first; item tags depend on them via contentsGetter.
     ModBlockTagsProvider blockTags = new ModBlockTagsProvider(
       output,
       event.getLookupProvider(),
@@ -45,10 +59,16 @@ public class DataGenerators {
         existingFileHelper
       )
     );
+
+    // 服务端生成器：配方及其解锁进度。
+    // Server providers: recipes and their unlock advancements.
     generator.addProvider(
       event.includeServer(),
       new ModRecipesProvider(output, event.getLookupProvider())
     );
+
+    // 服务端生成器：方块战利品表，使用 BLOCK 参数集。
+    // Server provider: block loot tables using the BLOCK parameter set.
     generator.addProvider(
       event.includeServer(),
       new LootTableProvider(
