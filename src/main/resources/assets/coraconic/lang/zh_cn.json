@@ -17,6 +17,8 @@
     "block.coraconic.aviraconic_block":"腾龙金属块",
     "block.coraconic.tin_ore":"锡矿石",
     "block.coraconic.lead_ore":"铅矿石",
+    "block.coraconic.deepslate_tin_ore":"深板岩锡矿石",
+    "block.coraconic.deepslate_lead_ore":"深板岩铅矿石",
     "itemGroup.coraconic_tech":"核龙科技",
 
     "coraconic.configuration.title": "核龙科技 Configs",

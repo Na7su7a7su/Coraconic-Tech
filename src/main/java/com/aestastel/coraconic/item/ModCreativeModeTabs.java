@@ -21,7 +21,6 @@ public class ModCreativeModeTabs {
         .icon(() -> new ItemStack(ModItems.CORACONIC_INGOT.get()))
         .title(Component.translatable("itemGroup.coraconic_tech"))
         .displayItems((parameter, output) -> {
-          output.accept(ModItems.HCV2);
           output.accept(ModItems.TIN_INGOT);
           output.accept(ModItems.LEAD_INGOT);
           output.accept(ModItems.CORACONIC_INGOT);
@@ -39,6 +38,8 @@ public class ModCreativeModeTabs {
           output.accept(ModBlocks.AVIRACONIC_BLOCK.get());
           output.accept(ModBlocks.TIN_ORE.get());
           output.accept(ModBlocks.LEAD_ORE.get());
+          output.accept(ModBlocks.DEEPSLAT_TIN_ORE.get());
+          output.accept(ModBlocks.DEEPSLAT_LEAD_ORE.get());
         })
         .build()
     );

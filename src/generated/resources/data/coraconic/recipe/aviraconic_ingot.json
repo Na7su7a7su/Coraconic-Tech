@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "coraconic:coraconic_ingot"
+    },
+    {
+      "item": "coraconic:aviraconic_element"
+    },
+    {
+      "item": "coraconic:aviraconic_element"
+    },
+    {
+      "item": "coraconic:aviraconic_element"
+    },
+    {
+      "item": "coraconic:aviraconic_element"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:aviraconic_ingot"
+  }
+}
