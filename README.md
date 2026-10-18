@@ -1,25 +1,91 @@
+# 核龙科技 (Coraconic Tech)
 
-Installation information
-=======
+NeoForge 1.21.1 科技模组，当前处于早期开发阶段。
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## 当前状态
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- 开发中，注册名、配方和数值可能随时调整
+- 暂不保证存档兼容
+- 仓库不公开，README 仅作为开发记录
+- 目标环境：Minecraft 1.21.1 / NeoForge 21.1.259+ / Java 21
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## 模组定位
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+围绕锡、铅、核龙金属、腾龙金属展开的科技模组，后续逐步扩展材料加工与科技内容。
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## 已实现内容
+
+### 金属
+
+- 锡
+- 铅
+- 核龙金属
+- 腾龙金属
+
+### 物品
+
+- 锡锭、铅锭、核龙金属锭、腾龙金属锭
+- 锡粒、铅粒、核龙金属粒、腾龙金属粒
+- 粗锡、粗铅
+- 常金属核心、核龙金属核心、腾龙金属核心
+- 核龙元素、腾龙元素
+- hcv2（食物）
+
+### 方块
+
+- 锡块、铅块、核龙金属块、腾龙金属块
+- 锡矿石、铅矿石
+- 深板岩锡矿石、深板岩铅矿石
+
+> 矿石方块已注册，但尚未实现自然生成。
+
+### 配方与标签
+
+- 金属块 ↔ 金属锭（9:1）
+- 金属锭 ↔ 金属粒（1:9）
+- 核心、元素与金属锭相关配方
+- 通用物品标签：`c:ingots`、`c:nuggets`、`c:raw_materials`、`c:ores`、`c:storage_blocks`、`c:foods`
+
+### 本地化
+
+- 英语：`en_us`
+- 简体中文：`zh_cn`
+- 繁体中文：`zh_hk`、`zh_tw`
+
+### 数据生成
+
+- 方块状态、方块模型、物品模型
+- 方块标签、物品标签
+- 配方与解锁进度
+- 方块战利品表
+
+## 开发进度
+
+| 模块 | 状态 | 说明 |
+| --- | --- | --- |
+| 金属材料 | 已完成 | 四种金属及锭、粒、块 |
+| 矿石方块 | 部分完成 | 方块已注册，无自然生成 |
+| 配方与标签 | 已完成 | 基础转换与通用标签 |
+| 数据生成 | 已完成 | 模型、标签、配方、战利品表 |
+| 世界生成 | 未开始 | 锡矿、铅矿的自然生成 |
+| 加工链 | 未开始 | 粗矿处理、冶炼等流程 |
+| 工具与盔甲 | 未开始 | |
+| 机器与能量 | 未开始 | |
+| JEI 支持 | 占位 | 插件为空实现 |
+| 代码清理 | 进行中 | 仍有 MDK 示例代码 |
+
+## 待办
+
+- [ ] 实现锡矿、铅矿的自然生成
+- [ ] 设计粗矿处理与冶炼流程
+- [ ] 添加工具、盔甲或机器
+- [ ] 完善 JEI 配方展示
+- [ ] 清理 MDK 示例注册器、配置和日志
+- [ ] 更新 `mods.toml` 描述与版本号
+
+## 已知问题
+
+- `CoraconicTech` 主类仍保留 MDK 示例注册器与演示配置
+- `neoforge.mods.toml` 中的描述仍为 `Example mod description`
+- `gradle.properties` 中的 `mod_version=1.0.0` 与提交记录中的 `0.0.x` 不一致
+- JEI 插件目前为空实现，没有额外的配方信息

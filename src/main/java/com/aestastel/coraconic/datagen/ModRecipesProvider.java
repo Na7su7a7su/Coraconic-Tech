@@ -5,6 +5,7 @@ import com.aestastel.coraconic.block.ModBlocks;
 import com.aestastel.coraconic.item.ModItems;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -132,100 +133,273 @@ public class ModRecipesProvider extends RecipeProvider {
       )
       .save(recipeOutput);
 
-    // 金属块与金属锭的压缩/解压配方。
-    // Packing/unpacking recipes between metal blocks and ingots.
+    // 金属块与金属锭、金属锭与金属粒的压缩/解压配方。
+    // Packing/unpacking recipes between metal blocks/ingots and metal ingots/nuggets.
     packingRecipe(
       recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.TIN_BLOCK.get(),
       ModItems.TIN_INGOT.get(),
+      "tin_block",
       "has_tin_ingot"
     );
     unpackingRecipe(
       recipeOutput,
-      ModBlocks.TIN_BLOCK.get(),
+      RecipeCategory.MISC,
       ModItems.TIN_INGOT.get(),
+      ModBlocks.TIN_BLOCK.get(),
       "tin_ingot_from_tin_block",
       "has_tin_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.TIN_INGOT.get(),
+      ModItems.TIN_NUGGET.get(),
+      "tin_ingot_from_tin_nuggets",
+      "has_tin_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.TIN_NUGGET.get(),
+      ModItems.TIN_INGOT.get(),
+      "tin_nugget_from_tin_ingot",
+      "has_tin_ingot"
     );
 
     packingRecipe(
       recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.LEAD_BLOCK.get(),
       ModItems.LEAD_INGOT.get(),
+      "lead_block",
       "has_lead_ingot"
     );
     unpackingRecipe(
       recipeOutput,
-      ModBlocks.LEAD_BLOCK.get(),
+      RecipeCategory.MISC,
       ModItems.LEAD_INGOT.get(),
+      ModBlocks.LEAD_BLOCK.get(),
       "lead_ingot_from_lead_block",
       "has_lead_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.LEAD_INGOT.get(),
+      ModItems.LEAD_NUGGET.get(),
+      "lead_ingot_from_lead_nuggets",
+      "has_lead_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.LEAD_NUGGET.get(),
+      ModItems.LEAD_INGOT.get(),
+      "lead_nugget_from_lead_ingot",
+      "has_lead_ingot"
     );
 
     packingRecipe(
       recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.CORACONIC_BLOCK.get(),
       ModItems.CORACONIC_INGOT.get(),
+      "coraconic_block",
       "has_coraconic_ingot"
     );
     unpackingRecipe(
       recipeOutput,
-      ModBlocks.CORACONIC_BLOCK.get(),
+      RecipeCategory.MISC,
       ModItems.CORACONIC_INGOT.get(),
+      ModBlocks.CORACONIC_BLOCK.get(),
       "coraconic_ingot_from_coraconic_block",
       "has_coraconic_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.CORACONIC_INGOT.get(),
+      ModItems.CORACONIC_NUGGET.get(),
+      "coraconic_ingot_from_coraconic_nuggets",
+      "has_coraconic_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.CORACONIC_NUGGET.get(),
+      ModItems.CORACONIC_INGOT.get(),
+      "coraconic_nugget_from_coraconic_ingot",
+      "has_coraconic_ingot"
     );
 
     packingRecipe(
       recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.AVIRACONIC_BLOCK.get(),
       ModItems.AVIRACONIC_INGOT.get(),
+      "aviraconic_block",
       "has_aviraconic_ingot"
     );
     unpackingRecipe(
       recipeOutput,
-      ModBlocks.AVIRACONIC_BLOCK.get(),
+      RecipeCategory.MISC,
       ModItems.AVIRACONIC_INGOT.get(),
+      ModBlocks.AVIRACONIC_BLOCK.get(),
       "aviraconic_ingot_from_aviraconic_block",
       "has_aviraconic_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.AVIRACONIC_INGOT.get(),
+      ModItems.AVIRACONIC_NUGGET.get(),
+      "aviraconic_ingot_from_aviraconic_nuggets",
+      "has_aviraconic_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.AVIRACONIC_NUGGET.get(),
+      ModItems.AVIRACONIC_INGOT.get(),
+      "aviraconic_nugget_from_aviraconic_ingot",
+      "has_aviraconic_ingot"
     );
   }
 
   /**
-   * 生成“九个锭合成一个金属块”的无序配方。
+   * 生成“九个基础单位压缩成一个成品”的无序合成配方。
    *
-   * <p>Generates a shapeless recipe that packs nine ingots into one metal block.
+   * <p>该方法同时服务于两种物品转换：
+   * <ul>
+   *   <li>九个金属锭 → 一个金属块，配方类别为
+   *       {@link RecipeCategory#BUILDING_BLOCKS}，因为金属块属于建筑方块；</li>
+   *   <li>九个金属粒 → 一个金属锭，配方类别为
+   *       {@link RecipeCategory#MISC}，因为金属锭属于材料而非建筑方块。</li>
+   * </ul>
+   *
+   * <p>之所以使用无序配方（{@link ShapelessRecipeBuilder}）而不是有序配方，
+   * 是因为压缩属于纯粹的物品数量转换：玩家只需要在 3×3 合成格中放入九个
+   * 相同的基础单位，不应该被额外的图案布局限制。这一行为也与原版
+   * “金粒 ↔ 金锭”的转换方式保持一致，便于玩家凭借既有习惯理解。
+   *
+   * <p>参数含义如下：
+   * <ul>
+   *   <li>{@code recipeOutput}：数据生成器提供的配方输出目标，所有配方 JSON
+   *       和对应的解锁进度都会写入该目标；</li>
+   *   <li>{@code category}：配方书中的分类标签页，决定玩家在配方书里从哪个
+   *       分类找到该配方，不影响玩家手动摆放合成；</li>
+   *   <li>{@code result}：一次合成得到的成品，即金属块或金属锭；</li>
+   *   <li>{@code ingredient}：每个配方固定消耗九个的基础单位，即金属锭或
+   *       金属粒；</li>
+   *   <li>{@code recipeName}：期望使用的配方 ID，最终会写成
+   *       {@code <modid>:<recipeName>}。金属块压缩配方通常直接使用成品 ID
+   *       （例如 {@code tin_block}），此时 Minecraft 要求调用不带显式 ID 的
+   *       {@code save(recipeOutput)}；而金属粒压缩配方必须使用独立名称
+   *       （例如 {@code tin_ingot_from_tin_nuggets}），因为同一个金属锭可能
+   *       已经有其他来源配方。若核龙金属锭的元素合成与粒压缩都使用默认 ID
+   *       {@code coraconic_ingot}，后生成的配方会覆盖先生成的配方，导致其中
+   *       一种合成方式丢失。本方法会在内部判断该名称是否等于成品默认 ID，
+   *       自动选择正确的保存方式，调用方无需关心这一细节；</li>
+   *   <li>{@code criterionName}：解锁条件的名称，通常写成
+   *       {@code has_<ingredient>}。数据生成器会据此生成一个
+   *       {@code inventory_changed} 触发器，玩家首次获得基础单位后，该配方
+   *       才会出现在配方书中，避免新玩家在尚未接触材料时就看到大量配方。</li>
+   * </ul>
+   *
+   * <p>输出位置：配方本体写入
+   * {@code data/<modid>/recipe/<recipeName>.json}，解锁进度由
+   * {@link RecipeProvider} 自动写入
+   * {@code data/<modid>/advancement/recipes/...}。两者必须同时生成，
+   * 否则配方在配方书中不会解锁。
    */
   private static void packingRecipe(
     RecipeOutput recipeOutput,
-    ItemLike block,
-    ItemLike ingot,
-    String criterionName
-  ) {
-    ShapelessRecipeBuilder.shapeless(
-      RecipeCategory.BUILDING_BLOCKS,
-      block
-    )
-      .requires(ingot, 9)
-      .unlockedBy(criterionName, has(ingot))
-      .save(recipeOutput);
-  }
-
-  /**
-   * 生成“一个金属块分解为九个锭”的配方。
-   *
-   * <p>Generates a recipe that unpacks one metal block into nine ingots.
-   */
-  private static void unpackingRecipe(
-    RecipeOutput recipeOutput,
-    ItemLike block,
-    ItemLike ingot,
+    RecipeCategory category,
+    ItemLike result,
+    ItemLike ingredient,
     String recipeName,
     String criterionName
   ) {
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
-      .requires(block)
-      .unlockedBy(criterionName, has(block))
+    // 3×3 合成格中任意位置放满九个基础单位即可，无需固定图案。
+    // Nine base units anywhere in the 3x3 grid are enough; no fixed pattern is needed.
+    ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(
+      category,
+      result
+    )
+      .requires(ingredient, 9)
+      .unlockedBy(criterionName, has(ingredient));
+
+    // Minecraft 的 RecipeBuilder 会校验显式 ID：当传入的 ID 与成品默认 ID
+    // 完全相同时会抛出异常，要求改用不带 ID 的 save 重载。因此这里先取出
+    // 成品在物品注册表中的路径作为默认 ID，再根据调用方传入的名称决定保存
+    // 方式。这样金属块压缩配方可以继续生成 tin_block 等默认文件名，而金属粒
+    // 压缩配方仍能使用 tin_ingot_from_tin_nuggets 这类不会冲突的独立名称。
+    // RecipeBuilder rejects an explicit id equal to the result's default id, so
+    // choose the overload based on whether the requested name is the default.
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(
+        recipeOutput,
+        CoraconicTech.MODID + ":" + recipeName
+      );
+    }
+  }
+
+  /**
+   * 生成“一个成品分解为九个基础单位”的无序合成配方。
+   *
+   * <p>该方法与 {@link #packingRecipe} 互为逆操作，同时服务于两种转换：
+   * <ul>
+   *   <li>一个金属块 → 九个金属锭，配方类别为
+   *       {@link RecipeCategory#MISC}；</li>
+   *   <li>一个金属锭 → 九个金属粒，配方类别同样为
+   *       {@link RecipeCategory#MISC}。</li>
+   * </ul>
+   *
+   * <p>解压配方使用无序形式的原因与压缩配方相同：玩家只需把单个成品放进
+   * 合成格，物品在格子中的具体位置没有任何意义。固定产物数量为九个，
+   * 是为了与压缩配方的“九个换一个”保持严格对称，确保玩家反复压缩、解压
+   * 时不会凭空产生或丢失材料。
+   *
+   * <p>参数含义如下：
+   * <ul>
+   *   <li>{@code recipeOutput}：数据生成器提供的配方输出目标；</li>
+   *   <li>{@code category}：配方书分类。解压得到的通常是材料，因此调用方
+   *       统一使用 {@link RecipeCategory#MISC}；</li>
+   *   <li>{@code result}：一次合成得到的九个基础单位，即金属锭或金属粒；</li>
+   *   <li>{@code ingredient}：被分解的单个成品，即金属块或金属锭；</li>
+   *   <li>{@code recipeName}：显式指定的配方 ID，最终写成
+   *       {@code <modid>:<recipeName>}。解压配方必须显式命名，因为同一物品
+   *       可能既是某个配方的产物，又是另一个配方的原料；显式命名可以避免
+   *       不同来源的配方互相覆盖；</li>
+   *   <li>{@code criterionName}：解锁条件名称。这里通常传入
+   *       {@code has_<ingredient>}，即玩家获得被分解的成品后，解压配方才会
+   *       在配方书中解锁。</li>
+   * </ul>
+   *
+   * <p>输出位置：配方本体写入
+   * {@code data/<modid>/recipe/<recipeName>.json}，解锁进度由
+   * {@link RecipeProvider} 自动生成。
+   */
+  private static void unpackingRecipe(
+    RecipeOutput recipeOutput,
+    RecipeCategory category,
+    ItemLike result,
+    ItemLike ingredient,
+    String recipeName,
+    String criterionName
+  ) {
+    // 单个成品放入合成格即可得到九个基础单位，产物数量由第三个参数固定。
+    // One finished item in the grid yields nine base units; the count is fixed by the third argument.
+    ShapelessRecipeBuilder.shapeless(category, result, 9)
+      .requires(ingredient)
+      .unlockedBy(criterionName, has(ingredient))
       .save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
   }
 }
