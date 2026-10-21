@@ -46,13 +46,5 @@
     "block.coraconic.deepslate_tin_ore":"深板岩錫礦石",
     "block.coraconic.deepslate_lead_ore":"深板岩鉛礦石",
     "itemGroup.coraconic_tech":"核龍科技",
-    "itemGroup.coraconic_tech_tool":"核龍科技工具",
-
-    "coraconic.configuration.title": "核龍科技 Configs",
-    "coraconic.configuration.section.coraconic.common.toml": "核龍科技 Configs",
-    "coraconic.configuration.section.coraconic.common.toml.title": "核龍科技 Configs",
-    "coraconic.configuration.items": "Item List",
-    "coraconic.configuration.logDirtBlock": "Log Dirt Block",
-    "coraconic.configuration.magicNumberIntroduction": "Magic Number Text",
-    "coraconic.configuration.magicNumber": "Magic Number"
+    "itemGroup.coraconic_tech_tool":"核龍科技工具"
 }

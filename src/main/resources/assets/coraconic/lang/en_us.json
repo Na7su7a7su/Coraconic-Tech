@@ -46,14 +46,5 @@
     "block.coraconic.deepslate_tin_ore":"Deepslate Tin Ore",
     "block.coraconic.deepslate_lead_ore":"Deepslate Lead Ore",
     "itemGroup.coraconic_tech":"Coraconic Tech",
-  "itemGroup.coraconic_tech_tool":"Coraconic Tech Tools",
-
-
-  "coraconic.configuration.title": "Coraconic Tech Configs",
-  "coraconic.configuration.section.coraconic.common.toml": "Coraconic Tech Configs",
-  "coraconic.configuration.section.coraconic.common.toml.title": "Coraconic Tech Configs",
-  "coraconic.configuration.items": "Item List",
-  "coraconic.configuration.logDirtBlock": "Log Dirt Block",
-  "coraconic.configuration.magicNumberIntroduction": "Magic Number Text",
-  "coraconic.configuration.magicNumber": "Magic Number"
+  "itemGroup.coraconic_tech_tool":"Coraconic Tech Tools"
 }

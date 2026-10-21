@@ -4,101 +4,59 @@ import com.aestastel.coraconic.block.ModBlocks;
 import com.aestastel.coraconic.item.ModCreativeModeTabs;
 import com.aestastel.coraconic.item.ModItems;
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
+/**
+ * 核龙科技主类：挂载注册器与模组生命周期事件。
+ *
+ * <p>物品、方块与创造栏的注册分别由 {@link ModItems}、{@link ModBlocks} 和
+ * {@link ModCreativeModeTabs} 负责；本类只负责把它们的延迟注册器挂到模组事件
+ * 总线，并保留公共初始化与服务端启动钩子。
+ *
+ * <p>Main mod class: attaches the deferred registers to the mod event bus and
+ * keeps the common setup and server-starting hooks.
+ */
 @Mod(CoraconicTech.MODID)
 public class CoraconicTech {
 
-  // Define mod id in a common place for everything to reference
+  /** 模组 ID，必须与 {@code neoforge.mods.toml} 中的 modId 一致。 */
   public static final String MODID = "coraconic";
-  // Directly reference a slf4j logger
+
+  /** 模组共享日志器。 */
   public static final Logger LOGGER = LogUtils.getLogger();
-  // Create a Deferred Register to hold Blocks which will all be registered under the "coraconic" namespace
-  public static final DeferredRegister.Blocks BLOCKS =
-    DeferredRegister.createBlocks(MODID);
-  // Create a Deferred Register to hold Items which will all be registered under the "coraconic" namespace
-  public static final DeferredRegister.Items ITEMS =
-    DeferredRegister.createItems(MODID);
-  // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "coraconic" namespace
-  public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
-    DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-  // The constructor for the mod class is the first code that is run when your mod is loaded.
-  // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-  public CoraconicTech(IEventBus modEventBus, ModContainer modContainer) {
-    // Register the commonSetup method for modloading
-    modEventBus.addListener(this::commonSetup);
-
+  public CoraconicTech(IEventBus modEventBus) {
     ModItems.register(modEventBus);
     ModBlocks.register(modEventBus);
-
-    // Register the Deferred Register to the mod event bus so blocks get registered
-    BLOCKS.register(modEventBus);
-    // Register the Deferred Register to the mod event bus so items get registered
-    ITEMS.register(modEventBus);
-    // Register the Deferred Register to the mod event bus so tabs get registered
-    CREATIVE_MODE_TABS.register(modEventBus);
-
-    // Register ourselves for server and other game events we are interested in.
-    // Note that this is necessary if and only if we want *this* class (CoraconicTech) to respond directly to events.
-    // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
-    NeoForge.EVENT_BUS.register(this);
     ModCreativeModeTabs.register(modEventBus);
-    // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-    modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+    modEventBus.addListener(this::commonSetup);
+    NeoForge.EVENT_BUS.register(this);
   }
 
+  /**
+   * 公共初始化钩子。当前只输出初始化日志，后续可在此挂载通用逻辑。
+   *
+   * <p>Common setup hook. Currently only logs initialization; shared logic can
+   * be attached here later.
+   */
   private void commonSetup(FMLCommonSetupEvent event) {
-    // Some common setup code
-    LOGGER.info("HELLO FROM COMMON SETUP");
-
-    if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
-      LOGGER.info(
-        "DIRT BLOCK >> {}",
-        BuiltInRegistries.BLOCK.getKey(Blocks.DIRT)
-      );
-    }
-
-    LOGGER.info(
-      "{}{}",
-      Config.MAGIC_NUMBER_INTRODUCTION.get(),
-      Config.MAGIC_NUMBER.getAsInt()
-    );
-
-    Config.ITEM_STRINGS.get().forEach(item -> LOGGER.info("ITEM >> {}", item));
+    LOGGER.info("Coraconic Tech common setup initialized");
   }
 
-  // You can use SubscribeEvent and let the Event Bus discover methods to call
+  /**
+   * 服务端启动钩子，保留用于后续服务端逻辑。
+   *
+   * <p>Server-starting hook, reserved for future server-side logic.
+   */
   @SubscribeEvent
   public void onServerStarting(ServerStartingEvent event) {
-    // Do something when the server starts
-    LOGGER.info("HELLO from server starting");
+    LOGGER.info("Coraconic Tech server starting");
   }
 }
