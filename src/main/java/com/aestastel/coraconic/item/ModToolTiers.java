@@ -3,7 +3,6 @@ package com.aestastel.coraconic.item;
 import com.aestastel.coraconic.tag.ModBlockTags;
 import com.aestastel.coraconic.tag.ModItemTags;
 import java.util.function.Supplier;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;

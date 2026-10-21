@@ -1,7 +1,6 @@
 package com.aestastel.coraconic.item;
 
 import com.aestastel.coraconic.CoraconicTech;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.HoeItem;
