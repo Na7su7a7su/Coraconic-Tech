@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_aviraconic_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:elements/aviraconic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coraconic:aviraconic_pickaxe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_aviraconic_pickaxe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coraconic:aviraconic_pickaxe"
+    ]
+  }
+}

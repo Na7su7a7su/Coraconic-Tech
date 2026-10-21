@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_aviraconic_element": {
+      "conditions": {
+        "items": [
+          {
+            "items": "coraconic:aviraconic_element"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coraconic:aviraconic_metal_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_aviraconic_element"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coraconic:aviraconic_metal_ingot"
+    ]
+  }
+}

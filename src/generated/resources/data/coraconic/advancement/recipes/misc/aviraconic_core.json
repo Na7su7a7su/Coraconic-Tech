@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_aviraconic_ingot": {
+    "has_aviraconic_metal_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "coraconic:aviraconic_ingot"
+            "items": "coraconic:aviraconic_metal_ingot"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_aviraconic_ingot"
+      "has_aviraconic_metal_ingot"
     ]
   ],
   "rewards": {

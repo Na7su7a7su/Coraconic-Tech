@@ -61,14 +61,14 @@ public class ModItems {
     "commonmetal_core",
     () -> new Item(new Item.Properties())
   );
-  public static final DeferredItem<Item> CORACONIC_INGOT = ITEMS.register(
-    "coraconic_ingot",
+  public static final DeferredItem<Item> CORACONIC_METAL_INGOT = ITEMS.register(
+    "coraconic_metal_ingot",
     () -> new Item(new Item.Properties())
   );
-  public static final DeferredItem<Item> AVIRACONIC_INGOT = ITEMS.register(
-    "aviraconic_ingot",
-    () -> new Item(new Item.Properties())
-  );
+  public static final DeferredItem<Item> AVIRACONIC_METAL_INGOT =
+    ITEMS.register("aviraconic_metal_ingot", () ->
+      new Item(new Item.Properties())
+    );
   public static final DeferredItem<Item> TIN_NUGGET = ITEMS.register(
     "tin_nugget",
     () -> new Item(new Item.Properties())
@@ -109,6 +109,14 @@ public class ModItems {
     "aviraconic_element",
     () -> new Item(new Item.Properties())
   );
+  public static final DeferredItem<Item> CORACONIC_DIAMOND_STRUCTURED_CRYSTAL =
+    ITEMS.register("coraconic_diamond-structured_crystal", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL =
+    ITEMS.register("aviraconic_diamond-structured_crystal", () ->
+      new Item(new Item.Properties())
+    );
   public static final DeferredItem<Item> TIN_SWORD = ITEMS.register(
     "tin_sword",
     () ->

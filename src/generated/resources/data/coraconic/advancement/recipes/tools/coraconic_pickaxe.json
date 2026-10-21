@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_coraconic_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:elements/coraconic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coraconic:coraconic_pickaxe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_coraconic_pickaxe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coraconic:coraconic_pickaxe"
+    ]
+  }
+}

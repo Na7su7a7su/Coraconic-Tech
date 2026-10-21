@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "tag": "c:ingots/tin"
+    }
+  },
+  "pattern": [
+    "SS",
+    " I",
+    " I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:tin_hoe"
+  }
+}

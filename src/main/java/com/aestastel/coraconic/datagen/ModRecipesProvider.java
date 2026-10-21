@@ -2,12 +2,9 @@ package com.aestastel.coraconic.datagen;
 
 import com.aestastel.coraconic.CoraconicTech;
 import com.aestastel.coraconic.block.ModBlocks;
-import com.aestastel.coraconic.datagen.ModBlockTagsProvider;
-import com.aestastel.coraconic.datagen.ModItemTagsProvider;
 import com.aestastel.coraconic.item.ModItems;
 import com.aestastel.coraconic.tag.ModItemTags;
 import java.util.concurrent.CompletableFuture;
-import mezz.jei.api.constants.Tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -16,8 +13,11 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 
 /**
  * 配方生成器：生成模组物品的合成配方与解锁进度。
@@ -61,14 +61,17 @@ public class ModRecipesProvider extends RecipeProvider {
       ModItems.CORACONIC_CORE.get(),
       2
     )
-      .define('C', ModItems.CORACONIC_INGOT.get())
+      .define('C', ModItems.CORACONIC_METAL_INGOT.get())
       .define('G', Items.GOLD_INGOT)
       .define('O', Items.OBSIDIAN)
       .define('#', Items.DIAMOND)
       .pattern("CGO")
       .pattern("G#G")
       .pattern("OGC")
-      .unlockedBy("has_coraconic_ingot", has(ModItems.CORACONIC_INGOT.get()))
+      .unlockedBy(
+        "has_coraconic_metal_ingot",
+        has(ModItems.CORACONIC_METAL_INGOT.get())
+      )
       .save(recipeOutput);
 
     // 腾龙金属核心：腾龙锭、钻石、荧石粉与绿宝石合成两个。
@@ -78,14 +81,17 @@ public class ModRecipesProvider extends RecipeProvider {
       ModItems.AVIRACONIC_CORE.get(),
       2
     )
-      .define('C', ModItems.AVIRACONIC_INGOT.get())
+      .define('C', ModItems.AVIRACONIC_METAL_INGOT.get())
       .define('G', Items.DIAMOND)
       .define('O', Items.GLOWSTONE_DUST)
       .define('#', Items.EMERALD)
       .pattern("CGO")
       .pattern("G#G")
       .pattern("OGC")
-      .unlockedBy("has_aviraconic_ingot", has(ModItems.AVIRACONIC_INGOT.get()))
+      .unlockedBy(
+        "has_aviraconic_metal_ingot",
+        has(ModItems.AVIRACONIC_METAL_INGOT.get())
+      )
       .save(recipeOutput);
 
     // 常金属核心：铅锭、铁锭、红石、金锭与锡锭合成两个。
@@ -110,7 +116,7 @@ public class ModRecipesProvider extends RecipeProvider {
     // Coraconic ingot: shapeless recipe from gold, tin, lead, and four coraconic elements.
     ShapelessRecipeBuilder.shapeless(
       RecipeCategory.MISC,
-      ModItems.CORACONIC_INGOT.get()
+      ModItems.CORACONIC_METAL_INGOT.get()
     )
       .requires(Items.GOLD_INGOT, 2)
       .requires(ModItemTags.INGOTS_TIN)
@@ -126,11 +132,11 @@ public class ModRecipesProvider extends RecipeProvider {
     // Aviraconic ingot: shapeless recipe from diamonds, emerald, coraconic ingot, and four aviraconic elements.
     ShapelessRecipeBuilder.shapeless(
       RecipeCategory.MISC,
-      ModItems.AVIRACONIC_INGOT.get()
+      ModItems.AVIRACONIC_METAL_INGOT.get()
     )
       .requires(Items.DIAMOND, 2)
       .requires(Items.EMERALD)
-      .requires(ModItems.CORACONIC_INGOT.get())
+      .requires(ModItems.CORACONIC_METAL_INGOT.get())
       .requires(ModItems.AVIRACONIC_ELEMENT.get(), 4)
       .unlockedBy(
         "has_aviraconic_element",
@@ -210,66 +216,210 @@ public class ModRecipesProvider extends RecipeProvider {
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.CORACONIC_BLOCK.get(),
-      ModItems.CORACONIC_INGOT.get(),
+      ModItems.CORACONIC_METAL_INGOT.get(),
       "coraconic_block",
-      "has_coraconic_ingot"
+      "has_coraconic_metal_ingot"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
-      ModItems.CORACONIC_INGOT.get(),
+      ModItems.CORACONIC_METAL_INGOT.get(),
       ModBlocks.CORACONIC_BLOCK.get(),
-      "coraconic_ingot_from_coraconic_block",
+      "coraconic_metal_ingot_from_coraconic_block",
       "has_coraconic_block"
     );
     packingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
-      ModItems.CORACONIC_INGOT.get(),
+      ModItems.CORACONIC_METAL_INGOT.get(),
       ModItems.CORACONIC_NUGGET.get(),
-      "coraconic_ingot_from_coraconic_nuggets",
+      "coraconic_metal_ingot_from_coraconic_nuggets",
       "has_coraconic_nugget"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
       ModItems.CORACONIC_NUGGET.get(),
-      ModItems.CORACONIC_INGOT.get(),
-      "coraconic_nugget_from_coraconic_ingot",
-      "has_coraconic_ingot"
+      ModItems.CORACONIC_METAL_INGOT.get(),
+      "coraconic_nugget_from_coraconic_metal_ingot",
+      "has_coraconic_metal_ingot"
     );
 
     packingRecipe(
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.AVIRACONIC_BLOCK.get(),
-      ModItems.AVIRACONIC_INGOT.get(),
+      ModItems.AVIRACONIC_METAL_INGOT.get(),
       "aviraconic_block",
-      "has_aviraconic_ingot"
+      "has_aviraconic_metal_ingot"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
-      ModItems.AVIRACONIC_INGOT.get(),
+      ModItems.AVIRACONIC_METAL_INGOT.get(),
       ModBlocks.AVIRACONIC_BLOCK.get(),
-      "aviraconic_ingot_from_aviraconic_block",
+      "aviraconic_metal_ingot_from_aviraconic_block",
       "has_aviraconic_block"
     );
     packingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
-      ModItems.AVIRACONIC_INGOT.get(),
+      ModItems.AVIRACONIC_METAL_INGOT.get(),
       ModItems.AVIRACONIC_NUGGET.get(),
-      "aviraconic_ingot_from_aviraconic_nuggets",
+      "aviraconic_metal_ingot_from_aviraconic_nuggets",
       "has_aviraconic_nugget"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
       ModItems.AVIRACONIC_NUGGET.get(),
-      ModItems.AVIRACONIC_INGOT.get(),
-      "aviraconic_nugget_from_aviraconic_ingot",
-      "has_aviraconic_ingot"
+      ModItems.AVIRACONIC_METAL_INGOT.get(),
+      "aviraconic_nugget_from_aviraconic_metal_ingot",
+      "has_aviraconic_metal_ingot"
+    );
+    swordRecipe(
+      recipeOutput,
+      ModItems.TIN_SWORD.get(),
+      ModItemTags.INGOTS_TIN,
+      "tin_sword",
+      "has_tin_sword"
+    );
+    swordRecipe(
+      recipeOutput,
+      ModItems.LEAD_SWORD.get(),
+      ModItemTags.INGOTS_LEAD,
+      "lead_sword",
+      "has_lead_sword"
+    );
+    swordRecipe(
+      recipeOutput,
+      ModItems.CORACONIC_SWORD.get(),
+      ModItemTags.ELEMENTS_CORACONIC,
+      "coraconic_sword",
+      "has_coraconic_sword"
+    );
+    swordRecipe(
+      recipeOutput,
+      ModItems.AVIRACONIC_SWORD.get(),
+      ModItemTags.ELEMENTS_AVIRACONIC,
+      "aviraconic_sword",
+      "has_aviraconic_sword"
+    );
+
+    pickaxeRecipe(
+      recipeOutput,
+      ModItems.TIN_PICKAXE.get(),
+      ModItemTags.INGOTS_TIN,
+      "tin_pickaxe",
+      "has_tin_pickaxe"
+    );
+    pickaxeRecipe(
+      recipeOutput,
+      ModItems.LEAD_PICKAXE.get(),
+      ModItemTags.INGOTS_LEAD,
+      "lead_pickaxe",
+      "has_lead_pickaxe"
+    );
+    pickaxeRecipe(
+      recipeOutput,
+      ModItems.CORACONIC_PICKAXE.get(),
+      ModItemTags.ELEMENTS_CORACONIC,
+      "coraconic_pickaxe",
+      "has_coraconic_pickaxe"
+    );
+    pickaxeRecipe(
+      recipeOutput,
+      ModItems.AVIRACONIC_PICKAXE.get(),
+      ModItemTags.ELEMENTS_AVIRACONIC,
+      "aviraconic_pickaxe",
+      "has_aviraconic_pickaxe"
+    );
+
+    axeRecipeA(
+      recipeOutput,
+      ModItems.TIN_AXE.get(),
+      ModItemTags.INGOTS_TIN,
+      "tin_axe",
+      "has_tin_axe"
+    );
+    axeRecipeA(
+      recipeOutput,
+      ModItems.LEAD_AXE.get(),
+      ModItemTags.INGOTS_LEAD,
+      "lead_axe",
+      "has_lead_axe"
+    );
+    axeRecipeA(
+      recipeOutput,
+      ModItems.CORACONIC_AXE.get(),
+      ModItemTags.ELEMENTS_CORACONIC,
+      "coraconic_axe",
+      "has_coraconic_axe"
+    );
+    axeRecipeA(
+      recipeOutput,
+      ModItems.AVIRACONIC_AXE.get(),
+      ModItemTags.ELEMENTS_AVIRACONIC,
+      "aviraconic_axe",
+      "has_aviraconic_axe"
+    );
+
+    shovelRecipe(
+      recipeOutput,
+      ModItems.TIN_SHOVEL.get(),
+      ModItemTags.INGOTS_TIN,
+      "tin_shovel",
+      "has_tin_shovel"
+    );
+    shovelRecipe(
+      recipeOutput,
+      ModItems.LEAD_SHOVEL.get(),
+      ModItemTags.INGOTS_LEAD,
+      "lead_shovel",
+      "has_lead_shovel"
+    );
+    shovelRecipe(
+      recipeOutput,
+      ModItems.CORACONIC_SHOVEL.get(),
+      ModItemTags.ELEMENTS_CORACONIC,
+      "coraconic_shovel",
+      "has_coraconic_shovel"
+    );
+    shovelRecipe(
+      recipeOutput,
+      ModItems.AVIRACONIC_SHOVEL.get(),
+      ModItemTags.ELEMENTS_AVIRACONIC,
+      "aviraconic_shovel",
+      "has_aviraconic_shovel"
+    );
+
+    hoeRecipe(
+      recipeOutput,
+      ModItems.TIN_HOE.get(),
+      ModItemTags.INGOTS_TIN,
+      "tin_hoe",
+      "has_tin_hoe"
+    );
+    hoeRecipe(
+      recipeOutput,
+      ModItems.LEAD_HOE.get(),
+      ModItemTags.INGOTS_LEAD,
+      "lead_hoe",
+      "has_lead_hoe"
+    );
+    hoeRecipe(
+      recipeOutput,
+      ModItems.CORACONIC_HOE.get(),
+      ModItemTags.ELEMENTS_CORACONIC,
+      "coraconic_hoe",
+      "has_coraconic_hoe"
+    );
+    hoeRecipe(
+      recipeOutput,
+      ModItems.AVIRACONIC_HOE.get(),
+      ModItemTags.ELEMENTS_AVIRACONIC,
+      "aviraconic_hoe",
+      "has_aviraconic_hoe"
     );
 
     // ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Items.ENCHANTED_GOLDEN_APPLE);
@@ -306,7 +456,7 @@ public class ModRecipesProvider extends RecipeProvider {
    *       {@code save(recipeOutput)}；而金属粒压缩配方必须使用独立名称
    *       （例如 {@code tin_ingot_from_tin_nuggets}），因为同一个金属锭可能
    *       已经有其他来源配方。若核龙金属锭的元素合成与粒压缩都使用默认 ID
-   *       {@code coraconic_ingot}，后生成的配方会覆盖先生成的配方，导致其中
+   *       {@code coraconic_metal_ingot}，后生成的配方会覆盖先生成的配方，导致其中
    *       一种合成方式丢失。本方法会在内部判断该名称是否等于成品默认 ID，
    *       自动选择正确的保存方式，调用方无需关心这一细节；</li>
    *   <li>{@code criterionName}：解锁条件的名称，通常写成
@@ -405,5 +555,157 @@ public class ModRecipesProvider extends RecipeProvider {
       .requires(ingredient)
       .unlockedBy(criterionName, has(ingredient))
       .save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+  }
+
+  /**
+   * 生成一把剑的有序合成配方：两格材料竖向排列，下方一格木棍。
+   *
+   * <p>Generates a shaped sword recipe: two material slots vertically above
+   * one wooden rod.
+   *
+   * @param recipeOutput 配方输出目标 / recipe output target
+   * @param result 配方产物 / recipe result
+   * @param material 剑身材料标签 / sword material tag
+   * @param recipeName 配方 ID 路径 / recipe id path
+   * @param criterionName 解锁条件名称 / unlock criterion name
+   */
+  private static void swordRecipe(
+    RecipeOutput recipeOutput,
+    ItemLike result,
+    TagKey<Item> material,
+    String recipeName,
+    String criterionName
+  ) {
+    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
+      RecipeCategory.COMBAT,
+      result
+    )
+      .define('S', material)
+      .define('I', Tags.Items.RODS_WOODEN)
+      .pattern("S")
+      .pattern("S")
+      .pattern("I")
+      .unlockedBy(criterionName, has(material));
+
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+    }
+  }
+
+  private static void pickaxeRecipe(
+    RecipeOutput recipeOutput,
+    ItemLike result,
+    TagKey<Item> material,
+    String recipeName,
+    String criterionName
+  ) {
+    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
+      RecipeCategory.TOOLS,
+      result
+    )
+      .define('S', material)
+      .define('I', Tags.Items.RODS_WOODEN)
+      .pattern("SSS")
+      .pattern(" I ")
+      .pattern(" I ")
+      .unlockedBy(criterionName, has(material));
+
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+    }
+  }
+
+  private static void axeRecipeA(
+    RecipeOutput recipeOutput,
+    ItemLike result,
+    TagKey<Item> material,
+    String recipeName,
+    String criterionName
+  ) {
+    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
+      RecipeCategory.TOOLS,
+      result
+    )
+      .define('S', material)
+      .define('I', Tags.Items.RODS_WOODEN)
+      .pattern("SS")
+      .pattern("SI")
+      .pattern(" I")
+      .unlockedBy(criterionName, has(material));
+
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+    }
+  }
+
+  private static void shovelRecipe(
+    RecipeOutput recipeOutput,
+    ItemLike result,
+    TagKey<Item> material,
+    String recipeName,
+    String criterionName
+  ) {
+    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
+      RecipeCategory.TOOLS,
+      result
+    )
+      .define('S', material)
+      .define('I', Tags.Items.RODS_WOODEN)
+      .pattern("S")
+      .pattern("I")
+      .pattern("I")
+      .unlockedBy(criterionName, has(material));
+
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+    }
+  }
+
+  private static void hoeRecipe(
+    RecipeOutput recipeOutput,
+    ItemLike result,
+    TagKey<Item> material,
+    String recipeName,
+    String criterionName
+  ) {
+    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
+      RecipeCategory.TOOLS,
+      result
+    )
+      .define('S', material)
+      .define('I', Tags.Items.RODS_WOODEN)
+      .pattern("SS")
+      .pattern(" I")
+      .pattern(" I")
+      .unlockedBy(criterionName, has(material));
+
+    String defaultRecipeName = BuiltInRegistries.ITEM.getKey(
+      result.asItem()
+    ).getPath();
+    if (recipeName.equals(defaultRecipeName)) {
+      builder.save(recipeOutput);
+    } else {
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
+    }
   }
 }

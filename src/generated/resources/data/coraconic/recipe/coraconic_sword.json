@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "tag": "c:elements/coraconic"
+    }
+  },
+  "pattern": [
+    "S",
+    "S",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:coraconic_sword"
+  }
+}

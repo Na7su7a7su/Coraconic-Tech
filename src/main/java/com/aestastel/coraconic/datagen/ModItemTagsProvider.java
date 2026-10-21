@@ -15,9 +15,9 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 /**
- * 物品标签生成器：为锭、粒、粗矿、矿石、存储块、工具与食物生成标签。
+ * 物品标签生成器：为锭、粒、粗矿、矿石、存储块、晶体、工具与食物生成标签。
  *
- * <p>Item tag provider: generates tags for ingots, nuggets, raw materials, ores, storage blocks, tools, and foods.
+ * <p>Item tag provider: generates tags for ingots, nuggets, raw materials, ores, storage blocks, gems, tools, and foods.
  */
 public class ModItemTagsProvider extends ItemTagsProvider {
 
@@ -49,9 +49,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Ingots: register metal-specific tags and attach them to the c:ingots parent tag.
     tag(ModItemTags.INGOTS_TIN).add(ModItems.TIN_INGOT.get());
     tag(ModItemTags.INGOTS_LEAD).add(ModItems.LEAD_INGOT.get());
-    tag(ModItemTags.INGOTS_CORACONIC).add(ModItems.CORACONIC_INGOT.get());
+    tag(ModItemTags.INGOTS_CORACONIC).add(ModItems.CORACONIC_METAL_INGOT.get());
     tag(ModItemTags.INGOTS_AVIRACONIC).add(
-      ModItems.AVIRACONIC_INGOT.get()
+      ModItems.AVIRACONIC_METAL_INGOT.get()
     );
     tag(Tags.Items.INGOTS)
       .addTag(ModItemTags.INGOTS_TIN)
@@ -63,12 +63,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Nuggets: register metal-specific tags and attach them to the c:nuggets parent tag.
     tag(ModItemTags.NUGGETS_TIN).add(ModItems.TIN_NUGGET.get());
     tag(ModItemTags.NUGGETS_LEAD).add(ModItems.LEAD_NUGGET.get());
-    tag(ModItemTags.NUGGETS_CORACONIC).add(
-      ModItems.CORACONIC_NUGGET.get()
-    );
-    tag(ModItemTags.NUGGETS_AVIRACONIC).add(
-      ModItems.AVIRACONIC_NUGGET.get()
-    );
+    tag(ModItemTags.NUGGETS_CORACONIC).add(ModItems.CORACONIC_NUGGET.get());
+    tag(ModItemTags.NUGGETS_AVIRACONIC).add(ModItems.AVIRACONIC_NUGGET.get());
     tag(Tags.Items.NUGGETS)
       .addTag(ModItemTags.NUGGETS_TIN)
       .addTag(ModItemTags.NUGGETS_LEAD)
@@ -90,10 +86,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(Tags.Items.ORES)
       .addTag(ModItemTags.ORES_TIN)
       .addTag(ModItemTags.ORES_LEAD);
-    copy(
-      Tags.Blocks.ORES_IN_GROUND_STONE,
-      Tags.Items.ORES_IN_GROUND_STONE
-    );
+    copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE);
     copy(
       Tags.Blocks.ORES_IN_GROUND_DEEPSLATE,
       Tags.Items.ORES_IN_GROUND_DEEPSLATE
@@ -116,6 +109,23 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.STORAGE_BLOCKS_LEAD)
       .addTag(ModItemTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModItemTags.STORAGE_BLOCKS_AVIRACONIC);
+
+    // 元素：注册核龙元素与腾龙元素的通用标签。
+    // Elements: register common tags for coraconic and aviraconic elements.
+    tag(ModItemTags.ELEMENTS_CORACONIC).add(ModItems.CORACONIC_ELEMENT.get());
+    tag(ModItemTags.ELEMENTS_AVIRACONIC).add(ModItems.AVIRACONIC_ELEMENT.get());
+
+    // 晶体：注册核龙晶体与腾龙晶体的通用宝石标签，并挂到 c:gems 父标签。
+    // Gems: register common gem tags for the coraconic and aviraconic crystals, and attach them to c:gems.
+    tag(ModItemTags.GEMS_CORACONIC_DS).add(
+      ModItems.CORACONIC_DIAMOND_STRUCTURED_CRYSTAL.get()
+    );
+    tag(ModItemTags.GEMS_AVIRACONIC_DS).add(
+      ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL.get()
+    );
+    tag(Tags.Items.GEMS)
+      .addTag(ModItemTags.GEMS_CORACONIC_DS)
+      .addTag(ModItemTags.GEMS_AVIRACONIC_DS);
 
     // 工具：将锡、铅、核龙金属与腾龙金属四套工具挂到原版工具标签。
     // Tools: attach the tin, lead, coraconic, and aviraconic tool sets to vanilla tool tags.

@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "tag": "c:ingots/tin"
+    },
+    {
+      "item": "coraconic:lead_ingot"
+    },
+    {
+      "item": "coraconic:coraconic_element"
+    },
+    {
+      "item": "coraconic:coraconic_element"
+    },
+    {
+      "item": "coraconic:coraconic_element"
+    },
+    {
+      "item": "coraconic:coraconic_element"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:coraconic_metal_ingot"
+  }
+}

@@ -28,7 +28,7 @@ public enum ModToolTiers implements Tier {
     100,
     0.2F,
     -2.0F,
-    2,
+    256,
     () -> Ingredient.of(ModItemTags.INGOTS_AVIRACONIC)
   );
 

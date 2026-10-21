@@ -4,8 +4,8 @@
   "item.coraconic.lead_ingot":"Lead Ingot",
   "item.coraconic.raw_tin":"Raw Tin",
   "item.coraconic.raw_lead":"Raw Lead",
-  "item.coraconic.coraconic_ingot":"Coraconic Ingot",
-  "item.coraconic.aviraconic_ingot":"Aviraconic Ingot",
+  "item.coraconic.coraconic_metal_ingot":"Coraconic Ingot",
+  "item.coraconic.aviraconic_metal_ingot":"Aviraconic Ingot",
   "item.coraconic.tin_nugget":"Tin Nugget",
   "item.coraconic.lead_nugget":"Lead Nugget",
   "item.coraconic.coraconic_nugget":"Coraconic Nugget",
@@ -35,6 +35,8 @@
     "item.coraconic.lead_hoe":"Lead Hoe",
     "item.coraconic.coraconic_hoe":"Coraconic Hoe",
     "item.coraconic.aviraconic_hoe":"Aviraconic Hoe",
+    "item.coraconic.coraconic_diamond-structured_crystal":"Coraconic Diamond-Structured Crystal",
+    "item.coraconic.aviraconic_diamond-structured_crystal":"Aviraconic Diamond-Structured Crystal",
     "block.coraconic.tin_block":"Tin Block",
     "block.coraconic.lead_block":"Lead Block",
     "block.coraconic.coraconic_block":"Coraconic Block",
@@ -44,6 +46,7 @@
     "block.coraconic.deepslate_tin_ore":"Deepslate Tin Ore",
     "block.coraconic.deepslate_lead_ore":"Deepslate Lead Ore",
     "itemGroup.coraconic_tech":"Coraconic Tech",
+  "itemGroup.coraconic_tech_tool":"Coraconic Tech Tools",
 
 
   "coraconic.configuration.title": "Coraconic Tech Configs",

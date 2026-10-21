@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_coraconic_metal_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "coraconic:coraconic_metal_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coraconic:coraconic_nugget_from_coraconic_metal_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_coraconic_metal_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coraconic:coraconic_nugget_from_coraconic_metal_ingot"
+    ]
+  }
+}

@@ -44,17 +44,19 @@ public class ModCreativeModeTabs {
    */
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
     DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CoraconicTech.MODID);
+  public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS_TOOL =
+    DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CoraconicTech.MODID);
 
   public static final Supplier<CreativeModeTab> CORACONIC_TECH =
     CREATIVE_MODE_TABS.register("coraconic_tech", () ->
       CreativeModeTab.builder()
-        .icon(() -> new ItemStack(ModItems.CORACONIC_INGOT.get()))
+        .icon(() -> new ItemStack(ModItems.CORACONIC_METAL_INGOT.get()))
         .title(Component.translatable("itemGroup.coraconic_tech"))
         .displayItems((parameter, output) -> {
           output.accept(ModItems.TIN_INGOT);
           output.accept(ModItems.LEAD_INGOT);
-          output.accept(ModItems.CORACONIC_INGOT);
-          output.accept(ModItems.AVIRACONIC_INGOT);
+          output.accept(ModItems.CORACONIC_METAL_INGOT);
+          output.accept(ModItems.AVIRACONIC_METAL_INGOT);
           output.accept(ModItems.TIN_NUGGET);
           output.accept(ModItems.LEAD_NUGGET);
           output.accept(ModItems.CORACONIC_NUGGET);
@@ -78,20 +80,60 @@ public class ModCreativeModeTabs {
         .build()
     );
 
+  public static final Supplier<CreativeModeTab> CORACONIC_TECH_TOOL =
+    CREATIVE_MODE_TABS_TOOL.register("coraconic_tech_tool", () ->
+      CreativeModeTab.builder()
+        .icon(() -> new ItemStack(ModItems.CORACONIC_PICKAXE.get()))
+        .title(Component.translatable("itemGroup.coraconic_tech_tool"))
+        .displayItems((parameter, output) -> {
+          // 锡质工具 / Tin tools
+          output.accept(ModItems.TIN_SWORD);
+          output.accept(ModItems.TIN_PICKAXE);
+          output.accept(ModItems.TIN_AXE);
+          output.accept(ModItems.TIN_SHOVEL);
+          output.accept(ModItems.TIN_HOE);
+
+          // 铅质工具 / Lead tools
+          output.accept(ModItems.LEAD_SWORD);
+          output.accept(ModItems.LEAD_PICKAXE);
+          output.accept(ModItems.LEAD_AXE);
+          output.accept(ModItems.LEAD_SHOVEL);
+          output.accept(ModItems.LEAD_HOE);
+
+          // 核龙金属工具 / Coraconic tools
+          output.accept(ModItems.CORACONIC_SWORD);
+          output.accept(ModItems.CORACONIC_PICKAXE);
+          output.accept(ModItems.CORACONIC_AXE);
+          output.accept(ModItems.CORACONIC_SHOVEL);
+          output.accept(ModItems.CORACONIC_HOE);
+
+          // 腾龙金属工具 / Aviraconic tools
+          output.accept(ModItems.AVIRACONIC_SWORD);
+          output.accept(ModItems.AVIRACONIC_PICKAXE);
+          output.accept(ModItems.AVIRACONIC_AXE);
+          output.accept(ModItems.AVIRACONIC_SHOVEL);
+          output.accept(ModItems.AVIRACONIC_HOE);
+        })
+        .build()
+    );
+
   /**
    * 将创造模式物品栏延迟注册器挂到模组事件总线。
    *
-   * <p>必须在模组构造期间调用。{@link #CREATIVE_MODE_TABS} 在声明阶段只保存
-   * 待注册的创造栏，调用 {@link DeferredRegister#register(IEventBus)} 后才会
-   * 在对应注册事件阶段把创造栏写入游戏注册表；若遗漏此调用，创造栏不会出现，
-   * 其中的展示条目自然也无法被玩家看到。
+   * <p>必须在模组构造期间调用。{@link #CREATIVE_MODE_TABS} 与
+   * {@link #CREATIVE_MODE_TABS_TOOL} 在声明阶段只保存待注册的创造栏，调用
+   * {@link DeferredRegister#register(IEventBus)} 后才会在对应注册事件阶段把
+   * 创造栏写入游戏注册表；若遗漏此调用，创造栏不会出现，其中的展示条目自然
+   * 也无法被玩家看到。
    *
-   * <p>Attaches the deferred creative tab register to the mod event bus. Must be
-   * called during mod construction; otherwise the creative tab will not exist.
+   * <p>Attaches both deferred creative tab registers to the mod event bus. Must
+   * be called during mod construction; otherwise the creative tabs will not
+   * exist.
    *
    * @param eventBus 模组专用事件总线，通常由主模组类传入
    */
   public static void register(IEventBus eventBus) {
     CREATIVE_MODE_TABS.register(eventBus);
+    CREATIVE_MODE_TABS_TOOL.register(eventBus);
   }
 }
