@@ -2,10 +2,12 @@ package com.aestastel.coraconic.datagen;
 
 import com.aestastel.coraconic.CoraconicTech;
 import com.aestastel.coraconic.block.ModBlocks;
+import com.aestastel.coraconic.tag.ModBlockTags;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -36,6 +38,44 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
    */
   @Override
   protected void addTags(HolderLookup.Provider provider) {
+    // 通用矿石标签：按矿物类型与生成岩层归类。
+    // Common ore tags: classify by mineral type and host stone.
+    tag(ModBlockTags.ORES_TIN).add(
+      ModBlocks.TIN_ORE.get(),
+      ModBlocks.DEEPSLAT_TIN_ORE.get()
+    );
+    tag(ModBlockTags.ORES_LEAD).add(
+      ModBlocks.LEAD_ORE.get(),
+      ModBlocks.DEEPSLAT_LEAD_ORE.get()
+    );
+    tag(Tags.Blocks.ORES)
+      .addTag(ModBlockTags.ORES_TIN)
+      .addTag(ModBlockTags.ORES_LEAD);
+    tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(
+      ModBlocks.TIN_ORE.get(),
+      ModBlocks.LEAD_ORE.get()
+    );
+    tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(
+      ModBlocks.DEEPSLAT_TIN_ORE.get(),
+      ModBlocks.DEEPSLAT_LEAD_ORE.get()
+    );
+
+    // 通用存储块标签：注册金属块并挂到 c:storage_blocks 父标签。
+    // Common storage block tags: register metal blocks and attach them to c:storage_blocks.
+    tag(ModBlockTags.STORAGE_BLOCKS_TIN).add(ModBlocks.TIN_BLOCK.get());
+    tag(ModBlockTags.STORAGE_BLOCKS_LEAD).add(ModBlocks.LEAD_BLOCK.get());
+    tag(ModBlockTags.STORAGE_BLOCKS_CORACONIC).add(
+      ModBlocks.CORACONIC_BLOCK.get()
+    );
+    tag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC).add(
+      ModBlocks.AVIRACONIC_BLOCK.get()
+    );
+    tag(Tags.Blocks.STORAGE_BLOCKS)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_TIN)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_LEAD)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_CORACONIC)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC);
+
     // 四种金属块与四种矿石可由镐加速挖掘。
     // All four metal blocks and all four ores can be mined faster with a pickaxe.
     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(

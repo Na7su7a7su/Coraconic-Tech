@@ -2,7 +2,13 @@ package com.aestastel.coraconic.item;
 
 import com.aestastel.coraconic.CoraconicTech;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -40,14 +46,9 @@ public class ModItems {
    */
   public static final DeferredRegister.Items ITEMS =
     DeferredRegister.createItems(CoraconicTech.MODID);
-  public static final FoodProperties HCV2_FOOD_PROPERTIES =
-    new FoodProperties.Builder()
-      .nutrition(64)
-      .saturationModifier(500.0F)
-      .alwaysEdible()
-      .build();
+
   public static final DeferredItem<Item> HCV2 = ITEMS.register("hcv2", () ->
-    new Item(new Item.Properties().food(HCV2_FOOD_PROPERTIES))
+    new Item(new Item.Properties().food(ModFood.HCV2))
   );
   public static final DeferredItem<Item> TIN_INGOT = ITEMS.register(
     "tin_ingot",
@@ -108,6 +109,206 @@ public class ModItems {
   public static final DeferredItem<Item> AVIRACONIC_ELEMENT = ITEMS.register(
     "aviraconic_element",
     () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> TIN_SWORD = ITEMS.register(
+    "tin_sword",
+    () ->
+      new SwordItem(
+        ModToolTiers.TIN,
+        new Item.Properties().attributes(
+          SwordItem.createAttributes(ModToolTiers.TIN, 0.5F, 2.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> TIN_PICKAXE = ITEMS.register(
+    "tin_pickaxe",
+    () ->
+      new PickaxeItem(
+        ModToolTiers.TIN,
+        new Item.Properties().attributes(
+          DiggerItem.createAttributes(ModToolTiers.TIN, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> TIN_AXE = ITEMS.register(
+    "tin_axe",
+    () ->
+      new AxeItem(
+        ModToolTiers.TIN,
+        new Item.Properties().attributes(
+          AxeItem.createAttributes(ModToolTiers.TIN, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> TIN_SHOVEL = ITEMS.register(
+    "tin_shovel",
+    () ->
+      new ShovelItem(
+        ModToolTiers.TIN,
+        new Item.Properties().attributes(
+          ShovelItem.createAttributes(ModToolTiers.TIN, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> TIN_HOE = ITEMS.register(
+    "tin_hoe",
+    () ->
+      new HoeItem(
+        ModToolTiers.TIN,
+        new Item.Properties().attributes(
+          HoeItem.createAttributes(ModToolTiers.TIN, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> LEAD_SWORD = ITEMS.register(
+    "lead_sword",
+    () ->
+      new SwordItem(
+        ModToolTiers.LEAD,
+        new Item.Properties().attributes(
+          SwordItem.createAttributes(ModToolTiers.LEAD, 1, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> LEAD_PICKAXE = ITEMS.register(
+    "lead_pickaxe",
+    () ->
+      new PickaxeItem(
+        ModToolTiers.LEAD,
+        new Item.Properties().attributes(
+          DiggerItem.createAttributes(ModToolTiers.LEAD, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> LEAD_AXE = ITEMS.register(
+    "lead_axe",
+    () ->
+      new AxeItem(
+        ModToolTiers.LEAD,
+        new Item.Properties().attributes(
+          AxeItem.createAttributes(ModToolTiers.LEAD, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> LEAD_SHOVEL = ITEMS.register(
+    "lead_shovel",
+    () ->
+      new ShovelItem(
+        ModToolTiers.LEAD,
+        new Item.Properties().attributes(
+          ShovelItem.createAttributes(ModToolTiers.LEAD, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> LEAD_HOE = ITEMS.register(
+    "lead_hoe",
+    () ->
+      new HoeItem(
+        ModToolTiers.LEAD,
+        new Item.Properties().attributes(
+          HoeItem.createAttributes(ModToolTiers.LEAD, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> CORACONIC_SWORD = ITEMS.register(
+    "coraconic_sword",
+    () ->
+      new SwordItem(
+        ModToolTiers.CORACONICBASIC,
+        new Item.Properties().attributes(
+          SwordItem.createAttributes(ModToolTiers.CORACONICBASIC, 1, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> CORACONIC_PICKAXE = ITEMS.register(
+    "coraconic_pickaxe",
+    () ->
+      new PickaxeItem(
+        ModToolTiers.CORACONICBASIC,
+        new Item.Properties().attributes(
+          DiggerItem.createAttributes(ModToolTiers.CORACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> CORACONIC_AXE = ITEMS.register(
+    "coraconic_axe",
+    () ->
+      new AxeItem(
+        ModToolTiers.CORACONICBASIC,
+        new Item.Properties().attributes(
+          AxeItem.createAttributes(ModToolTiers.CORACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> CORACONIC_SHOVEL = ITEMS.register(
+    "coraconic_shovel",
+    () ->
+      new ShovelItem(
+        ModToolTiers.CORACONICBASIC,
+        new Item.Properties().attributes(
+          ShovelItem.createAttributes(ModToolTiers.CORACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> CORACONIC_HOE = ITEMS.register(
+    "coraconic_hoe",
+    () ->
+      new HoeItem(
+        ModToolTiers.CORACONICBASIC,
+        new Item.Properties().attributes(
+          HoeItem.createAttributes(ModToolTiers.CORACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> AVIRACONIC_SWORD = ITEMS.register(
+    "aviraconic_sword",
+    () ->
+      new SwordItem(
+        ModToolTiers.AVIRACONICBASIC,
+        new Item.Properties().attributes(
+          SwordItem.createAttributes(ModToolTiers.AVIRACONICBASIC, 1, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> AVIRACONIC_PICKAXE = ITEMS.register(
+    "aviraconic_pickaxe",
+    () ->
+      new PickaxeItem(
+        ModToolTiers.AVIRACONICBASIC,
+        new Item.Properties().attributes(
+          DiggerItem.createAttributes(ModToolTiers.AVIRACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> AVIRACONIC_AXE = ITEMS.register(
+    "aviraconic_axe",
+    () ->
+      new AxeItem(
+        ModToolTiers.AVIRACONICBASIC,
+        new Item.Properties().attributes(
+          AxeItem.createAttributes(ModToolTiers.AVIRACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> AVIRACONIC_SHOVEL = ITEMS.register(
+    "aviraconic_shovel",
+    () ->
+      new ShovelItem(
+        ModToolTiers.AVIRACONICBASIC,
+        new Item.Properties().attributes(
+          ShovelItem.createAttributes(ModToolTiers.AVIRACONICBASIC, 1.0F, 1.0F)
+        )
+      )
+  );
+  public static final DeferredItem<Item> AVIRACONIC_HOE = ITEMS.register(
+    "aviraconic_hoe",
+    () ->
+      new HoeItem(
+        ModToolTiers.AVIRACONICBASIC,
+        new Item.Properties().attributes(
+          HoeItem.createAttributes(ModToolTiers.AVIRACONICBASIC, 1.0F, 1.0F)
+        )
+      )
   );
 
   /**

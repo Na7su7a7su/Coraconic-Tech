@@ -18,53 +18,57 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 /**
- * 方块战利品表生成器：定义金属块与锡/铅矿石的掉落规则。
+ * 方块战利品表数据生成器，负责定义本模组金属块、锡矿与铅矿的掉落规则。
  *
- * <p>Block loot table provider: defines drop rules for metal blocks and tin/lead ores.
+ * <p>Block loot table data provider responsible for defining the drop rules of this mod's metal
+ * blocks, tin ores, and lead ores.
  */
 public class ModBlockLootTablesProvider extends BlockLootSubProvider {
 
+  /**
+   * 构造生成器：本模组没有爆炸抗性方块，因此传入空集合与原版特性标记集。
+   *
+   * <p>Constructs the provider: the mod has no explosion-resistant blocks, so an empty set and the
+   * vanilla feature flag set are used.
+   *
+   * @param registries 注册表提供者，用于查询附魔等数据 / registry provider for enchantment lookups
+   */
   public ModBlockLootTablesProvider(HolderLookup.Provider registries) {
-    // 无爆炸抗性方块，使用原版特性标记集。
-    // No explosion-resistant blocks; use the vanilla feature flag set.
     super(Set.of(), FeatureFlags.VANILLA_SET, registries);
   }
 
   /**
-   * 注册所有模组方块的战利品表。
+   * 生成本模组全部方块的战利品表。
    *
-   * <p>Registers loot tables for all modded blocks.
+   * <p>Generates loot tables for every block in this mod.
    */
   @Override
   protected void generate() {
-    // 金属块：掉落自身，并受爆炸存活条件保护。
-    // Metal blocks: drop themselves, guarded by the survives-explosion condition.
+    // 金属块使用 dropSelf：正常破坏时掉落自身，并附带爆炸衰减保护。
+    // Metal blocks use dropSelf: they drop themselves when mined normally, with explosion decay.
     dropSelf(ModBlocks.TIN_BLOCK.get());
     dropSelf(ModBlocks.LEAD_BLOCK.get());
     dropSelf(ModBlocks.CORACONIC_BLOCK.get());
     dropSelf(ModBlocks.AVIRACONIC_BLOCK.get());
 
-    // 锡矿：精准采集掉矿石，否则掉 2-5 个粗锡。
-    // Tin ores: silk touch drops the ore; otherwise drops 2-5 raw tin.
+    // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
+    // Tin ores: silk touch drops the ore itself; otherwise 2-5 raw tin. The deepslate variant
+    // shares the same rule.
     add(ModBlocks.TIN_ORE.get(), this::createTinOreDrops);
     add(ModBlocks.DEEPSLAT_TIN_ORE.get(), this::createTinOreDrops);
 
-    // 铅矿：精准采集掉矿石，否则掉 1 个粗铅。
-    // Lead ores: silk touch drops the ore; otherwise drops 1 raw lead.
-    add(
-      ModBlocks.LEAD_ORE.get(),
-      block -> createOreDrop(block, ModItems.RAW_LEAD.get())
-    );
-    add(
-      ModBlocks.DEEPSLAT_LEAD_ORE.get(),
-      block -> createOreDrop(block, ModItems.RAW_LEAD.get())
-    );
+    // 铅矿石：精准采集掉落矿石本身，否则掉落 1-2 个粗铅；深层变种规则相同。
+    // Lead ores: silk touch drops the ore itself; otherwise 1-2 raw lead. The deepslate variant
+    // shares the same rule.
+    add(ModBlocks.LEAD_ORE.get(), this::createLeadOreDrops);
+    add(ModBlocks.DEEPSLAT_LEAD_ORE.get(), this::createLeadOreDrops);
   }
 
   /**
-   * 仅遍历本模组方块，避免为原版方块要求战利品表。
+   * 仅返回本模组注册的方块，防止数据生成器要求原版方块也提供战利品表。
    *
-   * <p>Iterates only this mod's blocks to avoid requiring loot tables for vanilla blocks.
+   * <p>Returns only blocks registered by this mod, preventing the provider from requiring loot
+   * tables for vanilla blocks.
    */
   @Override
   protected Iterable<Block> getKnownBlocks() {
@@ -75,9 +79,10 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
   }
 
   /**
-   * 生成锡矿掉落：2-5 个粗锡，支持时运与爆炸衰减。
+   * 构建锡矿掉落表：精准采集时掉落矿石本身，否则掉落 2-5 个粗锡，并应用时运加成与爆炸衰减。
    *
-   * <p>Builds tin ore drops: 2-5 raw tin with fortune and explosion decay support.
+   * <p>Builds the tin ore loot table: silk touch drops the ore itself; otherwise 2-5 raw tin with
+   * fortune bonus and explosion decay applied.
    */
   private LootTable.Builder createTinOreDrops(Block block) {
     HolderLookup.RegistryLookup<Enchantment> enchantments =
@@ -89,6 +94,32 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         LootItem.lootTableItem(ModItems.RAW_TIN.get())
           .apply(
             SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F))
+          )
+          .apply(
+            ApplyBonusCount.addOreBonusCount(
+              enchantments.getOrThrow(Enchantments.FORTUNE)
+            )
+          )
+      )
+    );
+  }
+
+  /**
+   * 构建铅矿掉落表：精准采集时掉落矿石本身，否则掉落 1-2 个粗铅，并应用时运加成与爆炸衰减。
+   *
+   * <p>Builds the lead ore loot table: silk touch drops the ore itself; otherwise 1-2 raw lead with
+   * fortune bonus and explosion decay applied.
+   */
+  private LootTable.Builder createLeadOreDrops(Block block) {
+    HolderLookup.RegistryLookup<Enchantment> enchantments =
+      this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+    return this.createSilkTouchDispatchTable(
+      block,
+      (LootPoolEntryContainer.Builder<?>) this.applyExplosionDecay(
+        block,
+        LootItem.lootTableItem(ModItems.RAW_LEAD.get())
+          .apply(
+            SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))
           )
           .apply(
             ApplyBonusCount.addOreBonusCount(

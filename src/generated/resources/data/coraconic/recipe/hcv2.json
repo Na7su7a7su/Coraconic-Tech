@@ -4,11 +4,14 @@
   "key": {
     "#": {
       "item": "minecraft:enchanted_golden_apple"
+    },
+    "S": {
+      "item": "coraconic:aviraconic_block"
     }
   },
   "pattern": [
     "###",
-    "###",
+    "#S#",
     "###"
   ],
   "result": {

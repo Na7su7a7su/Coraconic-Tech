@@ -2,8 +2,12 @@ package com.aestastel.coraconic.datagen;
 
 import com.aestastel.coraconic.CoraconicTech;
 import com.aestastel.coraconic.block.ModBlocks;
+import com.aestastel.coraconic.datagen.ModBlockTagsProvider;
+import com.aestastel.coraconic.datagen.ModItemTagsProvider;
 import com.aestastel.coraconic.item.ModItems;
+import com.aestastel.coraconic.tag.ModItemTags;
 import java.util.concurrent.CompletableFuture;
+import mezz.jei.api.constants.Tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -40,8 +44,9 @@ public class ModRecipesProvider extends RecipeProvider {
     // HCV2: shaped recipe using nine enchanted golden apples.
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HCV2.get())
       .define('#', Items.ENCHANTED_GOLDEN_APPLE)
+      .define('S', ModBlocks.AVIRACONIC_BLOCK)
       .pattern("###")
-      .pattern("###")
+      .pattern("#S#")
       .pattern("###")
       .unlockedBy(
         "has_enchanted_golden_apple",
@@ -108,7 +113,7 @@ public class ModRecipesProvider extends RecipeProvider {
       ModItems.CORACONIC_INGOT.get()
     )
       .requires(Items.GOLD_INGOT, 2)
-      .requires(ModItems.TIN_INGOT.get())
+      .requires(ModItemTags.INGOTS_TIN)
       .requires(ModItems.LEAD_INGOT.get())
       .requires(ModItems.CORACONIC_ELEMENT.get(), 4)
       .unlockedBy(
@@ -266,6 +271,8 @@ public class ModRecipesProvider extends RecipeProvider {
       "aviraconic_nugget_from_aviraconic_ingot",
       "has_aviraconic_ingot"
     );
+
+    // ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Items.ENCHANTED_GOLDEN_APPLE);
   }
 
   /**
@@ -344,10 +351,7 @@ public class ModRecipesProvider extends RecipeProvider {
     if (recipeName.equals(defaultRecipeName)) {
       builder.save(recipeOutput);
     } else {
-      builder.save(
-        recipeOutput,
-        CoraconicTech.MODID + ":" + recipeName
-      );
+      builder.save(recipeOutput, CoraconicTech.MODID + ":" + recipeName);
     }
   }
 
