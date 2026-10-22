@@ -1,6 +1,9 @@
 package com.aestastel.coraconic.menu;
 
 import com.aestastel.coraconic.block.ModBlockEntity;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -8,6 +11,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -41,6 +45,30 @@ public class ItemStorageMenu extends AbstractContainerMenu {
   private static final int CONTAINER_Y = 18;
   private static final int PLAYER_INVENTORY_Y = 193;
   private static final int HOTBAR_OFFSET = 58;
+
+  /**
+   * 单次拖拽允许改变的槽位上限。
+   *
+   * <p>{@code ServerboundContainerClickPacket} 的 changedSlots 映射上限为
+   * 128；超过后客户端无法编码数据包，会被直接踢出连接。MK1/MK2 的槽位
+   * 总数超过 128，因此把单次拖拽限制在 120 格，留出安全余量。
+   *
+   * <p>Maximum slots a single drag may change. The click packet encodes its
+   * changed-slot map with a hard cap of 128; exceeding it disconnects the
+   * client. Large containers therefore cap a single drag at 120 slots.
+   */
+  private static final int MAX_QUICK_CRAFT_SLOTS = 120;
+
+  /**
+   * 本次拖拽已经收集的槽位。使用身份集合，避免重复路过同一格时重复计数，
+   * 同时保证客户端与服务端得到相同的收集结果。
+   *
+   * <p>Slots collected by the current drag. An identity set avoids counting the
+   * same slot twice and keeps client and server results consistent.
+   */
+  private final Set<Slot> quickCraftSlots = Collections.newSetFromMap(
+    new IdentityHashMap<>()
+  );
 
   private final Container container;
   private final int totalSlots;
@@ -194,6 +222,69 @@ public class ItemStorageMenu extends AbstractContainerMenu {
   @Override
   public boolean stillValid(Player player) {
     return container.stillValid(player);
+  }
+
+  /**
+   * 跟踪拖拽（quick-craft）的开始与结束，重置本次收集的槽位集合。
+   *
+   * <p>原版在拖拽结束时会把所有收集到的槽位一次性写入，并把这些槽位放进
+   * {@code ServerboundContainerClickPacket} 的 changedSlots 映射；该映射上限
+   * 为 128，超出会导致编码失败并断开连接。这里配合
+   * {@link #canDragTo(Slot)} 限制单次拖拽的槽位数。
+   *
+   * <p>Tracks the start and end of a quick-craft drag so the collected slot set
+   * can be reset. The click packet's changed-slot map is capped at 128 entries;
+   * {@link #canDragTo(Slot)} limits how many slots one drag may collect.
+   */
+  @Override
+  public void clicked(
+    int slotId,
+    int button,
+    ClickType clickType,
+    Player player
+  ) {
+    if (clickType == ClickType.QUICK_CRAFT) {
+      int header = AbstractContainerMenu.getQuickcraftHeader(button);
+      if (header == 0) {
+        // 开始拖拽 / drag start
+        quickCraftSlots.clear();
+      }
+      super.clicked(slotId, button, clickType, player);
+      if (header == 2) {
+        // 结束拖拽 / drag end
+        quickCraftSlots.clear();
+      }
+      return;
+    }
+
+    // 其他点击会结束当前拖拽状态。
+    // Any other click ends the current drag state.
+    quickCraftSlots.clear();
+    super.clicked(slotId, button, clickType, player);
+  }
+
+  /**
+   * 限制单次拖拽能覆盖的槽位数，避免 changedSlots 超过协议上限。
+   *
+   * <p>重复经过同一槽位不会重复计数；达到上限后新槽位会被拒绝，已收集的
+   * 槽位仍能正常应用。
+   *
+   * <p>Limits the number of slots one drag can cover. Revisiting a slot does not
+   * consume the budget, and already-collected slots are still applied.
+   */
+  @Override
+  public boolean canDragTo(Slot slot) {
+    if (!super.canDragTo(slot)) {
+      return false;
+    }
+    if (quickCraftSlots.contains(slot)) {
+      return true;
+    }
+    if (quickCraftSlots.size() >= MAX_QUICK_CRAFT_SLOTS) {
+      return false;
+    }
+    quickCraftSlots.add(slot);
+    return true;
   }
 
   /**

@@ -68,6 +68,8 @@ public class ModCreativeModeTabs {
           output.accept(ModItems.RAW_TIN);
           output.accept(ModItems.CORACONIC_ELEMENT);
           output.accept(ModItems.AVIRACONIC_ELEMENT);
+          output.accept(ModItems.CORACONIC_DIAMOND_STRUCTURED_CRYSTAL);
+          output.accept(ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL);
           output.accept(ModBlocks.TIN_BLOCK.get());
           output.accept(ModBlocks.LEAD_BLOCK.get());
           output.accept(ModBlocks.CORACONIC_BLOCK.get());
