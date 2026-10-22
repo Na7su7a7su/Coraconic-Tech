@@ -1,10 +1,13 @@
 package com.aestastel.coraconic;
 
+import com.aestastel.coraconic.client.ItemStorageScreen;
+import com.aestastel.coraconic.menu.ModMenuType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 /**
  * 客户端专用入口：保留客户端事件总线与初始化钩子。
@@ -24,5 +27,19 @@ public class CoraconicTechClient {
   @SubscribeEvent
   static void onClientSetup(FMLClientSetupEvent event) {
     CoraconicTech.LOGGER.info("Coraconic Tech client initialized");
+  }
+
+  /**
+   * 把菜单类型与客户端界面绑定。
+   *
+   * <p>菜单类型在两端是同一个注册表条目，但只有客户端知道该用哪个
+   * {@code Screen} 来渲染它，因此界面注册必须放在客户端事件中。
+   *
+   * <p>Binds the menu type to its client screen. Only the client knows how to
+   * render a menu, so screen registration happens on the client event bus.
+   */
+  @SubscribeEvent
+  static void registerScreens(RegisterMenuScreensEvent event) {
+    event.register(ModMenuType.ITEM_STORAGE.get(), ItemStorageScreen::new);
   }
 }

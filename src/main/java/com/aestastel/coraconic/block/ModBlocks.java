@@ -7,6 +7,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -100,6 +101,39 @@ public class ModBlocks {
   public static final DeferredBlock<Block> LEAD_ORE = registerBlocks(
     "lead_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
+  );
+  public static final DeferredBlock<Block> ITEM_STORAGE_MK0 = registerBlocks(
+    "item_storage_mk0",
+    () ->
+      new ItemStorageBlock(
+        BlockBehaviour.Properties.of()
+          .strength(2.5F, 6.0F)
+          .sound(SoundType.STONE),
+        () -> ModBlockEntityType.ITEM_STORAGE_MK0_ENTITY.get(),
+        ItemStorageBlock.SLOTS_MK0
+      )
+  );
+  public static final DeferredBlock<Block> ITEM_STORAGE_MK1 = registerBlocks(
+    "item_storage_mk1",
+    () ->
+      new ItemStorageBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.STONE),
+        () -> ModBlockEntityType.ITEM_STORAGE_MK1_ENTITY.get(),
+        ItemStorageBlock.SLOTS_MK1
+      )
+  );
+  public static final DeferredBlock<Block> ITEM_STORAGE_MK2 = registerBlocks(
+    "item_storage_mk2",
+    () ->
+      new ItemStorageBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.5F, 6.0F)
+          .sound(SoundType.STONE),
+        () -> ModBlockEntityType.ITEM_STORAGE_MK2_ENTITY.get(),
+        ItemStorageBlock.SLOTS_MK2
+      )
   );
 
   /**

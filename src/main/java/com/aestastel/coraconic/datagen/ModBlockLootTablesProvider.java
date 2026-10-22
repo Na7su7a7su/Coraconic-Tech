@@ -51,6 +51,12 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     dropSelf(ModBlocks.CORACONIC_BLOCK.get());
     dropSelf(ModBlocks.AVIRACONIC_BLOCK.get());
 
+    // 物品存储 MK0：正常破坏时掉落自身。
+    // Item storage MK0 drops itself when mined normally.
+    dropSelf(ModBlocks.ITEM_STORAGE_MK0.get());
+    dropSelf(ModBlocks.ITEM_STORAGE_MK1.get());
+    dropSelf(ModBlocks.ITEM_STORAGE_MK2.get());
+
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
     // Tin ores: silk touch drops the ore itself; otherwise 2-5 raw tin. The deepslate variant
     // shares the same rule.

@@ -1,8 +1,10 @@
 package com.aestastel.coraconic;
 
+import com.aestastel.coraconic.block.ModBlockEntityType;
 import com.aestastel.coraconic.block.ModBlocks;
 import com.aestastel.coraconic.item.ModCreativeModeTabs;
 import com.aestastel.coraconic.item.ModItems;
+import com.aestastel.coraconic.menu.ModMenuType;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,6 +36,8 @@ public class CoraconicTech {
   public CoraconicTech(IEventBus modEventBus) {
     ModItems.register(modEventBus);
     ModBlocks.register(modEventBus);
+    ModBlockEntityType.register(modEventBus);
+    ModMenuType.register(modEventBus);
     ModCreativeModeTabs.register(modEventBus);
 
     modEventBus.addListener(this::commonSetup);
