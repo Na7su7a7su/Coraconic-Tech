@@ -26,17 +26,17 @@ public final class ModCapabilities {
   public static void registerCapabilities(RegisterCapabilitiesEvent event) {
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_MK0_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_MK1_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_MK2_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
   }

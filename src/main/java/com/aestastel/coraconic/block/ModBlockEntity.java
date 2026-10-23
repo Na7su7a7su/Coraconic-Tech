@@ -1,8 +1,11 @@
 package com.aestastel.coraconic.block;
 
-import com.aestastel.coraconic.menu.ItemStorageMenu;
+import com.aestastel.coraconic.menu.ItemStorageUnitMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -10,22 +13,23 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 /**
- * 物品存储方块实体：保存 81 / 162 / 243 格物品栏，并提供容器与菜单能力。
+ * 物品存储单元方块实体：保存 81 / 162 / 243 格物品栏，并提供容器与菜单能力。
  *
  * <p>三个等级共用本类，容量由方块实体类型在创建实例时传入。本类同时扮演：
  * <ul>
  *   <li>{@link BlockEntity} —— 挂载在方块上，负责存档的保存与读取；</li>
  *   <li>{@link Container} —— 让原版菜单与槽位系统能够读写库存；</li>
- *   <li>{@link MenuProvider} —— 右键方块时向玩家打开 {@link ItemStorageMenu}。</li>
+ *   <li>{@link MenuProvider} —— 右键方块时向玩家打开 {@link ItemStorageUnitMenu}。</li>
  * </ul>
  *
- * <p>Item storage block entity shared by all tiers. The capacity is supplied by
+ * <p>Item Storage Unit block entity shared by all tiers. The capacity is supplied by
  * the block entity type when an instance is created. It acts as a
  * {@link BlockEntity} for persistence, a {@link Container} for the vanilla slot
  * system, and a {@link MenuProvider} for opening the GUI.
@@ -76,6 +80,87 @@ public class ModBlockEntity
   }
 
   // ---------------------------------------------------------------------------
+  // 物品组件 / Item components（潜影盒式内容保存）
+  // ---------------------------------------------------------------------------
+
+  /**
+   * 把当前内容写入 {@code minecraft:container} 组件。
+   *
+   * <p>组件用于在挖掘、创造模式选取或战利品表复制时，把库存随物品一起带走。
+   *
+   * <p>Writes the current contents into the {@code minecraft:container} component
+   * so the inventory travels with the item when mined or picked.
+   */
+  @Override
+  protected void collectImplicitComponents(
+    DataComponentMap.Builder components
+  ) {
+    super.collectImplicitComponents(components);
+    // 空容器不写入组件，使空单元仍能与新合成单元正常堆叠。
+    // Empty containers do not get the component, so empty units still stack
+    // with freshly crafted ones.
+    if (!isEmpty()) {
+      components.set(
+        DataComponents.CONTAINER,
+        ItemContainerContents.fromItems(createItemList())
+      );
+    }
+  }
+
+  /**
+   * 放置方块时从物品组件恢复内容。
+   *
+   * <p>由 {@code BlockItem} 在放置后自动调用，组件缺失时按空容器处理。
+   *
+   * <p>Restores the contents from the item component when the block is placed.
+   * A missing component is treated as an empty container.
+   */
+  @Override
+  protected void applyImplicitComponents(
+    BlockEntity.DataComponentInput componentInput
+  ) {
+    super.applyImplicitComponents(componentInput);
+    NonNullList<ItemStack> items = NonNullList.withSize(
+      slots,
+      ItemStack.EMPTY
+    );
+    componentInput
+      .getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
+      .copyInto(items);
+    for (int slot = 0; slot < slots; slot++) {
+      itemHandler.setStackInSlot(slot, items.get(slot));
+    }
+  }
+
+  /**
+   * 保存到物品时移除 NBT 中的 inventory，避免与容器组件重复存储。
+   *
+   * <p>Removes the NBT inventory when saving to an item so it is not stored
+   * twice alongside the container component.
+   */
+  @Deprecated
+  @Override
+  public void removeComponentsFromTag(CompoundTag tag) {
+    tag.remove("inventory");
+  }
+
+  /**
+   * 构建与槽位一一对应的物品列表，供组件编码使用。
+   *
+   * <p>Builds a slot-aligned item list for component encoding.
+   */
+  private NonNullList<ItemStack> createItemList() {
+    NonNullList<ItemStack> items = NonNullList.withSize(
+      slots,
+      ItemStack.EMPTY
+    );
+    for (int slot = 0; slot < slots; slot++) {
+      items.set(slot, itemHandler.getStackInSlot(slot));
+    }
+    return items;
+  }
+
+  // ---------------------------------------------------------------------------
   // MenuProvider
   // ---------------------------------------------------------------------------
 
@@ -97,12 +182,12 @@ public class ModBlockEntity
    * the same window id.
    */
   @Override
-  public ItemStorageMenu createMenu(
+  public ItemStorageUnitMenu createMenu(
     int containerId,
     Inventory playerInventory,
     Player player
   ) {
-    return new ItemStorageMenu(containerId, playerInventory, this);
+    return new ItemStorageUnitMenu(containerId, playerInventory, this);
   }
 
   // ---------------------------------------------------------------------------

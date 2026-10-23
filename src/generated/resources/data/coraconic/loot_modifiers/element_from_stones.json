@@ -1,0 +1,17 @@
+{
+  "type": "coraconic:add_item",
+  "conditions": [
+    {
+      "condition": "coraconic:block_tag",
+      "tag": "coraconic:element_source_stones"
+    },
+    {
+      "chance": 0.002,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": {
+    "count": 1,
+    "id": "coraconic:coraconic_element"
+  }
+}

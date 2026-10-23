@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * 菜单类型注册器：把 {@link ItemStorageMenu} 绑定到游戏注册表。
+ * 菜单类型注册器：把 {@link ItemStorageUnitMenu} 绑定到游戏注册表。
  *
  * <p>三个存储等级共用同一个菜单类型，容量由打开界面时发送的附加数据决定。
  * 使用 {@link IMenuTypeExtension#create} 创建带附加数据的菜单类型，使服务端
@@ -25,10 +25,10 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
-    MenuType<ItemStorageMenu>
-  > ITEM_STORAGE = MENU_TYPES.register(
-    "item_storage",
-    () -> IMenuTypeExtension.create(ItemStorageMenu::fromNetwork)
+    MenuType<ItemStorageUnitMenu>
+  > ITEM_STORAGE_UNIT = MENU_TYPES.register(
+    "item_storage_unit",
+    () -> IMenuTypeExtension.create(ItemStorageUnitMenu::fromNetwork)
   );
 
   /**

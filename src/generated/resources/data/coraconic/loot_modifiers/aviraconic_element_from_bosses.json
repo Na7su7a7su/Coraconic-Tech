@@ -1,0 +1,21 @@
+{
+  "type": "coraconic:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "#coraconic:element_source_bosses"
+      }
+    }
+  ],
+  "count": {
+    "type": "minecraft:uniform",
+    "max": 5.0,
+    "min": 3.0
+  },
+  "item": {
+    "count": 1,
+    "id": "coraconic:aviraconic_element"
+  }
+}

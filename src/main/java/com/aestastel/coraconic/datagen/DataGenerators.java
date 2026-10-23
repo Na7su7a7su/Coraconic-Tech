@@ -83,5 +83,23 @@ public class DataGenerators {
         event.getLookupProvider()
       )
     );
+
+    // 服务端生成器：全局战利品修饰器（矿石/石头额外掉落核龙元素）。
+    // Server provider: global loot modifiers (extra element drops from ores/stones).
+    generator.addProvider(
+      event.includeServer(),
+      new ModGlobalLootModifiersProvider(output, event.getLookupProvider())
+    );
+
+    // 服务端生成器：实体类型标签（额外掉落腾龙元素的 Boss）。
+    // Server provider: entity type tags (bosses that drop aviraconic elements).
+    generator.addProvider(
+      event.includeServer(),
+      new ModEntityTypeTagsProvider(
+        output,
+        event.getLookupProvider(),
+        existingFileHelper
+      )
+    );
   }
 }

@@ -16,23 +16,23 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * 物品存储容器的菜单：固定 9 行，列数由容量决定。
+ * 物品存储单元容器的菜单：固定 9 行，列数由容量决定。
  *
  * <p>三个等级共用本菜单，布局规则完全一致：
  * <ul>
- *   <li>MK0：9 行 × 9 列 = 81 格；</li>
- *   <li>MK1：9 行 × 18 列 = 162 格；</li>
- *   <li>MK2：9 行 × 27 列 = 243 格。</li>
+ *   <li>MK1：9 行 × 9 列 = 81 格；</li>
+ *   <li>MK2：9 行 × 18 列 = 162 格；</li>
+ *   <li>MK3：9 行 × 27 列 = 243 格。</li>
  * </ul>
  * 槽位索引按“行优先”排列（索引 ÷ 列数 = 行，索引 % 列数 = 列），因此
- * MK0 的既有存档布局与之前完全一致。界面宽度随列数增长，玩家背包始终居中。
+ * MK1 的既有存档布局与之前完全一致。界面宽度随列数增长，玩家背包始终居中。
  *
  * <p>Menu shared by all storage tiers: always 9 rows, with the column count
  * derived from the capacity. Slot indices are row-major, preserving the existing
- * MK0 save layout. The GUI widens with the column count while the player
+ * MK1 save layout. The GUI widens with the column count while the player
  * inventory stays centered.
  */
-public class ItemStorageMenu extends AbstractContainerMenu {
+public class ItemStorageUnitMenu extends AbstractContainerMenu {
 
   /** 固定行数。 */
   public static final int ROWS = 9;
@@ -50,7 +50,7 @@ public class ItemStorageMenu extends AbstractContainerMenu {
    * 单次拖拽允许改变的槽位上限。
    *
    * <p>{@code ServerboundContainerClickPacket} 的 changedSlots 映射上限为
-   * 128；超过后客户端无法编码数据包，会被直接踢出连接。MK1/MK2 的槽位
+   * 128；超过后客户端无法编码数据包，会被直接踢出连接。MK2/MK3 的槽位
    * 总数超过 128，因此把单次拖拽限制在 120 格，留出安全余量。
    *
    * <p>Maximum slots a single drag may change. The click packet encodes its
@@ -79,7 +79,7 @@ public class ItemStorageMenu extends AbstractContainerMenu {
    *
    * <p>Server-side constructor; the capacity comes from the block entity.
    */
-  public ItemStorageMenu(
+  public ItemStorageUnitMenu(
     int containerId,
     Inventory playerInventory,
     Container container
@@ -93,13 +93,13 @@ public class ItemStorageMenu extends AbstractContainerMenu {
    * <p>General constructor with an explicit slot count, also used by the client
    * to restore the correct size.
    */
-  public ItemStorageMenu(
+  public ItemStorageUnitMenu(
     int containerId,
     Inventory playerInventory,
     Container container,
     int totalSlots
   ) {
-    super(ModMenuType.ITEM_STORAGE.get(), containerId);
+    super(ModMenuType.ITEM_STORAGE_UNIT.get(), containerId);
     checkContainerSize(container, totalSlots);
     this.container = container;
     this.totalSlots = totalSlots;
@@ -166,7 +166,7 @@ public class ItemStorageMenu extends AbstractContainerMenu {
    * @param buffer 服务端写入的附加数据 / extra data written by the server
    * @return 客户端菜单实例 / the client-side menu
    */
-  public static ItemStorageMenu fromNetwork(
+  public static ItemStorageUnitMenu fromNetwork(
     int containerId,
     Inventory playerInventory,
     RegistryFriendlyByteBuf buffer
@@ -179,7 +179,7 @@ public class ItemStorageMenu extends AbstractContainerMenu {
         blockEntity.getContainerSize() == totalSlots
         ? blockEntity
         : new SimpleContainer(totalSlots);
-    return new ItemStorageMenu(
+    return new ItemStorageUnitMenu(
       containerId,
       playerInventory,
       container,

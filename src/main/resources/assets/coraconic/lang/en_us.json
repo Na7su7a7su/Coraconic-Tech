@@ -45,9 +45,11 @@
     "block.coraconic.lead_ore":"Lead Ore",
     "block.coraconic.deepslate_tin_ore":"Deepslate Tin Ore",
     "block.coraconic.deepslate_lead_ore":"Deepslate Lead Ore",
-    "block.coraconic.item_storage_mk0":"Item Storage MK0",
-    "block.coraconic.item_storage_mk1":"Item Storage MK1",
-    "block.coraconic.item_storage_mk2":"Item Storage MK2",
+    "block.coraconic.item_storage_unit_mk1":"Item Storage Unit MK1",
+    "block.coraconic.item_storage_unit_mk2":"Item Storage Unit MK2",
+    "block.coraconic.item_storage_unit_mk3":"Item Storage Unit MK3",
+    "tooltip.coraconic.item_storage_unit.saved":"Contents saved",
+    "tooltip.coraconic.item_storage_unit.items":"Items: %s",
     "itemGroup.coraconic_tech":"Coraconic Tech",
   "itemGroup.coraconic_tech_tool":"Coraconic Tech Tools"
 }

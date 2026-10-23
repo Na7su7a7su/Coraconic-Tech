@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "coraconic:block/item_storage_mk1"
+    "all": "coraconic:block/item_storage_unit_mk3"
   }
 }

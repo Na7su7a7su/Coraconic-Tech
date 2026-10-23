@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -58,6 +59,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
       ModBlocks.DEEPSLAT_LEAD_ORE.get()
+    );
+
+    // 核龙元素的额外掉落来源：石头、深板岩、下界岩、末地石。
+    // Extra sources of coraconic elements: stone, deepslate, netherrack, end stone.
+    tag(ModBlockTags.ELEMENT_SOURCE_STONES).add(
+      Blocks.STONE,
+      Blocks.DEEPSLATE,
+      Blocks.NETHERRACK,
+      Blocks.END_STONE
     );
 
     // 通用存储块标签：注册金属块并挂到 c:storage_blocks 父标签。

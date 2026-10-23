@@ -51,11 +51,21 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     dropSelf(ModBlocks.CORACONIC_BLOCK.get());
     dropSelf(ModBlocks.AVIRACONIC_BLOCK.get());
 
-    // 物品存储 MK0：正常破坏时掉落自身。
-    // Item storage MK0 drops itself when mined normally.
-    dropSelf(ModBlocks.ITEM_STORAGE_MK0.get());
-    dropSelf(ModBlocks.ITEM_STORAGE_MK1.get());
-    dropSelf(ModBlocks.ITEM_STORAGE_MK2.get());
+    // 物品存储单元：掉落自身并把容器内容复制到物品组件（类似潜影盒）。
+    // Item storage units drop themselves and copy their contents into the item
+    // components (like shulker boxes).
+    add(
+      ModBlocks.ITEM_STORAGE_UNIT_MK1.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK1.get())
+    );
+    add(
+      ModBlocks.ITEM_STORAGE_UNIT_MK2.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK2.get())
+    );
+    add(
+      ModBlocks.ITEM_STORAGE_UNIT_MK3.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK3.get())
+    );
 
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
     // Tin ores: silk touch drops the ore itself; otherwise 2-5 raw tin. The deepslate variant

@@ -1,0 +1,8 @@
+{
+  "entries": [
+    "coraconic:element_from_ores",
+    "coraconic:element_from_stones",
+    "coraconic:aviraconic_element_from_bosses"
+  ],
+  "replace": false
+}

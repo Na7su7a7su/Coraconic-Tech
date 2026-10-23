@@ -1,7 +1,9 @@
 package com.aestastel.coraconic.block;
 
 import com.aestastel.coraconic.CoraconicTech;
+import com.aestastel.coraconic.item.ItemStorageUnitItem;
 import com.aestastel.coraconic.item.ModItems;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -102,38 +104,41 @@ public class ModBlocks {
     "lead_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
   );
-  public static final DeferredBlock<Block> ITEM_STORAGE_MK0 = registerBlocks(
-    "item_storage_mk0",
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK1 = registerBlocks(
+    "item_storage_unit_mk1",
     () ->
-      new ItemStorageBlock(
+      new ItemStorageUnitBlock(
         BlockBehaviour.Properties.of()
           .strength(2.5F, 6.0F)
           .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_MK0_ENTITY.get(),
-        ItemStorageBlock.SLOTS_MK0
-      )
+        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
+        ItemStorageUnitBlock.SLOTS_MK1
+      ),
+    ItemStorageUnitItem::new
   );
-  public static final DeferredBlock<Block> ITEM_STORAGE_MK1 = registerBlocks(
-    "item_storage_mk1",
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK2 = registerBlocks(
+    "item_storage_unit_mk2",
     () ->
-      new ItemStorageBlock(
+      new ItemStorageUnitBlock(
         BlockBehaviour.Properties.of()
           .strength(3.0F, 6.0F)
           .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_MK1_ENTITY.get(),
-        ItemStorageBlock.SLOTS_MK1
-      )
+        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
+        ItemStorageUnitBlock.SLOTS_MK2
+      ),
+    ItemStorageUnitItem::new
   );
-  public static final DeferredBlock<Block> ITEM_STORAGE_MK2 = registerBlocks(
-    "item_storage_mk2",
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK3 = registerBlocks(
+    "item_storage_unit_mk3",
     () ->
-      new ItemStorageBlock(
+      new ItemStorageUnitBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_MK2_ENTITY.get(),
-        ItemStorageBlock.SLOTS_MK2
-      )
+        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
+        ItemStorageUnitBlock.SLOTS_MK3
+      ),
+    ItemStorageUnitItem::new
   );
 
   /**
@@ -223,6 +228,33 @@ public class ModBlocks {
   ) {
     DeferredBlock<T> blocks = BLOCK.register(name, block);
     registerBlockItems(name, blocks);
+    return blocks;
+  }
+
+  /**
+   * 注册方块并使用自定义物品工厂创建对应的 {@link BlockItem}。
+   *
+   * <p>普通方块使用默认的 {@link BlockItem}；需要额外行为（例如 tooltip）
+   * 的方块可以通过本重载传入自定义物品类。
+   *
+   * <p>Registers a block and creates its {@link BlockItem} through a custom item
+   * factory, allowing specialised items such as tooltip-aware block items.
+   *
+   * @param name 方块与物品共用的注册路径 / shared registration path
+   * @param block 方块工厂 / block factory
+   * @param itemFactory 物品工厂，接收方块与物品属性 / block item factory
+   * @param <T> 具体的方块类型 / concrete block type
+   * @return 方块延迟持有者 / deferred block holder
+   */
+  private static <T extends Block> DeferredBlock<T> registerBlocks(
+    String name,
+    Supplier<T> block,
+    BiFunction<T, Item.Properties, ? extends BlockItem> itemFactory
+  ) {
+    DeferredBlock<T> blocks = BLOCK.register(name, block);
+    ModItems.ITEMS.register(name, () ->
+      itemFactory.apply(blocks.get(), new Item.Properties())
+    );
     return blocks;
   }
 }
