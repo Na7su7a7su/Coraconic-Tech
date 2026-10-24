@@ -48,8 +48,14 @@
     "block.coraconic.item_storage_unit_mk1":"物品存储单元 MK1",
     "block.coraconic.item_storage_unit_mk2":"物品存储单元 MK2",
     "block.coraconic.item_storage_unit_mk3":"物品存储单元 MK3",
+    "block.coraconic.energy_storage_unit_mk1":"能量存储单元 MK1",
+    "block.coraconic.energy_storage_unit_mk2":"能量存储单元 MK2",
+    "block.coraconic.energy_storage_unit_mk3":"能量存储单元 MK3",
+    "gui.coraconic.energy_storage_unit.charge":"充电",
+    "gui.coraconic.energy_storage_unit.discharge":"放电",
     "tooltip.coraconic.item_storage_unit.saved":"内容已保存",
     "tooltip.coraconic.item_storage_unit.items":"项目数：%s",
+    "tooltip.coraconic.energy_storage_unit.energy":"能量：%s / %s FE",
     "itemGroup.coraconic_tech":"核龙科技",
     "itemGroup.coraconic_tech_tool":"核龙科技工具"
 }

@@ -4,17 +4,21 @@ import com.aestastel.coraconic.block.ModBlocks;
 import com.aestastel.coraconic.item.ModItems;
 import java.util.Set;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 /**
@@ -67,6 +71,22 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK3.get())
     );
 
+    // 能量存储单元：掉落自身并复制方块实体数据（能量与两个机器槽位）。
+    // Energy storage units drop themselves and copy the block entity data
+    // (stored energy and both machine slots).
+    add(
+      ModBlocks.ENERGY_STORAGE_UNIT_MK1.get(),
+      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get())
+    );
+    add(
+      ModBlocks.ENERGY_STORAGE_UNIT_MK2.get(),
+      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get())
+    );
+    add(
+      ModBlocks.ENERGY_STORAGE_UNIT_MK3.get(),
+      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get())
+    );
+
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
     // Tin ores: silk touch drops the ore itself; otherwise 2-5 raw tin. The deepslate variant
     // shares the same rule.
@@ -92,6 +112,33 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       .stream()
       .<Block>map(holder -> holder.get())
       .toList();
+  }
+
+  /**
+   * 构建能量存储单元掉落表：掉落自身并复制方块实体中的能量与槽位数据。
+   *
+   * <p>Builds the energy storage unit loot table: drops the block itself and copies the block
+   * entity data containing stored energy and both machine slots.
+   */
+  private LootTable.Builder createEnergyStorageUnitDrop(Block block) {
+    return LootTable.lootTable()
+      .withPool(
+        this.applyExplosionCondition(
+          block,
+          LootPool.lootPool()
+            .setRolls(ConstantValue.exactly(1.0F))
+            .add(
+              LootItem.lootTableItem(block)
+                .apply(
+                  CopyComponentsFunction.copyComponents(
+                    CopyComponentsFunction.Source.BLOCK_ENTITY
+                  )
+                    .include(DataComponents.CUSTOM_NAME)
+                    .include(DataComponents.BLOCK_ENTITY_DATA)
+                )
+            )
+        )
+      );
   }
 
   /**

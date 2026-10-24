@@ -1,5 +1,6 @@
 package com.aestastel.coraconic;
 
+import com.aestastel.coraconic.client.EnergyStorageUnitScreen;
 import com.aestastel.coraconic.client.ItemStorageUnitScreen;
 import com.aestastel.coraconic.menu.ModMenuType;
 import net.neoforged.api.distmarker.Dist;
@@ -41,5 +42,9 @@ public class CoraconicTechClient {
   @SubscribeEvent
   static void registerScreens(RegisterMenuScreensEvent event) {
     event.register(ModMenuType.ITEM_STORAGE_UNIT.get(), ItemStorageUnitScreen::new);
+    event.register(
+      ModMenuType.ENERGY_STORAGE_UNIT.get(),
+      EnergyStorageUnitScreen::new
+    );
   }
 }

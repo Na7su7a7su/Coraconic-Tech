@@ -48,8 +48,14 @@
     "block.coraconic.item_storage_unit_mk1":"Item Storage Unit MK1",
     "block.coraconic.item_storage_unit_mk2":"Item Storage Unit MK2",
     "block.coraconic.item_storage_unit_mk3":"Item Storage Unit MK3",
+    "block.coraconic.energy_storage_unit_mk1":"Energy Storage Unit MK1",
+    "block.coraconic.energy_storage_unit_mk2":"Energy Storage Unit MK2",
+    "block.coraconic.energy_storage_unit_mk3":"Energy Storage Unit MK3",
+    "gui.coraconic.energy_storage_unit.charge":"Charge",
+    "gui.coraconic.energy_storage_unit.discharge":"Discharge",
     "tooltip.coraconic.item_storage_unit.saved":"Contents saved",
     "tooltip.coraconic.item_storage_unit.items":"Items: %s",
+    "tooltip.coraconic.energy_storage_unit.energy":"Energy: %s / %s FE",
     "itemGroup.coraconic_tech":"Coraconic Tech",
   "itemGroup.coraconic_tech_tool":"Coraconic Tech Tools"
 }

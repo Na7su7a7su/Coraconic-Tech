@@ -31,6 +31,14 @@ public class ModMenuType {
     () -> IMenuTypeExtension.create(ItemStorageUnitMenu::fromNetwork)
   );
 
+  public static final DeferredHolder<
+    MenuType<?>,
+    MenuType<EnergyStorageUnitMenu>
+  > ENERGY_STORAGE_UNIT = MENU_TYPES.register(
+    "energy_storage_unit",
+    () -> IMenuTypeExtension.create(EnergyStorageUnitMenu::fromNetwork)
+  );
+
   /**
    * 将菜单类型注册器挂到模组事件总线。
    *

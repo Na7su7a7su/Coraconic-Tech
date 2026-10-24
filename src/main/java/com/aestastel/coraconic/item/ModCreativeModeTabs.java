@@ -81,6 +81,9 @@ public class ModCreativeModeTabs {
           output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK1.get());
           output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK2.get());
           output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK3.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get());
         })
         .build()
     );

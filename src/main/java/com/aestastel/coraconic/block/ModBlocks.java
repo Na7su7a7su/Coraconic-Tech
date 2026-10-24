@@ -1,6 +1,7 @@
 package com.aestastel.coraconic.block;
 
 import com.aestastel.coraconic.CoraconicTech;
+import com.aestastel.coraconic.item.EnergyStorageUnitItem;
 import com.aestastel.coraconic.item.ItemStorageUnitItem;
 import com.aestastel.coraconic.item.ModItems;
 import java.util.function.BiFunction;
@@ -140,6 +141,48 @@ public class ModBlocks {
       ),
     ItemStorageUnitItem::new
   );
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK1 =
+    registerBlocks(
+      "energy_storage_unit_mk1",
+      () ->
+        new EnergyStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK1_ENTITY.get(),
+          32_000_000L,
+          1_000
+        ),
+      EnergyStorageUnitItem::new
+    );
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK2 =
+    registerBlocks(
+      "energy_storage_unit_mk2",
+      () ->
+        new EnergyStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.0F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK2_ENTITY.get(),
+          320_000_000L,
+          4_000
+        ),
+      EnergyStorageUnitItem::new
+    );
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK3 =
+    registerBlocks(
+      "energy_storage_unit_mk3",
+      () ->
+        new EnergyStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.5F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK3_ENTITY.get(),
+          3_200_000_000L,
+          16_000
+        ),
+      EnergyStorageUnitItem::new
+    );
 
   /**
    * 将方块延迟注册器挂到模组事件总线。

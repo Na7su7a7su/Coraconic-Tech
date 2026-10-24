@@ -10,15 +10,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * 方块实体类型注册器：声明本模组三个物品存储单元等级的 {@link BlockEntityType}。
+ * 方块实体类型注册器：声明物品存储单元与能量存储单元的 {@link BlockEntityType}。
  *
- * <p>三个等级共用同一个方块实体类 {@link ModBlockEntity}，只是容量不同。
- * 工厂方法 {@link #createBlockEntity} 从方块状态读取所属方块，再取得该等级
- * 的类型与容量，避免在字段初始化器里引用自身。
+ * <p>物品存储三个等级共用 {@link ModBlockEntity}，能量存储三个等级共用
+ * {@link EnergyStorageUnitBlockEntity}；工厂方法从方块状态读取所属方块，
+ * 再取得该等级的类型、容量与速率，避免在字段初始化器里引用自身。
  *
- * <p>Block entity type registry for the three item storage unit tiers. All tiers
- * share {@link ModBlockEntity}; the factory reads the owning block from the
- * block state to obtain the tier's type and capacity.
+ * <p>Block entity type registry for the item storage and energy storage units.
+ * The factories read the owning block from the block state to obtain the tier's
+ * type, capacity and transfer rate.
  */
 public class ModBlockEntityType {
 
@@ -82,6 +82,57 @@ public class ModBlockEntityType {
   );
 
   /**
+   * 能量存储单元 MK1：32,000,000 FE，1,000 FE/t。
+   *
+   * <p>Energy Storage Unit MK1: 32,000,000 FE, 1,000 FE/t.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<EnergyStorageUnitBlockEntity>
+  > ENERGY_STORAGE_UNIT_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_mk1_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createEnergyBlockEntity,
+        ModBlocks.ENERGY_STORAGE_UNIT_MK1.get()
+      ).build(null)
+  );
+
+  /**
+   * 能量存储单元 MK2：320,000,000 FE，4,000 FE/t。
+   *
+   * <p>Energy Storage Unit MK2: 320,000,000 FE, 4,000 FE/t.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<EnergyStorageUnitBlockEntity>
+  > ENERGY_STORAGE_UNIT_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_mk2_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createEnergyBlockEntity,
+        ModBlocks.ENERGY_STORAGE_UNIT_MK2.get()
+      ).build(null)
+  );
+
+  /**
+   * 能量存储单元 MK3：3,200,000,000 FE（3.2G），16,000 FE/t。
+   *
+   * <p>Energy Storage Unit MK3: 3,200,000,000 FE (3.2G), 16,000 FE/t.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<EnergyStorageUnitBlockEntity>
+  > ENERGY_STORAGE_UNIT_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_mk3_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createEnergyBlockEntity,
+        ModBlocks.ENERGY_STORAGE_UNIT_MK3.get()
+      ).build(null)
+  );
+
+  /**
    * 方块实体工厂：根据方块状态取得对应等级的类型与容量。
    *
    * <p>方块实体类型只会注册给它自己的方块，因此这里的类型转换是安全的。
@@ -103,6 +154,30 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for item storage unit block entity: " + state
+    );
+  }
+
+  /**
+   * 能量方块实体工厂：根据方块状态取得对应等级的容量与速率。
+   *
+   * <p>Energy block entity factory: resolves the tier's capacity and transfer
+   * rate from the block state.
+   */
+  private static EnergyStorageUnitBlockEntity createEnergyBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof EnergyStorageUnitBlock energyBlock) {
+      return new EnergyStorageUnitBlockEntity(
+        energyBlock.getBlockEntityType(),
+        pos,
+        state,
+        energyBlock.getCapacity(),
+        energyBlock.getTransfer()
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for energy storage unit block entity: " + state
     );
   }
 

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "minecraft:block_entity_data"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "coraconic:energy_storage_unit_mk2"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "coraconic:blocks/energy_storage_unit_mk2"
+}
