@@ -20,9 +20,25 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.5c`
-- 本次提交标签：`0.0.5cr_261024_a`
+- 最近版本提交：`0.0.5cr_261024_a`
+- 最新提交：`239ffa4`（Add MIT License）
+- 最后更新：2026-10-25
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
+
+### 最近更新
+
+- `239ffa4`：新增 MIT License，项目许可证更新为 MIT。
+- `0.0.5cr_261024_a`：加入 MK1/MK2/MK3 能量存储单元、能量显示与物品充放电，补齐能量单元掉落内容保留与物品存储单元手写模型，并重写 README。
+- `0.0.5cq_261023_b`：为物品存储单元 GUI 加入分级配色的 ITEM 标识。
+- `0.0.5cp_261023_a`：统一物品存储单元命名与三档容量，加入潜影盒式内容保存与全局元素掉落规则。
+
+### 快速开始
+
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块及两类存储单元。
+2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
+3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
+4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
 
 ### 已实现内容
 
@@ -175,7 +191,9 @@
 
 ### 许可
 
-All Rights Reserved.
+本项目采用 [MIT License](LICENSE)。
+
+Copyright (c) 2026 Aestastel
 
 ---
 
@@ -195,9 +213,25 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.5c`
-- Commit tag: `0.0.5cr_261024_a`
+- Latest version commit: `0.0.5cr_261024_a`
+- Latest commit: `239ffa4` (Add MIT License)
+- Last updated: 2026-10-25
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
+
+### Recent Changes
+
+- `239ffa4`: added the MIT License and updated the project license to MIT.
+- `0.0.5cr_261024_a`: added MK1/MK2/MK3 energy storage units, energy displays, item charging, retained contents for dropped units, hand-authored item storage models, and rewrote the README.
+- `0.0.5cq_261023_b`: added tier-colored ITEM markers to the item storage unit GUIs.
+- `0.0.5cp_261023_a`: unified item storage unit naming and tiers, added shulker-box-style content persistence, and added global element drop rules.
+
+### Quick Start
+
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, and both storage-unit families.
+2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
+3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
+4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
 
 ### Implemented Content
 
@@ -350,4 +384,6 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 ### License
 
-All Rights Reserved.
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright (c) 2026 Aestastel
