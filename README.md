@@ -20,14 +20,15 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.5c`
-- 最近版本提交：`0.0.5cr_261024_a`
-- 最新提交：`239ffa4`（Add MIT License）
+- 最近版本提交：`0.0.5ct_261025_c`
 - 最后更新：2026-10-25
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.5ct_261025_c`：为 40 个 Java 源文件添加 MIT 版权与 SPDX 文件头。
+- `0.0.5cs_261025_b`：更新 README 的 MIT 许可证说明与版本状态，并将 `mod_license` 同步为 MIT。
 - `239ffa4`：新增 MIT License，项目许可证更新为 MIT。
 - `0.0.5cr_261024_a`：加入 MK1/MK2/MK3 能量存储单元、能量显示与物品充放电，补齐能量单元掉落内容保留与物品存储单元手写模型，并重写 README。
 - `0.0.5cq_261023_b`：为物品存储单元 GUI 加入分级配色的 ITEM 标识。
@@ -213,14 +214,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.5c`
-- Latest version commit: `0.0.5cr_261024_a`
-- Latest commit: `239ffa4` (Add MIT License)
+- Latest version commit: `0.0.5ct_261025_c`
 - Last updated: 2026-10-25
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.5ct_261025_c`: added MIT copyright and SPDX headers to 40 Java source files.
+- `0.0.5cs_261025_b`: updated the README MIT license notes and version status, and set `mod_license` to MIT.
 - `239ffa4`: added the MIT License and updated the project license to MIT.
 - `0.0.5cr_261024_a`: added MK1/MK2/MK3 energy storage units, energy displays, item charging, retained contents for dropped units, hand-authored item storage models, and rewrote the README.
 - `0.0.5cq_261023_b`: added tier-colored ITEM markers to the item storage unit GUIs.

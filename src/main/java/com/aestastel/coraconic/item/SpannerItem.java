@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2026 Aestastel
+ *
+ * This file is part of Coraconic Tech and is licensed under the MIT License.
+ * See the LICENSE file in the project root for the full license text.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 package com.aestastel.coraconic.item;
 
 import net.minecraft.core.BlockPos;
