@@ -1,5 +1,9 @@
 # 核龙科技 / Coraconic Tech
 
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-green.svg)](https://www.minecraft.net/)
+[![NeoForge](https://img.shields.io/badge/NeoForge-21.1.x-orange.svg)](https://neoforged.net/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 [中文](#中文) | [English](#english)
 
 ---
@@ -56,7 +60,7 @@
 #### 工具
 
 - 四种材料各五件套，共 20 种工具：
-  - 剑、镐、斧、锹、锄
+    - 剑、镐、斧、锹、锄
 - 全部工具均有合成配方、解锁进度、手持模型与四语名称
 - 独立的工具创造栏
 - 工具数值仍处于早期平衡阶段
@@ -72,11 +76,11 @@
 
 三个等级均为固定 9 行，列数随等级增加：
 
-| 等级 | 槽位 | 界面尺寸 | 说明 |
-| --- | ---: | --- | --- |
-| MK1 | 81（9×9） | 176×276 | 基础物品存储 |
-| MK2 | 162（9×18） | 338×276 | 中型物品存储 |
-| MK3 | 243（9×27） | 500×276 | 大型物品存储 |
+| 等级 |        槽位 | 界面尺寸 | 说明         |
+| ---- | ----------: | -------- | ------------ |
+| MK1  |   81（9×9） | 176×276  | 基础物品存储 |
+| MK2  | 162（9×18） | 338×276  | 中型物品存储 |
+| MK3  | 243（9×27） | 500×276  | 大型物品存储 |
 
 - 支持漏斗、管道等自动化设施通过 `Capabilities.ItemHandler.BLOCK` 访问
 - 破坏方块、创造模式破坏与中键选取时，库存写入 `minecraft:container` 组件，放置后恢复
@@ -86,15 +90,15 @@
 
 #### 能量存储单元
 
-| 等级 | 容量 | 传输速率 |
-| --- | ---: | ---: |
-| MK1 | 32,000,000 FE | 1,000 FE/t |
-| MK2 | 320,000,000 FE | 4,000 FE/t |
-| MK3 | 3,200,000,000 FE | 16,000 FE/t |
+| 等级 |             容量 |    传输速率 |
+| ---- | ---------------: | ----------: |
+| MK1  |    32,000,000 FE |  1,000 FE/t |
+| MK2  |   320,000,000 FE |  4,000 FE/t |
+| MK3  | 3,200,000,000 FE | 16,000 FE/t |
 
 - 每个单元提供两个机器槽位：
-  - 充电槽：把单元能量输入到物品
-  - 放电槽：把物品能量输入到单元
+    - 充电槽：把单元能量输入到物品
+    - 放电槽：把物品能量输入到单元
 - GUI 显示当前能量、容量、能量条与玩家背包
 - 能量显示在 1,000 以上使用 `k FE`，1,000,000 以上使用 `M FE`，1,000,000,000 以上使用 `G FE`；保留两位小数，按住 Shift 显示完整 FE 数值
 - MK3 等超过 `Integer.MAX_VALUE` 的容量会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
@@ -118,14 +122,14 @@
 - 锡矿石、铅矿石也可在熔炉或高炉中冶炼为对应金属锭，包含深板岩变种（0.7 经验）
 - 核心、元素、金属锭与工具相关配方
 - 通用标签：
-  - `c:ingots`、`c:nuggets`、`c:raw_materials`、`c:ores`
-  - `c:storage_blocks`、`c:elements`、`c:gems`
-  - `c:tools`、`c:foods`
+    - `c:ingots`、`c:nuggets`、`c:raw_materials`、`c:ores`
+    - `c:storage_blocks`、`c:elements`、`c:gems`
+    - `c:tools`、`c:foods`
 - 工具同时接入原版 `minecraft:swords`、`pickaxes`、`axes`、`shovels`、`hoes`
 - 全局战利品规则：
-  - `c:ores` 矿石有 10% 概率额外掉落 1 个核龙元素
-  - 石头、深板岩、下界岩、末地石有 0.2% 概率额外掉落 1 个核龙元素
-  - 凋灵、末影龙、坚守者、远古守卫者掉落 3-5 个腾龙元素
+    - `c:ores` 矿石有 10% 概率额外掉落 1 个核龙元素
+    - 石头、深板岩、下界岩、末地石有 0.2% 概率额外掉落 1 个核龙元素
+    - 凋灵、末影龙、坚守者、远古守卫者掉落 3-5 个腾龙元素
 
 > 物品存储单元与能量存储单元目前主要通过创造模式获取，生存模式合成配方尚未加入。
 
@@ -146,23 +150,23 @@
 
 ### 开发进度
 
-| 模块 | 状态 | 说明 |
-| --- | --- | --- |
-| 金属材料 | 完成 | 四种金属及锭、粒、粗矿 |
-| 金属块 | 完成 | 四种金属块与压缩/解压配方 |
-| 矿石方块 | 部分完成 | 方块、掉落与标签完成；无自然生成 |
-| 工具 | 完成 | 20 种工具、配方、模型、标签与创造栏；数值待平衡 |
-| 晶体 | 完成 | 物品、纹理、标签与四语名称 |
-| 物品存储 | 完成 | 三级容量、GUI、组件保存、自动化能力与自定义模型 |
-| 能量存储 | 完成 | 三级容量、GUI、多段能量、线缆能力与物品充放电 |
-| 配方与标签 | 大部分完成 | 基础材料与工具完成；存储单元配方待补 |
-| 本地化 | 完成 | `en_us`、`zh_cn`、`zh_hk`、`zh_tw` |
-| 数据生成 | 完成 | 模型、标签、配方、进度、战利品与全局修饰器 |
-| 世界生成 | 未开始 | 锡矿、铅矿的自然生成 |
-| 加工链 | 部分完成 | 粗锡/粗铅与矿石可通过熔炉、高炉冶炼；自动化加工链待扩展 |
-| 盔甲 | 未开始 | |
-| JEI 支持 | 占位 | 插件为空实现 |
-| 代码清理 | 完成 | MDK 示例注册器与演示配置已移除 |
+| 模块       | 状态       | 说明                                                    |
+| ---------- | ---------- | ------------------------------------------------------- |
+| 金属材料   | 完成       | 四种金属及锭、粒、粗矿                                  |
+| 金属块     | 完成       | 四种金属块与压缩/解压配方                               |
+| 矿石方块   | 部分完成   | 方块、掉落与标签完成；无自然生成                        |
+| 工具       | 完成       | 20 种工具、配方、模型、标签与创造栏；数值待平衡         |
+| 晶体       | 完成       | 物品、纹理、标签与四语名称                              |
+| 物品存储   | 完成       | 三级容量、GUI、组件保存、自动化能力与自定义模型         |
+| 能量存储   | 完成       | 三级容量、GUI、多段能量、线缆能力与物品充放电           |
+| 配方与标签 | 大部分完成 | 基础材料与工具完成；存储单元配方待补                    |
+| 本地化     | 完成       | `en_us`、`zh_cn`、`zh_hk`、`zh_tw`                      |
+| 数据生成   | 完成       | 模型、标签、配方、进度、战利品与全局修饰器              |
+| 世界生成   | 未开始     | 锡矿、铅矿的自然生成                                    |
+| 加工链     | 部分完成   | 粗锡/粗铅与矿石可通过熔炉、高炉冶炼；自动化加工链待扩展 |
+| 盔甲       | 未开始     |                                                         |
+| JEI 支持   | 占位       | 插件为空实现                                            |
+| 代码清理   | 完成       | MDK 示例注册器与演示配置已移除                          |
 
 ### 已知问题
 
@@ -253,7 +257,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 #### Tools
 
 - Five tools for each of the four materials, 20 tools in total:
-  - Sword, pickaxe, axe, shovel, hoe
+    - Sword, pickaxe, axe, shovel, hoe
 - Recipes, advancements, handheld models, and four-language names for every tool
 - A dedicated tool creative tab
 - Tool stats are still in an early balancing stage
@@ -269,11 +273,11 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 All three tiers use a fixed 9 rows; the column count grows with the tier:
 
-| Tier | Slots | GUI size | Notes |
-| --- | ---: | --- | --- |
-| MK1 | 81 (9×9) | 176×276 | Basic item storage |
-| MK2 | 162 (9×18) | 338×276 | Medium item storage |
-| MK3 | 243 (9×27) | 500×276 | Large item storage |
+| Tier |      Slots | GUI size | Notes               |
+| ---- | ---------: | -------- | ------------------- |
+| MK1  |   81 (9×9) | 176×276  | Basic item storage  |
+| MK2  | 162 (9×18) | 338×276  | Medium item storage |
+| MK3  | 243 (9×27) | 500×276  | Large item storage  |
 
 - Hoppers, pipes, and other automation can access the inventory through `Capabilities.ItemHandler.BLOCK`
 - Breaking, creative-breaking, or pick-blocking the unit stores its inventory in the `minecraft:container` component; it is restored when placed
@@ -283,15 +287,15 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 #### Energy Storage Units
 
-| Tier | Capacity | Transfer rate |
-| --- | ---: | ---: |
-| MK1 | 32,000,000 FE | 1,000 FE/t |
-| MK2 | 320,000,000 FE | 4,000 FE/t |
-| MK3 | 3,200,000,000 FE | 16,000 FE/t |
+| Tier |         Capacity | Transfer rate |
+| ---- | ---------------: | ------------: |
+| MK1  |    32,000,000 FE |    1,000 FE/t |
+| MK2  |   320,000,000 FE |    4,000 FE/t |
+| MK3  | 3,200,000,000 FE |   16,000 FE/t |
 
 - Each unit has two machine slots:
-  - Charge slot: transfers energy from the unit into an item
-  - Discharge slot: transfers energy from an item into the unit
+    - Charge slot: transfers energy from the unit into an item
+    - Discharge slot: transfers energy from an item into the unit
 - The GUI shows current energy, capacity, a large energy display, and the player inventory
 - Energy is abbreviated with `k FE`, `M FE`, or `G FE` above the corresponding thresholds, with two decimal places; hold Shift to show the full FE values
 - Capacities above `Integer.MAX_VALUE`, such as MK3, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
@@ -315,14 +319,14 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Tin and lead ores can also be smelted or blasted into the corresponding ingots, including deepslate variants (0.7 XP)
 - Recipes for cores, elements, metal ingots, and tools
 - Common tags:
-  - `c:ingots`, `c:nuggets`, `c:raw_materials`, `c:ores`
-  - `c:storage_blocks`, `c:elements`, `c:gems`
-  - `c:tools`, `c:foods`
+    - `c:ingots`, `c:nuggets`, `c:raw_materials`, `c:ores`
+    - `c:storage_blocks`, `c:elements`, `c:gems`
+    - `c:tools`, `c:foods`
 - Tools are also registered under the vanilla `minecraft:swords`, `pickaxes`, `axes`, `shovels`, and `hoes` tags
 - Global loot modifiers:
-  - `c:ores` blocks have a 10% chance to additionally drop one coraconic element
-  - Stone, deepslate, netherrack, and end stone have a 0.2% chance to additionally drop one coraconic element
-  - The wither, ender dragon, warden, and elder guardian drop 3-5 aviraconic elements
+    - `c:ores` blocks have a 10% chance to additionally drop one coraconic element
+    - Stone, deepslate, netherrack, and end stone have a 0.2% chance to additionally drop one coraconic element
+    - The wither, ender dragon, warden, and elder guardian drop 3-5 aviraconic elements
 
 > Item and energy storage units are currently obtained primarily in creative mode; survival recipes have not been added yet.
 
@@ -343,23 +347,23 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 ### Progress
 
-| Module | Status | Notes |
-| --- | --- | --- |
-| Metal materials | Complete | Four metals, ingots, nuggets, and raw materials |
-| Metal blocks | Complete | Four metal blocks with packing/unpacking recipes |
-| Ore blocks | Partial | Blocks, drops, and tags done; no world generation |
-| Tools | Complete | 20 tools with recipes, models, tags, and creative tab; stats pending balance |
-| Crystals | Complete | Items, textures, tags, and four-language names |
-| Item storage | Complete | Three tiers, GUI, component persistence, automation capability, and custom models |
-| Energy storage | Complete | Three tiers, GUI, multi-bank storage, cable capability, and item charging |
-| Recipes and tags | Mostly complete | Materials and tools done; storage recipes pending |
-| Localization | Complete | `en_us`, `zh_cn`, `zh_hk`, `zh_tw` |
-| Data generation | Complete | Models, tags, recipes, advancements, loot tables, and global modifiers |
-| World generation | Not started | Natural tin and lead ore generation |
-| Processing chain | Partial | Raw tin/lead and ores can be smelted/blasted; automated processing chain pending |
-| Armor | Not started | |
-| JEI support | Placeholder | Empty plugin implementation |
-| Code cleanup | Complete | MDK example registrars and demo configuration removed |
+| Module           | Status          | Notes                                                                             |
+| ---------------- | --------------- | --------------------------------------------------------------------------------- |
+| Metal materials  | Complete        | Four metals, ingots, nuggets, and raw materials                                   |
+| Metal blocks     | Complete        | Four metal blocks with packing/unpacking recipes                                  |
+| Ore blocks       | Partial         | Blocks, drops, and tags done; no world generation                                 |
+| Tools            | Complete        | 20 tools with recipes, models, tags, and creative tab; stats pending balance      |
+| Crystals         | Complete        | Items, textures, tags, and four-language names                                    |
+| Item storage     | Complete        | Three tiers, GUI, component persistence, automation capability, and custom models |
+| Energy storage   | Complete        | Three tiers, GUI, multi-bank storage, cable capability, and item charging         |
+| Recipes and tags | Mostly complete | Materials and tools done; storage recipes pending                                 |
+| Localization     | Complete        | `en_us`, `zh_cn`, `zh_hk`, `zh_tw`                                                |
+| Data generation  | Complete        | Models, tags, recipes, advancements, loot tables, and global modifiers            |
+| World generation | Not started     | Natural tin and lead ore generation                                               |
+| Processing chain | Partial         | Raw tin/lead and ores can be smelted/blasted; automated processing chain pending  |
+| Armor            | Not started     |                                                                                   |
+| JEI support      | Placeholder     | Empty plugin implementation                                                       |
+| Code cleanup     | Complete        | MDK example registrars and demo configuration removed                             |
 
 ### Known Issues
 
