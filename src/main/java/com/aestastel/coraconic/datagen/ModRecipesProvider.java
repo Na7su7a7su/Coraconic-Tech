@@ -22,9 +22,11 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 
@@ -152,6 +154,108 @@ public class ModRecipesProvider extends RecipeProvider {
         has(ModItems.AVIRACONIC_ELEMENT.get())
       )
       .save(recipeOutput);
+
+    // 粗锡/粗铅：熔炉与高炉均可冶炼为对应的金属锭。
+    // Raw tin/lead: smelt or blast into the corresponding metal ingot.
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItems.RAW_TIN.get()),
+      RecipeCategory.MISC,
+      ModItems.TIN_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_raw_tin", has(ModItems.RAW_TIN.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":tin_ingot_from_smelting_raw_tin"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItems.RAW_TIN.get()),
+      RecipeCategory.MISC,
+      ModItems.TIN_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_raw_tin", has(ModItems.RAW_TIN.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":tin_ingot_from_blasting_raw_tin"
+      );
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItems.RAW_LEAD.get()),
+      RecipeCategory.MISC,
+      ModItems.LEAD_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_raw_lead", has(ModItems.RAW_LEAD.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":lead_ingot_from_smelting_raw_lead"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItems.RAW_LEAD.get()),
+      RecipeCategory.MISC,
+      ModItems.LEAD_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_raw_lead", has(ModItems.RAW_LEAD.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":lead_ingot_from_blasting_raw_lead"
+      );
+
+    // 锡矿石/铅矿石：使用矿物标签，同时覆盖普通矿石与深板岩变种。
+    // Tin/lead ores: use ore tags so both stone and deepslate variants are covered.
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItemTags.ORES_TIN),
+      RecipeCategory.MISC,
+      ModItems.TIN_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_tin_ore", has(ModItemTags.ORES_TIN))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":tin_ingot_from_smelting_tin_ore"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItemTags.ORES_TIN),
+      RecipeCategory.MISC,
+      ModItems.TIN_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_tin_ore", has(ModItemTags.ORES_TIN))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":tin_ingot_from_blasting_tin_ore"
+      );
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItemTags.ORES_LEAD),
+      RecipeCategory.MISC,
+      ModItems.LEAD_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_lead_ore", has(ModItemTags.ORES_LEAD))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":lead_ingot_from_smelting_lead_ore"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItemTags.ORES_LEAD),
+      RecipeCategory.MISC,
+      ModItems.LEAD_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_lead_ore", has(ModItemTags.ORES_LEAD))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":lead_ingot_from_blasting_lead_ore"
+      );
 
     // 金属块与金属锭、金属锭与金属粒的压缩/解压配方。
     // Packing/unpacking recipes between metal blocks/ingots and metal ingots/nuggets.

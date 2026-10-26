@@ -20,13 +20,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.5c`
-- 最近版本提交：`0.0.5ct_261025_c`
-- 最后更新：2026-10-25
+- 最近版本提交：`0.0.5cu_261026_a`
+- 最后更新：2026-10-26
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.5cu_261026_a`：新增粗锡/粗铅与锡/铅矿石的熔炉、高炉配方，矿石配方覆盖深板岩变种。
 - `0.0.5ct_261025_c`：为 40 个 Java 源文件添加 MIT 版权与 SPDX 文件头。
 - `0.0.5cs_261025_b`：更新 README 的 MIT 许可证说明与版本状态，并将 `mod_license` 同步为 MIT。
 - `239ffa4`：新增 MIT License，项目许可证更新为 MIT。
@@ -113,6 +114,8 @@
 
 - 金属块 ↔ 金属锭（9:1）
 - 金属锭 ↔ 金属粒（1:9）
+- 粗锡、粗铅可在熔炉或高炉中冶炼为对应金属锭（0.7 经验）
+- 锡矿石、铅矿石也可在熔炉或高炉中冶炼为对应金属锭，包含深板岩变种（0.7 经验）
 - 核心、元素、金属锭与工具相关配方
 - 通用标签：
   - `c:ingots`、`c:nuggets`、`c:raw_materials`、`c:ores`
@@ -156,7 +159,7 @@
 | 本地化 | 完成 | `en_us`、`zh_cn`、`zh_hk`、`zh_tw` |
 | 数据生成 | 完成 | 模型、标签、配方、进度、战利品与全局修饰器 |
 | 世界生成 | 未开始 | 锡矿、铅矿的自然生成 |
-| 加工链 | 未开始 | 粗矿处理、冶炼等流程 |
+| 加工链 | 部分完成 | 粗锡/粗铅与矿石可通过熔炉、高炉冶炼；自动化加工链待扩展 |
 | 盔甲 | 未开始 | |
 | JEI 支持 | 占位 | 插件为空实现 |
 | 代码清理 | 完成 | MDK 示例注册器与演示配置已移除 |
@@ -173,7 +176,7 @@
 ### 后续计划
 
 - [ ] 实现锡矿、铅矿的自然生成
-- [ ] 设计粗矿处理与冶炼流程
+- [ ] 扩展粗矿处理与自动化冶炼流程
 - [ ] 补齐存储单元的生存模式合成配方
 - [ ] 添加盔甲
 - [ ] 扩展机器与自动化加工链
@@ -214,13 +217,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.5c`
-- Latest version commit: `0.0.5ct_261025_c`
-- Last updated: 2026-10-25
+- Latest version commit: `0.0.5cu_261026_a`
+- Last updated: 2026-10-26
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.5cu_261026_a`: added furnace and blast furnace recipes for raw tin/lead and tin/lead ores, including deepslate ore variants.
 - `0.0.5ct_261025_c`: added MIT copyright and SPDX headers to 40 Java source files.
 - `0.0.5cs_261025_b`: updated the README MIT license notes and version status, and set `mod_license` to MIT.
 - `239ffa4`: added the MIT License and updated the project license to MIT.
@@ -307,6 +311,8 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 - Metal blocks ↔ metal ingots (9:1)
 - Metal ingots ↔ metal nuggets (1:9)
+- Raw tin and raw lead can be smelted or blasted into the corresponding metal ingots (0.7 XP)
+- Tin and lead ores can also be smelted or blasted into the corresponding ingots, including deepslate variants (0.7 XP)
 - Recipes for cores, elements, metal ingots, and tools
 - Common tags:
   - `c:ingots`, `c:nuggets`, `c:raw_materials`, `c:ores`
@@ -350,7 +356,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 | Localization | Complete | `en_us`, `zh_cn`, `zh_hk`, `zh_tw` |
 | Data generation | Complete | Models, tags, recipes, advancements, loot tables, and global modifiers |
 | World generation | Not started | Natural tin and lead ore generation |
-| Processing chain | Not started | Raw ore processing and smelting |
+| Processing chain | Partial | Raw tin/lead and ores can be smelted/blasted; automated processing chain pending |
 | Armor | Not started | |
 | JEI support | Placeholder | Empty plugin implementation |
 | Code cleanup | Complete | MDK example registrars and demo configuration removed |
@@ -367,7 +373,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 ### Roadmap
 
 - [ ] Implement natural tin and lead ore generation
-- [ ] Design raw ore processing and smelting
+- [ ] Expand raw ore processing and automated smelting
 - [ ] Add survival recipes for both storage-unit families
 - [ ] Add armor
 - [ ] Expand machines and automated processing chains
