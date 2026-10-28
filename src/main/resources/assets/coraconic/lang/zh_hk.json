@@ -51,6 +51,7 @@
     "block.coraconic.energy_storage_unit_mk1":"能量儲存單元 MK1",
     "block.coraconic.energy_storage_unit_mk2":"能量儲存單元 MK2",
     "block.coraconic.energy_storage_unit_mk3":"能量儲存單元 MK3",
+    "block.coraconic.solar_generator_mk0":"太陽能發電機 MK0",
     "gui.coraconic.energy_storage_unit.charge":"充電",
     "gui.coraconic.energy_storage_unit.discharge":"放電",
     "tooltip.coraconic.item_storage_unit.saved":"內容已儲存",

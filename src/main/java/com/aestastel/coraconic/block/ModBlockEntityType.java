@@ -142,6 +142,23 @@ public class ModBlockEntityType {
   );
 
   /**
+   * 太阳能发电机 MK0：96,000 FE 缓存、120 FE/t 发电。
+   *
+   * <p>Solar Generator MK0: 96,000 FE buffer and 120 FE/t generation.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<SolarGeneratorMk0BlockEntity>
+  > SOLAR_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_mk0_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createSolarGeneratorBlockEntity,
+        ModBlocks.SOLAR_GENERATOR_MK0.get()
+      ).build(null)
+  );
+
+  /**
    * 方块实体工厂：根据方块状态取得对应等级的类型与容量。
    *
    * <p>方块实体类型只会注册给它自己的方块，因此这里的类型转换是安全的。
@@ -187,6 +204,27 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for energy storage unit block entity: " + state
+    );
+  }
+
+  /**
+   * 太阳能发电机方块实体工厂。
+   *
+   * <p>Solar generator block entity factory.
+   */
+  private static SolarGeneratorMk0BlockEntity createSolarGeneratorBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof SolarGeneratorMk0Block generatorBlock) {
+      return new SolarGeneratorMk0BlockEntity(
+        generatorBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for solar generator block entity: " + state
     );
   }
 

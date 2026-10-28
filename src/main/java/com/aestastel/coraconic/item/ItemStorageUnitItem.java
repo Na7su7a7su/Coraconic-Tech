@@ -9,6 +9,7 @@
 
 package com.aestastel.coraconic.item;
 
+import com.aestastel.coraconic.block.ItemStorageUnitBlock;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -25,17 +26,77 @@ import net.minecraft.world.level.block.Block;
  *
  * <p>内容保存在 {@code minecraft:container} 组件中。tooltip 只在容器非空时
  * 显示两行提示：一行说明内容已随物品保存，另一行给出非空槽位（堆）数量。
- * 具体物品名称、附魔等信息不会展示。
+ * 物品栏中还会按已占用槽位比例显示黄色空间条，具体物品名称、附魔等信息不会
+ * 展示。
  *
  * <p>Block item for the item storage units. It summarises the stored contents in
- * the tooltip without listing the individual items. The contents live in the
+ * the tooltip without listing the individual items, and shows a yellow
+ * occupied-slot bar in inventories. The contents live in the
  * {@code minecraft:container} component; only non-empty units show the two
  * summary lines.
  */
 public class ItemStorageUnitItem extends BlockItem {
 
+  /** 与物品存储界面的分级配色区分开的黄色空间条。 */
+  private static final int BAR_COLOR = 0xFFD54F;
+
+  private final int totalSlots;
+
   public ItemStorageUnitItem(Block block, Properties properties) {
     super(block, properties);
+    this.totalSlots =
+      block instanceof ItemStorageUnitBlock storage ? storage.getSlots() : 0;
+  }
+
+  /**
+   * 物品栏中的空间条：按照已占用槽位数量显示。
+   *
+   * <p>Inventory space bar: shown according to the number of occupied slots.
+   */
+  @Override
+  public boolean isBarVisible(ItemStack stack) {
+    return getOccupiedSlots(stack) > 0;
+  }
+
+  /**
+   * 将已占用槽位数量映射到原版 13 像素耐久条宽度。
+   *
+   * <p>Maps the number of occupied slots to the vanilla 13-pixel bar width.
+   */
+  @Override
+  public int getBarWidth(ItemStack stack) {
+    int occupiedSlots = getOccupiedSlots(stack);
+    if (occupiedSlots <= 0 || totalSlots <= 0) {
+      return 0;
+    }
+
+    int width = (int) Math.round(
+      (13.0D * (double) occupiedSlots) / (double) totalSlots
+    );
+    return Math.max(1, Math.min(13, width));
+  }
+
+  @Override
+  public int getBarColor(ItemStack stack) {
+    return BAR_COLOR;
+  }
+
+  /**
+   * 统计容器组件中的非空槽位（堆）数量。
+   *
+   * <p>Counts non-empty slots (stacks) in the container component.
+   */
+  private static int getOccupiedSlots(ItemStack stack) {
+    ItemContainerContents contents = stack.getOrDefault(
+      DataComponents.CONTAINER,
+      ItemContainerContents.EMPTY
+    );
+
+    int occupiedSlots = 0;
+    for (ItemStack ignored : contents.nonEmptyItems()) {
+      occupiedSlots++;
+    }
+    return occupiedSlots;
   }
 
   /**
@@ -56,15 +117,7 @@ public class ItemStorageUnitItem extends BlockItem {
   ) {
     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
-    ItemContainerContents contents = stack.getOrDefault(
-      DataComponents.CONTAINER,
-      ItemContainerContents.EMPTY
-    );
-
-    int occupiedSlots = 0;
-    for (ItemStack ignored : contents.nonEmptyItems()) {
-      occupiedSlots++;
-    }
+    int occupiedSlots = getOccupiedSlots(stack);
 
     if (occupiedSlots > 0) {
       tooltipComponents.add(

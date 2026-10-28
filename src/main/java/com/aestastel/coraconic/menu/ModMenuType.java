@@ -48,6 +48,14 @@ public class ModMenuType {
     () -> IMenuTypeExtension.create(EnergyStorageUnitMenu::fromNetwork)
   );
 
+  public static final DeferredHolder<
+    MenuType<?>,
+    MenuType<SolarGeneratorMk0Menu>
+  > SOLAR_GENERATOR_MK0 = MENU_TYPES.register(
+    "solar_generator_mk0",
+    () -> IMenuTypeExtension.create(SolarGeneratorMk0Menu::fromNetwork)
+  );
+
   /**
    * 将菜单类型注册器挂到模组事件总线。
    *

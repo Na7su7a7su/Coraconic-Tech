@@ -11,6 +11,7 @@ package com.aestastel.coraconic;
 
 import com.aestastel.coraconic.client.EnergyStorageUnitScreen;
 import com.aestastel.coraconic.client.ItemStorageUnitScreen;
+import com.aestastel.coraconic.client.SolarGeneratorMk0Screen;
 import com.aestastel.coraconic.menu.ModMenuType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -54,6 +55,10 @@ public class CoraconicTechClient {
     event.register(
       ModMenuType.ENERGY_STORAGE_UNIT.get(),
       EnergyStorageUnitScreen::new
+    );
+    event.register(
+      ModMenuType.SOLAR_GENERATOR_MK0.get(),
+      SolarGeneratorMk0Screen::new
     );
   }
 }

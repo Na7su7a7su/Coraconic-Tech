@@ -1,0 +1,178 @@
+/*
+ * Copyright (c) 2026 Aestastel
+ *
+ * This file is part of Coraconic Tech and is licensed under the MIT License.
+ * See the LICENSE file in the project root for the full license text.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+package com.aestastel.coraconic.block;
+
+import java.util.function.Supplier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+
+/**
+ * 太阳能发电机 MK0 方块。
+ *
+ * <p>方块本身只负责创建方块实体、驱动服务端 ticker 和打开界面。发电判定、
+ * 缓存与面向外部的能量能力均由 {@link SolarGeneratorMk0BlockEntity} 处理。
+ *
+ * <p>Solar Generator MK0 block. It creates the block entity, runs the
+ * server-side ticker, and opens the GUI; generation and energy handling live in
+ * {@link SolarGeneratorMk0BlockEntity}.
+ */
+public class SolarGeneratorMk0Block extends Block implements EntityBlock {
+
+  private final Supplier<BlockEntityType<?>> typeSupplier;
+
+  public SolarGeneratorMk0Block(
+    Properties properties,
+    Supplier<BlockEntityType<?>> typeSupplier
+  ) {
+    super(properties);
+    this.typeSupplier = typeSupplier;
+  }
+
+  @Override
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new SolarGeneratorMk0BlockEntity(
+      typeSupplier.get(),
+      pos,
+      state
+    );
+  }
+
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+    Level level,
+    BlockState state,
+    BlockEntityType<T> type
+  ) {
+    if (level.isClientSide) {
+      return null;
+    }
+    return (tickLevel, pos, tickState, blockEntity) -> {
+      if (blockEntity instanceof SolarGeneratorMk0BlockEntity generator) {
+        generator.tick();
+      }
+    };
+  }
+
+  /** {@return 本方块对应的方块实体类型} */
+  public BlockEntityType<?> getBlockEntityType() {
+    return typeSupplier.get();
+  }
+
+  @Override
+  protected InteractionResult useWithoutItem(
+    BlockState state,
+    Level level,
+    BlockPos pos,
+    Player player,
+    BlockHitResult hitResult
+  ) {
+    if (level.isClientSide) {
+      return InteractionResult.SUCCESS;
+    }
+    if (
+      level.getBlockEntity(pos) instanceof
+        SolarGeneratorMk0BlockEntity blockEntity
+    ) {
+      player.openMenu(blockEntity, buffer -> buffer.writeBlockPos(pos));
+    }
+    return InteractionResult.CONSUME;
+  }
+
+  /**
+   * 创造模式破坏时手动掉落带缓存能量的方块物品。
+   *
+   * <p>In creative mode the loot table is not used, so an item carrying only
+   * the buffered energy is spawned manually. Output-slot items still drop from
+   * {@link #onRemove}.
+   */
+  @Override
+  public BlockState playerWillDestroy(
+    Level level,
+    BlockPos pos,
+    BlockState state,
+    Player player
+  ) {
+    if (
+      !level.isClientSide &&
+      player.isCreative() &&
+      level.getBlockEntity(pos) instanceof
+        SolarGeneratorMk0BlockEntity blockEntity &&
+      blockEntity.getEnergyStored() > 0
+    ) {
+      ItemStack stack = new ItemStack(this);
+      blockEntity.saveToItem(stack, level.registryAccess());
+      ItemEntity entity = new ItemEntity(
+        level,
+        pos.getX() + 0.5,
+        pos.getY() + 0.5,
+        pos.getZ() + 0.5,
+        stack
+      );
+      entity.setDefaultPickUpDelay();
+      level.addFreshEntity(entity);
+    }
+    return super.playerWillDestroy(level, pos, state, player);
+  }
+
+  /**
+   * 中键选取方块时保留缓存能量，但不复制输出槽物品。
+   *
+   * <p>Preserves buffered energy when pick-blocking, without copying the
+   * output-slot item into the block item.
+   */
+  @Override
+  public ItemStack getCloneItemStack(
+    BlockState state,
+    HitResult target,
+    LevelReader level,
+    BlockPos pos,
+    Player player
+  ) {
+    ItemStack stack = new ItemStack(this);
+    if (
+      level.getBlockEntity(pos) instanceof
+        SolarGeneratorMk0BlockEntity blockEntity
+    ) {
+      blockEntity.saveToItem(stack, level.registryAccess());
+    }
+    return stack;
+  }
+
+  /**
+   * 方块被移除时掉落输出槽中的物品。
+   *
+   * <p>Drops the output slot contents when the block is removed.
+   */
+  @Override
+  protected void onRemove(
+    BlockState state,
+    Level level,
+    BlockPos pos,
+    BlockState newState,
+    boolean movedByPiston
+  ) {
+    Containers.dropContentsOnDestroy(state, newState, level, pos);
+    super.onRemove(state, level, pos, newState, movedByPiston);
+  }
+}

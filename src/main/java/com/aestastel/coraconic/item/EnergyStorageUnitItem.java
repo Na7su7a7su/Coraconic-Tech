@@ -41,6 +41,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
  */
 public class EnergyStorageUnitItem extends BlockItem {
 
+  /** 与能量 GUI 一致的绿色电量条颜色（RGB）。 */
+  private static final int BAR_COLOR = 0x4FD784;
+
   private final EnergyStorageUnitBlock energyBlock;
   private final long capacity;
   private final int transfer;
@@ -65,6 +68,45 @@ public class EnergyStorageUnitItem extends BlockItem {
   /** {@return 物品形式的 FE 能力} */
   public IEnergyStorage getEnergyStorage(ItemStack stack) {
     return new ItemEnergyStorage(stack);
+  }
+
+  /**
+   * 电量大于 0 时在物品栏显示类似耐久条的电量条。
+   *
+   * <p>Shows a durability-style charge bar in inventories while the unit has
+   * stored energy.
+   */
+  @Override
+  public boolean isBarVisible(ItemStack stack) {
+    return getStoredEnergy(stack) > 0L;
+  }
+
+  /**
+   * 将当前电量映射到原版 13 像素耐久条宽度。
+   *
+   * <p>Maps the stored energy to the vanilla 13-pixel bar width. Non-empty
+   * units keep at least one pixel so small charges remain visible.
+   */
+  @Override
+  public int getBarWidth(ItemStack stack) {
+    long stored = getStoredEnergy(stack);
+    if (stored <= 0L) {
+      return 0;
+    }
+    int width = (int) Math.round(
+      13.0D * (double) stored / (double) capacity
+    );
+    return Math.max(1, Math.min(13, width));
+  }
+
+  /**
+   * 电量条颜色与能量 GUI 保持一致。
+   *
+   * <p>Uses the same green as the energy GUI.
+   */
+  @Override
+  public int getBarColor(ItemStack stack) {
+    return BAR_COLOR;
   }
 
   @Override

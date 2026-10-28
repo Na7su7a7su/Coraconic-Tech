@@ -51,6 +51,7 @@
     "block.coraconic.energy_storage_unit_mk1":"Energy Storage Unit MK1",
     "block.coraconic.energy_storage_unit_mk2":"Energy Storage Unit MK2",
     "block.coraconic.energy_storage_unit_mk3":"Energy Storage Unit MK3",
+    "block.coraconic.solar_generator_mk0":"Solar Generator MK0",
     "gui.coraconic.energy_storage_unit.charge":"Charge",
     "gui.coraconic.energy_storage_unit.discharge":"Discharge",
     "tooltip.coraconic.item_storage_unit.saved":"Contents saved",

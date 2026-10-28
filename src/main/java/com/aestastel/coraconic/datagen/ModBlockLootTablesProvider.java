@@ -85,15 +85,23 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     // (stored energy and both machine slots).
     add(
       ModBlocks.ENERGY_STORAGE_UNIT_MK1.get(),
-      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get())
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get())
     );
     add(
       ModBlocks.ENERGY_STORAGE_UNIT_MK2.get(),
-      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get())
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get())
     );
     add(
       ModBlocks.ENERGY_STORAGE_UNIT_MK3.get(),
-      createEnergyStorageUnitDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get())
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get())
+    );
+
+    // 太阳能发电机：掉落自身并复制缓存能量；输出槽内容在方块移除时单独掉落。
+    // Solar generator: drops itself with buffered energy; output-slot contents
+    // drop separately when the block is removed.
+    add(
+      ModBlocks.SOLAR_GENERATOR_MK0.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK0.get())
     );
 
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
@@ -124,12 +132,13 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
   }
 
   /**
-   * 构建能量存储单元掉落表：掉落自身并复制方块实体中的能量与槽位数据。
+   * 构建方块实体数据掉落表：掉落自身并复制 block_entity_data 组件。
    *
-   * <p>Builds the energy storage unit loot table: drops the block itself and copies the block
-   * entity data containing stored energy and both machine slots.
+   * <p>Builds a loot table that drops the block and copies its block entity data
+   * component. Energy storage units include energy and slots; the solar
+   * generator includes only buffered energy.
    */
-  private LootTable.Builder createEnergyStorageUnitDrop(Block block) {
+  private LootTable.Builder createBlockEntityDataDrop(Block block) {
     return LootTable.lootTable()
       .withPool(
         this.applyExplosionCondition(

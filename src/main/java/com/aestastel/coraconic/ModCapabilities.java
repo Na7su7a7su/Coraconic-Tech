@@ -72,6 +72,14 @@ public final class ModCapabilities {
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
 
+    // 太阳能发电机：每个面都可以抽取缓存能量。
+    // Solar generator: every face can extract from its buffer.
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+
     // 能量存储单元物品：让物品本身也能作为 FE 容器被充放电。
     // Energy storage unit items: expose their own FE storage for charging.
     registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_MK1.get());

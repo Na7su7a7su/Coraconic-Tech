@@ -192,6 +192,17 @@ public class ModBlocks {
         ),
       EnergyStorageUnitItem::new
     );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 =
+    registerBlocks(
+      "solar_generator_mk0",
+      () ->
+        new SolarGeneratorMk0Block(
+          BlockBehaviour.Properties.of()
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get()
+        )
+    );
 
   /**
    * 将方块延迟注册器挂到模组事件总线。
