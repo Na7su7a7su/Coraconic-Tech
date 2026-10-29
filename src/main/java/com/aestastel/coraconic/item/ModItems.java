@@ -327,10 +327,14 @@ public class ModItems {
       )
   );
 
-  //   public static final DeferredItem<Item> EFFECT_AMPLIFICATION_CORE =
-  //     ITEMS.register("effect_amplification_core", () ->
-  //       new Item(new Item.Properties())
-  //     );
+  public static final DeferredItem<Item> EFFECT_AMPLIFICATION_CORE =
+    ITEMS.register("effect_amplification_core", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> SPANNER = ITEMS.register(
+    "spanner",
+    () -> new SpannerItem(new Item.Properties().stacksTo(1))
+  );
 
   /**
    * 将物品延迟注册器挂到模组事件总线。

@@ -11,18 +11,23 @@ package com.aestastel.coraconic.block;
 
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -36,6 +41,9 @@ import net.minecraft.world.phys.HitResult;
  * provides a server-side ticker for item charge/discharge, and opens the GUI.
  */
 public class EnergyStorageUnitBlock extends Block implements EntityBlock {
+
+  public static final DirectionProperty FACING =
+    HorizontalDirectionalBlock.FACING;
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
   private final long capacity;
@@ -51,6 +59,24 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
     this.typeSupplier = typeSupplier;
     this.capacity = capacity;
     this.transfer = transfer;
+    registerDefaultState(
+      this.stateDefinition.any().setValue(FACING, Direction.NORTH)
+    );
+  }
+
+  @Override
+  protected void createBlockStateDefinition(
+    StateDefinition.Builder<Block, BlockState> builder
+  ) {
+    builder.add(FACING);
+  }
+
+  @Override
+  public BlockState getStateForPlacement(BlockPlaceContext context) {
+    return defaultBlockState().setValue(
+      FACING,
+      context.getHorizontalDirection().getOpposite()
+    );
   }
 
   @Override
@@ -149,7 +175,9 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
       player.isCreative() &&
       level.getBlockEntity(pos) instanceof
         EnergyStorageUnitBlockEntity blockEntity &&
-      (blockEntity.getEnergyStoredLong() > 0L || !blockEntity.isEmpty())
+      (blockEntity.getEnergyStoredLong() > 0L ||
+        !blockEntity.isEmpty() ||
+        blockEntity.hasNonDefaultFaceModes())
     ) {
       ItemStack stack = new ItemStack(this);
       blockEntity.saveToItem(stack, level.registryAccess());

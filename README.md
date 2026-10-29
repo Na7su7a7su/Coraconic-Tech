@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.6a`
-- 最近版本提交：`0.0.6ap_261028_a`
-- 最后更新：2026-10-28
+- `mod_version`：`0.0.6b`
+- 最近版本提交：`0.0.6bp_261029_a`
+- 最后更新：2026-10-29
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6bp_261029_a`：新增效应放大核心与数据生成；为七种功能方块加入水平朝向；扳手扩展为旋转/扳手/配置三模式；能量存储单元与太阳能发电机支持六面独立输入、输出、输入/输出、阻断配置，加入相邻方块主动传输、面配置持久化与掉落保留。
 - `0.0.6ap_261028_a`：新增太阳能发电机 MK0（96,000 FE 缓存、120 FE/t 发电、白天与完整天空柱判定、优先输出槽、掉落保留能量），并为能量单元与物品存储单元物品加入物品栏耐久条显示。
 - `0.0.5cu_261026_a`：新增粗锡/粗铅与锡/铅矿石的熔炉、高炉配方，矿石配方覆盖深板岩变种。
 - `0.0.5ct_261025_c`：为 40 个 Java 源文件添加 MIT 版权与 SPDX 文件头。
@@ -53,7 +54,7 @@
 
 - 锡、铅、核龙金属、腾龙金属
 - 对应的金属锭、金属粒与粗矿物品
-- 常金属核心、核龙金属核心、腾龙金属核心
+- 常金属核心、核龙金属核心、腾龙金属核心、效应放大核心
 - 核龙元素、腾龙元素
 - 核龙金刚晶体、腾龙金刚晶体
 - `hcv2` 自定义食物
@@ -64,6 +65,10 @@
     - 剑、镐、斧、锹、锄
 - 全部工具均有合成配方、解锁进度、手持模型与四语名称
 - 独立的工具创造栏
+- 扳手：Shift + 滚轮在旋转/扳手/配置模式间循环
+    - 旋转模式：右键顺时针旋转，Shift + 右键逆时针旋转
+    - 扳手模式：右键正常交互，Shift + 右键拆除七种功能方块
+    - 配置模式：不与功能方块正常交互；右键查看所点面的能量模式并打印到聊天栏，Shift + 右键按输入 → 输出 → 输入/输出 → 阻断 → 输入切换
 - 工具数值仍处于早期平衡阶段
 
 #### 方块与世界
@@ -104,17 +109,20 @@
 - GUI 显示当前能量、容量、能量条与玩家背包
 - 能量显示在 1,000 以上使用 `k FE`，1,000,000 以上使用 `M FE`，1,000,000,000 以上使用 `G FE`；保留两位小数，按住 Shift 显示完整 FE 数值
 - MK3 等超过 `Integer.MAX_VALUE` 的容量会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
-- 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露能量能力
+- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输入/输出；仅能通过扳手配置模式切换
+- 输入面会主动从相邻能量方块抽取能量，输出面会主动向相邻能量方块发送能量；阻断面拒绝所有外部输入输出
+- 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
 #### 太阳能发电机 MK0
 
 - 内部缓存：`96,000 FE`
 - 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `120 FE/t`
-- 六个面均可输出缓存能量，每面最高 `600 FE/t`
+- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出；仅能通过扳手配置模式切换
+- 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 包含输出槽、竖直能量条、能量数值与玩家背包
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
-- 破坏方块时，方块物品保留缓存能量；输出槽物品单独掉落
-- 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露能量能力
+- 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
+- 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
 #### 能量存储单元物品
 
@@ -122,7 +130,7 @@
 - 物品栏与快捷栏通过类似耐久条的绿色电量条显示当前电量
 - 物品自身注册 `Capabilities.EnergyStorage.ITEM`，可作为可携带的 FE 容器
 - 可放入其他能量单元的充电槽或放电槽，进行双向充放电
-- 破坏、创造模式破坏与中键选取时保留能量和内部槽位
+- 破坏、创造模式破坏与中键选取时保留能量、内部槽位与六个面配置
 - 充放电会写回 `minecraft:block_entity_data`，并保留物品内部库存
 - 能量单元物品最大堆叠数为 1，避免多个物品共享同一份能量数据
 - 写入方块实体数据时包含类型 `id`，修复此前保存玩家背包时因缺少 `id` 导致的崩溃
@@ -234,14 +242,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.6a`
-- Latest version commit: `0.0.6ap_261028_a`
-- Last updated: 2026-10-28
+- `mod_version`: `0.0.6b`
+- Latest version commit: `0.0.6bp_261029_a`
+- Last updated: 2026-10-29
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6bp_261029_a`: added the Effect Amplification Core and its data generation; added horizontal facing to the seven functional blocks; expanded the wrench into rotate, wrench, and configure modes; added independent per-face input, output, input/output, and blocked modes to energy storage units and the solar generator, with active adjacent transfer, face-mode persistence, and drop preservation.
 - `0.0.6ap_261028_a`: added Solar Generator MK0 (96,000 FE buffer, 120 FE/t generation, daytime and full sky-column checks, output-slot priority, retained buffered energy on drop), plus durability-style inventory bars for energy and item storage unit items.
 - `0.0.5cu_261026_a`: added furnace and blast furnace recipes for raw tin/lead and tin/lead ores, including deepslate ore variants.
 - `0.0.5ct_261025_c`: added MIT copyright and SPDX headers to 40 Java source files.
@@ -264,7 +273,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 - Tin, lead, coraconic metal, and aviraconic metal
 - Matching ingots, nuggets, and raw ore items
-- Common-metal, coraconic, and aviraconic cores
+- Common-metal, coraconic, aviraconic, and effect amplification cores
 - Coraconic and aviraconic elements
 - Coraconic and aviraconic diamond-structured crystals
 - `hcv2`, a custom food item
@@ -275,6 +284,10 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
     - Sword, pickaxe, axe, shovel, hoe
 - Recipes, advancements, handheld models, and four-language names for every tool
 - A dedicated tool creative tab
+- Wrench: Shift + mouse wheel cycles rotate, wrench, and configure modes
+    - Rotate mode: right-click rotates clockwise; Shift + right-click rotates counter-clockwise
+    - Wrench mode: right-click interacts normally; Shift + right-click dismantles the seven functional machines
+    - Configure mode: does not interact with functional machines normally; right-click prints the clicked face's energy mode to chat, and Shift + right-click cycles input → output → input/output → blocked → input
 - Tool stats are still in an early balancing stage
 
 #### Blocks and World
@@ -315,17 +328,20 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The GUI shows current energy, capacity, a large energy display, and the player inventory
 - Energy is abbreviated with `k FE`, `M FE`, or `G FE` above the corresponding thresholds, with two decimal places; hold Shift to show the full FE values
 - Capacities above `Integer.MAX_VALUE`, such as MK3, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
-- Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK`
+- Each face can independently be set to input, output, input/output, or blocked; all faces default to input/output and can only be changed through the wrench configure mode
+- Input faces actively pull from adjacent energy blocks, output faces actively push to them, and blocked faces reject all external input/output
+- Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
 #### Solar Generator MK0
 
 - Internal buffer: `96,000 FE`
 - Generates `120 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
-- Every face can output buffered energy at up to `600 FE/t`
+- Each face can independently be set to input, output, input/output, or blocked; all faces default to output and can only be changed through the wrench configure mode
+- Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI contains an output slot, a vertical energy bar, energy text, and the player inventory
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
-- Breaking the block keeps buffered energy in the block item; output-slot contents drop separately
-- Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK`
+- Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
+- Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
 #### Energy Storage Unit Items
 
@@ -333,7 +349,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Inventory and hotbar slots show the current charge as a green durability-style bar
 - The item registers `Capabilities.EnergyStorage.ITEM` and works as a portable FE container
 - It can be placed in another unit's charge or discharge slot for two-way charging
-- Breaking, creative-breaking, or pick-blocking the unit preserves its energy and internal slots
+- Breaking, creative-breaking, or pick-blocking the unit preserves its energy, internal slots, and six face modes
 - Charging writes back to `minecraft:block_entity_data` while preserving the unit's internal inventory
 - Energy unit items have a maximum stack size of 1 so multiple items cannot share one energy component
 - The block entity data now includes its type `id`, fixing the previous player-inventory save crash caused by a missing `id`

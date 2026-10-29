@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "coraconic:block/item_storage_unit_mk1"
-    }
+    "facing=north": { "model": "coraconic:block/item_storage_unit_mk1", "y": 0 },
+    "facing=east": { "model": "coraconic:block/item_storage_unit_mk1", "y": 90 },
+    "facing=south": { "model": "coraconic:block/item_storage_unit_mk1", "y": 180 },
+    "facing=west": { "model": "coraconic:block/item_storage_unit_mk1", "y": 270 }
   }
 }

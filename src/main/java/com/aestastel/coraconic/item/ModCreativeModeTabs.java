@@ -73,6 +73,7 @@ public class ModCreativeModeTabs {
           output.accept(ModItems.COMMONMETAL_CORE);
           output.accept(ModItems.CORACONIC_CORE);
           output.accept(ModItems.AVIRACONIC_CORE);
+          output.accept(ModItems.EFFECT_AMPLIFICATION_CORE);
           output.accept(ModItems.RAW_LEAD);
           output.accept(ModItems.RAW_TIN);
           output.accept(ModItems.CORACONIC_ELEMENT);
@@ -131,6 +132,7 @@ public class ModCreativeModeTabs {
           output.accept(ModItems.AVIRACONIC_AXE);
           output.accept(ModItems.AVIRACONIC_SHOVEL);
           output.accept(ModItems.AVIRACONIC_HOE);
+          output.accept(ModItems.SPANNER);
         })
         .build()
     );

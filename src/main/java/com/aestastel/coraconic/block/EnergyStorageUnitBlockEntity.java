@@ -9,6 +9,10 @@
 
 package com.aestastel.coraconic.block;
 
+import com.aestastel.coraconic.energy.EnergyFaceConfigurable;
+import com.aestastel.coraconic.energy.EnergyFaceMode;
+import com.aestastel.coraconic.energy.EnergyFaceStorage;
+import com.aestastel.coraconic.energy.EnergyFaceTransfer;
 import com.aestastel.coraconic.energy.ModEnergyStorage;
 import com.aestastel.coraconic.menu.EnergyStorageUnitMenu;
 import net.minecraft.core.BlockPos;
@@ -30,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 能量存储单元方块实体：保存 FE 能量与两个物品槽位。
@@ -45,16 +50,20 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  * <p>当总容量超过 {@link Integer#MAX_VALUE}（例如 MK3 的 3.2G）时，内部会
  * 自动拆分为多个不超过 int 上限的能量段，并按查询面暴露不同段；线缆连接
  * 不同面即可访问完整容量。GUI 与充放电槽始终使用所有段的总和。
+ * 六个面还可分别配置输入、输出、输入/输出或阻断模式，并主动与相邻能量
+ * 方块交换能量。
  *
  * <p>Energy storage unit block entity. It stores FE and two item slots:
  * a charge slot (energy flows from the unit into the item) and a discharge slot
  * (energy flows from the item into the unit). Capacities above
  * {@link Integer#MAX_VALUE} are split into int-sized segments mapped to
- * different sides; the GUI and item slots use the sum of all segments.
+ * different sides; the GUI and item slots use the sum of all segments. Each face
+ * has an independent input/output/blocked mode and actively exchanges energy
+ * with adjacent energy blocks.
  */
 public class EnergyStorageUnitBlockEntity
   extends BlockEntity
-  implements Container, MenuProvider
+  implements Container, MenuProvider, EnergyFaceConfigurable
 {
 
   /** 充电槽：能量从单元进入物品。 */
@@ -67,6 +76,9 @@ public class EnergyStorageUnitBlockEntity
   private final ModEnergyStorage[] banks;
   private final long totalCapacity;
   private final int transfer;
+  private final EnergyFaceMode[] faceModes = new EnergyFaceMode[6];
+  private final IEnergyStorage[] sideStorages = new IEnergyStorage[6];
+  private final IEnergyStorage nullSideStorage;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -103,6 +115,17 @@ public class EnergyStorageUnitBlockEntity
         this::setChanged
       );
     }
+
+    for (Direction direction : Direction.values()) {
+      this.faceModes[direction.get3DDataValue()] = EnergyFaceMode.INPUT_OUTPUT;
+      this.sideStorages[direction.get3DDataValue()] =
+        new EnergyFaceStorage(
+          getBankForSide(direction),
+          this,
+          direction
+        );
+    }
+    this.nullSideStorage = new EnergyFaceStorage(banks[0], this, null);
   }
 
   /**
@@ -116,6 +139,7 @@ public class EnergyStorageUnitBlockEntity
     }
     chargeItem();
     dischargeItem();
+    transferFaces();
   }
 
   /**
@@ -211,24 +235,182 @@ public class EnergyStorageUnitBlockEntity
   }
 
   /**
-   * 按面返回对应的能量段。
+   * 按面返回带模式门控的能量能力。
    *
    * <p>容量不超过 int 上限时只有一个段；MK3 被拆成两个 1.6G 段，不同面会
-   * 暴露不同段，线缆连接不同面即可访问完整的 3.2G。
+   * 暴露不同段，线缆连接不同面即可访问完整的 3.2G。返回的视图会根据该面
+   * 的输入/输出模式拒绝不允许的操作。
    *
-   * <p>Returns the energy segment for the queried side. Large capacities are
-   * split into int-sized segments and mapped to different faces.
+   * <p>Returns the face-mode-gated energy capability for the queried side.
+   * Large capacities are split into int-sized segments and mapped to different
+   * faces.
    *
    * @param side 查询面；{@code null} 表示不区分面 / queried side, null for side-agnostic
    */
-  public ModEnergyStorage getEnergyStorageForSide(Direction side) {
+  public IEnergyStorage getEnergyStorageForSide(@Nullable Direction side) {
+    return side == null
+      ? nullSideStorage
+      : sideStorages[side.get3DDataValue()];
+  }
+
+  private ModEnergyStorage getBankForSide(Direction side) {
     if (banks.length == 1) {
       return banks[0];
     }
-    int index = side == null
-      ? 0
-      : Math.floorMod(side.get3DDataValue(), banks.length);
-    return banks[index];
+    return banks[Math.floorMod(side.get3DDataValue(), banks.length)];
+  }
+
+  @Override
+  public EnergyFaceMode getFaceMode(@Nullable Direction side) {
+    if (side == null) {
+      return getDefaultFaceMode();
+    }
+    EnergyFaceMode mode = faceModes[side.get3DDataValue()];
+    return mode == null ? getDefaultFaceMode() : mode;
+  }
+
+  @Override
+  public void setFaceMode(Direction side, EnergyFaceMode mode) {
+    faceModes[side.get3DDataValue()] = mode;
+    setChanged();
+  }
+
+  @Override
+  public EnergyFaceMode getDefaultFaceMode() {
+    return EnergyFaceMode.INPUT_OUTPUT;
+  }
+
+  /**
+   * 每个服务器 tick 处理六个面的主动能量搬运。
+   *
+   * <p>主动传输与外部能力接口共用同一组面模式。输入面拉取，输出面推送；
+   * 输入/输出面按两端能量差的一半平衡，避免两台方块在同一 tick 来回搬移。
+   *
+   * <p>Runs active per-face transfer. Input faces pull and output faces push;
+   * input/output faces balance by half the energy difference so two blocks
+   * cannot ping-pong energy every tick.
+   */
+  private void transferFaces() {
+    if (this.level == null) {
+      return;
+    }
+
+    for (Direction side : Direction.values()) {
+      if (
+        !EnergyFaceTransfer.ownsTransfer(
+          this.level,
+          this.worldPosition,
+          side
+        )
+      ) {
+        continue;
+      }
+
+      EnergyFaceMode mode = getFaceMode(side);
+      if (mode == EnergyFaceMode.BLOCKED) {
+        continue;
+      }
+
+      if (mode == EnergyFaceMode.INPUT) {
+        pullFrom(side, this.transfer);
+        continue;
+      }
+      if (mode == EnergyFaceMode.OUTPUT) {
+        pushTo(side, this.transfer);
+        continue;
+      }
+
+      // 输入/输出面按能量差平衡，避免两台 INOUT 方块来回搬移。
+      // Balance INOUT faces by half the energy difference so two
+      // input/output blocks cannot ping-pong energy every tick.
+      IEnergyStorage neighbour = getNeighbourStorage(side);
+      if (neighbour == null) {
+        continue;
+      }
+      long ownEnergy = getEnergyStoredLong();
+      long neighbourEnergy = neighbour.getEnergyStored();
+      if (ownEnergy < neighbourEnergy) {
+        int limit = (int) Math.min(
+          (long) this.transfer,
+          (neighbourEnergy - ownEnergy) / 2L
+        );
+        if (limit > 0) {
+          pullFrom(side, limit);
+        }
+      } else if (ownEnergy > neighbourEnergy) {
+        int limit = (int) Math.min(
+          (long) this.transfer,
+          (ownEnergy - neighbourEnergy) / 2L
+        );
+        if (limit > 0) {
+          pushTo(side, limit);
+        }
+      }
+    }
+  }
+
+  private int pushTo(Direction side, int limit) {
+    IEnergyStorage neighbour = getNeighbourStorage(side);
+    if (neighbour == null || !neighbour.canReceive()) {
+      return 0;
+    }
+
+    int available = extractFromBanks(limit, true);
+    if (available <= 0) {
+      return 0;
+    }
+    int accepted = neighbour.receiveEnergy(available, true);
+    if (accepted <= 0) {
+      return 0;
+    }
+
+    int extracted = extractFromBanks(accepted, false);
+    if (extracted <= 0) {
+      return 0;
+    }
+    int inserted = neighbour.receiveEnergy(extracted, false);
+    if (inserted < extracted) {
+      receiveIntoBanks(extracted - inserted, false);
+    }
+    return inserted;
+  }
+
+  private int pullFrom(Direction side, int limit) {
+    IEnergyStorage neighbour = getNeighbourStorage(side);
+    if (neighbour == null || !neighbour.canExtract()) {
+      return 0;
+    }
+
+    int offered = neighbour.extractEnergy(limit, true);
+    if (offered <= 0) {
+      return 0;
+    }
+    int accepted = receiveIntoBanks(offered, true);
+    if (accepted <= 0) {
+      return 0;
+    }
+
+    int extracted = neighbour.extractEnergy(accepted, false);
+    if (extracted <= 0) {
+      return 0;
+    }
+    int inserted = receiveIntoBanks(extracted, false);
+    if (inserted < extracted) {
+      neighbour.receiveEnergy(extracted - inserted, false);
+    }
+    return inserted;
+  }
+
+  @Nullable
+  private IEnergyStorage getNeighbourStorage(Direction side) {
+    if (this.level == null) {
+      return null;
+    }
+    return this.level.getCapability(
+      Capabilities.EnergyStorage.BLOCK,
+      this.worldPosition.relative(side),
+      side.getOpposite()
+    );
   }
 
   private int extractFromBanks(int amount, boolean simulate) {
@@ -387,7 +569,11 @@ public class EnergyStorageUnitBlockEntity
     DataComponentMap.Builder components
   ) {
     super.collectImplicitComponents(components);
-    if (getEnergyStoredLong() <= 0L && isEmpty()) {
+    if (
+      getEnergyStoredLong() <= 0L &&
+      isEmpty() &&
+      !hasNonDefaultFaceModes()
+    ) {
       return;
     }
     if (this.level == null) {
@@ -419,6 +605,7 @@ public class EnergyStorageUnitBlockEntity
   public void removeComponentsFromTag(CompoundTag tag) {
     tag.remove("energy");
     tag.remove("inventory");
+    tag.remove("face_modes");
   }
 
   // ---------------------------------------------------------------------------
@@ -437,6 +624,29 @@ public class EnergyStorageUnitBlockEntity
     }
     tag.putLongArray("energy", energies);
     tag.put("inventory", inventory.serializeNBT(registries));
+    tag.putIntArray("face_modes", serializeFaceModes());
+  }
+
+  private int[] serializeFaceModes() {
+    int[] modes = new int[6];
+    for (Direction direction : Direction.values()) {
+      modes[direction.get3DDataValue()] =
+        getFaceMode(direction).ordinal();
+    }
+    return modes;
+  }
+
+  private void loadFaceModes(int[] modes) {
+    if (modes.length != 6) {
+      return;
+    }
+    EnergyFaceMode[] values = EnergyFaceMode.values();
+    for (Direction direction : Direction.values()) {
+      int ordinal = modes[direction.get3DDataValue()];
+      if (ordinal >= 0 && ordinal < values.length) {
+        faceModes[direction.get3DDataValue()] = values[ordinal];
+      }
+    }
   }
 
   @Override
@@ -462,5 +672,7 @@ public class EnergyStorageUnitBlockEntity
     if (tag.contains("inventory")) {
       inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
+
+    loadFaceModes(tag.getIntArray("face_modes"));
   }
 }

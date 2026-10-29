@@ -10,7 +10,9 @@
 package com.aestastel.coraconic.datagen;
 
 import com.aestastel.coraconic.CoraconicTech;
+import com.aestastel.coraconic.block.EnergyStorageUnitBlock;
 import com.aestastel.coraconic.block.ModBlocks;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -51,6 +53,23 @@ public class ModBlockStatesProvider extends BlockStateProvider {
       ) {
         continue;
       }
+
+      // 能量存储单元与太阳能发电机可被扳手水平旋转。
+      // Energy storage units and the solar generator can be rotated horizontally.
+      if (
+        blockObject instanceof EnergyStorageUnitBlock ||
+        blockObject == ModBlocks.SOLAR_GENERATOR_MK0.get()
+      ) {
+        String path = BuiltInRegistries.BLOCK
+          .getKey(blockObject)
+          .getPath();
+        horizontalBlock(
+          blockObject,
+          models().cubeAll(path, modLoc("block/" + path))
+        );
+        continue;
+      }
+
       simpleBlock(blockObject);
     }
   }

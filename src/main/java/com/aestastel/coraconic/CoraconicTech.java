@@ -16,6 +16,7 @@ import com.aestastel.coraconic.item.ModItems;
 import com.aestastel.coraconic.loot.ModLootConditions;
 import com.aestastel.coraconic.loot.ModLootModifiers;
 import com.aestastel.coraconic.menu.ModMenuType;
+import com.aestastel.coraconic.network.ModNetwork;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -53,6 +54,7 @@ public class CoraconicTech {
     ModLootModifiers.register(modEventBus);
     ModCreativeModeTabs.register(modEventBus);
 
+    modEventBus.addListener(ModNetwork::register);
     modEventBus.addListener(this::commonSetup);
     NeoForge.EVENT_BUS.register(this);
   }

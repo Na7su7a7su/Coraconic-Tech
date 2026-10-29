@@ -9,6 +9,10 @@
 
 package com.aestastel.coraconic.block;
 
+import com.aestastel.coraconic.energy.EnergyFaceConfigurable;
+import com.aestastel.coraconic.energy.EnergyFaceMode;
+import com.aestastel.coraconic.energy.EnergyFaceStorage;
+import com.aestastel.coraconic.energy.EnergyFaceTransfer;
 import com.aestastel.coraconic.menu.SolarGeneratorMk0Menu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,24 +37,25 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 太阳能发电机 MK0 方块实体。
  *
  * <p>白天、维度不是下界、天空光大于 10，且正上方整个天空柱没有完整不透明
  * 方块遮挡时，每个服务器 tick 向 96,000 FE 缓存中增加 120 FE。缓存会优先
- * 给输出槽中的可充电物品充能，剩余能量通过所有面以每面最高 600 FE/t 对外
- * 输出。
+ * 给输出槽中的可充电物品充能，剩余能量通过六个可独立配置的面以每面最高
+ * 600 FE/t 对外输出。
  *
  * <p>During daytime, outside the Nether, with sky light greater than 10 and no
  * full opaque block anywhere above the panel, it generates 120 FE per server
  * tick into a 96,000 FE buffer. The buffer first charges an energy-receiving
- * item in the output slot, then exposes the remainder on every face at up to
- * 600 FE/t.
+ * item in the output slot, then uses six independently configured faces at up
+ * to 600 FE/t each.
  */
 public class SolarGeneratorMk0BlockEntity
   extends BlockEntity
-  implements Container, MenuProvider
+  implements Container, MenuProvider, EnergyFaceConfigurable
 {
 
   public static final int CAPACITY = 96_000;
@@ -70,7 +75,10 @@ public class SolarGeneratorMk0BlockEntity
     }
   };
 
-  private final IEnergyStorage sideStorage = new SolarSideEnergyStorage();
+  private final EnergyFaceMode[] faceModes = new EnergyFaceMode[6];
+  private final IEnergyStorage[] sideStorages = new IEnergyStorage[6];
+  private final IEnergyStorage nullSideStorage;
+  private final IEnergyStorage bufferStorage = new SolarBufferEnergyStorage();
 
   public SolarGeneratorMk0BlockEntity(
     BlockEntityType<?> type,
@@ -78,6 +86,20 @@ public class SolarGeneratorMk0BlockEntity
     BlockState state
   ) {
     super(type, pos, state);
+    for (Direction direction : Direction.values()) {
+      this.faceModes[direction.get3DDataValue()] = EnergyFaceMode.OUTPUT;
+      this.sideStorages[direction.get3DDataValue()] =
+        new EnergyFaceStorage(
+          this.bufferStorage,
+          this,
+          direction
+        );
+    }
+    this.nullSideStorage = new EnergyFaceStorage(
+      this.bufferStorage,
+      this,
+      null
+    );
   }
 
   /**
@@ -102,6 +124,8 @@ public class SolarGeneratorMk0BlockEntity
     if (chargeOutputItem() > 0) {
       changed = true;
     }
+
+    transferFaces();
 
     if (changed) {
       setChanged();
@@ -201,9 +225,163 @@ public class SolarGeneratorMk0BlockEntity
     return inserted;
   }
 
-  /** {@return 面向指定面的输出能力} */
-  public IEnergyStorage getEnergyStorageForSide(Direction side) {
-    return this.sideStorage;
+  /** {@return 面向指定面的能力视图} */
+  public IEnergyStorage getEnergyStorageForSide(@Nullable Direction side) {
+    return side == null
+      ? nullSideStorage
+      : sideStorages[side.get3DDataValue()];
+  }
+
+  @Override
+  public EnergyFaceMode getFaceMode(@Nullable Direction side) {
+    if (side == null) {
+      return getDefaultFaceMode();
+    }
+    EnergyFaceMode mode = faceModes[side.get3DDataValue()];
+    return mode == null ? getDefaultFaceMode() : mode;
+  }
+
+  @Override
+  public void setFaceMode(Direction side, EnergyFaceMode mode) {
+    faceModes[side.get3DDataValue()] = mode;
+    setChanged();
+  }
+
+  @Override
+  public EnergyFaceMode getDefaultFaceMode() {
+    return EnergyFaceMode.OUTPUT;
+  }
+
+  private void transferFaces() {
+    if (this.level == null) {
+      return;
+    }
+
+    for (Direction side : Direction.values()) {
+      if (
+        !EnergyFaceTransfer.ownsTransfer(
+          this.level,
+          this.worldPosition,
+          side
+        )
+      ) {
+        continue;
+      }
+
+      EnergyFaceMode mode = getFaceMode(side);
+      if (mode == EnergyFaceMode.BLOCKED) {
+        continue;
+      }
+
+      if (mode == EnergyFaceMode.INPUT) {
+        pullFrom(side, OUTPUT_PER_SIDE);
+        continue;
+      }
+      if (mode == EnergyFaceMode.OUTPUT) {
+        pushTo(side, OUTPUT_PER_SIDE);
+        continue;
+      }
+
+      IEnergyStorage neighbour = getNeighbourStorage(side);
+      if (neighbour == null) {
+        continue;
+      }
+      int ownEnergy = getEnergyStored();
+      int neighbourEnergy = neighbour.getEnergyStored();
+      if (ownEnergy < neighbourEnergy) {
+        int limit = Math.min(
+          OUTPUT_PER_SIDE,
+          (neighbourEnergy - ownEnergy) / 2
+        );
+        if (limit > 0) {
+          pullFrom(side, limit);
+        }
+      } else if (ownEnergy > neighbourEnergy) {
+        int limit = Math.min(
+          OUTPUT_PER_SIDE,
+          (ownEnergy - neighbourEnergy) / 2
+        );
+        if (limit > 0) {
+          pushTo(side, limit);
+        }
+      }
+    }
+  }
+
+  private int pushTo(Direction side, int limit) {
+    IEnergyStorage self = getEnergyStorageForSide(side);
+    if (!self.canExtract()) {
+      return 0;
+    }
+    IEnergyStorage neighbour = getNeighbourStorage(side);
+    if (neighbour == null || !neighbour.canReceive()) {
+      return 0;
+    }
+
+    int available = self.extractEnergy(limit, true);
+    if (available <= 0) {
+      return 0;
+    }
+    int accepted = neighbour.receiveEnergy(available, true);
+    if (accepted <= 0) {
+      return 0;
+    }
+
+    int extracted = self.extractEnergy(accepted, false);
+    if (extracted <= 0) {
+      return 0;
+    }
+    int inserted = neighbour.receiveEnergy(extracted, false);
+    if (inserted < extracted) {
+      this.energy = Math.min(
+        CAPACITY,
+        this.energy + (extracted - inserted)
+      );
+      setChanged();
+    }
+    return inserted;
+  }
+
+  private int pullFrom(Direction side, int limit) {
+    IEnergyStorage self = getEnergyStorageForSide(side);
+    if (!self.canReceive()) {
+      return 0;
+    }
+    IEnergyStorage neighbour = getNeighbourStorage(side);
+    if (neighbour == null || !neighbour.canExtract()) {
+      return 0;
+    }
+
+    int offered = neighbour.extractEnergy(limit, true);
+    if (offered <= 0) {
+      return 0;
+    }
+    int accepted = self.receiveEnergy(offered, true);
+    if (accepted <= 0) {
+      return 0;
+    }
+
+    int extracted = neighbour.extractEnergy(accepted, false);
+    if (extracted <= 0) {
+      return 0;
+    }
+    int inserted = self.receiveEnergy(extracted, false);
+    if (inserted < extracted) {
+      neighbour.receiveEnergy(extracted - inserted, false);
+    }
+    return inserted;
+  }
+
+  @Nullable
+  private IEnergyStorage getNeighbourStorage(Direction side) {
+    if (this.level == null) {
+      return null;
+    }
+    return this.level.getCapability(
+      Capabilities.EnergyStorage.BLOCK,
+      this.worldPosition.relative(side),
+      side.getOpposite()
+    );
   }
 
   /** {@return 当前缓存（FE）} */
@@ -307,12 +485,13 @@ public class SolarGeneratorMk0BlockEntity
     DataComponentMap.Builder components
   ) {
     super.collectImplicitComponents(components);
-    if (this.energy <= 0) {
+    if (this.energy <= 0 && !hasNonDefaultFaceModes()) {
       return;
     }
 
     CompoundTag tag = new CompoundTag();
     tag.putInt("energy", this.energy);
+    tag.putIntArray("face_modes", serializeFaceModes());
     BlockEntity.addEntityType(tag, this.getType());
     components.set(
       DataComponents.BLOCK_ENTITY_DATA,
@@ -331,6 +510,7 @@ public class SolarGeneratorMk0BlockEntity
   public void removeComponentsFromTag(CompoundTag tag) {
     tag.remove("energy");
     tag.remove("inventory");
+    tag.remove("face_modes");
   }
 
   // ---------------------------------------------------------------------------
@@ -345,6 +525,29 @@ public class SolarGeneratorMk0BlockEntity
     super.saveAdditional(tag, registries);
     tag.putInt("energy", this.energy);
     tag.put("inventory", this.inventory.serializeNBT(registries));
+    tag.putIntArray("face_modes", serializeFaceModes());
+  }
+
+  private int[] serializeFaceModes() {
+    int[] modes = new int[6];
+    for (Direction direction : Direction.values()) {
+      modes[direction.get3DDataValue()] =
+        getFaceMode(direction).ordinal();
+    }
+    return modes;
+  }
+
+  private void loadFaceModes(int[] modes) {
+    if (modes.length != 6) {
+      return;
+    }
+    EnergyFaceMode[] values = EnergyFaceMode.values();
+    for (Direction direction : Direction.values()) {
+      int ordinal = modes[direction.get3DDataValue()];
+      if (ordinal >= 0 && ordinal < values.length) {
+        faceModes[direction.get3DDataValue()] = values[ordinal];
+      }
+    }
   }
 
   @Override
@@ -360,19 +563,36 @@ public class SolarGeneratorMk0BlockEntity
         tag.getCompound("inventory")
       );
     }
+
+    loadFaceModes(tag.getIntArray("face_modes"));
   }
 
   /**
-   * 每个面独立的输出能力；单次抽取上限 600 FE。
+   * 太阳能缓存的实际能量操作；面模式由 {@link EnergyFaceStorage} 门控。
    *
-   * <p>Per-side output capability with a 600 FE extraction limit per call.
-   * Real extraction first gives the output-slot item priority over the buffer.
+   * <p>Backend buffer storage. Face modes are applied by
+   * {@link EnergyFaceStorage}.
    */
-  private final class SolarSideEnergyStorage implements IEnergyStorage {
+  private final class SolarBufferEnergyStorage implements IEnergyStorage {
 
     @Override
     public int receiveEnergy(int toReceive, boolean simulate) {
-      return 0;
+      if (toReceive <= 0 || SolarGeneratorMk0BlockEntity.this.energy >= CAPACITY) {
+        return 0;
+      }
+
+      int accepted = Math.min(
+        CAPACITY - SolarGeneratorMk0BlockEntity.this.energy,
+        Math.min(OUTPUT_PER_SIDE, toReceive)
+      );
+      if (accepted <= 0) {
+        return 0;
+      }
+      if (!simulate) {
+        SolarGeneratorMk0BlockEntity.this.energy += accepted;
+        setChanged();
+      }
+      return accepted;
     }
 
     @Override
@@ -421,7 +641,7 @@ public class SolarGeneratorMk0BlockEntity
 
     @Override
     public boolean canReceive() {
-      return false;
+      return true;
     }
   }
 }

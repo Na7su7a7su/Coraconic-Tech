@@ -11,19 +11,24 @@ package com.aestastel.coraconic.block;
 
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -39,6 +44,9 @@ import net.minecraft.world.phys.HitResult;
  */
 public class SolarGeneratorMk0Block extends Block implements EntityBlock {
 
+  public static final DirectionProperty FACING =
+    HorizontalDirectionalBlock.FACING;
+
   private final Supplier<BlockEntityType<?>> typeSupplier;
 
   public SolarGeneratorMk0Block(
@@ -47,6 +55,24 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
+    registerDefaultState(
+      this.stateDefinition.any().setValue(FACING, Direction.NORTH)
+    );
+  }
+
+  @Override
+  protected void createBlockStateDefinition(
+    StateDefinition.Builder<Block, BlockState> builder
+  ) {
+    builder.add(FACING);
+  }
+
+  @Override
+  public BlockState getStateForPlacement(BlockPlaceContext context) {
+    return defaultBlockState().setValue(
+      FACING,
+      context.getHorizontalDirection().getOpposite()
+    );
   }
 
   @Override
@@ -118,7 +144,8 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
       player.isCreative() &&
       level.getBlockEntity(pos) instanceof
         SolarGeneratorMk0BlockEntity blockEntity &&
-      blockEntity.getEnergyStored() > 0
+      (blockEntity.getEnergyStored() > 0 ||
+        blockEntity.hasNonDefaultFaceModes())
     ) {
       ItemStack stack = new ItemStack(this);
       blockEntity.saveToItem(stack, level.registryAccess());

@@ -11,17 +11,22 @@ package com.aestastel.coraconic.block;
 
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -46,6 +51,9 @@ public class ItemStorageUnitBlock extends Block implements EntityBlock {
   public static final int SLOTS_MK2 = 162;
   public static final int SLOTS_MK3 = 243;
 
+  public static final DirectionProperty FACING =
+    HorizontalDirectionalBlock.FACING;
+
   /** 方块实体类型来源；延迟求值，避免方块与方块实体注册相互初始化。 */
   private final Supplier<BlockEntityType<?>> typeSupplier;
   /** 本等级的总槽位数。 */
@@ -59,6 +67,24 @@ public class ItemStorageUnitBlock extends Block implements EntityBlock {
     super(properties);
     this.typeSupplier = typeSupplier;
     this.slots = slots;
+    registerDefaultState(
+      this.stateDefinition.any().setValue(FACING, Direction.NORTH)
+    );
+  }
+
+  @Override
+  protected void createBlockStateDefinition(
+    StateDefinition.Builder<Block, BlockState> builder
+  ) {
+    builder.add(FACING);
+  }
+
+  @Override
+  public BlockState getStateForPlacement(BlockPlaceContext context) {
+    return defaultBlockState().setValue(
+      FACING,
+      context.getHorizontalDirection().getOpposite()
+    );
   }
 
   /**
