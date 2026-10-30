@@ -50,6 +50,12 @@ public enum EnergyFaceMode {
     return modes[(ordinal() + 1) % modes.length];
   }
 
+  /** {@return 配置模式下的上一个模式} */
+  public EnergyFaceMode previous() {
+    EnergyFaceMode[] modes = values();
+    return modes[(ordinal() - 1 + modes.length) % modes.length];
+  }
+
   /** {@return 该模式的翻译键} */
   public String translationKey() {
     return "energy_face_mode.coraconic." + name().toLowerCase(Locale.ROOT);

@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.6b`
-- 最近版本提交：`0.0.6bp_261029_a`
-- 最后更新：2026-10-29
+- 最近版本提交：`0.0.6bq_261030_a`
+- 最后更新：2026-10-30
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6bq_261030_a`：能量存储单元与太阳能发电机 GUI 新增共享面配置悬浮窗；按钮位于界面左侧外部，展开后不遮挡物品栏与界面主体；支持左键正向、右键反向循环，并与扳手配置模式共享面设置。
 - `0.0.6bp_261029_a`：新增效应放大核心与数据生成；为七种功能方块加入水平朝向；扳手扩展为旋转/扳手/配置三模式；能量存储单元与太阳能发电机支持六面独立输入、输出、输入/输出、阻断配置，加入相邻方块主动传输、面配置持久化与掉落保留。
 - `0.0.6ap_261028_a`：新增太阳能发电机 MK0（96,000 FE 缓存、120 FE/t 发电、白天与完整天空柱判定、优先输出槽、掉落保留能量），并为能量单元与物品存储单元物品加入物品栏耐久条显示。
 - `0.0.5cu_261026_a`：新增粗锡/粗铅与锡/铅矿石的熔炉、高炉配方，矿石配方覆盖深板岩变种。
@@ -109,7 +110,8 @@
 - GUI 显示当前能量、容量、能量条与玩家背包
 - 能量显示在 1,000 以上使用 `k FE`，1,000,000 以上使用 `M FE`，1,000,000,000 以上使用 `G FE`；保留两位小数，按住 Shift 显示完整 FE 数值
 - MK3 等超过 `Integer.MAX_VALUE` 的容量会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
-- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输入/输出；仅能通过扳手配置模式切换
+- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输入/输出
+- GUI 左侧外部上方提供统一的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，并与扳手配置模式共用同一套设置
 - 输入面会主动从相邻能量方块抽取能量，输出面会主动向相邻能量方块发送能量；阻断面拒绝所有外部输入输出
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
@@ -117,7 +119,8 @@
 
 - 内部缓存：`96,000 FE`
 - 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `120 FE/t`
-- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出；仅能通过扳手配置模式切换
+- 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出
+- GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用扳手配置模式
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 包含输出槽、竖直能量条、能量数值与玩家背包
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
@@ -243,13 +246,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.6b`
-- Latest version commit: `0.0.6bp_261029_a`
-- Last updated: 2026-10-29
+- Latest version commit: `0.0.6bq_261030_a`
+- Last updated: 2026-10-30
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6bq_261030_a`: added a shared face configuration popup to energy storage unit and solar generator GUIs; the button sits outside the upper-left edge and the expanded panel does not cover the inventory or main UI; left-click cycles forward and right-click cycles backward, using the same face settings as the wrench configure mode.
 - `0.0.6bp_261029_a`: added the Effect Amplification Core and its data generation; added horizontal facing to the seven functional blocks; expanded the wrench into rotate, wrench, and configure modes; added independent per-face input, output, input/output, and blocked modes to energy storage units and the solar generator, with active adjacent transfer, face-mode persistence, and drop preservation.
 - `0.0.6ap_261028_a`: added Solar Generator MK0 (96,000 FE buffer, 120 FE/t generation, daytime and full sky-column checks, output-slot priority, retained buffered energy on drop), plus durability-style inventory bars for energy and item storage unit items.
 - `0.0.5cu_261026_a`: added furnace and blast furnace recipes for raw tin/lead and tin/lead ores, including deepslate ore variants.
@@ -328,7 +332,8 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The GUI shows current energy, capacity, a large energy display, and the player inventory
 - Energy is abbreviated with `k FE`, `M FE`, or `G FE` above the corresponding thresholds, with two decimal places; hold Shift to show the full FE values
 - Capacities above `Integer.MAX_VALUE`, such as MK3, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
-- Each face can independently be set to input, output, input/output, or blocked; all faces default to input/output and can only be changed through the wrench configure mode
+- Each face can independently be set to input, output, input/output, or blocked; all faces default to input/output
+- The GUI has a shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode edits the same settings
 - Input faces actively pull from adjacent energy blocks, output faces actively push to them, and blocked faces reject all external input/output
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
@@ -336,7 +341,8 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 - Internal buffer: `96,000 FE`
 - Generates `120 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
-- Each face can independently be set to input, output, input/output, or blocked; all faces default to output and can only be changed through the wrench configure mode
+- Each face can independently be set to input, output, input/output, or blocked; all faces default to output
+- The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode remains available
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI contains an output slot, a vertical energy bar, energy text, and the player inventory
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides

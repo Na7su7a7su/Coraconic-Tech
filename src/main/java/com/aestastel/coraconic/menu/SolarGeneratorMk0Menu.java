@@ -10,8 +10,12 @@
 package com.aestastel.coraconic.menu;
 
 import com.aestastel.coraconic.block.SolarGeneratorMk0BlockEntity;
+import com.aestastel.coraconic.energy.EnergyFaceMode;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,14 +38,23 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
  * The slot accepts energy-receiving items; the buffer charges that item before
  * external sides consume the remainder.
  */
-public class SolarGeneratorMk0Menu extends AbstractContainerMenu {
+public class SolarGeneratorMk0Menu
+  extends AbstractContainerMenu
+  implements EnergyFaceMenu
+{
 
   public static final int MACHINE_SLOTS = 1;
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
+  private static final int FACE_MODE_DATA_START = 1;
+  private static final int DATA_COUNT =
+    FACE_MODE_DATA_START + FACE_MODE_COUNT;
 
   private final SolarGeneratorMk0BlockEntity blockEntity;
   private final ContainerData data;
+  private final boolean clientSide;
+  private final EnergyFaceMode[] syncedFaceModes =
+    new EnergyFaceMode[FACE_MODE_COUNT];
 
   public SolarGeneratorMk0Menu(
     int containerId,
@@ -60,26 +73,52 @@ public class SolarGeneratorMk0Menu extends AbstractContainerMenu {
     super(ModMenuType.SOLAR_GENERATOR_MK0.get(), containerId);
     checkContainerSize(container, MACHINE_SLOTS);
     this.blockEntity = blockEntity;
+    this.clientSide = playerInventory.player.level().isClientSide;
+    for (Direction direction : Direction.values()) {
+      this.syncedFaceModes[direction.get3DDataValue()] =
+        blockEntity != null
+          ? blockEntity.getFaceMode(direction)
+          : EnergyFaceMode.OUTPUT;
+    }
 
     if (blockEntity != null) {
       this.data = new ContainerData() {
         @Override
         public int get(int index) {
+          if (index >= FACE_MODE_DATA_START) {
+            Direction side = Direction.from3DDataValue(
+              index - FACE_MODE_DATA_START
+            );
+            if (!clientSide) {
+              return blockEntity.getFaceMode(side).ordinal();
+            }
+            return syncedFaceModes[side.get3DDataValue()].ordinal();
+          }
+
           return blockEntity.getEnergyStored();
         }
 
         @Override
         public void set(int index, int value) {
+          if (index >= FACE_MODE_DATA_START) {
+            Direction side = Direction.from3DDataValue(
+              index - FACE_MODE_DATA_START
+            );
+            syncedFaceModes[side.get3DDataValue()] =
+              EnergyFaceMode.byOrdinal(value);
+            return;
+          }
+
           blockEntity.setEnergyStored(value);
         }
 
         @Override
         public int getCount() {
-          return 1;
+          return DATA_COUNT;
         }
       };
     } else {
-      this.data = new SimpleContainerData(1);
+      this.data = new SimpleContainerData(DATA_COUNT);
     }
 
     addSlot(
@@ -148,6 +187,41 @@ public class SolarGeneratorMk0Menu extends AbstractContainerMenu {
   /** {@return 缓存容量（FE）} */
   public int getCapacity() {
     return SolarGeneratorMk0BlockEntity.CAPACITY;
+  }
+
+  @Override
+  public EnergyFaceMode getFaceMode(Direction side) {
+    return EnergyFaceMode.byOrdinal(
+      data.get(FACE_MODE_DATA_START + side.get3DDataValue())
+    );
+  }
+
+  @Override
+  public boolean clickMenuButton(Player player, int id) {
+    if (
+      id < 0 ||
+      id >= FACE_MODE_COUNT * 2 ||
+      blockEntity == null ||
+      !stillValid(player)
+    ) {
+      return false;
+    }
+
+    Direction side = Direction.from3DDataValue(id % FACE_MODE_COUNT);
+    boolean reverse = id >= FACE_MODE_COUNT;
+    EnergyFaceMode mode = blockEntity.cycleFaceMode(side, reverse);
+    syncedFaceModes[side.get3DDataValue()] = mode;
+
+    player.level().playSound(
+      null,
+      blockEntity.getBlockPos(),
+      SoundEvents.LEVER_CLICK,
+      SoundSource.BLOCKS,
+      0.4F,
+      1.0F
+    );
+    broadcastChanges();
+    return true;
   }
 
   @Override

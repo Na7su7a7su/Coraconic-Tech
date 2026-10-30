@@ -10,8 +10,12 @@
 package com.aestastel.coraconic.menu;
 
 import com.aestastel.coraconic.block.EnergyStorageUnitBlockEntity;
+import com.aestastel.coraconic.energy.EnergyFaceMode;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,16 +38,25 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
  * plus the player inventory. Only the energy value is synchronised through
  * data slots.
  */
-public class EnergyStorageUnitMenu extends AbstractContainerMenu {
+public class EnergyStorageUnitMenu
+  extends AbstractContainerMenu
+  implements EnergyFaceMenu
+{
 
   public static final int MACHINE_SLOTS = 2;
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
+  private static final int FACE_MODE_DATA_START = 2;
+  private static final int DATA_COUNT =
+    FACE_MODE_DATA_START + FACE_MODE_COUNT;
 
   private final EnergyStorageUnitBlockEntity blockEntity;
   private final Container container;
   private final long capacity;
   private final ContainerData data;
+  private final boolean clientSide;
+  private final EnergyFaceMode[] syncedFaceModes =
+    new EnergyFaceMode[FACE_MODE_COUNT];
   private int energyLow;
   private int energyHigh;
 
@@ -78,6 +91,13 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
     this.container = container;
     this.blockEntity = blockEntity;
     this.capacity = capacity;
+    this.clientSide = playerInventory.player.level().isClientSide;
+    for (Direction direction : Direction.values()) {
+      this.syncedFaceModes[direction.get3DDataValue()] =
+        blockEntity != null
+          ? blockEntity.getFaceMode(direction)
+          : EnergyFaceMode.INPUT_OUTPUT;
+    }
 
     if (blockEntity != null) {
       long stored = blockEntity.getEnergyStoredLong();
@@ -86,6 +106,16 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
       this.data = new ContainerData() {
         @Override
         public int get(int index) {
+          if (index >= FACE_MODE_DATA_START) {
+            Direction side = Direction.from3DDataValue(
+              index - FACE_MODE_DATA_START
+            );
+            if (!clientSide) {
+              return blockEntity.getFaceMode(side).ordinal();
+            }
+            return syncedFaceModes[side.get3DDataValue()].ordinal();
+          }
+
           long current = blockEntity.getEnergyStoredLong();
           return index == 0
             ? (int) current
@@ -94,6 +124,15 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
 
         @Override
         public void set(int index, int value) {
+          if (index >= FACE_MODE_DATA_START) {
+            Direction side = Direction.from3DDataValue(
+              index - FACE_MODE_DATA_START
+            );
+            syncedFaceModes[side.get3DDataValue()] =
+              EnergyFaceMode.byOrdinal(value);
+            return;
+          }
+
           if (index == 0) {
             energyLow = value;
           } else {
@@ -104,11 +143,11 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
 
         @Override
         public int getCount() {
-          return 2;
+          return DATA_COUNT;
         }
       };
     } else {
-      this.data = new SimpleContainerData(2);
+      this.data = new SimpleContainerData(DATA_COUNT);
     }
 
     // 充电槽：只接受可以接收能量的物品。
@@ -206,6 +245,46 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
   /** {@return 最大容量（FE）} */
   public long getCapacity() {
     return capacity;
+  }
+
+  @Override
+  public EnergyFaceMode getFaceMode(Direction side) {
+    return EnergyFaceMode.byOrdinal(
+      data.get(FACE_MODE_DATA_START + side.get3DDataValue())
+    );
+  }
+
+  /**
+   * 处理 GUI 面配置按钮：0..5 正向循环，6..11 反向循环。
+   *
+   * <p>Handles face-mode buttons: 0..5 forward and 6..11 backward.
+   */
+  @Override
+  public boolean clickMenuButton(Player player, int id) {
+    if (
+      id < 0 ||
+      id >= FACE_MODE_COUNT * 2 ||
+      blockEntity == null ||
+      !stillValid(player)
+    ) {
+      return false;
+    }
+
+    Direction side = Direction.from3DDataValue(id % FACE_MODE_COUNT);
+    boolean reverse = id >= FACE_MODE_COUNT;
+    EnergyFaceMode mode = blockEntity.cycleFaceMode(side, reverse);
+    syncedFaceModes[side.get3DDataValue()] = mode;
+
+    player.level().playSound(
+      null,
+      blockEntity.getBlockPos(),
+      SoundEvents.LEVER_CLICK,
+      SoundSource.BLOCKS,
+      0.4F,
+      1.0F
+    );
+    broadcastChanges();
+    return true;
   }
 
   private static long join(int low, int high) {

@@ -46,6 +46,8 @@ public class SolarGeneratorMk0Screen
   private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_TEXT_Y = 78;
 
+  private final EnergyFaceConfigPanel faceConfigPanel;
+
   public SolarGeneratorMk0Screen(
     SolarGeneratorMk0Menu menu,
     Inventory playerInventory,
@@ -55,6 +57,10 @@ public class SolarGeneratorMk0Screen
     this.imageWidth = 176;
     this.imageHeight = 184;
     this.inventoryLabelY = this.imageHeight - 94;
+    this.faceConfigPanel = new EnergyFaceConfigPanel(
+      menu,
+      menu.containerId
+    );
   }
 
   @Override
@@ -78,6 +84,59 @@ public class SolarGeneratorMk0Screen
         mouseY
       );
     }
+
+    this.faceConfigPanel.render(
+      graphics,
+      this.leftPos,
+      this.topPos,
+      mouseX,
+      mouseY,
+      this.font
+    );
+  }
+
+  @Override
+  public boolean mouseClicked(
+    double mouseX,
+    double mouseY,
+    int button
+  ) {
+    if (
+      this.faceConfigPanel.mouseClicked(
+        mouseX,
+        mouseY,
+        button,
+        this.leftPos,
+        this.topPos
+      )
+    ) {
+      return true;
+    }
+    return super.mouseClicked(mouseX, mouseY, button);
+  }
+
+  @Override
+  public boolean mouseReleased(
+    double mouseX,
+    double mouseY,
+    int button
+  ) {
+    if (this.faceConfigPanel.mouseReleased()) {
+      return true;
+    }
+    return super.mouseReleased(mouseX, mouseY, button);
+  }
+
+  @Override
+  public boolean keyPressed(
+    int keyCode,
+    int scanCode,
+    int modifiers
+  ) {
+    if (this.faceConfigPanel.keyPressed(keyCode)) {
+      return true;
+    }
+    return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
   @Override

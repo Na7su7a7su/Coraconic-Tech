@@ -35,7 +35,18 @@ public interface EnergyFaceConfigurable {
 
   /** 按配置顺序切换指定面的模式，并返回新模式。 */
   default EnergyFaceMode cycleFaceMode(Direction side) {
-    EnergyFaceMode next = getFaceMode(side).next();
+    return cycleFaceMode(side, false);
+  }
+
+  /**
+   * 按配置顺序切换指定面的模式；{@code reverse} 为 true 时反向切换。
+   *
+   * <p>Cycles the face mode in either direction and returns the new mode.
+   */
+  default EnergyFaceMode cycleFaceMode(Direction side, boolean reverse) {
+    EnergyFaceMode next = reverse
+      ? getFaceMode(side).previous()
+      : getFaceMode(side).next();
     setFaceMode(side, next);
     return next;
   }
