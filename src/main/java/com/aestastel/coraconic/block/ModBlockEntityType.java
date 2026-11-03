@@ -142,19 +142,56 @@ public class ModBlockEntityType {
   );
 
   /**
-   * 太阳能发电机 MK0：96,000 FE 缓存、120 FE/t 发电。
+   * 太阳能发电机 MK0–MK3：共用方块实体逻辑，等级由所属方块提供。
    *
-   * <p>Solar Generator MK0: 96,000 FE buffer and 120 FE/t generation.
+   * <p>Solar Generator MK0–MK3: shared block entity logic with the tier
+   * supplied by the owning block.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
-    BlockEntityType<SolarGeneratorMk0BlockEntity>
+    BlockEntityType<SolarGeneratorBlockEntity>
   > SOLAR_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
     "solar_generator_mk0_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
         ModBlocks.SOLAR_GENERATOR_MK0.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<SolarGeneratorBlockEntity>
+  > SOLAR_GENERATOR_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_mk1_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createSolarGeneratorBlockEntity,
+        ModBlocks.SOLAR_GENERATOR_MK1.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<SolarGeneratorBlockEntity>
+  > SOLAR_GENERATOR_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_mk2_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createSolarGeneratorBlockEntity,
+        ModBlocks.SOLAR_GENERATOR_MK2.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<SolarGeneratorBlockEntity>
+  > SOLAR_GENERATOR_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_mk3_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createSolarGeneratorBlockEntity,
+        ModBlocks.SOLAR_GENERATOR_MK3.get()
       ).build(null)
   );
 
@@ -212,15 +249,16 @@ public class ModBlockEntityType {
    *
    * <p>Solar generator block entity factory.
    */
-  private static SolarGeneratorMk0BlockEntity createSolarGeneratorBlockEntity(
+  private static SolarGeneratorBlockEntity createSolarGeneratorBlockEntity(
     BlockPos pos,
     BlockState state
   ) {
-    if (state.getBlock() instanceof SolarGeneratorMk0Block generatorBlock) {
-      return new SolarGeneratorMk0BlockEntity(
+    if (state.getBlock() instanceof SolarGeneratorBlock generatorBlock) {
+      return new SolarGeneratorBlockEntity(
         generatorBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        generatorBlock.getTier()
       );
     }
     throw new IllegalStateException(

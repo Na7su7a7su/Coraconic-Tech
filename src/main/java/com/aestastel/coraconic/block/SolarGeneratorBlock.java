@@ -2,7 +2,7 @@
  * Copyright (c) 2026 Aestastel
  *
  * This file is part of Coraconic Tech and is licensed under the MIT License.
- * See the LICENSE file in the project root for the full license text.
+ * See the LICENSE file in the project root for full license text.
  *
  * SPDX-License-Identifier: MIT
  */
@@ -33,28 +33,31 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * 太阳能发电机 MK0 方块。
+ * 太阳能发电机 MK0–MK3 的共用方块。
  *
- * <p>方块本身只负责创建方块实体、驱动服务端 ticker 和打开界面。发电判定、
- * 缓存与面向外部的能量能力均由 {@link SolarGeneratorMk0BlockEntity} 处理。
+ * <p>方块本身只负责创建方块实体、驱动服务端 ticker 和打开界面；发电判定、
+ * 缓存与面向外部的能量能力由 {@link SolarGeneratorBlockEntity} 处理。
  *
- * <p>Solar Generator MK0 block. It creates the block entity, runs the
- * server-side ticker, and opens the GUI; generation and energy handling live in
- * {@link SolarGeneratorMk0BlockEntity}.
+ * <p>Shared solar generator block for MK0–MK3. It creates the block entity,
+ * runs the server-side ticker, and opens the GUI; generation and energy
+ * handling live in {@link SolarGeneratorBlockEntity}.
  */
-public class SolarGeneratorMk0Block extends Block implements EntityBlock {
+public class SolarGeneratorBlock extends Block implements EntityBlock {
 
   public static final DirectionProperty FACING =
     HorizontalDirectionalBlock.FACING;
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
+  private final SolarGeneratorTier tier;
 
-  public SolarGeneratorMk0Block(
+  public SolarGeneratorBlock(
     Properties properties,
-    Supplier<BlockEntityType<?>> typeSupplier
+    Supplier<BlockEntityType<?>> typeSupplier,
+    SolarGeneratorTier tier
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
+    this.tier = tier;
     registerDefaultState(
       this.stateDefinition.any().setValue(FACING, Direction.NORTH)
     );
@@ -77,10 +80,11 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return new SolarGeneratorMk0BlockEntity(
+    return new SolarGeneratorBlockEntity(
       typeSupplier.get(),
       pos,
-      state
+      state,
+      this.tier
     );
   }
 
@@ -94,7 +98,7 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
       return null;
     }
     return (tickLevel, pos, tickState, blockEntity) -> {
-      if (blockEntity instanceof SolarGeneratorMk0BlockEntity generator) {
+      if (blockEntity instanceof SolarGeneratorBlockEntity generator) {
         generator.tick();
       }
     };
@@ -103,6 +107,11 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
   /** {@return 本方块对应的方块实体类型} */
   public BlockEntityType<?> getBlockEntityType() {
     return typeSupplier.get();
+  }
+
+  /** {@return 本方块对应的太阳能发电机等级} */
+  public SolarGeneratorTier getTier() {
+    return this.tier;
   }
 
   @Override
@@ -118,9 +127,12 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
     }
     if (
       level.getBlockEntity(pos) instanceof
-        SolarGeneratorMk0BlockEntity blockEntity
+        SolarGeneratorBlockEntity blockEntity
     ) {
-      player.openMenu(blockEntity, buffer -> buffer.writeBlockPos(pos));
+      player.openMenu(blockEntity, buffer -> {
+        buffer.writeBlockPos(pos);
+        buffer.writeVarInt(blockEntity.getCapacity());
+      });
     }
     return InteractionResult.CONSUME;
   }
@@ -143,7 +155,7 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
       !level.isClientSide &&
       player.isCreative() &&
       level.getBlockEntity(pos) instanceof
-        SolarGeneratorMk0BlockEntity blockEntity &&
+        SolarGeneratorBlockEntity blockEntity &&
       (blockEntity.getEnergyStored() > 0 ||
         blockEntity.hasNonDefaultFaceModes())
     ) {
@@ -179,7 +191,7 @@ public class SolarGeneratorMk0Block extends Block implements EntityBlock {
     ItemStack stack = new ItemStack(this);
     if (
       level.getBlockEntity(pos) instanceof
-        SolarGeneratorMk0BlockEntity blockEntity
+        SolarGeneratorBlockEntity blockEntity
     ) {
       blockEntity.saveToItem(stack, level.registryAccess());
     }

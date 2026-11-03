@@ -72,11 +72,26 @@ public final class ModCapabilities {
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
 
-    // 太阳能发电机：每个面都可以抽取缓存能量。
-    // Solar generator: every face can extract from its buffer.
+    // 太阳能发电机：每个面都可以按面模式访问缓存能量。
+    // Solar generators: expose face-mode-gated buffer access on every side.
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
       ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
 

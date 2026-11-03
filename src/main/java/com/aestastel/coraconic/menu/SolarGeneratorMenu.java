@@ -2,14 +2,14 @@
  * Copyright (c) 2026 Aestastel
  *
  * This file is part of Coraconic Tech and is licensed under the MIT License.
- * See the LICENSE file in the project root for the full license text.
+ * See the LICENSE file in the project root for full license text.
  *
  * SPDX-License-Identifier: MIT
  */
 
 package com.aestastel.coraconic.menu;
 
-import com.aestastel.coraconic.block.SolarGeneratorMk0BlockEntity;
+import com.aestastel.coraconic.block.SolarGeneratorBlockEntity;
 import com.aestastel.coraconic.energy.EnergyFaceMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,16 +29,17 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
- * 太阳能发电机 MK0 菜单：一个输出槽加玩家背包。
+ * 太阳能发电机 MK0–MK3 的共用菜单。
  *
  * <p>输出槽只接受具有物品 FE 能力且能够接收能量的物品。缓存优先向该槽位
- * 中的物品充能，剩余能量由外部面抽取。
+ * 中的物品充能，剩余能量由外部面抽取。容量由打开界面时服务端发送，避免
+ * 每个等级硬编码在菜单类中。
  *
- * <p>Menu for Solar Generator MK0: one output slot plus the player inventory.
- * The slot accepts energy-receiving items; the buffer charges that item before
- * external sides consume the remainder.
+ * <p>Shared solar generator menu for MK0–MK3. The output slot accepts only
+ * energy-receiving items; the buffer charges that item before external sides
+ * consume the remainder. Capacity is sent by the server when the menu opens.
  */
-public class SolarGeneratorMk0Menu
+public class SolarGeneratorMenu
   extends AbstractContainerMenu
   implements EnergyFaceMenu
 {
@@ -50,29 +51,38 @@ public class SolarGeneratorMk0Menu
   private static final int DATA_COUNT =
     FACE_MODE_DATA_START + FACE_MODE_COUNT;
 
-  private final SolarGeneratorMk0BlockEntity blockEntity;
+  private final SolarGeneratorBlockEntity blockEntity;
+  private final int capacity;
   private final ContainerData data;
   private final boolean clientSide;
   private final EnergyFaceMode[] syncedFaceModes =
     new EnergyFaceMode[FACE_MODE_COUNT];
 
-  public SolarGeneratorMk0Menu(
+  public SolarGeneratorMenu(
     int containerId,
     Inventory playerInventory,
-    SolarGeneratorMk0BlockEntity blockEntity
+    SolarGeneratorBlockEntity blockEntity
   ) {
-    this(containerId, playerInventory, blockEntity, blockEntity);
+    this(
+      containerId,
+      playerInventory,
+      blockEntity,
+      blockEntity,
+      blockEntity.getCapacity()
+    );
   }
 
-  public SolarGeneratorMk0Menu(
+  public SolarGeneratorMenu(
     int containerId,
     Inventory playerInventory,
     Container container,
-    SolarGeneratorMk0BlockEntity blockEntity
+    SolarGeneratorBlockEntity blockEntity,
+    int capacity
   ) {
-    super(ModMenuType.SOLAR_GENERATOR_MK0.get(), containerId);
+    super(ModMenuType.SOLAR_GENERATOR.get(), containerId);
     checkContainerSize(container, MACHINE_SLOTS);
     this.blockEntity = blockEntity;
+    this.capacity = capacity;
     this.clientSide = playerInventory.player.level().isClientSide;
     for (Direction direction : Direction.values()) {
       this.syncedFaceModes[direction.get3DDataValue()] =
@@ -122,7 +132,12 @@ public class SolarGeneratorMk0Menu
     }
 
     addSlot(
-      new Slot(container, SolarGeneratorMk0BlockEntity.OUTPUT_SLOT, 80, 35) {
+      new Slot(
+        container,
+        SolarGeneratorBlockEntity.OUTPUT_SLOT,
+        80,
+        35
+      ) {
         @Override
         public boolean mayPlace(ItemStack stack) {
           return canCharge(stack);
@@ -157,25 +172,27 @@ public class SolarGeneratorMk0Menu
     addDataSlots(this.data);
   }
 
-  public static SolarGeneratorMk0Menu fromNetwork(
+  public static SolarGeneratorMenu fromNetwork(
     int containerId,
     Inventory playerInventory,
     RegistryFriendlyByteBuf buffer
   ) {
     BlockPos pos = buffer.readBlockPos();
-    SolarGeneratorMk0BlockEntity blockEntity =
+    int capacity = buffer.readVarInt();
+    SolarGeneratorBlockEntity blockEntity =
       playerInventory.player.level().getBlockEntity(pos)
-        instanceof SolarGeneratorMk0BlockEntity generator
+        instanceof SolarGeneratorBlockEntity generator
         ? generator
         : null;
     Container container = blockEntity != null
       ? blockEntity
       : new SimpleContainer(MACHINE_SLOTS);
-    return new SolarGeneratorMk0Menu(
+    return new SolarGeneratorMenu(
       containerId,
       playerInventory,
       container,
-      blockEntity
+      blockEntity,
+      capacity
     );
   }
 
@@ -184,9 +201,9 @@ public class SolarGeneratorMk0Menu
     return this.data.get(0);
   }
 
-  /** {@return 缓存容量（FE）} */
+  /** {@return 当前等级缓存容量（FE）} */
   public int getCapacity() {
-    return SolarGeneratorMk0BlockEntity.CAPACITY;
+    return this.capacity;
   }
 
   @Override

@@ -2,7 +2,7 @@
  * Copyright (c) 2026 Aestastel
  *
  * This file is part of Coraconic Tech and is licensed under the MIT License.
- * See the LICENSE file in the project root for the full license text.
+ * See the LICENSE file in the project root for full license text.
  *
  * SPDX-License-Identifier: MIT
  */
@@ -11,7 +11,7 @@ package com.aestastel.coraconic.client;
 
 import com.aestastel.coraconic.CoraconicTech;
 import com.aestastel.coraconic.energy.EnergyFormat;
-import com.aestastel.coraconic.menu.SolarGeneratorMk0Menu;
+import com.aestastel.coraconic.menu.SolarGeneratorMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -21,15 +21,15 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 太阳能发电机 MK0 的客户端界面。
+ * 太阳能发电机 MK0–MK3 的共用客户端界面。
  *
  * <p>显示输出槽、缓存能量条、当前/最大能量和玩家背包。
  *
- * <p>Client screen for Solar Generator MK0. It shows the output slot, buffered
- * energy bar, current/max energy, and the player inventory.
+ * <p>Shared client screen for Solar Generator MK0–MK3. It shows the output slot,
+ * buffered energy bar, current/max energy, and the player inventory.
  */
-public class SolarGeneratorMk0Screen
-  extends AbstractContainerScreen<SolarGeneratorMk0Menu>
+public class SolarGeneratorScreen
+  extends AbstractContainerScreen<SolarGeneratorMenu>
 {
 
   private static final ResourceLocation TEXTURE =
@@ -48,8 +48,8 @@ public class SolarGeneratorMk0Screen
 
   private final EnergyFaceConfigPanel faceConfigPanel;
 
-  public SolarGeneratorMk0Screen(
-    SolarGeneratorMk0Menu menu,
+  public SolarGeneratorScreen(
+    SolarGeneratorMenu menu,
     Inventory playerInventory,
     Component title
   ) {

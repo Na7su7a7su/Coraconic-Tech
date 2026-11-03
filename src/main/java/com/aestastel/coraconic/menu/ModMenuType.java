@@ -50,10 +50,10 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
-    MenuType<SolarGeneratorMk0Menu>
-  > SOLAR_GENERATOR_MK0 = MENU_TYPES.register(
-    "solar_generator_mk0",
-    () -> IMenuTypeExtension.create(SolarGeneratorMk0Menu::fromNetwork)
+    MenuType<SolarGeneratorMenu>
+  > SOLAR_GENERATOR = MENU_TYPES.register(
+    "solar_generator",
+    () -> IMenuTypeExtension.create(SolarGeneratorMenu::fromNetwork)
   );
 
   /**

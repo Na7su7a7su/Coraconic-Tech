@@ -114,42 +114,45 @@ public class ModBlocks {
     "lead_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
   );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK1 = registerBlocks(
-    "item_storage_unit_mk1",
-    () ->
-      new ItemStorageUnitBlock(
-        BlockBehaviour.Properties.of()
-          .strength(2.5F, 6.0F)
-          .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
-        ItemStorageUnitBlock.SLOTS_MK1
-      ),
-    ItemStorageUnitItem::new
-  );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK2 = registerBlocks(
-    "item_storage_unit_mk2",
-    () ->
-      new ItemStorageUnitBlock(
-        BlockBehaviour.Properties.of()
-          .strength(3.0F, 6.0F)
-          .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
-        ItemStorageUnitBlock.SLOTS_MK2
-      ),
-    ItemStorageUnitItem::new
-  );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK3 = registerBlocks(
-    "item_storage_unit_mk3",
-    () ->
-      new ItemStorageUnitBlock(
-        BlockBehaviour.Properties.of()
-          .strength(3.5F, 6.0F)
-          .sound(SoundType.STONE),
-        () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
-        ItemStorageUnitBlock.SLOTS_MK3
-      ),
-    ItemStorageUnitItem::new
-  );
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK1 =
+    registerBlocks(
+      "item_storage_unit_mk1",
+      () ->
+        new ItemStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.STONE),
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_MK1
+        ),
+      ItemStorageUnitItem::new
+    );
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK2 =
+    registerBlocks(
+      "item_storage_unit_mk2",
+      () ->
+        new ItemStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.0F, 6.0F)
+            .sound(SoundType.STONE),
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_MK2
+        ),
+      ItemStorageUnitItem::new
+    );
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK3 =
+    registerBlocks(
+      "item_storage_unit_mk3",
+      () ->
+        new ItemStorageUnitBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.5F, 6.0F)
+            .sound(SoundType.STONE),
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_MK3
+        ),
+      ItemStorageUnitItem::new
+    );
   public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK1 =
     registerBlocks(
       "energy_storage_unit_mk1",
@@ -160,7 +163,7 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK1_ENTITY.get(),
           32_000_000L,
-          1_000
+          4_000
         ),
       EnergyStorageUnitItem::new
     );
@@ -174,7 +177,7 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK2_ENTITY.get(),
           320_000_000L,
-          4_000
+          16_000
         ),
       EnergyStorageUnitItem::new
     );
@@ -188,7 +191,7 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK3_ENTITY.get(),
           3_200_000_000L,
-          16_000
+          64_000
         ),
       EnergyStorageUnitItem::new
     );
@@ -196,11 +199,48 @@ public class ModBlocks {
     registerBlocks(
       "solar_generator_mk0",
       () ->
-        new SolarGeneratorMk0Block(
+        new SolarGeneratorBlock(
           BlockBehaviour.Properties.of()
             .strength(2.5F, 6.0F)
             .sound(SoundType.METAL),
-          () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get()
+          () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
+          SolarGeneratorTier.MK0
+        )
+    );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK1 =
+    registerBlocks(
+      "solar_generator_mk1",
+      () ->
+        new SolarGeneratorBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.0F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
+          SolarGeneratorTier.MK1
+        )
+    );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK2 =
+    registerBlocks(
+      "solar_generator_mk2",
+      () ->
+        new SolarGeneratorBlock(
+          BlockBehaviour.Properties.of()
+            .strength(3.5F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
+          SolarGeneratorTier.MK2
+        )
+    );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK3 =
+    registerBlocks(
+      "solar_generator_mk3",
+      () ->
+        new SolarGeneratorBlock(
+          BlockBehaviour.Properties.of()
+            .strength(4.0F, 6.0F)
+            .sound(SoundType.METAL),
+          () -> ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
+          SolarGeneratorTier.MK3
         )
     );
 

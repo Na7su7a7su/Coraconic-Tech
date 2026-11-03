@@ -11,7 +11,7 @@ package com.aestastel.coraconic.item;
 
 import com.aestastel.coraconic.block.EnergyStorageUnitBlock;
 import com.aestastel.coraconic.block.ItemStorageUnitBlock;
-import com.aestastel.coraconic.block.SolarGeneratorMk0Block;
+import com.aestastel.coraconic.block.SolarGeneratorBlock;
 import com.aestastel.coraconic.energy.EnergyFaceConfigurable;
 import com.aestastel.coraconic.energy.EnergyFaceMode;
 import java.util.List;
@@ -266,7 +266,7 @@ public class SpannerItem extends Item {
     return (
       block instanceof ItemStorageUnitBlock ||
       block instanceof EnergyStorageUnitBlock ||
-      block instanceof SolarGeneratorMk0Block
+      block instanceof SolarGeneratorBlock
     );
   }
 }

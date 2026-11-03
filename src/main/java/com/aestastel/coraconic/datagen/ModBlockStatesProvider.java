@@ -12,6 +12,7 @@ package com.aestastel.coraconic.datagen;
 import com.aestastel.coraconic.CoraconicTech;
 import com.aestastel.coraconic.block.EnergyStorageUnitBlock;
 import com.aestastel.coraconic.block.ModBlocks;
+import com.aestastel.coraconic.block.SolarGeneratorBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
@@ -58,7 +59,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
       // Energy storage units and the solar generator can be rotated horizontally.
       if (
         blockObject instanceof EnergyStorageUnitBlock ||
-        blockObject == ModBlocks.SOLAR_GENERATOR_MK0.get()
+        blockObject instanceof SolarGeneratorBlock
       ) {
         String path = BuiltInRegistries.BLOCK
           .getKey(blockObject)

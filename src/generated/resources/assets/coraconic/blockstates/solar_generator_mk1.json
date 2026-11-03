@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "coraconic:block/solar_generator_mk1",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "coraconic:block/solar_generator_mk1"
+    },
+    "facing=south": {
+      "model": "coraconic:block/solar_generator_mk1",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coraconic:block/solar_generator_mk1",
+      "y": 270
+    }
+  }
+}

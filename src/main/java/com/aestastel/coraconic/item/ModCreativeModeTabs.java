@@ -95,6 +95,9 @@ public class ModCreativeModeTabs {
           output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get());
           output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get());
           output.accept(ModBlocks.SOLAR_GENERATOR_MK0.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_MK1.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_MK2.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_MK3.get());
         })
         .build()
     );

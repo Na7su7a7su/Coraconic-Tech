@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.6b`
-- 最近版本提交：`0.0.6bq_261030_a`
-- 最后更新：2026-10-30
+- `mod_version`：`0.0.6c`
+- 最近版本提交：`0.0.6cp_261103_a`
+- 最后更新：2026-11-03
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6cp_261103_a`：新增太阳能发电机 MK1–MK3，按等级实现维度、昼夜、雷暴、天空光与天空柱遮挡规则；MK0 迁移到共享太阳能等级/方块实体/GUI；生成三个等级的占位方块纹理与完整数据资源；能量存储单元传输速率调整为 4,000/16,000/64,000 FE/t，MK0 当前发电量保留为 30 FE/t。
 - `0.0.6bq_261030_a`：能量存储单元与太阳能发电机 GUI 新增共享面配置悬浮窗；按钮位于界面左侧外部，展开后不遮挡物品栏与界面主体；支持左键正向、右键反向循环，并与扳手配置模式共享面设置。
 - `0.0.6bp_261029_a`：新增效应放大核心与数据生成；为七种功能方块加入水平朝向；扳手扩展为旋转/扳手/配置三模式；能量存储单元与太阳能发电机支持六面独立输入、输出、输入/输出、阻断配置，加入相邻方块主动传输、面配置持久化与掉落保留。
 - `0.0.6ap_261028_a`：新增太阳能发电机 MK0（96,000 FE 缓存、120 FE/t 发电、白天与完整天空柱判定、优先输出槽、掉落保留能量），并为能量单元与物品存储单元物品加入物品栏耐久条显示。
@@ -44,7 +45,7 @@
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元及太阳能发电机。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元及太阳能发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -100,9 +101,9 @@
 
 | 等级 |             容量 |    传输速率 |
 | ---- | ---------------: | ----------: |
-| MK1  |    32,000,000 FE |  1,000 FE/t |
-| MK2  |   320,000,000 FE |  4,000 FE/t |
-| MK3  | 3,200,000,000 FE | 16,000 FE/t |
+| MK1  |    32,000,000 FE |  4,000 FE/t |
+| MK2  |   320,000,000 FE | 16,000 FE/t |
+| MK3  | 3,200,000,000 FE | 64,000 FE/t |
 
 - 每个单元提供两个机器槽位：
     - 充电槽：把单元能量输入到物品
@@ -118,7 +119,7 @@
 #### 太阳能发电机 MK0
 
 - 内部缓存：`96,000 FE`
-- 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `120 FE/t`
+- 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `30 FE/t`
 - 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出
 - GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用扳手配置模式
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
@@ -126,6 +127,20 @@
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
+
+#### 太阳能发电机 MK1–MK3
+
+| 等级 |     缓存容量 |   每面输出 |   物品充能 |
+| ---- | -----------: | ---------: | ---------: |
+| MK1  |   192,000 FE | 1,200 FE/t | 1,200 FE/t |
+| MK2  |   480,000 FE | 2,400 FE/t | 2,400 FE/t |
+| MK3  | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |
+
+- 三个新等级共用 MK0 的输出槽、面模式配置、GUI 与掉落保留逻辑
+- MK1：维度不是下界、白天、天空光大于 10、上方无完整不透明遮挡时发电 `120 FE/t`；雷暴时天空光为 10，因此不发电
+- MK2：维度不是下界且上方无完整遮挡时工作；雷暴 `120 FE/t`；白天 `240 FE/t`；黑夜 `120 FE/t`
+- MK3：下界始终 `80 FE/t`；非下界有完整遮挡时 `80 FE/t`；无遮挡时雷暴 `360 FE/t`、白天 `960 FE/t`、黑夜 `240 FE/t`
+- 当前仅通过创造模式获取，尚未添加合成配方
 
 #### 能量存储单元物品
 
@@ -183,7 +198,7 @@
 | 晶体       | 完成       | 物品、纹理、标签与四语名称                              |
 | 物品存储   | 完成       | 三级容量、GUI、组件保存、自动化能力与自定义模型         |
 | 能量存储   | 完成       | 三级容量、GUI、多段能量、线缆能力与物品充放电           |
-| 太阳能发电 | 完成       | MK0、96,000 FE 缓存、120 FE/t 发电与每面 600 FE/t 输出 |
+| 太阳能发电 | 完成       | MK0–MK3、分级缓存/输出与维度/天气/遮挡规则              |
 | 配方与标签 | 大部分完成 | 基础材料与工具完成；存储单元配方待补                    |
 | 本地化     | 完成       | `en_us`、`zh_cn`、`zh_hk`、`zh_tw`                      |
 | 数据生成   | 完成       | 模型、标签、配方、进度、战利品与全局修饰器              |
@@ -245,14 +260,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.6b`
-- Latest version commit: `0.0.6bq_261030_a`
-- Last updated: 2026-10-30
+- `mod_version`: `0.0.6c`
+- Latest version commit: `0.0.6cp_261103_a`
+- Last updated: 2026-11-03
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6cp_261103_a`: added Solar Generators MK1–MK3 with tiered dimension, daytime, thunder, sky-light, and sky-column rules; migrated MK0 to a shared solar tier/block entity/GUI implementation; generated placeholder textures and complete data resources for all three tiers; updated energy storage transfer rates to 4,000/16,000/64,000 FE/t and kept MK0 generation at the current 30 FE/t.
 - `0.0.6bq_261030_a`: added a shared face configuration popup to energy storage unit and solar generator GUIs; the button sits outside the upper-left edge and the expanded panel does not cover the inventory or main UI; left-click cycles forward and right-click cycles backward, using the same face settings as the wrench configure mode.
 - `0.0.6bp_261029_a`: added the Effect Amplification Core and its data generation; added horizontal facing to the seven functional blocks; expanded the wrench into rotate, wrench, and configure modes; added independent per-face input, output, input/output, and blocked modes to energy storage units and the solar generator, with active adjacent transfer, face-mode persistence, and drop preservation.
 - `0.0.6ap_261028_a`: added Solar Generator MK0 (96,000 FE buffer, 120 FE/t generation, daytime and full sky-column checks, output-slot priority, retained buffered energy on drop), plus durability-style inventory bars for energy and item storage unit items.
@@ -266,7 +282,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, and the solar generator.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, and Solar Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -322,9 +338,9 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 | Tier |         Capacity | Transfer rate |
 | ---- | ---------------: | ------------: |
-| MK1  |    32,000,000 FE |    1,000 FE/t |
-| MK2  |   320,000,000 FE |    4,000 FE/t |
-| MK3  | 3,200,000,000 FE |   16,000 FE/t |
+| MK1  |    32,000,000 FE |    4,000 FE/t |
+| MK2  |   320,000,000 FE |   16,000 FE/t |
+| MK3  | 3,200,000,000 FE |   64,000 FE/t |
 
 - Each unit has two machine slots:
     - Charge slot: transfers energy from the unit into an item
@@ -340,7 +356,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 #### Solar Generator MK0
 
 - Internal buffer: `96,000 FE`
-- Generates `120 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
+- Generates `30 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
 - Each face can independently be set to input, output, input/output, or blocked; all faces default to output
 - The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode remains available
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
@@ -348,6 +364,20 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
+
+#### Solar Generators MK1–MK3
+
+| Tier |      Capacity | Per-face output | Item charge |
+| ---- | ------------: | --------------: | ----------: |
+| MK1  |   192,000 FE |    1,200 FE/t | 1,200 FE/t |
+| MK2  |   480,000 FE |    2,400 FE/t | 2,400 FE/t |
+| MK3  | 1,920,000 FE |    9,600 FE/t | 9,600 FE/t |
+
+- MK1–MK3 share MK0's output slot, face-mode configuration, GUI, and drop persistence
+- MK1: outside the Nether, during daytime, with sky light above 10 and no full opaque obstruction above, generates `120 FE/t`; thunderstorms reduce sky light to 10, so generation stops
+- MK2: outside the Nether with no full opaque obstruction above; thunder `120 FE/t`, daytime `240 FE/t`, night `120 FE/t`
+- MK3: always `80 FE/t` in the Nether; outside the Nether with obstruction `80 FE/t`; without obstruction, thunder `360 FE/t`, daytime `960 FE/t`, night `240 FE/t`
+- Currently obtained in creative mode only; no crafting recipes yet
 
 #### Energy Storage Unit Items
 
@@ -405,7 +435,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 | Crystals         | Complete        | Items, textures, tags, and four-language names                                    |
 | Item storage     | Complete        | Three tiers, GUI, component persistence, automation capability, and custom models |
 | Energy storage   | Complete        | Three tiers, GUI, multi-bank storage, cable capability, and item charging         |
-| Solar generator  | Complete        | MK0, 96,000 FE buffer, 120 FE/t generation, and 600 FE/t per-face output          |
+| Solar generator  | Complete        | MK0–MK3, tiered buffers/output, and dimension/weather/obstruction rules            |
 | Recipes and tags | Mostly complete | Materials and tools done; storage recipes pending                                 |
 | Localization     | Complete        | `en_us`, `zh_cn`, `zh_hk`, `zh_tw`                                                |
 | Data generation  | Complete        | Models, tags, recipes, advancements, loot tables, and global modifiers            |

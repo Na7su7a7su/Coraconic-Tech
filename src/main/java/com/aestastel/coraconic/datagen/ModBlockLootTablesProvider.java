@@ -103,6 +103,18 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       ModBlocks.SOLAR_GENERATOR_MK0.get(),
       createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK0.get())
     );
+    add(
+      ModBlocks.SOLAR_GENERATOR_MK1.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK1.get())
+    );
+    add(
+      ModBlocks.SOLAR_GENERATOR_MK2.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK2.get())
+    );
+    add(
+      ModBlocks.SOLAR_GENERATOR_MK3.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK3.get())
+    );
 
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。
     // Tin ores: silk touch drops the ore itself; otherwise 2-5 raw tin. The deepslate variant

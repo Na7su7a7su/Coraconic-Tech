@@ -13,7 +13,7 @@ import com.aestastel.coraconic.energy.EnergyFaceConfigurable;
 import com.aestastel.coraconic.energy.EnergyFaceMode;
 import com.aestastel.coraconic.energy.EnergyFaceStorage;
 import com.aestastel.coraconic.energy.EnergyFaceTransfer;
-import com.aestastel.coraconic.menu.SolarGeneratorMk0Menu;
+import com.aestastel.coraconic.menu.SolarGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -29,7 +29,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,38 +39,36 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 太阳能发电机 MK0 方块实体。
+ * 太阳能发电机通用方块实体。
  *
- * <p>白天、维度不是下界、天空光大于 10，且正上方整个天空柱没有完整不透明
- * 方块遮挡时，每个服务器 tick 向 96,000 FE 缓存中增加 120 FE。缓存会优先
- * 给输出槽中的可充电物品充能，剩余能量通过六个可独立配置的面以每面最高
- * 600 FE/t 对外输出。
+ * <p>MK0–MK3 共用缓存、输出槽、六面能量配置、主动传输和 NBT 逻辑；具体
+ * 容量、逐面输出、物品充能速率和发电规则由 {@link SolarGeneratorTier} 提供。
  *
- * <p>During daytime, outside the Nether, with sky light greater than 10 and no
- * full opaque block anywhere above the panel, it generates 120 FE per server
- * tick into a 96,000 FE buffer. The buffer first charges an energy-receiving
- * item in the output slot, then uses six independently configured faces at up
- * to 600 FE/t each.
+ * <p>Shared solar generator block entity used by MK0–MK3. The tier supplies
+ * capacity, per-face output, item charge rate, and the generation rule; the
+ * common buffer, output slot, face configuration, transfer, and persistence
+ * logic lives here.
  */
-public class SolarGeneratorMk0BlockEntity
+public class SolarGeneratorBlockEntity
   extends BlockEntity
   implements Container, MenuProvider, EnergyFaceConfigurable
 {
 
-  public static final int CAPACITY = 96_000;
-  public static final int GENERATION = 120;
-  public static final int OUTPUT_PER_SIDE = 600;
-  public static final int ITEM_CHARGE_RATE = 600;
   public static final int OUTPUT_SLOT = 0;
   public static final int SLOT_COUNT = 1;
 
+  private final SolarGeneratorTier tier;
+  private final int capacity;
+  private final int outputPerSide;
+  private final int itemChargeRate;
+
   private int energy;
-  private int itemChargeThisTick = ITEM_CHARGE_RATE;
+  private int itemChargeThisTick;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
     protected void onContentsChanged(int slot) {
-      SolarGeneratorMk0BlockEntity.this.setChanged();
+      SolarGeneratorBlockEntity.this.setChanged();
     }
   };
 
@@ -80,20 +77,26 @@ public class SolarGeneratorMk0BlockEntity
   private final IEnergyStorage nullSideStorage;
   private final IEnergyStorage bufferStorage = new SolarBufferEnergyStorage();
 
-  public SolarGeneratorMk0BlockEntity(
+  public SolarGeneratorBlockEntity(
     BlockEntityType<?> type,
     BlockPos pos,
-    BlockState state
+    BlockState state,
+    SolarGeneratorTier tier
   ) {
     super(type, pos, state);
+    this.tier = tier;
+    this.capacity = tier.getCapacity();
+    this.outputPerSide = tier.getOutputPerSide();
+    this.itemChargeRate = tier.getItemChargeRate();
+    this.itemChargeThisTick = this.itemChargeRate;
+
     for (Direction direction : Direction.values()) {
       this.faceModes[direction.get3DDataValue()] = EnergyFaceMode.OUTPUT;
-      this.sideStorages[direction.get3DDataValue()] =
-        new EnergyFaceStorage(
-          this.bufferStorage,
-          this,
-          direction
-        );
+      this.sideStorages[direction.get3DDataValue()] = new EnergyFaceStorage(
+        this.bufferStorage,
+        this,
+        direction
+      );
     }
     this.nullSideStorage = new EnergyFaceStorage(
       this.bufferStorage,
@@ -116,8 +119,13 @@ public class SolarGeneratorMk0BlockEntity
     this.itemChargeThisTick = 0;
     boolean changed = false;
 
-    if (canGenerate() && this.energy < CAPACITY) {
-      this.energy = Math.min(CAPACITY, this.energy + GENERATION);
+    int generated = this.tier.getGeneration(
+      this.level,
+      this.worldPosition,
+      this::hasSolidBlockAbove
+    );
+    if (generated > 0 && this.energy < this.capacity) {
+      this.energy = Math.min(this.capacity, this.energy + generated);
       changed = true;
     }
 
@@ -130,25 +138,6 @@ public class SolarGeneratorMk0BlockEntity
     if (changed) {
       setChanged();
     }
-  }
-
-  private boolean canGenerate() {
-    if (this.level == null) {
-      return false;
-    }
-    if (
-      !this.level.isDay() ||
-      this.level.dimension().equals(Level.NETHER) ||
-      hasSolidBlockAbove()
-    ) {
-      return false;
-    }
-    return (
-      this.level.getBrightness(
-        LightLayer.SKY,
-        this.worldPosition.above()
-      ) > 10
-    );
   }
 
   /**
@@ -170,11 +159,7 @@ public class SolarGeneratorMk0BlockEntity
       z
     );
 
-    for (
-      int y = this.worldPosition.getY() + 1;
-      y < top;
-      y++
-    ) {
+    for (int y = this.worldPosition.getY() + 1; y < top; y++) {
       BlockPos checkPos = new BlockPos(x, y, z);
       BlockState state = this.level.getBlockState(checkPos);
       if (state.isSolidRender(this.level, checkPos)) {
@@ -185,14 +170,15 @@ public class SolarGeneratorMk0BlockEntity
   }
 
   /**
-   * 从缓存向输出槽物品充能，单 tick 最多 600 FE。
+   * 从缓存向输出槽物品充能，单 tick 最多为该等级的物品充能速率。
    *
-   * <p>Charges the output-slot item from the buffer, up to 600 FE per tick.
+   * <p>Charges the output-slot item from the buffer, limited by this tier's
+   * item charge rate.
    *
    * @return 实际传输量 / transferred amount
    */
   private int chargeOutputItem() {
-    int budget = ITEM_CHARGE_RATE - this.itemChargeThisTick;
+    int budget = this.itemChargeRate - this.itemChargeThisTick;
     if (budget <= 0 || this.energy <= 0) {
       return 0;
     }
@@ -227,9 +213,7 @@ public class SolarGeneratorMk0BlockEntity
 
   /** {@return 面向指定面的能力视图} */
   public IEnergyStorage getEnergyStorageForSide(@Nullable Direction side) {
-    return side == null
-      ? nullSideStorage
-      : sideStorages[side.get3DDataValue()];
+    return side == null ? nullSideStorage : sideStorages[side.get3DDataValue()];
   }
 
   @Override
@@ -259,11 +243,7 @@ public class SolarGeneratorMk0BlockEntity
 
     for (Direction side : Direction.values()) {
       if (
-        !EnergyFaceTransfer.ownsTransfer(
-          this.level,
-          this.worldPosition,
-          side
-        )
+        !EnergyFaceTransfer.ownsTransfer(this.level, this.worldPosition, side)
       ) {
         continue;
       }
@@ -274,11 +254,11 @@ public class SolarGeneratorMk0BlockEntity
       }
 
       if (mode == EnergyFaceMode.INPUT) {
-        pullFrom(side, OUTPUT_PER_SIDE);
+        pullFrom(side, this.outputPerSide);
         continue;
       }
       if (mode == EnergyFaceMode.OUTPUT) {
-        pushTo(side, OUTPUT_PER_SIDE);
+        pushTo(side, this.outputPerSide);
         continue;
       }
 
@@ -290,7 +270,7 @@ public class SolarGeneratorMk0BlockEntity
       int neighbourEnergy = neighbour.getEnergyStored();
       if (ownEnergy < neighbourEnergy) {
         int limit = Math.min(
-          OUTPUT_PER_SIDE,
+          this.outputPerSide,
           (neighbourEnergy - ownEnergy) / 2
         );
         if (limit > 0) {
@@ -298,7 +278,7 @@ public class SolarGeneratorMk0BlockEntity
         }
       } else if (ownEnergy > neighbourEnergy) {
         int limit = Math.min(
-          OUTPUT_PER_SIDE,
+          this.outputPerSide,
           (ownEnergy - neighbourEnergy) / 2
         );
         if (limit > 0) {
@@ -334,7 +314,7 @@ public class SolarGeneratorMk0BlockEntity
     int inserted = neighbour.receiveEnergy(extracted, false);
     if (inserted < extracted) {
       this.energy = Math.min(
-        CAPACITY,
+        this.capacity,
         this.energy + (extracted - inserted)
       );
       setChanged();
@@ -384,6 +364,10 @@ public class SolarGeneratorMk0BlockEntity
     );
   }
 
+  public SolarGeneratorTier getTier() {
+    return this.tier;
+  }
+
   /** {@return 当前缓存（FE）} */
   public int getEnergyStored() {
     return this.energy;
@@ -391,12 +375,20 @@ public class SolarGeneratorMk0BlockEntity
 
   /** {@return 缓存容量（FE）} */
   public int getCapacity() {
-    return CAPACITY;
+    return this.capacity;
+  }
+
+  public int getOutputPerSide() {
+    return this.outputPerSide;
+  }
+
+  public int getItemChargeRate() {
+    return this.itemChargeRate;
   }
 
   /** 供菜单客户端同步使用。 */
   public void setEnergyStored(int value) {
-    this.energy = Mth.clamp(value, 0, CAPACITY);
+    this.energy = Mth.clamp(value, 0, this.capacity);
   }
 
   /** {@return 输出槽物品栏} */
@@ -462,12 +454,12 @@ public class SolarGeneratorMk0BlockEntity
   }
 
   @Override
-  public SolarGeneratorMk0Menu createMenu(
+  public SolarGeneratorMenu createMenu(
     int containerId,
     Inventory playerInventory,
     Player player
   ) {
-    return new SolarGeneratorMk0Menu(containerId, playerInventory, this);
+    return new SolarGeneratorMenu(containerId, playerInventory, this);
   }
 
   // ---------------------------------------------------------------------------
@@ -493,10 +485,7 @@ public class SolarGeneratorMk0BlockEntity
     tag.putInt("energy", this.energy);
     tag.putIntArray("face_modes", serializeFaceModes());
     BlockEntity.addEntityType(tag, this.getType());
-    components.set(
-      DataComponents.BLOCK_ENTITY_DATA,
-      CustomData.of(tag)
-    );
+    components.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
   }
 
   /**
@@ -531,8 +520,7 @@ public class SolarGeneratorMk0BlockEntity
   private int[] serializeFaceModes() {
     int[] modes = new int[6];
     for (Direction direction : Direction.values()) {
-      modes[direction.get3DDataValue()] =
-        getFaceMode(direction).ordinal();
+      modes[direction.get3DDataValue()] = getFaceMode(direction).ordinal();
     }
     return modes;
   }
@@ -556,12 +544,9 @@ public class SolarGeneratorMk0BlockEntity
     HolderLookup.Provider registries
   ) {
     super.loadAdditional(tag, registries);
-    this.energy = Mth.clamp(tag.getInt("energy"), 0, CAPACITY);
+    this.energy = Mth.clamp(tag.getInt("energy"), 0, this.capacity);
     if (tag.contains("inventory")) {
-      this.inventory.deserializeNBT(
-        registries,
-        tag.getCompound("inventory")
-      );
+      this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
     loadFaceModes(tag.getIntArray("face_modes"));
@@ -577,19 +562,27 @@ public class SolarGeneratorMk0BlockEntity
 
     @Override
     public int receiveEnergy(int toReceive, boolean simulate) {
-      if (toReceive <= 0 || SolarGeneratorMk0BlockEntity.this.energy >= CAPACITY) {
+      if (
+        toReceive <= 0 ||
+        SolarGeneratorBlockEntity.this.energy >=
+        SolarGeneratorBlockEntity.this.capacity
+      ) {
         return 0;
       }
 
       int accepted = Math.min(
-        CAPACITY - SolarGeneratorMk0BlockEntity.this.energy,
-        Math.min(OUTPUT_PER_SIDE, toReceive)
+        SolarGeneratorBlockEntity.this.capacity -
+        SolarGeneratorBlockEntity.this.energy,
+        Math.min(
+          SolarGeneratorBlockEntity.this.outputPerSide,
+          toReceive
+        )
       );
       if (accepted <= 0) {
         return 0;
       }
       if (!simulate) {
-        SolarGeneratorMk0BlockEntity.this.energy += accepted;
+        SolarGeneratorBlockEntity.this.energy += accepted;
         setChanged();
       }
       return accepted;
@@ -597,7 +590,10 @@ public class SolarGeneratorMk0BlockEntity
 
     @Override
     public int extractEnergy(int toExtract, boolean simulate) {
-      if (toExtract <= 0 || SolarGeneratorMk0BlockEntity.this.energy <= 0) {
+      if (
+        toExtract <= 0 ||
+        SolarGeneratorBlockEntity.this.energy <= 0
+      ) {
         return 0;
       }
 
@@ -607,8 +603,11 @@ public class SolarGeneratorMk0BlockEntity
       }
 
       int extracted = Math.min(
-        SolarGeneratorMk0BlockEntity.this.energy,
-        Math.min(OUTPUT_PER_SIDE, toExtract)
+        SolarGeneratorBlockEntity.this.energy,
+        Math.min(
+          SolarGeneratorBlockEntity.this.outputPerSide,
+          toExtract
+        )
       );
       if (extracted <= 0) {
         if (charged > 0) {
@@ -618,7 +617,7 @@ public class SolarGeneratorMk0BlockEntity
       }
 
       if (!simulate) {
-        SolarGeneratorMk0BlockEntity.this.energy -= extracted;
+        SolarGeneratorBlockEntity.this.energy -= extracted;
         setChanged();
       }
       return extracted;
@@ -626,12 +625,12 @@ public class SolarGeneratorMk0BlockEntity
 
     @Override
     public int getEnergyStored() {
-      return SolarGeneratorMk0BlockEntity.this.energy;
+      return SolarGeneratorBlockEntity.this.energy;
     }
 
     @Override
     public int getMaxEnergyStored() {
-      return CAPACITY;
+      return SolarGeneratorBlockEntity.this.capacity;
     }
 
     @Override
