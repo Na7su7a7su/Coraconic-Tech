@@ -64,6 +64,8 @@ public class SolarGeneratorBlockEntity
 
   private int energy;
   private int itemChargeThisTick;
+  private int currentGeneration;
+  private SolarGeneratorMode currentMode = SolarGeneratorMode.SOLAR;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -119,11 +121,14 @@ public class SolarGeneratorBlockEntity
     this.itemChargeThisTick = 0;
     boolean changed = false;
 
-    int generated = this.tier.getGeneration(
+    SolarGeneratorStatus status = this.tier.getStatus(
       this.level,
       this.worldPosition,
       this::hasSolidBlockAbove
     );
+    this.currentGeneration = status.generation();
+    this.currentMode = status.mode();
+    int generated = status.generation();
     if (generated > 0 && this.energy < this.capacity) {
       this.energy = Math.min(this.capacity, this.energy + generated);
       changed = true;
@@ -384,6 +389,16 @@ public class SolarGeneratorBlockEntity
 
   public int getItemChargeRate() {
     return this.itemChargeRate;
+  }
+
+  /** {@return 当前规则发电速率，即使缓存已满也保留该值} */
+  public int getCurrentGeneration() {
+    return this.currentGeneration;
+  }
+
+  /** {@return 当前运行模式} */
+  public SolarGeneratorMode getCurrentMode() {
+    return this.currentMode;
   }
 
   /** 供菜单客户端同步使用。 */

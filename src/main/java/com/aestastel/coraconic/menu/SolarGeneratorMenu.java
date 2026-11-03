@@ -10,6 +10,8 @@
 package com.aestastel.coraconic.menu;
 
 import com.aestastel.coraconic.block.SolarGeneratorBlockEntity;
+import com.aestastel.coraconic.block.SolarGeneratorMode;
+import com.aestastel.coraconic.block.SolarGeneratorTier;
 import com.aestastel.coraconic.energy.EnergyFaceMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,15 +50,19 @@ public class SolarGeneratorMenu
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
   private static final int FACE_MODE_DATA_START = 1;
-  private static final int DATA_COUNT =
-    FACE_MODE_DATA_START + FACE_MODE_COUNT;
+  private static final int RATE_DATA_INDEX = 7;
+  private static final int MODE_DATA_INDEX = 8;
+  private static final int DATA_COUNT = 9;
 
   private final SolarGeneratorBlockEntity blockEntity;
   private final int capacity;
+  private final SolarGeneratorTier tier;
   private final ContainerData data;
   private final boolean clientSide;
   private final EnergyFaceMode[] syncedFaceModes =
     new EnergyFaceMode[FACE_MODE_COUNT];
+  private int currentRate;
+  private SolarGeneratorMode currentMode = SolarGeneratorMode.SOLAR;
 
   public SolarGeneratorMenu(
     int containerId,
@@ -68,7 +74,8 @@ public class SolarGeneratorMenu
       playerInventory,
       blockEntity,
       blockEntity,
-      blockEntity.getCapacity()
+      blockEntity.getCapacity(),
+      blockEntity.getTier()
     );
   }
 
@@ -77,13 +84,19 @@ public class SolarGeneratorMenu
     Inventory playerInventory,
     Container container,
     SolarGeneratorBlockEntity blockEntity,
-    int capacity
+    int capacity,
+    SolarGeneratorTier tier
   ) {
     super(ModMenuType.SOLAR_GENERATOR.get(), containerId);
     checkContainerSize(container, MACHINE_SLOTS);
     this.blockEntity = blockEntity;
     this.capacity = capacity;
+    this.tier = tier;
     this.clientSide = playerInventory.player.level().isClientSide;
+    if (blockEntity != null) {
+      this.currentRate = blockEntity.getCurrentGeneration();
+      this.currentMode = blockEntity.getCurrentMode();
+    }
     for (Direction direction : Direction.values()) {
       this.syncedFaceModes[direction.get3DDataValue()] =
         blockEntity != null
@@ -95,6 +108,16 @@ public class SolarGeneratorMenu
       this.data = new ContainerData() {
         @Override
         public int get(int index) {
+          if (index == RATE_DATA_INDEX) {
+            return clientSide
+              ? currentRate
+              : blockEntity.getCurrentGeneration();
+          }
+          if (index == MODE_DATA_INDEX) {
+            return (
+              clientSide ? currentMode : blockEntity.getCurrentMode()
+            ).ordinal();
+          }
           if (index >= FACE_MODE_DATA_START) {
             Direction side = Direction.from3DDataValue(
               index - FACE_MODE_DATA_START
@@ -110,6 +133,14 @@ public class SolarGeneratorMenu
 
         @Override
         public void set(int index, int value) {
+          if (index == RATE_DATA_INDEX) {
+            currentRate = value;
+            return;
+          }
+          if (index == MODE_DATA_INDEX) {
+            currentMode = SolarGeneratorMode.byOrdinal(value);
+            return;
+          }
           if (index >= FACE_MODE_DATA_START) {
             Direction side = Direction.from3DDataValue(
               index - FACE_MODE_DATA_START
@@ -135,7 +166,7 @@ public class SolarGeneratorMenu
       new Slot(
         container,
         SolarGeneratorBlockEntity.OUTPUT_SLOT,
-        80,
+        148,
         35
       ) {
         @Override
@@ -179,6 +210,9 @@ public class SolarGeneratorMenu
   ) {
     BlockPos pos = buffer.readBlockPos();
     int capacity = buffer.readVarInt();
+    SolarGeneratorTier tier = SolarGeneratorTier.byOrdinal(
+      buffer.readVarInt()
+    );
     SolarGeneratorBlockEntity blockEntity =
       playerInventory.player.level().getBlockEntity(pos)
         instanceof SolarGeneratorBlockEntity generator
@@ -192,7 +226,8 @@ public class SolarGeneratorMenu
       playerInventory,
       container,
       blockEntity,
-      capacity
+      capacity,
+      tier
     );
   }
 
@@ -204,6 +239,21 @@ public class SolarGeneratorMenu
   /** {@return 当前等级缓存容量（FE）} */
   public int getCapacity() {
     return this.capacity;
+  }
+
+  /** {@return 当前太阳能等级} */
+  public SolarGeneratorTier getTier() {
+    return this.tier;
+  }
+
+  /** {@return 当前规则发电速率} */
+  public int getCurrentRate() {
+    return this.currentRate;
+  }
+
+  /** {@return 当前运行模式} */
+  public SolarGeneratorMode getMode() {
+    return this.currentMode;
   }
 
   @Override

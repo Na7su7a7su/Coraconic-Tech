@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.6c`
-- 最近版本提交：`0.0.6cp_261103_a`
+- 最近版本提交：`0.0.6cq_261103_b`
 - 最后更新：2026-11-03
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6cq_261103_b`：太阳能发电机 GUI 改为右侧输出/充电槽 + 中央黑底绿字 CLI 面板，显示等级、`mod_version`、规则发电速率和运行模式；新增 `Thunder` 模式，模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`，状态由服务端菜单数据同步。
 - `0.0.6cp_261103_a`：新增太阳能发电机 MK1–MK3，按等级实现维度、昼夜、雷暴、天空光与天空柱遮挡规则；MK0 迁移到共享太阳能等级/方块实体/GUI；生成三个等级的占位方块纹理与完整数据资源；能量存储单元传输速率调整为 4,000/16,000/64,000 FE/t，MK0 当前发电量保留为 30 FE/t。
 - `0.0.6bq_261030_a`：能量存储单元与太阳能发电机 GUI 新增共享面配置悬浮窗；按钮位于界面左侧外部，展开后不遮挡物品栏与界面主体；支持左键正向、右键反向循环，并与扳手配置模式共享面设置。
 - `0.0.6bp_261029_a`：新增效应放大核心与数据生成；为七种功能方块加入水平朝向；扳手扩展为旋转/扳手/配置三模式；能量存储单元与太阳能发电机支持六面独立输入、输出、输入/输出、阻断配置，加入相邻方块主动传输、面配置持久化与掉落保留。
@@ -123,7 +124,9 @@
 - 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出
 - GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用扳手配置模式
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
-- GUI 包含输出槽、竖直能量条、能量数值与玩家背包
+- GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
+- CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
+- 模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`；`Power` 显示规则速率，不因缓存已满而归零
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
@@ -261,13 +264,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.6c`
-- Latest version commit: `0.0.6cp_261103_a`
+- Latest version commit: `0.0.6cq_261103_b`
 - Last updated: 2026-11-03
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6cq_261103_b`: changed the solar generator GUI to a right-side output/charge slot plus a centered black/green CLI panel showing tier, `mod_version`, rule-based generation rate, and runtime mode; added the `Thunder` mode with priority `Nether > Reflection > Thunder > Solar/Lunar`; status is synchronized through menu data.
 - `0.0.6cp_261103_a`: added Solar Generators MK1–MK3 with tiered dimension, daytime, thunder, sky-light, and sky-column rules; migrated MK0 to a shared solar tier/block entity/GUI implementation; generated placeholder textures and complete data resources for all three tiers; updated energy storage transfer rates to 4,000/16,000/64,000 FE/t and kept MK0 generation at the current 30 FE/t.
 - `0.0.6bq_261030_a`: added a shared face configuration popup to energy storage unit and solar generator GUIs; the button sits outside the upper-left edge and the expanded panel does not cover the inventory or main UI; left-click cycles forward and right-click cycles backward, using the same face settings as the wrench configure mode.
 - `0.0.6bp_261029_a`: added the Effect Amplification Core and its data generation; added horizontal facing to the seven functional blocks; expanded the wrench into rotate, wrench, and configure modes; added independent per-face input, output, input/output, and blocked modes to energy storage units and the solar generator, with active adjacent transfer, face-mode persistence, and drop preservation.
@@ -360,7 +364,9 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Each face can independently be set to input, output, input/output, or blocked; all faces default to output
 - The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode remains available
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
-- The GUI contains an output slot, a vertical energy bar, energy text, and the player inventory
+- The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
+- The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
+- Mode priority is `Nether > Reflection > Thunder > Solar/Lunar`; `Power` shows the rule-based rate and does not drop to zero merely because the buffer is full
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating

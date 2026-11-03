@@ -57,65 +57,92 @@ public enum SolarGeneratorTier {
     return itemChargeRate;
   }
 
+  /** {@return 按网络/数据序号还原等级；非法值回退到 MK0} */
+  public static SolarGeneratorTier byOrdinal(int ordinal) {
+    SolarGeneratorTier[] tiers = values();
+    return ordinal >= 0 && ordinal < tiers.length
+      ? tiers[ordinal]
+      : MK0;
+  }
+
   /**
-   * 计算当前 tick 的发电量。
+   * 计算当前 tick 的规则发电速率。
    *
-   * <p>{@code obstructed} 只在确实需要检查天空柱时调用，避免每个 tick 都做
-   * 无用的高度柱扫描。
-   *
-   * <p>Returns this tick's generation. The obstruction supplier is only called
-   * when the tier's rule actually needs a sky-column check.
+   * <p>Delegates to {@link #getStatus(Level, BlockPos, BooleanSupplier)}.
    */
   public int getGeneration(
     Level level,
     BlockPos pos,
     BooleanSupplier obstructed
   ) {
-    return switch (this) {
-      case MK0 -> {
-        if (
-          level.dimension().equals(Level.NETHER) ||
-          !level.isDay() ||
-          level.getBrightness(LightLayer.SKY, pos.above()) <= 10
-        ) {
-          yield 0;
-        }
-        yield obstructed.getAsBoolean() ? 0 : 30;
-      }
-      case MK1 -> {
-        if (
-          level.dimension().equals(Level.NETHER) ||
-          !level.isDay() ||
-          level.getBrightness(LightLayer.SKY, pos.above()) <= 10
-        ) {
-          yield 0;
-        }
-        yield obstructed.getAsBoolean() ? 0 : 120;
-      }
-      case MK2 -> {
-        if (
-          level.dimension().equals(Level.NETHER) ||
-          obstructed.getAsBoolean()
-        ) {
-          yield 0;
-        }
-        if (level.isThundering()) {
-          yield 120;
-        }
-        yield level.isDay() ? 240 : 120;
-      }
-      case MK3 -> {
-        if (level.dimension().equals(Level.NETHER)) {
-          yield 80;
-        }
-        if (obstructed.getAsBoolean()) {
-          yield 80;
-        }
-        if (level.isThundering()) {
-          yield 360;
-        }
-        yield level.isDay() ? 960 : 240;
-      }
+    return getStatus(level, pos, obstructed).generation();
+  }
+
+  /**
+   * 计算当前速率与运行模式。
+   *
+   * <p>优先级：下界 → 天空柱遮挡 → 雷暴 → 白天/黑夜。雷暴没有单独速率
+   * 以外的模式优先级，界面显示 Thunder。
+   *
+   * <p>Calculates the current rate and mode. Priority: Nether, obstruction,
+   * thunder, then daytime/night.
+   */
+  public SolarGeneratorStatus getStatus(
+    Level level,
+    BlockPos pos,
+    BooleanSupplier obstructed
+  ) {
+    if (level.dimension().equals(Level.NETHER)) {
+      return new SolarGeneratorStatus(
+        this == MK3 ? 80 : 0,
+        SolarGeneratorMode.NETHER
+      );
+    }
+
+    if (obstructed.getAsBoolean()) {
+      return new SolarGeneratorStatus(
+        this == MK3 ? 80 : 0,
+        SolarGeneratorMode.REFLECTION
+      );
+    }
+
+    if (level.isThundering()) {
+      int thunderRate = switch (this) {
+        case MK0, MK1 -> 0;
+        case MK2 -> 120;
+        case MK3 -> 360;
+      };
+      return new SolarGeneratorStatus(
+        thunderRate,
+        SolarGeneratorMode.THUNDER
+      );
+    }
+
+    if (level.isDay()) {
+      int dayRate = switch (this) {
+        case MK0 -> hasEnoughSkyLight(level, pos) ? 30 : 0;
+        case MK1 -> hasEnoughSkyLight(level, pos) ? 120 : 0;
+        case MK2 -> 240;
+        case MK3 -> 960;
+      };
+      return new SolarGeneratorStatus(
+        dayRate,
+        SolarGeneratorMode.SOLAR
+      );
+    }
+
+    int nightRate = switch (this) {
+      case MK0, MK1 -> 0;
+      case MK2 -> 120;
+      case MK3 -> 240;
     };
+    return new SolarGeneratorStatus(
+      nightRate,
+      SolarGeneratorMode.LUNAR
+    );
+  }
+
+  private static boolean hasEnoughSkyLight(Level level, BlockPos pos) {
+    return level.getBrightness(LightLayer.SKY, pos.above()) > 10;
   }
 }

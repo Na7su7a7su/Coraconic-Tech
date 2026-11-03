@@ -132,6 +132,7 @@ public class SolarGeneratorBlock extends Block implements EntityBlock {
       player.openMenu(blockEntity, buffer -> {
         buffer.writeBlockPos(pos);
         buffer.writeVarInt(blockEntity.getCapacity());
+        buffer.writeVarInt(blockEntity.getTier().ordinal());
       });
     }
     return InteractionResult.CONSUME;

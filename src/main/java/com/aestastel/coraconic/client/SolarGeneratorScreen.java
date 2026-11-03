@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.fml.ModList;
 
 /**
  * 太阳能发电机 MK0–MK3 的共用客户端界面。
@@ -46,6 +47,16 @@ public class SolarGeneratorScreen
   private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_TEXT_Y = 78;
 
+  private static final int SLOT_X = 148;
+  private static final int SLOT_Y = 35;
+  private static final int PANEL_X = 28;
+  private static final int PANEL_Y = 16;
+  private static final int PANEL_WIDTH = 112;
+  private static final int PANEL_HEIGHT = 58;
+  private static final int PANEL_BACKGROUND = 0xFF000000;
+  private static final int CLI_TEXT_COLOR = 0xFF55FF55;
+  private static final float CLI_SCALE = 0.55F;
+
   private final EnergyFaceConfigPanel faceConfigPanel;
 
   public SolarGeneratorScreen(
@@ -71,6 +82,8 @@ public class SolarGeneratorScreen
     float partialTick
   ) {
     super.render(graphics, mouseX, mouseY, partialTick);
+
+    renderCli(graphics);
 
     this.renderTooltip(graphics, mouseX, mouseY);
 
@@ -182,6 +195,33 @@ public class SolarGeneratorScreen
         ENERGY_COLOR
       );
     }
+
+    int panelX = this.leftPos + PANEL_X;
+    int panelY = this.topPos + PANEL_Y;
+    graphics.fill(
+      panelX,
+      panelY,
+      panelX + PANEL_WIDTH,
+      panelY + PANEL_HEIGHT,
+      PANEL_BACKGROUND
+    );
+
+    int slotFrameX = this.leftPos + SLOT_X - 1;
+    int slotFrameY = this.topPos + SLOT_Y - 1;
+    graphics.fill(
+      slotFrameX,
+      slotFrameY,
+      slotFrameX + 18,
+      slotFrameY + 18,
+      0xFF000000
+    );
+    graphics.fill(
+      slotFrameX + 1,
+      slotFrameY + 1,
+      slotFrameX + 17,
+      slotFrameY + 17,
+      0xFF373737
+    );
   }
 
   @Override
@@ -201,6 +241,44 @@ public class SolarGeneratorScreen
       4210752,
       false
     );
+  }
+
+  private void renderCli(GuiGraphics graphics) {
+    String[] lines = {
+      ">Power Generating System",
+      ">Generation " +
+      this.menu.getTier().name() +
+      " - Version " +
+      modVersion(),
+      ">Power: " + this.menu.getCurrentRate() + " FE/t",
+      ">Mode: " + this.menu.getMode().displayName(),
+    };
+
+    graphics.pose().pushPose();
+    graphics.pose().translate(
+      (float) (this.leftPos + PANEL_X + 4),
+      (float) (this.topPos + PANEL_Y + 4),
+      0.0F
+    );
+    graphics.pose().scale(CLI_SCALE, CLI_SCALE, 1.0F);
+    for (int index = 0; index < lines.length; index++) {
+      graphics.drawString(
+        this.font,
+        lines[index],
+        0,
+        index * 20,
+        CLI_TEXT_COLOR,
+        false
+      );
+    }
+    graphics.pose().popPose();
+  }
+
+  private static String modVersion() {
+    return ModList.get()
+      .getModContainerById(CoraconicTech.MODID)
+      .map(container -> container.getModInfo().getVersion().toString())
+      .orElse("unknown");
   }
 
   private String energyText() {
