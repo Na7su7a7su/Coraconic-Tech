@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.aestastel.coraconic.mixin",
+  "package": "aestastel.coraconic.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "injectors": {
