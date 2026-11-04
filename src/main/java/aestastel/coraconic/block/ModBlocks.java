@@ -163,7 +163,7 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK1_ENTITY.get(),
           32_000_000L,
-          4_000
+          4_000_000L
         ),
       EnergyStorageUnitItem::new
     );
@@ -177,7 +177,7 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK2_ENTITY.get(),
           320_000_000L,
-          16_000
+          16_000_000L
         ),
       EnergyStorageUnitItem::new
     );
@@ -191,58 +191,63 @@ public class ModBlocks {
             .sound(SoundType.METAL),
           () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK3_ENTITY.get(),
           3_200_000_000L,
-          64_000
+          64_000_000L
         ),
       EnergyStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 =
-    registerBlocks(
-      "solar_generator_mk0",
-      () ->
-        new SolarGeneratorBlock(
-          BlockBehaviour.Properties.of()
-            .strength(2.5F, 6.0F)
-            .sound(SoundType.METAL),
-          () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
-          SolarGeneratorTier.MK0
-        )
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 = registerBlocks(
+    "solar_generator_mk0",
+    () ->
+      new SolarGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(2.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
+        SolarGeneratorTier.MK0
+      )
+  );
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK0 =
+    registerBlocks("geomagnetic_generator_mk0", () ->
+      new GeomagneticGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(2.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK0_ENTITY.get()
+      )
     );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK1 =
-    registerBlocks(
-      "solar_generator_mk1",
-      () ->
-        new SolarGeneratorBlock(
-          BlockBehaviour.Properties.of()
-            .strength(3.0F, 6.0F)
-            .sound(SoundType.METAL),
-          () -> ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
-          SolarGeneratorTier.MK1
-        )
-    );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK2 =
-    registerBlocks(
-      "solar_generator_mk2",
-      () ->
-        new SolarGeneratorBlock(
-          BlockBehaviour.Properties.of()
-            .strength(3.5F, 6.0F)
-            .sound(SoundType.METAL),
-          () -> ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
-          SolarGeneratorTier.MK2
-        )
-    );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK3 =
-    registerBlocks(
-      "solar_generator_mk3",
-      () ->
-        new SolarGeneratorBlock(
-          BlockBehaviour.Properties.of()
-            .strength(4.0F, 6.0F)
-            .sound(SoundType.METAL),
-          () -> ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
-          SolarGeneratorTier.MK3
-        )
-    );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK1 = registerBlocks(
+    "solar_generator_mk1",
+    () ->
+      new SolarGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
+        SolarGeneratorTier.MK1
+      )
+  );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK2 = registerBlocks(
+    "solar_generator_mk2",
+    () ->
+      new SolarGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
+        SolarGeneratorTier.MK2
+      )
+  );
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK3 = registerBlocks(
+    "solar_generator_mk3",
+    () ->
+      new SolarGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(4.0F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
+        SolarGeneratorTier.MK3
+      )
+  );
 
   /**
    * 将方块延迟注册器挂到模组事件总线。

@@ -133,6 +133,7 @@ public class SolarGeneratorBlock extends Block implements EntityBlock {
         buffer.writeBlockPos(pos);
         buffer.writeVarInt(blockEntity.getCapacity());
         buffer.writeVarInt(blockEntity.getTier().ordinal());
+        buffer.writeBoolean(blockEntity.isGeomagnetic());
       });
     }
     return InteractionResult.CONSUME;

@@ -195,7 +195,9 @@ public class SolarGeneratorScreen
         modVersion(),
       ">Power: " + this.menu.getCurrentRate() + " FE/t",
       ">Mode: " + this.menu.getMode().displayName(),
-      ">Solar Energy",
+      this.menu.isGeomagnetic()
+        ? ">Geomagnetic Energy"
+        : ">Solar Energy",
     };
 
     graphics.pose().pushPose();

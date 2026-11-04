@@ -108,6 +108,31 @@ public class SolarGeneratorBlockEntity
   }
 
   /**
+   * 计算当前 tick 的发电状态。
+   *
+   * <p>默认使用太阳能等级规则；地磁发电机通过子类覆盖此方法。
+   *
+   * <p>Computes the current generation status. The default implementation
+   * uses the solar tier rules; the geomagnetic generator overrides it.
+   */
+  protected SolarGeneratorStatus computeStatus() {
+    return this.tier.getStatus(
+      this.level,
+      this.worldPosition,
+      this::hasSolidBlockAbove
+    );
+  }
+
+  /**
+   * 设置首次 tick 前显示的模式。
+   *
+   * <p>Sets the mode shown before the first server tick.
+   */
+  protected final void setCurrentMode(SolarGeneratorMode mode) {
+    this.currentMode = mode;
+  }
+
+  /**
    * 每个服务器 tick：先发电，再优先给输出槽物品充能。
    *
    * <p>Each server tick: generate energy, then charge the output-slot item
@@ -121,11 +146,7 @@ public class SolarGeneratorBlockEntity
     this.itemChargeThisTick = 0;
     boolean changed = false;
 
-    SolarGeneratorStatus status = this.tier.getStatus(
-      this.level,
-      this.worldPosition,
-      this::hasSolidBlockAbove
-    );
+    SolarGeneratorStatus status = computeStatus();
     this.currentGeneration = status.generation();
     this.currentMode = status.mode();
     int generated = status.generation();
@@ -371,6 +392,11 @@ public class SolarGeneratorBlockEntity
 
   public SolarGeneratorTier getTier() {
     return this.tier;
+  }
+
+  /** {@return 是否使用地磁发电机规则；太阳能发电机默认为 false} */
+  public boolean isGeomagnetic() {
+    return false;
   }
 
   /** {@return 当前缓存（FE）} */

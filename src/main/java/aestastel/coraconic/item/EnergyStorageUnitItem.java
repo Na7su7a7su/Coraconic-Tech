@@ -46,7 +46,7 @@ public class EnergyStorageUnitItem extends BlockItem {
 
   private final EnergyStorageUnitBlock energyBlock;
   private final long capacity;
-  private final int transfer;
+  private final long transfer;
 
   public EnergyStorageUnitItem(
     Block block,

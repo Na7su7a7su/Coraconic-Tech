@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.6e`
-- 最近版本提交：`0.0.6ep_261104_b`
+- `mod_version`：`0.0.6f`
+- 最近版本提交：`0.0.6fp_261104_c`
 - 最后更新：2026-11-04
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6fp_261104_c`：新增地磁发电机 MK0，复用太阳能 MK0 的缓存、输出、GUI 与掉落逻辑，按 `Y < 6`、维度和正下方方块判定 `Overworld` / `Nether` / `End` / `Null` 模式；四个太阳能发电机在末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；能量存储单元传输速率调整为 4,000,000/16,000,000/64,000,000 FE/t，相关速率字段改为 `long`。
 - `0.0.6ep_261104_b`：新增空间放缩、相位同步、质能补偿与中枢计算四种核心，补齐物品模型、纹理、四语名称、创造栏与 README，暂未添加合成配方；太阳能发电机 GUI 改用贴图绘制 CLI 背景与充电槽，输出槽调整至 `(146, 39)`，CLI 文本继续下移并右移，I/O 按钮右侧加宽 1 像素。
 - `0.0.6dp_261103_c`：将 Java 包名由 `com.aestastel.coraconic.*` 迁移为 `aestastel.coraconic.*`，同步 Mixin package 与 Gradle group ID 为 `aestastel.coraconic`；mod ID、资源命名空间、注册 ID 与 NBT 保持不变。
 - `0.0.6cq_261103_b`：太阳能发电机 GUI 改为右侧输出/充电槽 + 中央黑底绿字 CLI 面板，显示等级、`mod_version`、规则发电速率和运行模式；新增 `Thunder` 模式，模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`，状态由服务端菜单数据同步。
@@ -48,7 +49,7 @@
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元及太阳能发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、太阳能发电机 MK0–MK3 及地磁发电机 MK0。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -105,9 +106,9 @@
 
 | 等级 |             容量 |    传输速率 |
 | ---- | ---------------: | ----------: |
-| MK1  |    32,000,000 FE |  4,000 FE/t |
-| MK2  |   320,000,000 FE | 16,000 FE/t |
-| MK3  | 3,200,000,000 FE | 64,000 FE/t |
+| MK1  |    32,000,000 FE |  4,000,000 FE/t |
+| MK2  |   320,000,000 FE | 16,000,000 FE/t |
+| MK3  | 3,200,000,000 FE | 64,000,000 FE/t |
 
 - 每个单元提供两个机器槽位：
     - 充电槽：把单元能量输入到物品
@@ -129,10 +130,20 @@
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
 - CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
-- 模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`；`Power` 显示规则速率，不因缓存已满而归零
+- 模式优先级为 `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；`Power` 显示规则速率，不因缓存已满而归零
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
+
+#### 地磁发电机 MK0
+
+- 复用太阳能发电机 MK0 的 `96,000 FE` 缓存、每面 `600 FE/t` 输出、物品充能、输出槽、面配置、GUI 与掉落保留逻辑
+- 方块 Y 坐标必须小于 6 才会发电
+- 主世界、下界与其他模组维度：正下方为基岩时工作；主世界与其他维度发电 `2 FE/t`，模式为 `Overworld`；下界发电 `3 FE/t`，模式为 `Nether`
+- 末地：正下方没有方块时工作，发电 `6 FE/t`，模式为 `End`
+- 其他情况模式为 `Null`，发电 `0 FE/t`
+- GUI 复用太阳能 MK0 贴图与 CLI，最后一行显示 `>Geomagnetic Energy`
+- 当前仅通过创造模式获取，尚未添加合成配方
 
 #### 太阳能发电机 MK1–MK3
 
@@ -266,14 +277,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.6e`
-- Latest version commit: `0.0.6ep_261104_b`
+- `mod_version`: `0.0.6f`
+- Latest version commit: `0.0.6fp_261104_c`
 - Last updated: 2026-11-04
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6fp_261104_c`: added Geomagnetic Generator MK0 with Solar Generator MK0's buffer, output, GUI, and drop persistence, selecting `Overworld`, `Nether`, `End`, or `Null` from Y < 6, dimension, and the block directly below; made all four solar generators use `Solar` mode in the End when unobstructed while keeping `Reflection` when obstructed; raised energy storage transfer rates to 4,000,000/16,000,000/64,000,000 FE/t and changed the related rate fields to `long`.
 - `0.0.6ep_261104_b`: added Spatial Scaling, Phase Synchronization, Mass-Energy Compensation, and Central Computation cores with item models, textures, four-language names, creative-tab entries, and README documentation, without crafting recipes; changed the solar generator GUI to use texture-drawn CLI and charge-slot backgrounds, moved the output slot to `(146, 39)`, shifted the CLI text further right and down, and widened the I/O button by one pixel on the right.
 - `0.0.6dp_261103_c`: migrated Java packages from `com.aestastel.coraconic.*` to `aestastel.coraconic.*`, updated the mixin package and Gradle group ID to `aestastel.coraconic`, and left the mod ID, resource namespace, registry IDs, and NBT unchanged.
 - `0.0.6cq_261103_b`: changed the solar generator GUI to a right-side output/charge slot plus a centered black/green CLI panel showing tier, `mod_version`, rule-based generation rate, and runtime mode; added the `Thunder` mode with priority `Nether > Reflection > Thunder > Solar/Lunar`; status is synchronized through menu data.
@@ -291,7 +303,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, and Solar Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Solar Generators MK0–MK3, and the Geomagnetic Generator MK0.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -348,9 +360,9 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 | Tier |         Capacity | Transfer rate |
 | ---- | ---------------: | ------------: |
-| MK1  |    32,000,000 FE |    4,000 FE/t |
-| MK2  |   320,000,000 FE |   16,000 FE/t |
-| MK3  | 3,200,000,000 FE |   64,000 FE/t |
+| MK1  |    32,000,000 FE |    4,000,000 FE/t |
+| MK2  |   320,000,000 FE |   16,000,000 FE/t |
+| MK3  | 3,200,000,000 FE |   64,000,000 FE/t |
 
 - Each unit has two machine slots:
     - Charge slot: transfers energy from the unit into an item
@@ -372,10 +384,20 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
 - The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
-- Mode priority is `Nether > Reflection > Thunder > Solar/Lunar`; `Power` shows the rule-based rate and does not drop to zero merely because the buffer is full
+- Mode priority is `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; `Power` shows the rule-based rate and does not drop to zero merely because the buffer is full
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
+
+#### Geomagnetic Generator MK0
+
+- Reuses Solar Generator MK0's `96,000 FE` buffer, `600 FE/t` per-face output, item charging, output slot, face configuration, GUI, and drop persistence
+- The block must be at Y=5 or lower to generate
+- Overworld, Nether, and modded dimensions: requires bedrock directly below; the Overworld and modded dimensions generate `2 FE/t` in `Overworld` mode, while the Nether generates `3 FE/t` in `Nether` mode
+- The End: requires empty space directly below; generates `6 FE/t` in `End` mode
+- Any other case uses `Null` mode and generates `0 FE/t`
+- The GUI reuses the Solar Generator MK0 texture and CLI, with `>Geomagnetic Energy` on the last line
+- Currently obtained in creative mode only; no crafting recipes yet
 
 #### Solar Generators MK1–MK3
 

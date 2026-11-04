@@ -81,11 +81,12 @@ public enum SolarGeneratorTier {
   /**
    * 计算当前速率与运行模式。
    *
-   * <p>优先级：下界 → 天空柱遮挡 → 雷暴 → 白天/黑夜。雷暴没有单独速率
-   * 以外的模式优先级，界面显示 Thunder。
+   * <p>优先级：下界 → 天空柱遮挡 → 末地 → 雷暴 → 白天/黑夜。末地在
+   * 无遮挡时固定为 Solar，不再进入 Lunar；雷暴界面显示 Thunder。
    *
    * <p>Calculates the current rate and mode. Priority: Nether, obstruction,
-   * thunder, then daytime/night.
+   * the End, thunder, then daytime/night. The End is always in Solar mode when
+   * unobstructed.
    */
   public SolarGeneratorStatus getStatus(
     Level level,
@@ -103,6 +104,19 @@ public enum SolarGeneratorTier {
       return new SolarGeneratorStatus(
         this == MK3 ? 80 : 0,
         SolarGeneratorMode.REFLECTION
+      );
+    }
+
+    if (level.dimension().equals(Level.END)) {
+      int endRate = switch (this) {
+        case MK0 -> 30;
+        case MK1 -> 120;
+        case MK2 -> 240;
+        case MK3 -> 960;
+      };
+      return new SolarGeneratorStatus(
+        endRate,
+        SolarGeneratorMode.SOLAR
       );
     }
 

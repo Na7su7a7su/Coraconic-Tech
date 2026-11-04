@@ -91,9 +91,9 @@ public class ModBlockEntityType {
   );
 
   /**
-   * 能量存储单元 MK1：32,000,000 FE，1,000 FE/t。
+   * 能量存储单元 MK1：32,000,000 FE，4,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK1: 32,000,000 FE, 1,000 FE/t.
+   * <p>Energy Storage Unit MK1: 32,000,000 FE, 4,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
@@ -108,9 +108,9 @@ public class ModBlockEntityType {
   );
 
   /**
-   * 能量存储单元 MK2：320,000,000 FE，4,000 FE/t。
+   * 能量存储单元 MK2：320,000,000 FE，16,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK2: 320,000,000 FE, 4,000 FE/t.
+   * <p>Energy Storage Unit MK2: 320,000,000 FE, 16,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
@@ -125,9 +125,9 @@ public class ModBlockEntityType {
   );
 
   /**
-   * 能量存储单元 MK3：3,200,000,000 FE（3.2G），16,000 FE/t。
+   * 能量存储单元 MK3：3,200,000,000 FE（3.2G），64,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK3: 3,200,000,000 FE (3.2G), 16,000 FE/t.
+   * <p>Energy Storage Unit MK3: 3,200,000,000 FE (3.2G), 64,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
@@ -156,6 +156,24 @@ public class ModBlockEntityType {
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
         ModBlocks.SOLAR_GENERATOR_MK0.get()
+      ).build(null)
+  );
+
+  /**
+   * 地磁发电机 MK0：复用太阳能方块实体逻辑，独立注册便于能力绑定。
+   *
+   * <p>Geomagnetic Generator MK0: reuses the solar block entity logic and is
+   * registered separately for capability binding.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<GeomagneticGeneratorBlockEntity>
+  > GEOMAGNETIC_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_mk0_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
+        ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get()
       ).build(null)
   );
 
@@ -263,6 +281,27 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for solar generator block entity: " + state
+    );
+  }
+
+  /**
+   * 地磁发电机方块实体工厂。
+   *
+   * <p>Geomagnetic generator block entity factory.
+   */
+  private static GeomagneticGeneratorBlockEntity createGeomagneticGeneratorBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof GeomagneticGeneratorBlock generatorBlock) {
+      return new GeomagneticGeneratorBlockEntity(
+        generatorBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for geomagnetic generator block entity: " + state
     );
   }
 

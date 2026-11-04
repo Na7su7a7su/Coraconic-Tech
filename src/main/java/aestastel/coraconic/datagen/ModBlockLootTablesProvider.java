@@ -104,6 +104,10 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK0.get())
     );
     add(
+      ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get(),
+      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get())
+    );
+    add(
       ModBlocks.SOLAR_GENERATOR_MK1.get(),
       createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK1.get())
     );

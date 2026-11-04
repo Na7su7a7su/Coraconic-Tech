@@ -10,19 +10,24 @@
 package aestastel.coraconic.block;
 
 /**
- * 太阳能发电机界面的运行模式。
+ * 太阳能与地磁发电机界面的运行模式。
  *
- * <p>模式名称固定为英文，便于保持 CLI 风格。
+ * <p>模式名称固定为英文，便于保持 CLI 风格。新增模式追加在枚举末尾，
+ * 以保持既有太阳能模式序号不变。
  *
- * <p>Solar generator runtime modes. Display names remain in English to keep the
- * requested CLI style.
+ * <p>Solar and geomagnetic generator runtime modes. Display names remain in
+ * English to keep the requested CLI style. New modes are appended so existing
+ * solar mode ordinals stay stable.
  */
 public enum SolarGeneratorMode {
   SOLAR("Solar"),
   LUNAR("Lunar"),
   REFLECTION("Reflection"),
   NETHER("Nether"),
-  THUNDER("Thunder");
+  THUNDER("Thunder"),
+  OVERWORLD("Overworld"),
+  END("End"),
+  NULL("Null");
 
   private final String displayName;
 

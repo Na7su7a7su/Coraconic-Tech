@@ -59,6 +59,7 @@ public class SolarGeneratorMenu
   private final SolarGeneratorTier tier;
   private final ContainerData data;
   private final boolean clientSide;
+  private final boolean geomagnetic;
   private final EnergyFaceMode[] syncedFaceModes =
     new EnergyFaceMode[FACE_MODE_COUNT];
   private int currentRate;
@@ -73,9 +74,24 @@ public class SolarGeneratorMenu
       containerId,
       playerInventory,
       blockEntity,
+      blockEntity.isGeomagnetic()
+    );
+  }
+
+  public SolarGeneratorMenu(
+    int containerId,
+    Inventory playerInventory,
+    SolarGeneratorBlockEntity blockEntity,
+    boolean geomagnetic
+  ) {
+    this(
+      containerId,
+      playerInventory,
+      blockEntity,
       blockEntity,
       blockEntity.getCapacity(),
-      blockEntity.getTier()
+      blockEntity.getTier(),
+      geomagnetic
     );
   }
 
@@ -87,15 +103,38 @@ public class SolarGeneratorMenu
     int capacity,
     SolarGeneratorTier tier
   ) {
+    this(
+      containerId,
+      playerInventory,
+      container,
+      blockEntity,
+      capacity,
+      tier,
+      blockEntity != null && blockEntity.isGeomagnetic()
+    );
+  }
+
+  public SolarGeneratorMenu(
+    int containerId,
+    Inventory playerInventory,
+    Container container,
+    SolarGeneratorBlockEntity blockEntity,
+    int capacity,
+    SolarGeneratorTier tier,
+    boolean geomagnetic
+  ) {
     super(ModMenuType.SOLAR_GENERATOR.get(), containerId);
     checkContainerSize(container, MACHINE_SLOTS);
     this.blockEntity = blockEntity;
     this.capacity = capacity;
     this.tier = tier;
     this.clientSide = playerInventory.player.level().isClientSide;
+    this.geomagnetic = geomagnetic;
     if (blockEntity != null) {
       this.currentRate = blockEntity.getCurrentGeneration();
       this.currentMode = blockEntity.getCurrentMode();
+    } else if (geomagnetic) {
+      this.currentMode = SolarGeneratorMode.NULL;
     }
     for (Direction direction : Direction.values()) {
       this.syncedFaceModes[direction.get3DDataValue()] =
@@ -213,6 +252,7 @@ public class SolarGeneratorMenu
     SolarGeneratorTier tier = SolarGeneratorTier.byOrdinal(
       buffer.readVarInt()
     );
+    boolean geomagnetic = buffer.readBoolean();
     SolarGeneratorBlockEntity blockEntity =
       playerInventory.player.level().getBlockEntity(pos)
         instanceof SolarGeneratorBlockEntity generator
@@ -227,7 +267,8 @@ public class SolarGeneratorMenu
       container,
       blockEntity,
       capacity,
-      tier
+      tier,
+      geomagnetic
     );
   }
 
@@ -254,6 +295,11 @@ public class SolarGeneratorMenu
   /** {@return 当前运行模式} */
   public SolarGeneratorMode getMode() {
     return this.currentMode;
+  }
+
+  /** {@return 是否使用地磁发电机的 CLI 来源标识} */
+  public boolean isGeomagnetic() {
+    return this.geomagnetic;
   }
 
   @Override

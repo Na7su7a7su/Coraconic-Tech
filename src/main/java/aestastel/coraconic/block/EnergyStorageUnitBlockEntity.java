@@ -75,7 +75,7 @@ public class EnergyStorageUnitBlockEntity
 
   private final ModEnergyStorage[] banks;
   private final long totalCapacity;
-  private final int transfer;
+  private final long transfer;
   private final EnergyFaceMode[] faceModes = new EnergyFaceMode[6];
   private final IEnergyStorage[] sideStorages = new IEnergyStorage[6];
   private final IEnergyStorage nullSideStorage;
@@ -92,7 +92,7 @@ public class EnergyStorageUnitBlockEntity
     BlockPos pos,
     BlockState state,
     long capacity,
-    int maxTransfer
+    long maxTransfer
   ) {
     super(type, pos, state);
     this.transfer = maxTransfer;
@@ -159,14 +159,14 @@ public class EnergyStorageUnitBlockEntity
       return;
     }
 
-    int available = (int) Math.min(
+    long available = Math.min(
       this.transfer,
       getEnergyStoredLong()
     );
-    if (available <= 0) {
+    if (available <= 0L) {
       return;
     }
-    int request = Math.min(transfer, available);
+    int request = (int) Math.min(available, Integer.MAX_VALUE);
     int accepted = itemEnergy.receiveEnergy(request, true);
     if (accepted <= 0) {
       return;
@@ -209,11 +209,14 @@ public class EnergyStorageUnitBlockEntity
     if (space <= 0) {
       return;
     }
-    int request = (int) Math.min(this.transfer, space);
-    if (request <= 0) {
+    long request = Math.min(this.transfer, space);
+    if (request <= 0L) {
       return;
     }
-    int available = itemEnergy.extractEnergy(request, true);
+    int available = itemEnergy.extractEnergy(
+      (int) Math.min(request, Integer.MAX_VALUE),
+      true
+    );
     if (available <= 0) {
       return;
     }
@@ -330,32 +333,36 @@ public class EnergyStorageUnitBlockEntity
       long ownEnergy = getEnergyStoredLong();
       long neighbourEnergy = neighbour.getEnergyStored();
       if (ownEnergy < neighbourEnergy) {
-        int limit = (int) Math.min(
-          (long) this.transfer,
+        long limit = Math.min(
+          this.transfer,
           (neighbourEnergy - ownEnergy) / 2L
         );
-        if (limit > 0) {
+        if (limit > 0L) {
           pullFrom(side, limit);
         }
       } else if (ownEnergy > neighbourEnergy) {
-        int limit = (int) Math.min(
-          (long) this.transfer,
+        long limit = Math.min(
+          this.transfer,
           (ownEnergy - neighbourEnergy) / 2L
         );
-        if (limit > 0) {
+        if (limit > 0L) {
           pushTo(side, limit);
         }
       }
     }
   }
 
-  private int pushTo(Direction side, int limit) {
+  private int pushTo(Direction side, long limit) {
     IEnergyStorage neighbour = getNeighbourStorage(side);
     if (neighbour == null || !neighbour.canReceive()) {
       return 0;
     }
 
-    int available = extractFromBanks(limit, true);
+    int request = (int) Math.min(limit, Integer.MAX_VALUE);
+    if (request <= 0) {
+      return 0;
+    }
+    int available = extractFromBanks(request, true);
     if (available <= 0) {
       return 0;
     }
@@ -375,13 +382,17 @@ public class EnergyStorageUnitBlockEntity
     return inserted;
   }
 
-  private int pullFrom(Direction side, int limit) {
+  private int pullFrom(Direction side, long limit) {
     IEnergyStorage neighbour = getNeighbourStorage(side);
     if (neighbour == null || !neighbour.canExtract()) {
       return 0;
     }
 
-    int offered = neighbour.extractEnergy(limit, true);
+    int request = (int) Math.min(limit, Integer.MAX_VALUE);
+    if (request <= 0) {
+      return 0;
+    }
+    int offered = neighbour.extractEnergy(request, true);
     if (offered <= 0) {
       return 0;
     }

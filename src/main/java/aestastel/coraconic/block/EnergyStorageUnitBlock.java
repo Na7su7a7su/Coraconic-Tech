@@ -47,13 +47,13 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
   private final long capacity;
-  private final int transfer;
+  private final long transfer;
 
   public EnergyStorageUnitBlock(
     Properties properties,
     Supplier<BlockEntityType<?>> typeSupplier,
     long capacity,
-    int transfer
+    long transfer
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
@@ -122,7 +122,7 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
   }
 
   /** {@return 本等级的输入/输出上限（FE/t）} */
-  public int getTransfer() {
+  public long getTransfer() {
     return transfer;
   }
 

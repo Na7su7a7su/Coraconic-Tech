@@ -32,15 +32,15 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 public class ModEnergyStorage implements IEnergyStorage {
 
   private final long capacity;
-  private final int maxReceive;
-  private final int maxExtract;
+  private final long maxReceive;
+  private final long maxExtract;
   private final Runnable onChanged;
 
   private long energy;
 
   public ModEnergyStorage(
     long capacity,
-    int maxTransfer,
+    long maxTransfer,
     Runnable onChanged
   ) {
     this.capacity = capacity;
