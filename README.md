@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.6f`
-- 最近版本提交：`0.0.6fp_261104_c`
+- 最近版本提交：`0.0.6fq_261104_d`
 - 最后更新：2026-11-04
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6fq_261104_d`：将太阳能与地磁发电机的发电功率改为由运行模式查表决定，环境条件只负责选择模式；MK0/MK1 白天天空光不足时改为 `Null` 模式，末地与地磁规则保持不变。
 - `0.0.6fp_261104_c`：新增地磁发电机 MK0，复用太阳能 MK0 的缓存、输出、GUI 与掉落逻辑，按 `Y < 6`、维度和正下方方块判定 `Overworld` / `Nether` / `End` / `Null` 模式；四个太阳能发电机在末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；能量存储单元传输速率调整为 4,000,000/16,000,000/64,000,000 FE/t，相关速率字段改为 `long`。
 - `0.0.6ep_261104_b`：新增空间放缩、相位同步、质能补偿与中枢计算四种核心，补齐物品模型、纹理、四语名称、创造栏与 README，暂未添加合成配方；太阳能发电机 GUI 改用贴图绘制 CLI 背景与充电槽，输出槽调整至 `(146, 39)`，CLI 文本继续下移并右移，I/O 按钮右侧加宽 1 像素。
 - `0.0.6dp_261103_c`：将 Java 包名由 `com.aestastel.coraconic.*` 迁移为 `aestastel.coraconic.*`，同步 Mixin package 与 Gradle group ID 为 `aestastel.coraconic`；mod ID、资源命名空间、注册 ID 与 NBT 保持不变。
@@ -130,7 +131,7 @@
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
 - CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
-- 模式优先级为 `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；`Power` 显示规则速率，不因缓存已满而归零
+- 模式优先级为 `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；MK0/MK1 白天天空光不足时模式为 `Null`；功率由模式决定，`Power` 不因缓存已满而归零
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
@@ -278,13 +279,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.6f`
-- Latest version commit: `0.0.6fp_261104_c`
+- Latest version commit: `0.0.6fq_261104_d`
 - Last updated: 2026-11-04
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6fq_261104_d`: bound solar and geomagnetic generation rates to the selected mode, leaving environmental conditions responsible only for mode selection; MK0/MK1 now use `Null` during daytime with insufficient sky light, while End and geomagnetic rules remain unchanged.
 - `0.0.6fp_261104_c`: added Geomagnetic Generator MK0 with Solar Generator MK0's buffer, output, GUI, and drop persistence, selecting `Overworld`, `Nether`, `End`, or `Null` from Y < 6, dimension, and the block directly below; made all four solar generators use `Solar` mode in the End when unobstructed while keeping `Reflection` when obstructed; raised energy storage transfer rates to 4,000,000/16,000,000/64,000,000 FE/t and changed the related rate fields to `long`.
 - `0.0.6ep_261104_b`: added Spatial Scaling, Phase Synchronization, Mass-Energy Compensation, and Central Computation cores with item models, textures, four-language names, creative-tab entries, and README documentation, without crafting recipes; changed the solar generator GUI to use texture-drawn CLI and charge-slot backgrounds, moved the output slot to `(146, 39)`, shifted the CLI text further right and down, and widened the I/O button by one pixel on the right.
 - `0.0.6dp_261103_c`: migrated Java packages from `com.aestastel.coraconic.*` to `aestastel.coraconic.*`, updated the mixin package and Gradle group ID to `aestastel.coraconic`, and left the mod ID, resource namespace, registry IDs, and NBT unchanged.
@@ -384,7 +386,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
 - The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
-- Mode priority is `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; `Power` shows the rule-based rate and does not drop to zero merely because the buffer is full
+- Mode priority is `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; MK0/MK1 use `Null` during daytime with insufficient sky light; generation is bound to the mode, and `Power` does not drop to zero merely because the buffer is full
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating

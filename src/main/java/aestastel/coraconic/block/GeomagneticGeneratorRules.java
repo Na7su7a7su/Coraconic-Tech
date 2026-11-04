@@ -36,42 +36,55 @@ public final class GeomagneticGeneratorRules {
   private GeomagneticGeneratorRules() {}
 
   /**
-   * 计算当前 tick 的发电速率与模式。
+   * 根据环境条件选择运行模式。
    *
-   * <p>Calculates the current generation rate and mode.
+   * <p>Selects the runtime mode from Y level, dimension, and the block directly
+   * below.
    */
-  public static SolarGeneratorStatus getStatus(
+  public static SolarGeneratorMode determineMode(
     Level level,
     BlockPos pos
   ) {
     if (pos.getY() >= MAX_GENERATION_Y) {
-      return new SolarGeneratorStatus(0, SolarGeneratorMode.NULL);
+      return SolarGeneratorMode.NULL;
     }
 
     BlockState below = level.getBlockState(pos.below());
     if (level.dimension().equals(Level.END)) {
       return below.isAir()
-        ? new SolarGeneratorStatus(
-            END_GENERATION,
-            SolarGeneratorMode.END
-          )
-        : new SolarGeneratorStatus(0, SolarGeneratorMode.NULL);
+        ? SolarGeneratorMode.END
+        : SolarGeneratorMode.NULL;
     }
 
     if (!below.is(Blocks.BEDROCK)) {
-      return new SolarGeneratorStatus(0, SolarGeneratorMode.NULL);
+      return SolarGeneratorMode.NULL;
     }
 
-    if (level.dimension().equals(Level.NETHER)) {
-      return new SolarGeneratorStatus(
-        NETHER_GENERATION,
-        SolarGeneratorMode.NETHER
-      );
-    }
+    return level.dimension().equals(Level.NETHER)
+      ? SolarGeneratorMode.NETHER
+      : SolarGeneratorMode.OVERWORLD;
+  }
 
-    return new SolarGeneratorStatus(
-      OVERWORLD_GENERATION,
-      SolarGeneratorMode.OVERWORLD
-    );
+  /** {@return 指定模式对应的地磁发电速率} */
+  public static int getGeneration(SolarGeneratorMode mode) {
+    return switch (mode) {
+      case OVERWORLD -> OVERWORLD_GENERATION;
+      case NETHER -> NETHER_GENERATION;
+      case END -> END_GENERATION;
+      case SOLAR, LUNAR, REFLECTION, THUNDER, NULL -> 0;
+    };
+  }
+
+  /**
+   * 计算当前 tick 的发电速率与模式。
+   *
+   * <p>Conditions select the mode; generation is bound to that mode.
+   */
+  public static SolarGeneratorStatus getStatus(
+    Level level,
+    BlockPos pos
+  ) {
+    SolarGeneratorMode mode = determineMode(level, pos);
+    return new SolarGeneratorStatus(getGeneration(mode), mode);
   }
 }

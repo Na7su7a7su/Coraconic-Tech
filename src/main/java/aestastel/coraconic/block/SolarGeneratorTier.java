@@ -68,92 +68,103 @@ public enum SolarGeneratorTier {
   /**
    * 计算当前 tick 的规则发电速率。
    *
-   * <p>Delegates to {@link #getStatus(Level, BlockPos, BooleanSupplier)}.
+   * <p>先由条件判定模式，再从模式功率表取值。
+   *
+   * <p>Determines the mode first, then reads its generation rate from the
+   * tier's mode table.
    */
   public int getGeneration(
     Level level,
     BlockPos pos,
     BooleanSupplier obstructed
   ) {
-    return getStatus(level, pos, obstructed).generation();
+    return getGeneration(determineMode(level, pos, obstructed));
+  }
+
+  /** {@return 指定模式在本等级的发电速率} */
+  public int getGeneration(SolarGeneratorMode mode) {
+    return switch (mode) {
+      case SOLAR -> switch (this) {
+        case MK0 -> 30;
+        case MK1 -> 120;
+        case MK2 -> 240;
+        case MK3 -> 960;
+      };
+      case LUNAR -> switch (this) {
+        case MK0, MK1 -> 0;
+        case MK2 -> 120;
+        case MK3 -> 240;
+      };
+      case REFLECTION, NETHER -> this == MK3 ? 80 : 0;
+      case THUNDER -> switch (this) {
+        case MK0, MK1 -> 0;
+        case MK2 -> 120;
+        case MK3 -> 360;
+      };
+      case OVERWORLD, END, NULL -> 0;
+    };
+  }
+
+  /**
+   * 根据环境条件选择运行模式。
+   *
+   * <p>优先级：下界 → 天空柱遮挡 → 末地 → 雷暴 → 白天/黑夜。末地在
+   * 无遮挡时固定为 Solar；MK0/MK1 白天天空光不足时返回 Null。
+   *
+   * <p>Selects the runtime mode. Priority: Nether, obstruction, the End,
+   * thunder, then daytime/night. The End is always Solar when unobstructed;
+   * MK0/MK1 report Null during daytime with insufficient sky light.
+   */
+  public SolarGeneratorMode determineMode(
+    Level level,
+    BlockPos pos,
+    BooleanSupplier obstructed
+  ) {
+    if (level.dimension().equals(Level.NETHER)) {
+      return SolarGeneratorMode.NETHER;
+    }
+
+    if (obstructed.getAsBoolean()) {
+      return SolarGeneratorMode.REFLECTION;
+    }
+
+    if (level.dimension().equals(Level.END)) {
+      return SolarGeneratorMode.SOLAR;
+    }
+
+    if (level.isThundering()) {
+      return SolarGeneratorMode.THUNDER;
+    }
+
+    if (level.isDay()) {
+      if (
+        (this == MK0 || this == MK1) &&
+        !hasEnoughSkyLight(level, pos)
+      ) {
+        return SolarGeneratorMode.NULL;
+      }
+      return SolarGeneratorMode.SOLAR;
+    }
+
+    return SolarGeneratorMode.LUNAR;
   }
 
   /**
    * 计算当前速率与运行模式。
    *
-   * <p>优先级：下界 → 天空柱遮挡 → 末地 → 雷暴 → 白天/黑夜。末地在
-   * 无遮挡时固定为 Solar，不再进入 Lunar；雷暴界面显示 Thunder。
+   * <p>模式由 {@link #determineMode(Level, BlockPos, BooleanSupplier)}
+   * 选择，功率由 {@link #getGeneration(SolarGeneratorMode)} 绑定。
    *
-   * <p>Calculates the current rate and mode. Priority: Nether, obstruction,
-   * the End, thunder, then daytime/night. The End is always in Solar mode when
-   * unobstructed.
+   * <p>Calculates the current rate and mode. Conditions select the mode, and
+   * generation is bound to that mode.
    */
   public SolarGeneratorStatus getStatus(
     Level level,
     BlockPos pos,
     BooleanSupplier obstructed
   ) {
-    if (level.dimension().equals(Level.NETHER)) {
-      return new SolarGeneratorStatus(
-        this == MK3 ? 80 : 0,
-        SolarGeneratorMode.NETHER
-      );
-    }
-
-    if (obstructed.getAsBoolean()) {
-      return new SolarGeneratorStatus(
-        this == MK3 ? 80 : 0,
-        SolarGeneratorMode.REFLECTION
-      );
-    }
-
-    if (level.dimension().equals(Level.END)) {
-      int endRate = switch (this) {
-        case MK0 -> 30;
-        case MK1 -> 120;
-        case MK2 -> 240;
-        case MK3 -> 960;
-      };
-      return new SolarGeneratorStatus(
-        endRate,
-        SolarGeneratorMode.SOLAR
-      );
-    }
-
-    if (level.isThundering()) {
-      int thunderRate = switch (this) {
-        case MK0, MK1 -> 0;
-        case MK2 -> 120;
-        case MK3 -> 360;
-      };
-      return new SolarGeneratorStatus(
-        thunderRate,
-        SolarGeneratorMode.THUNDER
-      );
-    }
-
-    if (level.isDay()) {
-      int dayRate = switch (this) {
-        case MK0 -> hasEnoughSkyLight(level, pos) ? 30 : 0;
-        case MK1 -> hasEnoughSkyLight(level, pos) ? 120 : 0;
-        case MK2 -> 240;
-        case MK3 -> 960;
-      };
-      return new SolarGeneratorStatus(
-        dayRate,
-        SolarGeneratorMode.SOLAR
-      );
-    }
-
-    int nightRate = switch (this) {
-      case MK0, MK1 -> 0;
-      case MK2 -> 120;
-      case MK3 -> 240;
-    };
-    return new SolarGeneratorStatus(
-      nightRate,
-      SolarGeneratorMode.LUNAR
-    );
+    SolarGeneratorMode mode = determineMode(level, pos, obstructed);
+    return new SolarGeneratorStatus(getGeneration(mode), mode);
   }
 
   private static boolean hasEnoughSkyLight(Level level, BlockPos pos) {
