@@ -74,6 +74,10 @@ public class ModCreativeModeTabs {
           output.accept(ModItems.CORACONIC_CORE);
           output.accept(ModItems.AVIRACONIC_CORE);
           output.accept(ModItems.EFFECT_AMPLIFICATION_CORE);
+          output.accept(ModItems.SPATIAL_SCALING_CORE);
+          output.accept(ModItems.PHASE_SYNCHRONIZATION_CORE);
+          output.accept(ModItems.MASS_ENERGY_COMPENSATION_CORE);
+          output.accept(ModItems.CENTRAL_COMPUTATION_CORE);
           output.accept(ModItems.RAW_LEAD);
           output.accept(ModItems.RAW_TIN);
           output.accept(ModItems.CORACONIC_ELEMENT);

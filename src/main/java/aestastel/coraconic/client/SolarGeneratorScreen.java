@@ -47,13 +47,8 @@ public class SolarGeneratorScreen
   private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_TEXT_Y = 78;
 
-  private static final int SLOT_X = 148;
-  private static final int SLOT_Y = 35;
-  private static final int PANEL_X = 28;
-  private static final int PANEL_Y = 16;
-  private static final int PANEL_WIDTH = 112;
-  private static final int PANEL_HEIGHT = 58;
-  private static final int PANEL_BACKGROUND = 0xFF000000;
+  private static final int CLI_TEXT_X = 36;
+  private static final int CLI_TEXT_Y = 24;
   private static final int CLI_TEXT_COLOR = 0xFF55FF55;
   private static final float CLI_SCALE = 0.5F;
 
@@ -174,32 +169,6 @@ public class SolarGeneratorScreen
       );
     }
 
-    int panelX = this.leftPos + PANEL_X;
-    int panelY = this.topPos + PANEL_Y;
-    graphics.fill(
-      panelX,
-      panelY,
-      panelX + PANEL_WIDTH,
-      panelY + PANEL_HEIGHT,
-      PANEL_BACKGROUND
-    );
-
-    int slotFrameX = this.leftPos + SLOT_X - 1;
-    int slotFrameY = this.topPos + SLOT_Y - 1;
-    graphics.fill(
-      slotFrameX,
-      slotFrameY,
-      slotFrameX + 18,
-      slotFrameY + 18,
-      0xFF000000
-    );
-    graphics.fill(
-      slotFrameX + 1,
-      slotFrameY + 1,
-      slotFrameX + 17,
-      slotFrameY + 17,
-      0xFF373737
-    );
   }
 
   @Override
@@ -233,8 +202,8 @@ public class SolarGeneratorScreen
     graphics
       .pose()
       .translate(
-        (float) (this.leftPos + PANEL_X + 4),
-        (float) (this.topPos + PANEL_Y + 4),
+        (float) (this.leftPos + CLI_TEXT_X),
+        (float) (this.topPos + CLI_TEXT_Y),
         0.0F
       );
     graphics.pose().scale(CLI_SCALE, CLI_SCALE, 1.0F);

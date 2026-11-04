@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.6d`
-- 最近版本提交：`0.0.6dp_261103_c`
-- 最后更新：2026-11-03
+- `mod_version`：`0.0.6e`
+- 最近版本提交：`0.0.6ep_261104_b`
+- 最后更新：2026-11-04
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6ep_261104_b`：新增空间放缩、相位同步、质能补偿与中枢计算四种核心，补齐物品模型、纹理、四语名称、创造栏与 README，暂未添加合成配方；太阳能发电机 GUI 改用贴图绘制 CLI 背景与充电槽，输出槽调整至 `(146, 39)`，CLI 文本继续下移并右移，I/O 按钮右侧加宽 1 像素。
 - `0.0.6dp_261103_c`：将 Java 包名由 `com.aestastel.coraconic.*` 迁移为 `aestastel.coraconic.*`，同步 Mixin package 与 Gradle group ID 为 `aestastel.coraconic`；mod ID、资源命名空间、注册 ID 与 NBT 保持不变。
 - `0.0.6cq_261103_b`：太阳能发电机 GUI 改为右侧输出/充电槽 + 中央黑底绿字 CLI 面板，显示等级、`mod_version`、规则发电速率和运行模式；新增 `Thunder` 模式，模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`，状态由服务端菜单数据同步。
 - `0.0.6cp_261103_a`：新增太阳能发电机 MK1–MK3，按等级实现维度、昼夜、雷暴、天空光与天空柱遮挡规则；MK0 迁移到共享太阳能等级/方块实体/GUI；生成三个等级的占位方块纹理与完整数据资源；能量存储单元传输速率调整为 4,000/16,000/64,000 FE/t，MK0 当前发电量保留为 30 FE/t。
@@ -58,7 +59,8 @@
 
 - 锡、铅、核龙金属、腾龙金属
 - 对应的金属锭、金属粒与粗矿物品
-- 常金属核心、核龙金属核心、腾龙金属核心、效应放大核心
+- 常金属核心、核龙金属核心、腾龙金属核心、效应放大核心、空间放缩核心、相位同步核心、质能补偿核心、中枢计算核心
+- 五个特殊核心当前仅通过创造模式获取，暂未添加合成配方
 - 核龙元素、腾龙元素
 - 核龙金刚晶体、腾龙金刚晶体
 - `hcv2` 自定义食物
@@ -264,14 +266,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.6d`
-- Latest version commit: `0.0.6dp_261103_c`
-- Last updated: 2026-11-03
+- `mod_version`: `0.0.6e`
+- Latest version commit: `0.0.6ep_261104_b`
+- Last updated: 2026-11-04
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6ep_261104_b`: added Spatial Scaling, Phase Synchronization, Mass-Energy Compensation, and Central Computation cores with item models, textures, four-language names, creative-tab entries, and README documentation, without crafting recipes; changed the solar generator GUI to use texture-drawn CLI and charge-slot backgrounds, moved the output slot to `(146, 39)`, shifted the CLI text further right and down, and widened the I/O button by one pixel on the right.
 - `0.0.6dp_261103_c`: migrated Java packages from `com.aestastel.coraconic.*` to `aestastel.coraconic.*`, updated the mixin package and Gradle group ID to `aestastel.coraconic`, and left the mod ID, resource namespace, registry IDs, and NBT unchanged.
 - `0.0.6cq_261103_b`: changed the solar generator GUI to a right-side output/charge slot plus a centered black/green CLI panel showing tier, `mod_version`, rule-based generation rate, and runtime mode; added the `Thunder` mode with priority `Nether > Reflection > Thunder > Solar/Lunar`; status is synchronized through menu data.
 - `0.0.6cp_261103_a`: added Solar Generators MK1–MK3 with tiered dimension, daytime, thunder, sky-light, and sky-column rules; migrated MK0 to a shared solar tier/block entity/GUI implementation; generated placeholder textures and complete data resources for all three tiers; updated energy storage transfer rates to 4,000/16,000/64,000 FE/t and kept MK0 generation at the current 30 FE/t.
@@ -299,7 +302,8 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 - Tin, lead, coraconic metal, and aviraconic metal
 - Matching ingots, nuggets, and raw ore items
-- Common-metal, coraconic, aviraconic, and effect amplification cores
+- Common-metal, coraconic, aviraconic, effect amplification, spatial scaling, phase synchronization, mass-energy compensation, and central computation cores
+- The five special cores are currently creative-only and do not have crafting recipes yet
 - Coraconic and aviraconic elements
 - Coraconic and aviraconic diamond-structured crystals
 - `hcv2`, a custom food item

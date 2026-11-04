@@ -331,6 +331,22 @@ public class ModItems {
     ITEMS.register("effect_amplification_core", () ->
       new Item(new Item.Properties())
     );
+  public static final DeferredItem<Item> SPATIAL_SCALING_CORE = ITEMS.register(
+    "spatial_scaling_core",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> PHASE_SYNCHRONIZATION_CORE =
+    ITEMS.register("phase_synchronization_core", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> MASS_ENERGY_COMPENSATION_CORE =
+    ITEMS.register("mass_energy_compensation_core", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> CENTRAL_COMPUTATION_CORE =
+    ITEMS.register("central_computation_core", () ->
+      new Item(new Item.Properties())
+    );
   public static final DeferredItem<Item> SPANNER = ITEMS.register(
     "spanner",
     () -> new SpannerItem(new Item.Properties().stacksTo(1))

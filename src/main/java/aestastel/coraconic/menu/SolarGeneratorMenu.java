@@ -166,8 +166,8 @@ public class SolarGeneratorMenu
       new Slot(
         container,
         SolarGeneratorBlockEntity.OUTPUT_SLOT,
-        148,
-        35
+        146,
+        39
       ) {
         @Override
         public boolean mayPlace(ItemStack stack) {

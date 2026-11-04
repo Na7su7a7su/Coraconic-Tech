@@ -34,7 +34,7 @@ public final class EnergyFaceConfigPanel {
 
   private static final int BUTTON_OFFSET_X = 22;
   private static final int BUTTON_OFFSET_Y = 4;
-  private static final int BUTTON_WIDTH = 17;
+  private static final int BUTTON_WIDTH = 18;
   private static final int BUTTON_HEIGHT = 14;
 
   private static final Direction[] FACE_ORDER = {
