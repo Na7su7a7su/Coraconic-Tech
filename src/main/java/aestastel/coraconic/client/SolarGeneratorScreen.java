@@ -43,7 +43,7 @@ public class SolarGeneratorScreen
   private static final int BAR_Y = 20;
   private static final int BAR_WIDTH = 16;
   private static final int BAR_HEIGHT = 54;
-  private static final int ENERGY_COLOR = 0xFFFFD54F;
+  private static final int ENERGY_COLOR = 0x9A4FD784;
   private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_TEXT_Y = 78;
 
@@ -55,7 +55,7 @@ public class SolarGeneratorScreen
   private static final int PANEL_HEIGHT = 58;
   private static final int PANEL_BACKGROUND = 0xFF000000;
   private static final int CLI_TEXT_COLOR = 0xFF55FF55;
-  private static final float CLI_SCALE = 0.55F;
+  private static final float CLI_SCALE = 0.5F;
 
   private final EnergyFaceConfigPanel faceConfigPanel;
 
@@ -68,10 +68,7 @@ public class SolarGeneratorScreen
     this.imageWidth = 176;
     this.imageHeight = 184;
     this.inventoryLabelY = this.imageHeight - 94;
-    this.faceConfigPanel = new EnergyFaceConfigPanel(
-      menu,
-      menu.containerId
-    );
+    this.faceConfigPanel = new EnergyFaceConfigPanel(menu, menu.containerId);
   }
 
   @Override
@@ -87,9 +84,7 @@ public class SolarGeneratorScreen
 
     this.renderTooltip(graphics, mouseX, mouseY);
 
-    if (
-      isHovering(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, mouseX, mouseY)
-    ) {
+    if (isHovering(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, mouseX, mouseY)) {
       graphics.renderTooltip(
         this.font,
         Component.literal(energyText()),
@@ -109,11 +104,7 @@ public class SolarGeneratorScreen
   }
 
   @Override
-  public boolean mouseClicked(
-    double mouseX,
-    double mouseY,
-    int button
-  ) {
+  public boolean mouseClicked(double mouseX, double mouseY, int button) {
     if (
       this.faceConfigPanel.mouseClicked(
         mouseX,
@@ -129,11 +120,7 @@ public class SolarGeneratorScreen
   }
 
   @Override
-  public boolean mouseReleased(
-    double mouseX,
-    double mouseY,
-    int button
-  ) {
+  public boolean mouseReleased(double mouseX, double mouseY, int button) {
     if (this.faceConfigPanel.mouseReleased()) {
       return true;
     }
@@ -141,11 +128,7 @@ public class SolarGeneratorScreen
   }
 
   @Override
-  public boolean keyPressed(
-    int keyCode,
-    int scanCode,
-    int modifiers
-  ) {
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
     if (this.faceConfigPanel.keyPressed(keyCode)) {
       return true;
     }
@@ -173,18 +156,13 @@ public class SolarGeneratorScreen
 
     int x = this.leftPos + BAR_X;
     int y = this.topPos + BAR_Y;
-    graphics.fill(
-      x,
-      y,
-      x + BAR_WIDTH,
-      y + BAR_HEIGHT,
-      BAR_BACKGROUND
-    );
+    graphics.fill(x, y, x + BAR_WIDTH, y + BAR_HEIGHT, BAR_BACKGROUND);
 
     int capacity = menu.getCapacity();
-    double ratio = capacity <= 0
-      ? 0.0D
-      : Mth.clamp((double) menu.getEnergy() / (double) capacity, 0.0D, 1.0D);
+    double ratio =
+      capacity <= 0
+        ? 0.0D
+        : Mth.clamp((double) menu.getEnergy() / (double) capacity, 0.0D, 1.0D);
     int filled = (int) Math.round((BAR_HEIGHT - 2) * ratio);
     if (filled > 0) {
       graphics.fill(
@@ -225,11 +203,7 @@ public class SolarGeneratorScreen
   }
 
   @Override
-  protected void renderLabels(
-    GuiGraphics graphics,
-    int mouseX,
-    int mouseY
-  ) {
+  protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
     super.renderLabels(graphics, mouseX, mouseY);
 
     String energy = energyText();
@@ -247,19 +221,22 @@ public class SolarGeneratorScreen
     String[] lines = {
       ">Power Generating System",
       ">Generation " +
-      this.menu.getTier().name() +
-      " - Version " +
-      modVersion(),
+        this.menu.getTier().name() +
+        " - Version " +
+        modVersion(),
       ">Power: " + this.menu.getCurrentRate() + " FE/t",
       ">Mode: " + this.menu.getMode().displayName(),
+      ">Solar Energy",
     };
 
     graphics.pose().pushPose();
-    graphics.pose().translate(
-      (float) (this.leftPos + PANEL_X + 4),
-      (float) (this.topPos + PANEL_Y + 4),
-      0.0F
-    );
+    graphics
+      .pose()
+      .translate(
+        (float) (this.leftPos + PANEL_X + 4),
+        (float) (this.topPos + PANEL_Y + 4),
+        0.0F
+      );
     graphics.pose().scale(CLI_SCALE, CLI_SCALE, 1.0F);
     for (int index = 0; index < lines.length; index++) {
       graphics.drawString(
@@ -286,14 +263,18 @@ public class SolarGeneratorScreen
     int capacity = menu.getCapacity();
 
     if (Screen.hasShiftDown()) {
-      return EnergyFormat.detail(energy) +
+      return (
+        EnergyFormat.detail(energy) +
         " / " +
         EnergyFormat.detail(capacity) +
-        " FE";
+        " FE"
+      );
     }
-    return EnergyFormat.abbreviate(energy) +
+    return (
+      EnergyFormat.abbreviate(energy) +
       " / " +
       EnergyFormat.abbreviate(capacity) +
-      " FE";
+      " FE"
+    );
   }
 }
