@@ -18,23 +18,21 @@ import net.minecraft.world.level.block.state.BlockState;
  * 地磁发电机 MK0 的发电规则。
  *
  * <p>主世界要求 Y&lt;-59 且正下方为基岩；下界和其他模组维度要求 Y&lt;6
- * 且正下方为基岩；末地要求 Y&lt;6 且正下方没有方块。主世界产出 2 FE/t，
- * 下界与其他模组维度产出 3 FE/t；不符合条件时模式为 Null。
+ * 且正下方为基岩；末地要求 Y&lt;6 且正下方没有方块。条件只选择模式，
+ * 发电功率由 {@link GeomagneticGeneratorTier} 提供；不符合条件时模式为
+ * Null。
  *
- * <p>Geomagnetic Generator MK0 generation rules. The Overworld requires
- * Y &lt; -59 with bedrock below; the Nether and modded dimensions require
- * Y &lt; 6 with bedrock below; the End requires Y &lt; 6 with empty space
- * below. The Overworld produces 2 FE/t, while the Nether and modded dimensions
- * produce 3 FE/t; any other case reports Null.
+ * <p>Geomagnetic generator rules. The Overworld requires Y &lt; -59 with
+ * bedrock below; the Nether and modded dimensions require Y &lt; 6 with bedrock
+ * below; the End requires Y &lt; 6 with empty space below. Conditions select
+ * the mode, and {@link GeomagneticGeneratorTier} supplies its generation rate;
+ * any other case reports Null.
  */
 public final class GeomagneticGeneratorRules {
 
   private static final int OVERWORLD_MAX_Y = -59;
   private static final int NETHER_MAX_Y = 6;
   private static final int END_MAX_Y = 6;
-  private static final int OVERWORLD_GENERATION = 2;
-  private static final int NETHER_GENERATION = 3;
-  private static final int END_GENERATION = 6;
 
   private GeomagneticGeneratorRules() {}
 
@@ -77,26 +75,18 @@ public final class GeomagneticGeneratorRules {
       : GeomagneticGeneratorMode.NULL;
   }
 
-  /** {@return 指定模式对应的地磁发电速率} */
-  public static int getGeneration(GeomagneticGeneratorMode mode) {
-    return switch (mode) {
-      case OVERWORLD -> OVERWORLD_GENERATION;
-      case NETHER -> NETHER_GENERATION;
-      case END -> END_GENERATION;
-      case NULL -> 0;
-    };
-  }
-
   /**
    * 计算当前 tick 的发电速率与模式。
    *
-   * <p>Conditions select the mode; generation is bound to that mode.
+   * <p>Conditions select the mode; the tier supplies the mode's generation
+   * rate.
    */
   public static SolarGeneratorStatus getStatus(
     Level level,
-    BlockPos pos
+    BlockPos pos,
+    GeomagneticGeneratorTier tier
   ) {
     GeomagneticGeneratorMode mode = determineMode(level, pos);
-    return new SolarGeneratorStatus(getGeneration(mode), mode);
+    return new SolarGeneratorStatus(tier.getGeneration(mode), mode);
   }
 }

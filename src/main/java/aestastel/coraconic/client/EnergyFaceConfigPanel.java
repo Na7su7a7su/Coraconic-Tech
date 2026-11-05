@@ -34,7 +34,7 @@ public final class EnergyFaceConfigPanel {
 
   private static final int BUTTON_OFFSET_X = 22;
   private static final int BUTTON_OFFSET_Y = 4;
-  private static final int BUTTON_WIDTH = 18;
+  private static final int BUTTON_WIDTH = 19;
   private static final int BUTTON_HEIGHT = 14;
 
   private static final Direction[] FACE_ORDER = {
@@ -101,13 +101,7 @@ public final class EnergyFaceConfigPanel {
     int panelBottom = panelY + PANEL_HEIGHT;
     boolean compact = panelWidth < COMPACT_WIDTH;
 
-    graphics.fill(
-      panelX,
-      panelY,
-      panelRight,
-      panelBottom,
-      PANEL_BACKGROUND
-    );
+    graphics.fill(panelX, panelY, panelRight, panelBottom, PANEL_BACKGROUND);
     drawBorder(graphics, panelX, panelY, panelRight, panelBottom);
 
     graphics.drawString(
@@ -157,13 +151,9 @@ public final class EnergyFaceConfigPanel {
 
       EnergyFaceMode mode = this.menu.getFaceMode(face);
       String faceName = Component.translatable(
-        compact
-          ? shortFaceKey(face)
-          : "direction.coraconic." + face.getName()
+        compact ? shortFaceKey(face) : "direction.coraconic." + face.getName()
       ).getString();
-      String modeName = Component.translatable(
-        shortModeKey(mode)
-      ).getString();
+      String modeName = Component.translatable(shortModeKey(mode)).getString();
       int modeColor = colorFor(mode);
       int modeX = panelRight - 4 - font.width(modeName);
 
@@ -175,21 +165,8 @@ public final class EnergyFaceConfigPanel {
         TEXT_COLOR,
         false
       );
-      graphics.fill(
-        modeX - 7,
-        rowY + 3,
-        modeX - 3,
-        rowY + 11,
-        modeColor
-      );
-      graphics.drawString(
-        font,
-        modeName,
-        modeX,
-        rowY + 3,
-        modeColor,
-        false
-      );
+      graphics.fill(modeX - 7, rowY + 3, modeX - 3, rowY + 11, modeColor);
+      graphics.drawString(font, modeName, modeX, rowY + 3, modeColor, false);
     }
 
     if (hoveredFace != null) {
@@ -225,14 +202,7 @@ public final class EnergyFaceConfigPanel {
     int buttonY = topPos + BUTTON_OFFSET_Y;
 
     if (
-      isHovering(
-        buttonX,
-        buttonY,
-        BUTTON_WIDTH,
-        BUTTON_HEIGHT,
-        mouseX,
-        mouseY
-      )
+      isHovering(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, mouseX, mouseY)
     ) {
       this.suppressNextRelease = true;
       if (button == 0) {
@@ -252,30 +222,12 @@ public final class EnergyFaceConfigPanel {
     int panelRight = panelX + panelWidth;
     int panelBottom = panelY + PANEL_HEIGHT;
 
-    if (
-      !isHovering(
-        panelX,
-        panelY,
-        panelWidth,
-        PANEL_HEIGHT,
-        mouseX,
-        mouseY
-      )
-    ) {
+    if (!isHovering(panelX, panelY, panelWidth, PANEL_HEIGHT, mouseX, mouseY)) {
       this.open = false;
       return true;
     }
 
-    if (
-      isHovering(
-        panelRight - 14,
-        panelY + 3,
-        12,
-        12,
-        mouseX,
-        mouseY
-      )
-    ) {
+    if (isHovering(panelRight - 14, panelY + 3, 12, 12, mouseX, mouseY)) {
       this.open = false;
       return true;
     }
@@ -284,24 +236,14 @@ public final class EnergyFaceConfigPanel {
     for (int index = 0; index < FACE_ORDER.length; index++) {
       int rowY = rowStart + index * ROW_HEIGHT;
       if (
-        isHovering(
-          panelX + 2,
-          rowY,
-          panelWidth - 4,
-          ROW_HEIGHT,
-          mouseX,
-          mouseY
-        )
+        isHovering(panelX + 2, rowY, panelWidth - 4, ROW_HEIGHT, mouseX, mouseY)
       ) {
         if (button == 0 || button == 1) {
           Minecraft minecraft = Minecraft.getInstance();
           if (minecraft.gameMode != null) {
             minecraft.gameMode.handleInventoryButtonClick(
               this.containerId,
-              this.menu.faceModeButtonId(
-                FACE_ORDER[index],
-                button == 1
-              )
+              this.menu.faceModeButtonId(FACE_ORDER[index], button == 1)
             );
           }
         }
@@ -339,10 +281,7 @@ public final class EnergyFaceConfigPanel {
   }
 
   private static int panelWidth(int leftPos) {
-    return Math.min(
-      MAX_PANEL_WIDTH,
-      Math.max(MIN_PANEL_WIDTH, leftPos - 6)
-    );
+    return Math.min(MAX_PANEL_WIDTH, Math.max(MIN_PANEL_WIDTH, leftPos - 6));
   }
 
   private static int panelX(int leftPos, int width) {
@@ -381,23 +320,13 @@ public final class EnergyFaceConfigPanel {
       mouseY
     );
 
-    graphics.fill(
-      x,
-      y,
-      x + BUTTON_WIDTH,
-      y + BUTTON_HEIGHT,
-      0xFF000000
-    );
+    graphics.fill(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, 0xFF000000);
     graphics.fill(
       x + 1,
       y + 1,
       x + BUTTON_WIDTH - 1,
       y + BUTTON_HEIGHT - 1,
-      this.open
-        ? 0xFF4A90E2
-        : hovered
-          ? 0xFF3B6E9A
-          : 0xFF555555
+      this.open ? 0xFF4A90E2 : hovered ? 0xFF3B6E9A : 0xFF555555
     );
     graphics.drawString(
       font,
@@ -434,10 +363,7 @@ public final class EnergyFaceConfigPanel {
     double mouseY
   ) {
     return (
-      mouseX >= x &&
-      mouseX < x + width &&
-      mouseY >= y &&
-      mouseY < y + height
+      mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height
     );
   }
 

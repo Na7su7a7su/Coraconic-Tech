@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.6f`
-- 最近版本提交：`0.0.6fr_261105_a`
+- 最近版本提交：`0.0.6fs_261105_b`
 - 最后更新：2026-11-05
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
 - `0.0.6fr_261105_a`：分离太阳能与地磁发电机的模式枚举，新增 `GeneratorMode` 公共接口与 `GeomagneticGeneratorMode`；地磁发电机主世界改为 `Y < -59`，下界与其他模组维度统一套用 `Nether` 规则。
 - `0.0.6fq_261104_d`：将太阳能与地磁发电机的发电功率改为由运行模式查表决定，环境条件只负责选择模式；MK0/MK1 白天天空光不足时改为 `Null` 模式，末地与地磁规则保持不变。
 - `0.0.6fp_261104_c`：新增地磁发电机 MK0，复用太阳能 MK0 的缓存、输出、GUI 与掉落逻辑，按 `Y < 6`、维度和正下方方块判定 `Overworld` / `Nether` / `End` / `Null` 模式；四个太阳能发电机在末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；能量存储单元传输速率调整为 4,000,000/16,000,000/64,000,000 FE/t，相关速率字段改为 `long`。
@@ -51,7 +52,7 @@
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、太阳能发电机 MK0–MK3 及地磁发电机 MK0。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -137,9 +138,16 @@
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
-#### 地磁发电机 MK0
+#### 地磁发电机 MK0–MK3
 
-- 复用太阳能发电机 MK0 的 `96,000 FE` 缓存、每面 `600 FE/t` 输出、物品充能、输出槽、面配置、GUI 与掉落保留逻辑
+| 等级 |     缓存容量 |   每面输出 |   物品充能 | Overworld | Nether | End |
+| ---- | -----------: | ---------: | ---------: | --------: | -----: | --: |
+| MK0  |    96,000 FE |  600 FE/t |  600 FE/t |    2 FE/t | 3 FE/t | 6 FE/t |
+| MK1  |   192,000 FE | 1,200 FE/t | 1,200 FE/t |    6 FE/t | 16 FE/t | 32 FE/t |
+| MK2  |   480,000 FE | 2,400 FE/t | 2,400 FE/t |   32 FE/t | 56 FE/t | 112 FE/t |
+| MK3  | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |  112 FE/t | 320 FE/t | 640 FE/t |
+
+- 各等级复用对应太阳能等级的缓存、每面输出、物品充能、输出槽、面配置、GUI 与掉落保留逻辑
 - 主世界：Y 坐标必须小于 -59
 - 下界、其他模组维度与末地：Y 坐标必须小于 6
 - 主世界：正下方为基岩时工作，发电 `2 FE/t`，模式为 `Overworld`
@@ -282,13 +290,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.6f`
-- Latest version commit: `0.0.6fr_261105_a`
+- Latest version commit: `0.0.6fs_261105_b`
 - Last updated: 2026-11-05
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
 - `0.0.6fr_261105_a`: separated the solar and geomagnetic mode enums with a shared `GeneratorMode` interface and a new `GeomagneticGeneratorMode`; changed the geomagnetic Overworld rule to Y &lt; -59 and applied the Nether rule to the Nether and other modded dimensions.
 - `0.0.6fq_261104_d`: bound solar and geomagnetic generation rates to the selected mode, leaving environmental conditions responsible only for mode selection; MK0/MK1 now use `Null` during daytime with insufficient sky light, while End and geomagnetic rules remain unchanged.
 - `0.0.6fp_261104_c`: added Geomagnetic Generator MK0 with Solar Generator MK0's buffer, output, GUI, and drop persistence, selecting `Overworld`, `Nether`, `End`, or `Null` from Y < 6, dimension, and the block directly below; made all four solar generators use `Solar` mode in the End when unobstructed while keeping `Reflection` when obstructed; raised energy storage transfer rates to 4,000,000/16,000,000/64,000,000 FE/t and changed the related rate fields to `long`.
@@ -309,7 +318,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Solar Generators MK0–MK3, and the Geomagnetic Generator MK0.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -395,9 +404,16 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
-#### Geomagnetic Generator MK0
+#### Geomagnetic Generators MK0–MK3
 
-- Reuses Solar Generator MK0's `96,000 FE` buffer, `600 FE/t` per-face output, item charging, output slot, face configuration, GUI, and drop persistence
+| Tier |      Capacity | Per-face output | Item charge | Overworld | Nether | End |
+| ---- | ------------: | --------------: | ----------: | --------: | -----: | --: |
+| MK0  |    96,000 FE |        600 FE/t |    600 FE/t |   2 FE/t | 3 FE/t | 6 FE/t |
+| MK1  |   192,000 FE |      1,200 FE/t |  1,200 FE/t |   6 FE/t | 16 FE/t | 32 FE/t |
+| MK2  |   480,000 FE |      2,400 FE/t |  2,400 FE/t |  32 FE/t | 56 FE/t | 112 FE/t |
+| MK3  | 1,920,000 FE |      9,600 FE/t |  9,600 FE/t | 112 FE/t | 320 FE/t | 640 FE/t |
+
+- Each tier reuses the matching solar tier's buffer, per-face output, item charging, output slot, face configuration, GUI, and drop persistence
 - The Overworld requires Y &lt; -59
 - The Nether, modded dimensions, and the End require Y &lt; 6
 - The Overworld: requires bedrock directly below and generates `2 FE/t` in `Overworld` mode

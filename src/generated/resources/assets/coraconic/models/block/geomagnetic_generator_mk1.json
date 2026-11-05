@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "coraconic:block/geomagnetic_generator_mk1"
+  }
+}

@@ -212,7 +212,38 @@ public class ModBlocks {
         BlockBehaviour.Properties.of()
           .strength(2.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK0_ENTITY.get()
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK0_ENTITY.get(),
+        GeomagneticGeneratorTier.MK0
+      )
+    );
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK1 =
+    registerBlocks("geomagnetic_generator_mk1", () ->
+      new GeomagneticGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK1_ENTITY.get(),
+        GeomagneticGeneratorTier.MK1
+      )
+    );
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK2 =
+    registerBlocks("geomagnetic_generator_mk2", () ->
+      new GeomagneticGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK2_ENTITY.get(),
+        GeomagneticGeneratorTier.MK2
+      )
+    );
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK3 =
+    registerBlocks("geomagnetic_generator_mk3", () ->
+      new GeomagneticGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(4.0F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK3_ENTITY.get(),
+        GeomagneticGeneratorTier.MK3
       )
     );
   public static final DeferredBlock<Block> SOLAR_GENERATOR_MK1 = registerBlocks(

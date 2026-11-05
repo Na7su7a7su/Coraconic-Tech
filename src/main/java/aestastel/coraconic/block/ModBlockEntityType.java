@@ -179,6 +179,42 @@ public class ModBlockEntityType {
 
   public static final DeferredHolder<
     BlockEntityType<?>,
+    BlockEntityType<GeomagneticGeneratorBlockEntity>
+  > GEOMAGNETIC_GENERATOR_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_mk1_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
+        ModBlocks.GEOMAGNETIC_GENERATOR_MK1.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<GeomagneticGeneratorBlockEntity>
+  > GEOMAGNETIC_GENERATOR_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_mk2_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
+        ModBlocks.GEOMAGNETIC_GENERATOR_MK2.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<GeomagneticGeneratorBlockEntity>
+  > GEOMAGNETIC_GENERATOR_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_mk3_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
+        ModBlocks.GEOMAGNETIC_GENERATOR_MK3.get()
+      ).build(null)
+  );
+
+  public static final DeferredHolder<
+    BlockEntityType<?>,
     BlockEntityType<SolarGeneratorBlockEntity>
   > SOLAR_GENERATOR_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
     "solar_generator_mk1_entity",
@@ -297,7 +333,8 @@ public class ModBlockEntityType {
       return new GeomagneticGeneratorBlockEntity(
         generatorBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        generatorBlock.getGeomagneticTier()
       );
     }
     throw new IllegalStateException(
