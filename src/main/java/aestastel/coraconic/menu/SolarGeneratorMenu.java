@@ -9,6 +9,8 @@
 
 package aestastel.coraconic.menu;
 
+import aestastel.coraconic.block.GeomagneticGeneratorMode;
+import aestastel.coraconic.block.GeneratorMode;
 import aestastel.coraconic.block.SolarGeneratorBlockEntity;
 import aestastel.coraconic.block.SolarGeneratorMode;
 import aestastel.coraconic.block.SolarGeneratorTier;
@@ -63,7 +65,7 @@ public class SolarGeneratorMenu
   private final EnergyFaceMode[] syncedFaceModes =
     new EnergyFaceMode[FACE_MODE_COUNT];
   private int currentRate;
-  private SolarGeneratorMode currentMode = SolarGeneratorMode.SOLAR;
+  private GeneratorMode currentMode = SolarGeneratorMode.SOLAR;
 
   public SolarGeneratorMenu(
     int containerId,
@@ -134,7 +136,7 @@ public class SolarGeneratorMenu
       this.currentRate = blockEntity.getCurrentGeneration();
       this.currentMode = blockEntity.getCurrentMode();
     } else if (geomagnetic) {
-      this.currentMode = SolarGeneratorMode.NULL;
+      this.currentMode = GeomagneticGeneratorMode.NULL;
     }
     for (Direction direction : Direction.values()) {
       this.syncedFaceModes[direction.get3DDataValue()] =
@@ -177,7 +179,9 @@ public class SolarGeneratorMenu
             return;
           }
           if (index == MODE_DATA_INDEX) {
-            currentMode = SolarGeneratorMode.byOrdinal(value);
+            currentMode = geomagnetic
+              ? GeomagneticGeneratorMode.byOrdinal(value)
+              : SolarGeneratorMode.byOrdinal(value);
             return;
           }
           if (index >= FACE_MODE_DATA_START) {
@@ -293,7 +297,7 @@ public class SolarGeneratorMenu
   }
 
   /** {@return 当前运行模式} */
-  public SolarGeneratorMode getMode() {
+  public GeneratorMode getMode() {
     return this.currentMode;
   }
 

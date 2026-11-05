@@ -101,7 +101,7 @@ public enum SolarGeneratorTier {
         case MK2 -> 120;
         case MK3 -> 360;
       };
-      case OVERWORLD, END, NULL -> 0;
+      case NULL -> 0;
     };
   }
 

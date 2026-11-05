@@ -65,7 +65,7 @@ public class SolarGeneratorBlockEntity
   private int energy;
   private int itemChargeThisTick;
   private int currentGeneration;
-  private SolarGeneratorMode currentMode = SolarGeneratorMode.SOLAR;
+  private GeneratorMode currentMode = SolarGeneratorMode.SOLAR;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -128,7 +128,7 @@ public class SolarGeneratorBlockEntity
    *
    * <p>Sets the mode shown before the first server tick.
    */
-  protected final void setCurrentMode(SolarGeneratorMode mode) {
+  protected final void setCurrentMode(GeneratorMode mode) {
     this.currentMode = mode;
   }
 
@@ -423,7 +423,7 @@ public class SolarGeneratorBlockEntity
   }
 
   /** {@return 当前运行模式} */
-  public SolarGeneratorMode getCurrentMode() {
+  public GeneratorMode getCurrentMode() {
     return this.currentMode;
   }
 

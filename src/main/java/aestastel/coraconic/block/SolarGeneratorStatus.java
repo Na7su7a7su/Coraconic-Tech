@@ -10,16 +10,16 @@
 package aestastel.coraconic.block;
 
 /**
- * 太阳能发电机一次状态计算结果。
+ * 发电机一次状态计算结果。
  *
  * <p>{@code generation} 是规则允许的当前速率，即使缓存已满也保留该值，便于
  * GUI 显示环境状态；{@code mode} 是该条件下的运行模式。
  *
- * <p>One solar generator status result. {@code generation} is the rule-based
- * current rate even when the buffer is full; {@code mode} is the condition
- * label shown by the GUI.
+ * <p>One generator status result. {@code generation} is the rule-based current
+ * rate even when the buffer is full; {@code mode} is the condition label shown
+ * by the GUI.
  */
 public record SolarGeneratorStatus(
   int generation,
-  SolarGeneratorMode mode
+  GeneratorMode mode
 ) {}

@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.6f`
-- 最近版本提交：`0.0.6fq_261104_d`
-- 最后更新：2026-11-04
+- 最近版本提交：`0.0.6fr_261105_a`
+- 最后更新：2026-11-05
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.6fr_261105_a`：分离太阳能与地磁发电机的模式枚举，新增 `GeneratorMode` 公共接口与 `GeomagneticGeneratorMode`；地磁发电机主世界改为 `Y < -59`，下界与其他模组维度统一套用 `Nether` 规则。
 - `0.0.6fq_261104_d`：将太阳能与地磁发电机的发电功率改为由运行模式查表决定，环境条件只负责选择模式；MK0/MK1 白天天空光不足时改为 `Null` 模式，末地与地磁规则保持不变。
 - `0.0.6fp_261104_c`：新增地磁发电机 MK0，复用太阳能 MK0 的缓存、输出、GUI 与掉落逻辑，按 `Y < 6`、维度和正下方方块判定 `Overworld` / `Nether` / `End` / `Null` 模式；四个太阳能发电机在末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；能量存储单元传输速率调整为 4,000,000/16,000,000/64,000,000 FE/t，相关速率字段改为 `long`。
 - `0.0.6ep_261104_b`：新增空间放缩、相位同步、质能补偿与中枢计算四种核心，补齐物品模型、纹理、四语名称、创造栏与 README，暂未添加合成配方；太阳能发电机 GUI 改用贴图绘制 CLI 背景与充电槽，输出槽调整至 `(146, 39)`，CLI 文本继续下移并右移，I/O 按钮右侧加宽 1 像素。
@@ -139,8 +140,10 @@
 #### 地磁发电机 MK0
 
 - 复用太阳能发电机 MK0 的 `96,000 FE` 缓存、每面 `600 FE/t` 输出、物品充能、输出槽、面配置、GUI 与掉落保留逻辑
-- 方块 Y 坐标必须小于 6 才会发电
-- 主世界、下界与其他模组维度：正下方为基岩时工作；主世界与其他维度发电 `2 FE/t`，模式为 `Overworld`；下界发电 `3 FE/t`，模式为 `Nether`
+- 主世界：Y 坐标必须小于 -59
+- 下界、其他模组维度与末地：Y 坐标必须小于 6
+- 主世界：正下方为基岩时工作，发电 `2 FE/t`，模式为 `Overworld`
+- 下界与其他模组维度：正下方为基岩时工作，发电 `3 FE/t`，模式为 `Nether`
 - 末地：正下方没有方块时工作，发电 `6 FE/t`，模式为 `End`
 - 其他情况模式为 `Null`，发电 `0 FE/t`
 - GUI 复用太阳能 MK0 贴图与 CLI，最后一行显示 `>Geomagnetic Energy`
@@ -279,13 +282,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.6f`
-- Latest version commit: `0.0.6fq_261104_d`
-- Last updated: 2026-11-04
+- Latest version commit: `0.0.6fr_261105_a`
+- Last updated: 2026-11-05
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.6fr_261105_a`: separated the solar and geomagnetic mode enums with a shared `GeneratorMode` interface and a new `GeomagneticGeneratorMode`; changed the geomagnetic Overworld rule to Y &lt; -59 and applied the Nether rule to the Nether and other modded dimensions.
 - `0.0.6fq_261104_d`: bound solar and geomagnetic generation rates to the selected mode, leaving environmental conditions responsible only for mode selection; MK0/MK1 now use `Null` during daytime with insufficient sky light, while End and geomagnetic rules remain unchanged.
 - `0.0.6fp_261104_c`: added Geomagnetic Generator MK0 with Solar Generator MK0's buffer, output, GUI, and drop persistence, selecting `Overworld`, `Nether`, `End`, or `Null` from Y < 6, dimension, and the block directly below; made all four solar generators use `Solar` mode in the End when unobstructed while keeping `Reflection` when obstructed; raised energy storage transfer rates to 4,000,000/16,000,000/64,000,000 FE/t and changed the related rate fields to `long`.
 - `0.0.6ep_261104_b`: added Spatial Scaling, Phase Synchronization, Mass-Energy Compensation, and Central Computation cores with item models, textures, four-language names, creative-tab entries, and README documentation, without crafting recipes; changed the solar generator GUI to use texture-drawn CLI and charge-slot backgrounds, moved the output slot to `(146, 39)`, shifted the CLI text further right and down, and widened the I/O button by one pixel on the right.
@@ -394,9 +398,11 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 #### Geomagnetic Generator MK0
 
 - Reuses Solar Generator MK0's `96,000 FE` buffer, `600 FE/t` per-face output, item charging, output slot, face configuration, GUI, and drop persistence
-- The block must be at Y=5 or lower to generate
-- Overworld, Nether, and modded dimensions: requires bedrock directly below; the Overworld and modded dimensions generate `2 FE/t` in `Overworld` mode, while the Nether generates `3 FE/t` in `Nether` mode
-- The End: requires empty space directly below; generates `6 FE/t` in `End` mode
+- The Overworld requires Y &lt; -59
+- The Nether, modded dimensions, and the End require Y &lt; 6
+- The Overworld: requires bedrock directly below and generates `2 FE/t` in `Overworld` mode
+- The Nether and modded dimensions: require bedrock directly below and generate `3 FE/t` in `Nether` mode
+- The End: requires empty space directly below and generates `6 FE/t` in `End` mode
 - Any other case uses `Null` mode and generates `0 FE/t`
 - The GUI reuses the Solar Generator MK0 texture and CLI, with `>Geomagnetic Energy` on the last line
 - Currently obtained in creative mode only; no crafting recipes yet

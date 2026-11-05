@@ -17,18 +17,21 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * 地磁发电机 MK0 的发电规则。
  *
- * <p>方块必须位于 Y=5 或更低。末地要求正下方没有方块；主世界、下界和
- * 其他模组维度要求正下方为基岩。下界产出 3 FE/t，其余符合条件的维度
- * 产出 2 FE/t；不符合条件时模式为 Null。
+ * <p>主世界要求 Y&lt;-59 且正下方为基岩；下界和其他模组维度要求 Y&lt;6
+ * 且正下方为基岩；末地要求 Y&lt;6 且正下方没有方块。主世界产出 2 FE/t，
+ * 下界与其他模组维度产出 3 FE/t；不符合条件时模式为 Null。
  *
- * <p>Geomagnetic Generator MK0 generation rules. The block must be at Y=5 or
- * lower. The End requires empty space below; the Overworld, Nether, and modded
- * dimensions require bedrock below. The Nether produces 3 FE/t and every other
- * qualifying dimension produces 2 FE/t; any other case reports Null.
+ * <p>Geomagnetic Generator MK0 generation rules. The Overworld requires
+ * Y &lt; -59 with bedrock below; the Nether and modded dimensions require
+ * Y &lt; 6 with bedrock below; the End requires Y &lt; 6 with empty space
+ * below. The Overworld produces 2 FE/t, while the Nether and modded dimensions
+ * produce 3 FE/t; any other case reports Null.
  */
 public final class GeomagneticGeneratorRules {
 
-  private static final int MAX_GENERATION_Y = 6;
+  private static final int OVERWORLD_MAX_Y = -59;
+  private static final int NETHER_MAX_Y = 6;
+  private static final int END_MAX_Y = 6;
   private static final int OVERWORLD_GENERATION = 2;
   private static final int NETHER_GENERATION = 3;
   private static final int END_GENERATION = 6;
@@ -41,37 +44,46 @@ public final class GeomagneticGeneratorRules {
    * <p>Selects the runtime mode from Y level, dimension, and the block directly
    * below.
    */
-  public static SolarGeneratorMode determineMode(
+  public static GeomagneticGeneratorMode determineMode(
     Level level,
     BlockPos pos
   ) {
-    if (pos.getY() >= MAX_GENERATION_Y) {
-      return SolarGeneratorMode.NULL;
-    }
-
     BlockState below = level.getBlockState(pos.below());
     if (level.dimension().equals(Level.END)) {
+      if (pos.getY() >= END_MAX_Y) {
+        return GeomagneticGeneratorMode.NULL;
+      }
       return below.isAir()
-        ? SolarGeneratorMode.END
-        : SolarGeneratorMode.NULL;
+        ? GeomagneticGeneratorMode.END
+        : GeomagneticGeneratorMode.NULL;
     }
 
-    if (!below.is(Blocks.BEDROCK)) {
-      return SolarGeneratorMode.NULL;
+    if (level.dimension().equals(Level.OVERWORLD)) {
+      if (pos.getY() >= OVERWORLD_MAX_Y) {
+        return GeomagneticGeneratorMode.NULL;
+      }
+      return below.is(Blocks.BEDROCK)
+        ? GeomagneticGeneratorMode.OVERWORLD
+        : GeomagneticGeneratorMode.NULL;
     }
 
-    return level.dimension().equals(Level.NETHER)
-      ? SolarGeneratorMode.NETHER
-      : SolarGeneratorMode.OVERWORLD;
+    // 下界与其他模组维度统一套用下界规则。
+    // The Nether and other modded dimensions share the Nether rules.
+    if (pos.getY() >= NETHER_MAX_Y) {
+      return GeomagneticGeneratorMode.NULL;
+    }
+    return below.is(Blocks.BEDROCK)
+      ? GeomagneticGeneratorMode.NETHER
+      : GeomagneticGeneratorMode.NULL;
   }
 
   /** {@return 指定模式对应的地磁发电速率} */
-  public static int getGeneration(SolarGeneratorMode mode) {
+  public static int getGeneration(GeomagneticGeneratorMode mode) {
     return switch (mode) {
       case OVERWORLD -> OVERWORLD_GENERATION;
       case NETHER -> NETHER_GENERATION;
       case END -> END_GENERATION;
-      case SOLAR, LUNAR, REFLECTION, THUNDER, NULL -> 0;
+      case NULL -> 0;
     };
   }
 
@@ -84,7 +96,7 @@ public final class GeomagneticGeneratorRules {
     Level level,
     BlockPos pos
   ) {
-    SolarGeneratorMode mode = determineMode(level, pos);
+    GeomagneticGeneratorMode mode = determineMode(level, pos);
     return new SolarGeneratorStatus(getGeneration(mode), mode);
   }
 }

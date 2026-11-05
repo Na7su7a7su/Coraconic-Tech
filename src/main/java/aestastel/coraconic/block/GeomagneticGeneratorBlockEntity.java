@@ -38,14 +38,14 @@ public class GeomagneticGeneratorBlockEntity
     BlockState state
   ) {
     super(type, pos, state, SolarGeneratorTier.MK0);
-    setCurrentMode(SolarGeneratorMode.NULL);
+    setCurrentMode(GeomagneticGeneratorMode.NULL);
   }
 
   @Override
   protected SolarGeneratorStatus computeStatus() {
     Level level = getLevel();
     if (level == null) {
-      return new SolarGeneratorStatus(0, SolarGeneratorMode.NULL);
+      return new SolarGeneratorStatus(0, GeomagneticGeneratorMode.NULL);
     }
     return GeomagneticGeneratorRules.getStatus(level, getBlockPos());
   }
