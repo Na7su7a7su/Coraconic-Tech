@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7ap_261106_a`
+- 最近版本提交：`0.0.7aq_261106_b`
 - 最后更新：2026-11-06
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7aq_261106_b`：为合金仪加入 JEI 配方分类与机器催化剂，显示最多三组带数量的原料、加工箭头、成品槽、总耗能与加工时间；补充四语 JEI 文本。
 - `0.0.7ap_261106_a`：新增合金仪 MK1，提供 `320,000 FE` 缓存、三个原料槽、成品槽、放电槽和加工进度条；加入测试合金配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭，耗能 `20,000 FE`、耗时 `100 ticks`；补齐合金配方类型、序列化器、GUI、数据生成、四语名称与资源。
 - `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
 - `0.0.6fr_261105_a`：分离太阳能与地磁发电机的模式枚举，新增 `GeneratorMode` 公共接口与 `GeomagneticGeneratorMode`；地磁发电机主世界改为 `Y < -59`，下界与其他模组维度统一套用 `Nether` 规则。
@@ -133,6 +134,7 @@
 - GUI 中央提供加工进度条
 - 测试配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭
 - 测试配方耗能 `20,000 FE`，加工时间 `100 ticks`
+- JEI 提供独立的合金仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
 - 破坏方块时保留缓存能量、五个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
@@ -302,13 +304,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7ap_261106_a`
+- Latest version commit: `0.0.7aq_261106_b`
 - Last updated: 2026-11-06
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7aq_261106_b`: added the JEI recipe category and machine catalyst for the Alloying Machine, showing up to three counted inputs, a progress arrow, output, total energy, and processing time, with translations.
 - `0.0.7ap_261106_a`: added Alloying Machine MK1 with a `320,000 FE` buffer, three input slots, an output slot, a discharge slot, and a processing progress bar; added the test alloy recipe 4 gold ingots + 4 netherite scraps → 1 netherite ingot at `20,000 FE` and `100 ticks`; added the alloying recipe type, serializer, GUI, data generation, translations, and assets.
 - `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
 - `0.0.6fr_261105_a`: separated the solar and geomagnetic mode enums with a shared `GeneratorMode` interface and a new `GeomagneticGeneratorMode`; changed the geomagnetic Overworld rule to Y &lt; -59 and applied the Nether rule to the Nether and other modded dimensions.
@@ -411,6 +414,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - A central processing progress bar is present
 - Test recipe: 4 gold ingots + 4 netherite scraps → 1 netherite ingot
 - The test recipe costs `20,000 FE` and takes `100 ticks`
+- JEI provides a dedicated Alloying Machine category with counted inputs, a progress arrow, output, energy, and time information
 - Breaking the block preserves stored energy, all five slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
