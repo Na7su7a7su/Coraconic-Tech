@@ -96,6 +96,13 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get())
     );
 
+    // 合金仪：掉落自身并复制缓存能量与四个槽位。
+    // Alloying machine: drops itself with buffered energy and all four slots.
+    add(
+      ModBlocks.ALLOYING_MACHINE_MK1.get(),
+      createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_MK1.get())
+    );
+
     // 太阳能发电机：掉落自身并复制缓存能量；输出槽内容在方块移除时单独掉落。
     // Solar generator: drops itself with buffered energy; output-slot contents
     // drop separately when the block is removed.

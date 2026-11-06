@@ -12,11 +12,16 @@ package aestastel.coraconic.datagen;
 import aestastel.coraconic.CoraconicTech;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.item.ModItems;
+import aestastel.coraconic.recipe.AlloyingIngredient;
+import aestastel.coraconic.recipe.AlloyingRecipe;
 import aestastel.coraconic.tag.ModItemTags;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -51,6 +56,29 @@ public class ModRecipesProvider extends RecipeProvider {
    */
   @Override
   protected void buildRecipes(RecipeOutput recipeOutput) {
+    // 合金仪测试配方：四个金锭和四个下界合金碎片合成一个下界合金锭。
+    // Alloying machine test recipe: four gold ingots and four netherite
+    // scraps produce one netherite ingot.
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/netherite_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 4),
+          new AlloyingIngredient(
+            Ingredient.of(Items.NETHERITE_SCRAP),
+            4
+          )
+        ),
+        new ItemStack(Items.NETHERITE_INGOT),
+        20_000,
+        100
+      ),
+      null
+    );
+
     // HCV2：九个附魔金苹果合成的有序配方。
     // HCV2: shaped recipe using nine enchanted golden apples.
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HCV2.get())

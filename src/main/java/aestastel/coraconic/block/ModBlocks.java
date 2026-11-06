@@ -195,6 +195,15 @@ public class ModBlocks {
         ),
       EnergyStorageUnitItem::new
     );
+  public static final DeferredBlock<Block> ALLOYING_MACHINE_MK1 =
+    registerBlocks("alloying_machine_mk1", () ->
+      new AlloyingMachineBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.ALLOYING_MACHINE_MK1_ENTITY.get()
+      )
+    );
   public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 = registerBlocks(
     "solar_generator_mk0",
     () ->

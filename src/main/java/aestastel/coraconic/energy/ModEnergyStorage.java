@@ -43,9 +43,18 @@ public class ModEnergyStorage implements IEnergyStorage {
     long maxTransfer,
     Runnable onChanged
   ) {
+    this(capacity, maxTransfer, maxTransfer, onChanged);
+  }
+
+  public ModEnergyStorage(
+    long capacity,
+    long maxReceive,
+    long maxExtract,
+    Runnable onChanged
+  ) {
     this.capacity = capacity;
-    this.maxReceive = maxTransfer;
-    this.maxExtract = maxTransfer;
+    this.maxReceive = maxReceive;
+    this.maxExtract = maxExtract;
     this.onChanged = onChanged;
   }
 
@@ -105,6 +114,24 @@ public class ModEnergyStorage implements IEnergyStorage {
   @Override
   public boolean canReceive() {
     return this.maxReceive > 0;
+  }
+
+  /**
+   * 内部消耗能量，不受 {@link #canExtract()} 限制。
+   *
+   * <p>Consumes energy internally without respecting {@link #canExtract()}.
+   */
+  public long consumeEnergy(long amount) {
+    if (amount <= 0L) {
+      return 0L;
+    }
+    long consumed = Math.min(this.energy, amount);
+    if (consumed <= 0L) {
+      return 0L;
+    }
+    this.energy -= consumed;
+    this.onChanged.run();
+    return consumed;
   }
 
   /** {@return 当前储存的能量（long，完整值）} */

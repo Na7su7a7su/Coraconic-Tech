@@ -76,6 +76,11 @@ public final class ModCapabilities {
     // Solar generators: expose face-mode-gated buffer access on every side.
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.ALLOYING_MACHINE_MK1_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
       ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );

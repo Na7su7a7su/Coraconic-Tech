@@ -56,6 +56,14 @@ public class ModMenuType {
     () -> IMenuTypeExtension.create(SolarGeneratorMenu::fromNetwork)
   );
 
+  public static final DeferredHolder<
+    MenuType<?>,
+    MenuType<AlloyingMachineMenu>
+  > ALLOYING_MACHINE = MENU_TYPES.register(
+    "alloying_machine",
+    () -> IMenuTypeExtension.create(AlloyingMachineMenu::fromNetwork)
+  );
+
   /**
    * 将菜单类型注册器挂到模组事件总线。
    *

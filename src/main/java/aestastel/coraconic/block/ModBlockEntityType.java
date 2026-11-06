@@ -142,6 +142,23 @@ public class ModBlockEntityType {
   );
 
   /**
+   * 合金仪 MK1。
+   *
+   * <p>Alloying Machine MK1.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<AlloyingMachineBlockEntity>
+  > ALLOYING_MACHINE_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "alloying_machine_mk1_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createAlloyingMachineBlockEntity,
+        ModBlocks.ALLOYING_MACHINE_MK1.get()
+      ).build(null)
+  );
+
+  /**
    * 太阳能发电机 MK0–MK3：共用方块实体逻辑，等级由所属方块提供。
    *
    * <p>Solar Generator MK0–MK3: shared block entity logic with the tier
@@ -295,6 +312,27 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for energy storage unit block entity: " + state
+    );
+  }
+
+  /**
+   * 合金仪方块实体工厂。
+   *
+   * <p>Alloying machine block entity factory.
+   */
+  private static AlloyingMachineBlockEntity createAlloyingMachineBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof AlloyingMachineBlock machineBlock) {
+      return new AlloyingMachineBlockEntity(
+        machineBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for alloying machine block entity: " + state
     );
   }
 
