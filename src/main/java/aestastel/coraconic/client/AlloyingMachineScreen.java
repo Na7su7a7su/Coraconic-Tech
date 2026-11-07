@@ -37,7 +37,7 @@ public class AlloyingMachineScreen
   private static final ResourceLocation TEXTURE =
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "textures/gui/alloying_machine_mk1.png"
+      "textures/gui/alloying_machine.png"
     );
 
   private static final int BAR_X = 8;

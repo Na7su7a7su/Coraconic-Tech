@@ -64,6 +64,17 @@ public class ModMenuType {
     () -> IMenuTypeExtension.create(AlloyingMachineMenu::fromNetwork)
   );
 
+  public static final DeferredHolder<
+    MenuType<?>,
+    MenuType<ResonanceCrystallizingMachineMenu>
+  > RESONANCE_CRYSTALLIZING_MACHINE = MENU_TYPES.register(
+    "resonance_crystallizing_machine",
+    () ->
+      IMenuTypeExtension.create(
+        ResonanceCrystallizingMachineMenu::fromNetwork
+      )
+  );
+
   /**
    * 将菜单类型注册器挂到模组事件总线。
    *

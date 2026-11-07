@@ -11,8 +11,10 @@ package aestastel.coraconic;
 
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.client.AlloyingRecipeCategory;
+import aestastel.coraconic.client.ResonanceCrystallizingRecipeCategory;
 import aestastel.coraconic.recipe.AlloyingRecipe;
 import aestastel.coraconic.recipe.ModRecipes;
+import aestastel.coraconic.recipe.ResonanceCrystallizingRecipe;
 import java.util.List;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -38,6 +40,15 @@ public class CoraconicJeiPlugin implements IModPlugin {
     )
   );
 
+  public static final RecipeType<
+    RecipeHolder<ResonanceCrystallizingRecipe>
+  > RESONANCE_CRYSTALLIZING_RECIPE_TYPE = RecipeType.createRecipeHolderType(
+    ResourceLocation.fromNamespaceAndPath(
+      CoraconicTech.MODID,
+      "resonance_crystallizing"
+    )
+  );
+
   @Override
   public ResourceLocation getPluginUid() {
     return ResourceLocation.fromNamespaceAndPath(
@@ -52,6 +63,9 @@ public class CoraconicJeiPlugin implements IModPlugin {
   ) {
     registration.addRecipeCategories(
       new AlloyingRecipeCategory(
+        registration.getJeiHelpers().getGuiHelper()
+      ),
+      new ResonanceCrystallizingRecipeCategory(
         registration.getJeiHelpers().getGuiHelper()
       )
     );
@@ -68,6 +82,15 @@ public class CoraconicJeiPlugin implements IModPlugin {
       .getRecipeManager()
       .getAllRecipesFor(ModRecipes.ALLOYING_TYPE.get());
     registration.addRecipes(ALLOYING_RECIPE_TYPE, recipes);
+
+    List<RecipeHolder<ResonanceCrystallizingRecipe>> resonanceRecipes =
+      level
+        .getRecipeManager()
+        .getAllRecipesFor(ModRecipes.RESONANCE_CRYSTALLIZING_TYPE.get());
+    registration.addRecipes(
+      RESONANCE_CRYSTALLIZING_RECIPE_TYPE,
+      resonanceRecipes
+    );
   }
 
   @Override
@@ -77,6 +100,10 @@ public class CoraconicJeiPlugin implements IModPlugin {
     registration.addRecipeCatalyst(
       new ItemStack(ModBlocks.ALLOYING_MACHINE_MK1.get()),
       ALLOYING_RECIPE_TYPE
+    );
+    registration.addRecipeCatalyst(
+      new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()),
+      RESONANCE_CRYSTALLIZING_RECIPE_TYPE
     );
   }
 }

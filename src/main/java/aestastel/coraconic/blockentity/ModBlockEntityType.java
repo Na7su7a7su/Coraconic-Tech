@@ -15,6 +15,7 @@ import aestastel.coraconic.block.EnergyStorageUnitBlock;
 import aestastel.coraconic.block.GeomagneticGeneratorBlock;
 import aestastel.coraconic.block.ItemStorageUnitBlock;
 import aestastel.coraconic.block.ModBlocks;
+import aestastel.coraconic.block.ResonanceCrystallizingMachineBlock;
 import aestastel.coraconic.block.SolarGeneratorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -163,6 +164,24 @@ public class ModBlockEntityType {
         ModBlocks.ALLOYING_MACHINE_MK1.get()
       ).build(null)
   );
+
+  /**
+   * 共振晶化仪 MK1。
+   *
+   * <p>Resonance Crystallizing Machine MK1.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<ResonanceCrystallizingMachineBlockEntity>
+  > RESONANCE_CRYSTALLIZING_MACHINE_MK1_ENTITY =
+    BLOCK_ENTITY_TYPES.register(
+      "resonance_crystallizing_machine_mk1_entity",
+      () ->
+        BlockEntityType.Builder.of(
+          ModBlockEntityType::createResonanceCrystallizingMachineBlockEntity,
+          ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()
+        ).build(null)
+    );
 
   /**
    * 太阳能发电机 MK0–MK3：共用方块实体逻辑，等级由所属方块提供。
@@ -339,6 +358,32 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for alloying machine block entity: " + state
+    );
+  }
+
+  /**
+   * 共振晶化仪方块实体工厂。
+   *
+   * <p>Resonance crystallizing machine block entity factory.
+   */
+  private static ResonanceCrystallizingMachineBlockEntity
+  createResonanceCrystallizingMachineBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (
+      state.getBlock() instanceof
+        ResonanceCrystallizingMachineBlock machineBlock
+    ) {
+      return new ResonanceCrystallizingMachineBlockEntity(
+        machineBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for resonance crystallizing machine block entity: " +
+      state
     );
   }
 

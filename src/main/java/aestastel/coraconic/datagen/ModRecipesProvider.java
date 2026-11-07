@@ -17,15 +17,15 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 
 /**
- * 配方数据生成入口：组合合成、合金与熔炼三个生成器。
+ * 配方数据生成入口：组合合成、合金、共振晶化与熔炼生成器。
  *
  * <p>Minecraft 的 {@code RecipeProvider} 将生成器名称固定为 {@code Recipes}，
  * 因此不能直接同时注册多个 RecipeProvider。本类作为唯一注册入口，依次运行
- * 三个拆分的生成器。
+ * 拆分的生成器。
  *
- * <p>Recipe data entry point that composes the crafting, alloying, and smelting
- * providers. Vanilla {@code RecipeProvider} fixes its provider name, so this
- * wrapper is the single registered provider.
+ * <p>Recipe data entry point that composes the crafting, alloying, resonance
+ * crystallizing, and smelting providers. Vanilla {@code RecipeProvider} fixes
+ * its provider name, so this wrapper is the single registered provider.
  */
 public class ModRecipesProvider implements DataProvider {
 
@@ -39,6 +39,7 @@ public class ModRecipesProvider implements DataProvider {
       new ModCraftingRecipesProvider(output, registries),
       new ModFormulaCraftingRecipesProvider(output, registries),
       new ModAlloyingRecipesProvider(output, registries),
+      new ModResonanceCrystallizingRecipesProvider(output, registries),
       new ModSmeltingRecipesProvider(output, registries)
     );
   }

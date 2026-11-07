@@ -205,6 +205,16 @@ public class ModBlocks {
         () -> ModBlockEntityType.ALLOYING_MACHINE_MK1_ENTITY.get()
       )
     );
+  public static final DeferredBlock<Block> RESONANCE_CRYSTALLIZING_MACHINE_MK1 =
+    registerBlocks("resonance_crystallizing_machine_mk1", () ->
+      new ResonanceCrystallizingMachineBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.5F, 6.0F)
+          .sound(SoundType.METAL),
+        () ->
+          ModBlockEntityType.RESONANCE_CRYSTALLIZING_MACHINE_MK1_ENTITY.get()
+      )
+    );
   public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 = registerBlocks(
     "solar_generator_mk0",
     () ->
