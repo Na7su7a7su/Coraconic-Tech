@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7at_261107_c`
+- 最近版本提交：`0.0.7au_261107_d`
 - 最后更新：2026-11-07
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
 - `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
 - `0.0.7as_261107_b`：将合成配方生成器进一步拆分为独立配方与公式配方两类；新增/调整合金仪配方：下界合金锭使用 2 金锭 + 4 下界合金碎片，核龙金属锭使用 1 铅 + 1 锡 + 1 核龙元素，腾龙金属锭使用 1 钻石 + 1 绿宝石 + 1 腾龙元素；同步核龙金属锭合成配方与生成资源。
 - `0.0.7ar_261107_a`：将配方数据生成器拆分为合成、合金与熔炼三个生成器；保留 `ModRecipesProvider` 作为唯一数据生成入口，避免重复的 `Recipes` provider 名称；配方生成结果保持不变。
@@ -150,7 +151,7 @@
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
 - CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
-- 模式优先级为 `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；MK0/MK1 白天天空光不足时模式为 `Null`；功率由模式决定，`Power` 不因缓存已满而归零
+- 模式优先级为 `Radiation (MK3) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；MK0/MK1 白天天空光不足时模式为 `Null`；功率由模式决定，`Power` 不因缓存已满而归零
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
@@ -186,6 +187,7 @@
 - MK1：维度不是下界、白天、天空光大于 10、上方无完整不透明遮挡时发电 `120 FE/t`；雷暴时天空光为 10，因此不发电
 - MK2：维度不是下界且上方无完整遮挡时工作；雷暴 `120 FE/t`；白天 `240 FE/t`；黑夜 `120 FE/t`
 - MK3：下界始终 `80 FE/t`；非下界有完整遮挡时 `80 FE/t`；无遮挡时雷暴 `360 FE/t`、白天 `960 FE/t`、黑夜 `240 FE/t`
+- MK3：主世界 `Y >= 315`，下界、末地与其他模组维度 `Y >= 250` 时进入 `Radiation` 模式，优先于其他所有模式，发电 `1,440 FE/t`；MK0–MK2 不支持该模式
 - 当前仅通过创造模式获取，尚未添加合成配方
 
 #### 能量存储单元物品
@@ -307,13 +309,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7at_261107_c`
+- Latest version commit: `0.0.7au_261107_d`
 - Last updated: 2026-11-07
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
 - `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
 - `0.0.7as_261107_b`: split crafting recipe generation into standalone and formula-based providers; added and adjusted alloying recipes for netherite, coraconic, and aviraconic ingots; updated the coraconic ingot crafting recipe and generated resources.
 - `0.0.7ar_261107_a`: split recipe data generation into crafting, alloying, and smelting providers; kept `ModRecipesProvider` as the single data-generation entry point to avoid duplicate `Recipes` provider names; generated recipe output is unchanged.
@@ -433,7 +436,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
 - The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
-- Mode priority is `Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; MK0/MK1 use `Null` during daytime with insufficient sky light; generation is bound to the mode, and `Power` does not drop to zero merely because the buffer is full
+- Mode priority is `Radiation (MK3) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; MK0/MK1 use `Null` during daytime with insufficient sky light; generation is bound to the mode, and `Power` does not drop to zero merely because the buffer is full
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
@@ -469,6 +472,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - MK1: outside the Nether, during daytime, with sky light above 10 and no full opaque obstruction above, generates `120 FE/t`; thunderstorms reduce sky light to 10, so generation stops
 - MK2: outside the Nether with no full opaque obstruction above; thunder `120 FE/t`, daytime `240 FE/t`, night `120 FE/t`
 - MK3: always `80 FE/t` in the Nether; outside the Nether with obstruction `80 FE/t`; without obstruction, thunder `360 FE/t`, daytime `960 FE/t`, night `240 FE/t`
+- MK3: at `Y >= 315` in the Overworld or `Y >= 250` in the Nether, the End, and other modded dimensions, enters `Radiation` mode ahead of all other modes and generates `1,440 FE/t`; MK0–MK2 never use this mode
 - Currently obtained in creative mode only; no crafting recipes yet
 
 #### Energy Storage Unit Items

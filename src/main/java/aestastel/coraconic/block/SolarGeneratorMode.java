@@ -25,7 +25,8 @@ public enum SolarGeneratorMode implements GeneratorMode {
   REFLECTION("Reflection"),
   NETHER("Nether"),
   THUNDER("Thunder"),
-  NULL("Null");
+  NULL("Null"),
+  RADIATION("Radiation");
 
   private final String displayName;
 

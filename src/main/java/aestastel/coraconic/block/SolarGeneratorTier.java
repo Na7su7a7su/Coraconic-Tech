@@ -19,17 +19,22 @@ import net.minecraft.world.level.LightLayer;
  *
  * <p>缓存容量、每面输出和物品充能速率集中在这里声明；发电条件由
  * {@link #getGeneration(Level, BlockPos, BooleanSupplier)} 根据等级、维度、
- * 天气、时间和天空柱遮挡返回本 tick 的发电量。
+ * 天气、时间和天空柱遮挡返回本 tick 的发电量。MK3 在高海拔时优先进入
+ * Radiation 模式。
  *
  * <p>Solar generator tiers and generation rules. Capacity, per-face output, and
  * item charge rate live here; the generation method evaluates dimension,
- * weather, time, sky light, and sky-column obstruction.
+ * weather, time, sky light, and sky-column obstruction. MK3 enters Radiation
+ * mode first at high altitude.
  */
 public enum SolarGeneratorTier {
   MK0(96_000, 600, 600),
   MK1(192_000, 1_200, 1_200),
   MK2(480_000, 2_400, 2_400),
   MK3(1_920_000, 9_600, 9_600);
+
+  private static final int OVERWORLD_RADIATION_MIN_Y = 315;
+  private static final int OTHER_DIMENSION_RADIATION_MIN_Y = 250;
 
   private final int capacity;
   private final int outputPerSide;
@@ -101,6 +106,7 @@ public enum SolarGeneratorTier {
         case MK2 -> 120;
         case MK3 -> 360;
       };
+      case RADIATION -> this == MK3 ? 1_440 : 0;
       case NULL -> 0;
     };
   }
@@ -108,18 +114,24 @@ public enum SolarGeneratorTier {
   /**
    * 根据环境条件选择运行模式。
    *
-   * <p>优先级：下界 → 天空柱遮挡 → 末地 → 雷暴 → 白天/黑夜。末地在
-   * 无遮挡时固定为 Solar；MK0/MK1 白天天空光不足时返回 Null。
+   * <p>优先级：高海拔 Radiation（仅 MK3）→ 下界 → 天空柱遮挡 → 末地 →
+   * 雷暴 → 白天/黑夜。末地在无遮挡时固定为 Solar；MK0/MK1 白天天空光不足
+   * 时返回 Null。
    *
-   * <p>Selects the runtime mode. Priority: Nether, obstruction, the End,
-   * thunder, then daytime/night. The End is always Solar when unobstructed;
-   * MK0/MK1 report Null during daytime with insufficient sky light.
+   * <p>Selects the runtime mode. Priority: high-altitude Radiation (MK3
+   * only), Nether, obstruction, the End, thunder, then daytime/night. The End
+   * is always Solar when unobstructed; MK0/MK1 report Null during daytime with
+   * insufficient sky light.
    */
   public SolarGeneratorMode determineMode(
     Level level,
     BlockPos pos,
     BooleanSupplier obstructed
   ) {
+    if (isInRadiationZone(level, pos)) {
+      return SolarGeneratorMode.RADIATION;
+    }
+
     if (level.dimension().equals(Level.NETHER)) {
       return SolarGeneratorMode.NETHER;
     }
@@ -165,6 +177,17 @@ public enum SolarGeneratorTier {
   ) {
     SolarGeneratorMode mode = determineMode(level, pos, obstructed);
     return new SolarGeneratorStatus(getGeneration(mode), mode);
+  }
+
+  private boolean isInRadiationZone(Level level, BlockPos pos) {
+    if (this != MK3) {
+      return false;
+    }
+
+    int minimumY = level.dimension().equals(Level.OVERWORLD)
+      ? OVERWORLD_RADIATION_MIN_Y
+      : OTHER_DIMENSION_RADIATION_MIN_Y;
+    return pos.getY() >= minimumY;
   }
 
   private static boolean hasEnoughSkyLight(Level level, BlockPos pos) {
