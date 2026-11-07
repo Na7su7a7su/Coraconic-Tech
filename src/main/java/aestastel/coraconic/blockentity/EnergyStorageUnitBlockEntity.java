@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-package aestastel.coraconic.block;
+package aestastel.coraconic.blockentity;
 
 import aestastel.coraconic.energy.EnergyFaceConfigurable;
 import aestastel.coraconic.energy.EnergyFaceMode;

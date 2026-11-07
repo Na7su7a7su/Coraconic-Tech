@@ -11,7 +11,7 @@ package aestastel.coraconic.menu;
 
 import aestastel.coraconic.block.GeomagneticGeneratorMode;
 import aestastel.coraconic.block.GeneratorMode;
-import aestastel.coraconic.block.SolarGeneratorBlockEntity;
+import aestastel.coraconic.blockentity.SolarGeneratorBlockEntity;
 import aestastel.coraconic.block.SolarGeneratorMode;
 import aestastel.coraconic.block.SolarGeneratorTier;
 import aestastel.coraconic.energy.EnergyFaceMode;

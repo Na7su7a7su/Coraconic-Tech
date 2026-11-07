@@ -9,7 +9,7 @@
 
 package aestastel.coraconic.menu;
 
-import aestastel.coraconic.block.EnergyStorageUnitBlockEntity;
+import aestastel.coraconic.blockentity.EnergyStorageUnitBlockEntity;
 import aestastel.coraconic.energy.EnergyFaceMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

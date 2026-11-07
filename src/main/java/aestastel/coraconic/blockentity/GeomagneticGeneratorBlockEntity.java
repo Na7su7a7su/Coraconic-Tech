@@ -7,8 +7,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-package aestastel.coraconic.block;
+package aestastel.coraconic.blockentity;
 
+import aestastel.coraconic.block.GeomagneticGeneratorMode;
+import aestastel.coraconic.block.GeomagneticGeneratorRules;
+import aestastel.coraconic.block.GeomagneticGeneratorTier;
+import aestastel.coraconic.block.SolarGeneratorStatus;
 import aestastel.coraconic.menu.SolarGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

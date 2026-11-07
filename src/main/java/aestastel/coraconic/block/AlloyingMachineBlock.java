@@ -9,6 +9,7 @@
 
 package aestastel.coraconic.block;
 
+import aestastel.coraconic.blockentity.AlloyingMachineBlockEntity;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;

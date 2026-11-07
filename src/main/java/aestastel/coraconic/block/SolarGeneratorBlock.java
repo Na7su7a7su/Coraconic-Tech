@@ -9,6 +9,7 @@
 
 package aestastel.coraconic.block;
 
+import aestastel.coraconic.blockentity.SolarGeneratorBlockEntity;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

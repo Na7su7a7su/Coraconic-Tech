@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-package aestastel.coraconic.block;
+package aestastel.coraconic.blockentity;
 
 import aestastel.coraconic.energy.ModEnergyStorage;
 import aestastel.coraconic.menu.AlloyingMachineMenu;

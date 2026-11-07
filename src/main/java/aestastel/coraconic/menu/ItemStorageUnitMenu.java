@@ -9,7 +9,7 @@
 
 package aestastel.coraconic.menu;
 
-import aestastel.coraconic.block.ModBlockEntity;
+import aestastel.coraconic.blockentity.ModBlockEntity;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Set;

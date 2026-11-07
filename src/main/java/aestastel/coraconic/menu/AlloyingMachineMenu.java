@@ -9,7 +9,7 @@
 
 package aestastel.coraconic.menu;
 
-import aestastel.coraconic.block.AlloyingMachineBlockEntity;
+import aestastel.coraconic.blockentity.AlloyingMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;

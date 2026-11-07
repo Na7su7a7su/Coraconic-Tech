@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7av_261107_e`
+- 最近版本提交：`0.0.7aw_261107_f`
 - 最后更新：2026-11-07
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
 - `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
 - `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
 - `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
@@ -40,7 +41,6 @@
 - `0.0.7ap_261106_a`：新增合金仪 MK1，提供 `320,000 FE` 缓存、三个原料槽、成品槽、放电槽和加工进度条；加入测试合金配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭，耗能 `20,000 FE`、耗时 `100 ticks`；补齐合金配方类型、序列化器、GUI、数据生成、四语名称与资源。
 - `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
 - `0.0.6fr_261105_a`：分离太阳能与地磁发电机的模式枚举，新增 `GeneratorMode` 公共接口与 `GeomagneticGeneratorMode`；地磁发电机主世界改为 `Y < -59`，下界与其他模组维度统一套用 `Nether` 规则。
-- `0.0.6fq_261104_d`：将太阳能与地磁发电机的发电功率改为由运行模式查表决定，环境条件只负责选择模式；MK0/MK1 白天天空光不足时改为 `Null` 模式，末地与地磁规则保持不变。
 
 ### 快速开始
 
@@ -295,13 +295,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7av_261107_e`
+- Latest version commit: `0.0.7aw_261107_f`
 - Last updated: 2026-11-07
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
 - `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
 - `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
 - `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
@@ -311,7 +312,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7ap_261106_a`: added Alloying Machine MK1 with a `320,000 FE` buffer, three input slots, an output slot, a discharge slot, and a processing progress bar; added the test alloy recipe 4 gold ingots + 4 netherite scraps → 1 netherite ingot at `20,000 FE` and `100 ticks`; added the alloying recipe type, serializer, GUI, data generation, translations, and assets.
 - `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
 - `0.0.6fr_261105_a`: separated the solar and geomagnetic mode enums with a shared `GeneratorMode` interface and a new `GeomagneticGeneratorMode`; changed the geomagnetic Overworld rule to Y &lt; -59 and applied the Nether rule to the Nether and other modded dimensions.
-- `0.0.6fq_261104_d`: bound solar and geomagnetic generation rates to the selected mode, leaving environmental conditions responsible only for mode selection; MK0/MK1 now use `Null` during daytime with insufficient sky light, while End and geomagnetic rules remain unchanged.
 
 ### Quick Start
 

@@ -7,8 +7,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-package aestastel.coraconic.block;
+package aestastel.coraconic.blockentity;
 
+import aestastel.coraconic.block.GeneratorMode;
+import aestastel.coraconic.block.SolarGeneratorMode;
+import aestastel.coraconic.block.SolarGeneratorStatus;
+import aestastel.coraconic.block.SolarGeneratorTier;
 import aestastel.coraconic.energy.EnergyFaceConfigurable;
 import aestastel.coraconic.energy.EnergyFaceMode;
 import aestastel.coraconic.energy.EnergyFaceStorage;

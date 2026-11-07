@@ -9,7 +9,7 @@
 
 package aestastel.coraconic;
 
-import aestastel.coraconic.block.ModBlockEntityType;
+import aestastel.coraconic.blockentity.ModBlockEntityType;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.item.ModCreativeModeTabs;
 import aestastel.coraconic.item.ModItems;

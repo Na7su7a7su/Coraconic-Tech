@@ -10,6 +10,7 @@
 package aestastel.coraconic.block;
 
 import aestastel.coraconic.CoraconicTech;
+import aestastel.coraconic.blockentity.ModBlockEntityType;
 import aestastel.coraconic.item.EnergyStorageUnitItem;
 import aestastel.coraconic.item.ItemStorageUnitItem;
 import aestastel.coraconic.item.ModItems;

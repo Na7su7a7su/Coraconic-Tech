@@ -7,9 +7,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-package aestastel.coraconic.block;
+package aestastel.coraconic.blockentity;
 
 import aestastel.coraconic.CoraconicTech;
+import aestastel.coraconic.block.AlloyingMachineBlock;
+import aestastel.coraconic.block.EnergyStorageUnitBlock;
+import aestastel.coraconic.block.GeomagneticGeneratorBlock;
+import aestastel.coraconic.block.ItemStorageUnitBlock;
+import aestastel.coraconic.block.ModBlocks;
+import aestastel.coraconic.block.SolarGeneratorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
