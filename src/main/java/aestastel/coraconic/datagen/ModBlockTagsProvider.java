@@ -84,10 +84,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(ModBlockTags.STORAGE_BLOCKS_TIN).add(ModBlocks.TIN_BLOCK.get());
     tag(ModBlockTags.STORAGE_BLOCKS_LEAD).add(ModBlocks.LEAD_BLOCK.get());
     tag(ModBlockTags.STORAGE_BLOCKS_CORACONIC).add(
-      ModBlocks.CORACONIC_BLOCK.get()
+      ModBlocks.CORACONIC_METAL_BLOCK.get()
     );
     tag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC).add(
-      ModBlocks.AVIRACONIC_BLOCK.get()
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get()
     );
     tag(Tags.Blocks.STORAGE_BLOCKS)
       .addTag(ModBlockTags.STORAGE_BLOCKS_TIN)
@@ -100,8 +100,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
       ModBlocks.TIN_BLOCK.get(),
       ModBlocks.LEAD_BLOCK.get(),
-      ModBlocks.CORACONIC_BLOCK.get(),
-      ModBlocks.AVIRACONIC_BLOCK.get(),
+      ModBlocks.CORACONIC_METAL_BLOCK.get(),
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
       ModBlocks.TIN_ORE.get(),
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
       ModBlocks.LEAD_ORE.get(),
@@ -129,8 +129,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     // 核龙金属块和腾龙金属块需要钻石镐或更高级工具。
     // Coraconic and aviraconic blocks require a diamond pickaxe or better.
     tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
-      ModBlocks.CORACONIC_BLOCK.get(),
-      ModBlocks.AVIRACONIC_BLOCK.get()
+      ModBlocks.CORACONIC_METAL_BLOCK.get(),
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get()
     );
   }
 }

@@ -86,8 +86,8 @@ public class ModCreativeModeTabs {
           output.accept(ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL);
           output.accept(ModBlocks.TIN_BLOCK.get());
           output.accept(ModBlocks.LEAD_BLOCK.get());
-          output.accept(ModBlocks.CORACONIC_BLOCK.get());
-          output.accept(ModBlocks.AVIRACONIC_BLOCK.get());
+          output.accept(ModBlocks.CORACONIC_METAL_BLOCK.get());
+          output.accept(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
           output.accept(ModBlocks.TIN_ORE.get());
           output.accept(ModBlocks.LEAD_ORE.get());
           output.accept(ModBlocks.DEEPSLAT_TIN_ORE.get());

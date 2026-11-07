@@ -115,18 +115,18 @@ public class ModFormulaCraftingRecipesProvider extends RecipeProvider {
     packingRecipe(
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
-      ModBlocks.CORACONIC_BLOCK.get(),
+      ModBlocks.CORACONIC_METAL_BLOCK.get(),
       ModItems.CORACONIC_METAL_INGOT.get(),
-      "coraconic_block",
+      "coraconic_metal_block",
       "has_coraconic_metal_ingot"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
       ModItems.CORACONIC_METAL_INGOT.get(),
-      ModBlocks.CORACONIC_BLOCK.get(),
-      "coraconic_metal_ingot_from_coraconic_block",
-      "has_coraconic_block"
+      ModBlocks.CORACONIC_METAL_BLOCK.get(),
+      "coraconic_metal_ingot_from_coraconic_metal_block",
+      "has_coraconic_metal_block"
     );
     packingRecipe(
       recipeOutput,
@@ -148,18 +148,18 @@ public class ModFormulaCraftingRecipesProvider extends RecipeProvider {
     packingRecipe(
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
-      ModBlocks.AVIRACONIC_BLOCK.get(),
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
       ModItems.AVIRACONIC_METAL_INGOT.get(),
-      "aviraconic_block",
+      "aviraconic_metal_block",
       "has_aviraconic_metal_ingot"
     );
     unpackingRecipe(
       recipeOutput,
       RecipeCategory.MISC,
       ModItems.AVIRACONIC_METAL_INGOT.get(),
-      ModBlocks.AVIRACONIC_BLOCK.get(),
-      "aviraconic_metal_ingot_from_aviraconic_block",
-      "has_aviraconic_block"
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
+      "aviraconic_metal_ingot_from_aviraconic_metal_block",
+      "has_aviraconic_metal_block"
     );
     packingRecipe(
       recipeOutput,

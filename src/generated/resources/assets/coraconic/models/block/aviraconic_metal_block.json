@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "coraconic:block/coraconic_block"
+    "all": "coraconic:block/aviraconic_metal_block"
   }
 }

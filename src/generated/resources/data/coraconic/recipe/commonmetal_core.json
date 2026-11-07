@@ -6,10 +6,10 @@
       "item": "minecraft:gold_ingot"
     },
     "C": {
-      "item": "coraconic:tin_ingot"
+      "tag": "c:ingots/tin"
     },
     "D": {
-      "item": "coraconic:lead_ingot"
+      "tag": "c:ingots/lead"
     },
     "G": {
       "item": "minecraft:iron_ingot"

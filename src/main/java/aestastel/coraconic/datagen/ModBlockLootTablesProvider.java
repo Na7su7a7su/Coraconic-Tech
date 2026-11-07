@@ -61,8 +61,8 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     // Metal blocks use dropSelf: they drop themselves when mined normally, with explosion decay.
     dropSelf(ModBlocks.TIN_BLOCK.get());
     dropSelf(ModBlocks.LEAD_BLOCK.get());
-    dropSelf(ModBlocks.CORACONIC_BLOCK.get());
-    dropSelf(ModBlocks.AVIRACONIC_BLOCK.get());
+    dropSelf(ModBlocks.CORACONIC_METAL_BLOCK.get());
+    dropSelf(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
 
     // 物品存储单元：掉落自身并把容器内容复制到物品组件（类似潜影盒）。
     // Item storage units drop themselves and copy their contents into the item

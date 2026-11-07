@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_coraconic_block": {
+    "has_coraconic_metal_block": {
       "conditions": {
         "items": [
           {
-            "items": "coraconic:coraconic_block"
+            "items": "coraconic:coraconic_metal_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "coraconic:coraconic_metal_ingot_from_coraconic_block"
+        "recipe": "coraconic:coraconic_metal_ingot_from_coraconic_metal_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_coraconic_block"
+      "has_coraconic_metal_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "coraconic:coraconic_metal_ingot_from_coraconic_block"
+      "coraconic:coraconic_metal_ingot_from_coraconic_metal_block"
     ]
   }
 }

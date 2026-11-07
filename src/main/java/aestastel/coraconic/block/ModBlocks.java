@@ -78,8 +78,8 @@ public class ModBlocks {
           .requiresCorrectToolForDrops()
       )
   );
-  public static final DeferredBlock<Block> CORACONIC_BLOCK = registerBlocks(
-    "coraconic_block",
+  public static final DeferredBlock<Block> CORACONIC_METAL_BLOCK = registerBlocks(
+    "coraconic_metal_block",
     () ->
       new Block(
         BlockBehaviour.Properties.of()
@@ -87,8 +87,8 @@ public class ModBlocks {
           .requiresCorrectToolForDrops()
       )
   );
-  public static final DeferredBlock<Block> AVIRACONIC_BLOCK = registerBlocks(
-    "aviraconic_block",
+  public static final DeferredBlock<Block> AVIRACONIC_METAL_BLOCK = registerBlocks(
+    "aviraconic_metal_block",
     () ->
       new Block(
         BlockBehaviour.Properties.of()

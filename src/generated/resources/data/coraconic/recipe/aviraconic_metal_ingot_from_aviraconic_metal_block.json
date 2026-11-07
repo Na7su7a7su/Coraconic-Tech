@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "coraconic:coraconic_block"
+      "item": "coraconic:aviraconic_metal_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "coraconic:coraconic_metal_ingot"
+    "id": "coraconic:aviraconic_metal_ingot"
   }
 }

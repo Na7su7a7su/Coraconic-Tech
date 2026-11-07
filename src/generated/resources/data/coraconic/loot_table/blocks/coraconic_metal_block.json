@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "coraconic:coraconic_block"
+          "name": "coraconic:coraconic_metal_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "coraconic:blocks/coraconic_block"
+  "random_sequence": "coraconic:blocks/coraconic_metal_block"
 }

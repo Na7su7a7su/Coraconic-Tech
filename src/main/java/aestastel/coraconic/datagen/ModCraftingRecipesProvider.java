@@ -42,7 +42,7 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
     // HCV2: shaped recipe using nine enchanted golden apples.
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HCV2.get())
       .define('#', Items.ENCHANTED_GOLDEN_APPLE)
-      .define('S', ModBlocks.AVIRACONIC_BLOCK)
+      .define('S', ModBlocks.AVIRACONIC_METAL_BLOCK)
       .pattern("###")
       .pattern("#S#")
       .pattern("###")
@@ -99,11 +99,11 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
       ModItems.COMMONMETAL_CORE.get(),
       2
     )
-      .define('D', ModItems.LEAD_INGOT.get())
+      .define('D', ModItemTags.INGOTS_LEAD)
       .define('G', Items.IRON_INGOT)
       .define('O', Items.REDSTONE)
       .define('#', Items.GOLD_INGOT)
-      .define('C', ModItems.TIN_INGOT.get())
+      .define('C', ModItemTags.INGOTS_TIN)
       .pattern("DGO")
       .pattern("G#G")
       .pattern("OGC")
@@ -141,6 +141,5 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
         has(ModItems.AVIRACONIC_ELEMENT.get())
       )
       .save(recipeOutput);
-
   }
 }

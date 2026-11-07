@@ -2,8 +2,8 @@
   "values": [
     "coraconic:tin_block",
     "coraconic:lead_block",
-    "coraconic:coraconic_block",
-    "coraconic:aviraconic_block",
+    "coraconic:coraconic_metal_block",
+    "coraconic:aviraconic_metal_block",
     "coraconic:tin_ore",
     "coraconic:deepslate_tin_ore",
     "coraconic:lead_ore",
