@@ -1,8 +1,9 @@
 {
   "type": "coraconic:alloying",
+  "energy": 20,
   "ingredients": [
     {
-      "count": 4,
+      "count": 2,
       "ingredient": {
         "item": "minecraft:gold_ingot"
       }
@@ -17,5 +18,6 @@
   "result": {
     "count": 1,
     "id": "minecraft:netherite_ingot"
-  }
+  },
+  "time": 10
 }

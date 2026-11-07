@@ -10,8 +10,10 @@
 package aestastel.coraconic.datagen;
 
 import aestastel.coraconic.CoraconicTech;
+import aestastel.coraconic.item.ModItems;
 import aestastel.coraconic.recipe.AlloyingIngredient;
 import aestastel.coraconic.recipe.AlloyingRecipe;
+import aestastel.coraconic.tag.ModItemTags;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
@@ -19,6 +21,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -49,12 +53,54 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
       ),
       new AlloyingRecipe(
         List.of(
-          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 4),
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 2),
           new AlloyingIngredient(Ingredient.of(Items.NETHERITE_SCRAP), 4)
         ),
         new ItemStack(Items.NETHERITE_INGOT),
-        20_000,
-        100
+        20,
+        10
+      ),
+      null
+    );
+
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/coraconic_metal_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(ModItemTags.INGOTS_LEAD), 1),
+          new AlloyingIngredient(Ingredient.of(ModItemTags.INGOTS_TIN), 1),
+          new AlloyingIngredient(
+            Ingredient.of(ModItemTags.ELEMENTS_CORACONIC),
+            1
+          )
+        ),
+        new ItemStack(ModItems.CORACONIC_METAL_INGOT.get()),
+        640,
+        40
+      ),
+      null
+    );
+
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/aviraconic_metal_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.DIAMOND), 1),
+          new AlloyingIngredient(Ingredient.of(Items.EMERALD), 1),
+          new AlloyingIngredient(
+            Ingredient.of(ModItemTags.ELEMENTS_AVIRACONIC),
+            1
+          )
+        ),
+        new ItemStack(ModItems.AVIRACONIC_METAL_INGOT.get()),
+        6400,
+        50
       ),
       null
     );

@@ -37,6 +37,7 @@ public class ModRecipesProvider implements DataProvider {
   ) {
     this.providers = List.of(
       new ModCraftingRecipesProvider(output, registries),
+      new ModFormulaCraftingRecipesProvider(output, registries),
       new ModAlloyingRecipesProvider(output, registries),
       new ModSmeltingRecipesProvider(output, registries)
     );

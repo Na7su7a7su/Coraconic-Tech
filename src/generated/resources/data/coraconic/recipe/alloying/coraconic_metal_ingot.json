@@ -1,0 +1,29 @@
+{
+  "type": "coraconic:alloying",
+  "energy": 640,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/lead"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/tin"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:elements/coraconic"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:coraconic_metal_ingot"
+  },
+  "time": 40
+}
