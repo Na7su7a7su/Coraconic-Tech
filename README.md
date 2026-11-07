@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7au_261107_d`
+- 最近版本提交：`0.0.7av_261107_e`
 - 最后更新：2026-11-07
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
 - `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
 - `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
 - `0.0.7as_261107_b`：将合成配方生成器进一步拆分为独立配方与公式配方两类；新增/调整合金仪配方：下界合金锭使用 2 金锭 + 4 下界合金碎片，核龙金属锭使用 1 铅 + 1 锡 + 1 核龙元素，腾龙金属锭使用 1 钻石 + 1 绿宝石 + 1 腾龙元素；同步核龙金属锭合成配方与生成资源。
@@ -40,21 +41,6 @@
 - `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
 - `0.0.6fr_261105_a`：分离太阳能与地磁发电机的模式枚举，新增 `GeneratorMode` 公共接口与 `GeomagneticGeneratorMode`；地磁发电机主世界改为 `Y < -59`，下界与其他模组维度统一套用 `Nether` 规则。
 - `0.0.6fq_261104_d`：将太阳能与地磁发电机的发电功率改为由运行模式查表决定，环境条件只负责选择模式；MK0/MK1 白天天空光不足时改为 `Null` 模式，末地与地磁规则保持不变。
-- `0.0.6fp_261104_c`：新增地磁发电机 MK0，复用太阳能 MK0 的缓存、输出、GUI 与掉落逻辑，按 `Y < 6`、维度和正下方方块判定 `Overworld` / `Nether` / `End` / `Null` 模式；四个太阳能发电机在末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；能量存储单元传输速率调整为 4,000,000/16,000,000/64,000,000 FE/t，相关速率字段改为 `long`。
-- `0.0.6ep_261104_b`：新增空间放缩、相位同步、质能补偿与中枢计算四种核心，补齐物品模型、纹理、四语名称、创造栏与 README，暂未添加合成配方；太阳能发电机 GUI 改用贴图绘制 CLI 背景与充电槽，输出槽调整至 `(146, 39)`，CLI 文本继续下移并右移，I/O 按钮右侧加宽 1 像素。
-- `0.0.6dp_261103_c`：将 Java 包名由 `com.aestastel.coraconic.*` 迁移为 `aestastel.coraconic.*`，同步 Mixin package 与 Gradle group ID 为 `aestastel.coraconic`；mod ID、资源命名空间、注册 ID 与 NBT 保持不变。
-- `0.0.6cq_261103_b`：太阳能发电机 GUI 改为右侧输出/充电槽 + 中央黑底绿字 CLI 面板，显示等级、`mod_version`、规则发电速率和运行模式；新增 `Thunder` 模式，模式优先级为 `Nether > Reflection > Thunder > Solar/Lunar`，状态由服务端菜单数据同步。
-- `0.0.6cp_261103_a`：新增太阳能发电机 MK1–MK3，按等级实现维度、昼夜、雷暴、天空光与天空柱遮挡规则；MK0 迁移到共享太阳能等级/方块实体/GUI；生成三个等级的占位方块纹理与完整数据资源；能量存储单元传输速率调整为 4,000/16,000/64,000 FE/t，MK0 当前发电量保留为 30 FE/t。
-- `0.0.6bq_261030_a`：能量存储单元与太阳能发电机 GUI 新增共享面配置悬浮窗；按钮位于界面左侧外部，展开后不遮挡物品栏与界面主体；支持左键正向、右键反向循环，并与扳手配置模式共享面设置。
-- `0.0.6bp_261029_a`：新增效应放大核心与数据生成；为七种功能方块加入水平朝向；扳手扩展为旋转/扳手/配置三模式；能量存储单元与太阳能发电机支持六面独立输入、输出、输入/输出、阻断配置，加入相邻方块主动传输、面配置持久化与掉落保留。
-- `0.0.6ap_261028_a`：新增太阳能发电机 MK0（96,000 FE 缓存、120 FE/t 发电、白天与完整天空柱判定、优先输出槽、掉落保留能量），并为能量单元与物品存储单元物品加入物品栏耐久条显示。
-- `0.0.5cu_261026_a`：新增粗锡/粗铅与锡/铅矿石的熔炉、高炉配方，矿石配方覆盖深板岩变种。
-- `0.0.5ct_261025_c`：为 40 个 Java 源文件添加 MIT 版权与 SPDX 文件头。
-- `0.0.5cs_261025_b`：更新 README 的 MIT 许可证说明与版本状态，并将 `mod_license` 同步为 MIT。
-- `239ffa4`：新增 MIT License，项目许可证更新为 MIT。
-- `0.0.5cr_261024_a`：加入 MK1/MK2/MK3 能量存储单元、能量显示与物品充放电，补齐能量单元掉落内容保留与物品存储单元手写模型，并重写 README。
-- `0.0.5cq_261023_b`：为物品存储单元 GUI 加入分级配色的 ITEM 标识。
-- `0.0.5cp_261023_a`：统一物品存储单元命名与三档容量，加入潜影盒式内容保存与全局元素掉落规则。
 
 ### 快速开始
 
@@ -309,13 +295,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7au_261107_d`
+- Latest version commit: `0.0.7av_261107_e`
 - Last updated: 2026-11-07
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
 - `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
 - `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
 - `0.0.7as_261107_b`: split crafting recipe generation into standalone and formula-based providers; added and adjusted alloying recipes for netherite, coraconic, and aviraconic ingots; updated the coraconic ingot crafting recipe and generated resources.
@@ -325,21 +312,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
 - `0.0.6fr_261105_a`: separated the solar and geomagnetic mode enums with a shared `GeneratorMode` interface and a new `GeomagneticGeneratorMode`; changed the geomagnetic Overworld rule to Y &lt; -59 and applied the Nether rule to the Nether and other modded dimensions.
 - `0.0.6fq_261104_d`: bound solar and geomagnetic generation rates to the selected mode, leaving environmental conditions responsible only for mode selection; MK0/MK1 now use `Null` during daytime with insufficient sky light, while End and geomagnetic rules remain unchanged.
-- `0.0.6fp_261104_c`: added Geomagnetic Generator MK0 with Solar Generator MK0's buffer, output, GUI, and drop persistence, selecting `Overworld`, `Nether`, `End`, or `Null` from Y < 6, dimension, and the block directly below; made all four solar generators use `Solar` mode in the End when unobstructed while keeping `Reflection` when obstructed; raised energy storage transfer rates to 4,000,000/16,000,000/64,000,000 FE/t and changed the related rate fields to `long`.
-- `0.0.6ep_261104_b`: added Spatial Scaling, Phase Synchronization, Mass-Energy Compensation, and Central Computation cores with item models, textures, four-language names, creative-tab entries, and README documentation, without crafting recipes; changed the solar generator GUI to use texture-drawn CLI and charge-slot backgrounds, moved the output slot to `(146, 39)`, shifted the CLI text further right and down, and widened the I/O button by one pixel on the right.
-- `0.0.6dp_261103_c`: migrated Java packages from `com.aestastel.coraconic.*` to `aestastel.coraconic.*`, updated the mixin package and Gradle group ID to `aestastel.coraconic`, and left the mod ID, resource namespace, registry IDs, and NBT unchanged.
-- `0.0.6cq_261103_b`: changed the solar generator GUI to a right-side output/charge slot plus a centered black/green CLI panel showing tier, `mod_version`, rule-based generation rate, and runtime mode; added the `Thunder` mode with priority `Nether > Reflection > Thunder > Solar/Lunar`; status is synchronized through menu data.
-- `0.0.6cp_261103_a`: added Solar Generators MK1–MK3 with tiered dimension, daytime, thunder, sky-light, and sky-column rules; migrated MK0 to a shared solar tier/block entity/GUI implementation; generated placeholder textures and complete data resources for all three tiers; updated energy storage transfer rates to 4,000/16,000/64,000 FE/t and kept MK0 generation at the current 30 FE/t.
-- `0.0.6bq_261030_a`: added a shared face configuration popup to energy storage unit and solar generator GUIs; the button sits outside the upper-left edge and the expanded panel does not cover the inventory or main UI; left-click cycles forward and right-click cycles backward, using the same face settings as the wrench configure mode.
-- `0.0.6bp_261029_a`: added the Effect Amplification Core and its data generation; added horizontal facing to the seven functional blocks; expanded the wrench into rotate, wrench, and configure modes; added independent per-face input, output, input/output, and blocked modes to energy storage units and the solar generator, with active adjacent transfer, face-mode persistence, and drop preservation.
-- `0.0.6ap_261028_a`: added Solar Generator MK0 (96,000 FE buffer, 120 FE/t generation, daytime and full sky-column checks, output-slot priority, retained buffered energy on drop), plus durability-style inventory bars for energy and item storage unit items.
-- `0.0.5cu_261026_a`: added furnace and blast furnace recipes for raw tin/lead and tin/lead ores, including deepslate ore variants.
-- `0.0.5ct_261025_c`: added MIT copyright and SPDX headers to 40 Java source files.
-- `0.0.5cs_261025_b`: updated the README MIT license notes and version status, and set `mod_license` to MIT.
-- `239ffa4`: added the MIT License and updated the project license to MIT.
-- `0.0.5cr_261024_a`: added MK1/MK2/MK3 energy storage units, energy displays, item charging, retained contents for dropped units, hand-authored item storage models, and rewrote the README.
-- `0.0.5cq_261023_b`: added tier-colored ITEM markers to the item storage unit GUIs.
-- `0.0.5cp_261023_a`: unified item storage unit naming and tiers, added shulker-box-style content persistence, and added global element drop rules.
 
 ### Quick Start
 
