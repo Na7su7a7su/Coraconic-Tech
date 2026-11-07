@@ -69,8 +69,9 @@ public class DataGenerators {
       )
     );
 
-    // 服务端生成器：配方及其解锁进度。
-    // Server providers: recipes and their unlock advancements.
+    // 服务端生成器：合成、合金与熔炼配方及其解锁进度。
+    // Server provider: composes crafting, alloying, and smelting recipe
+    // providers and their unlock advancements.
     generator.addProvider(
       event.includeServer(),
       new ModRecipesProvider(output, event.getLookupProvider())

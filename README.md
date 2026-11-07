@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7aq_261106_b`
-- 最后更新：2026-11-06
+- 最近版本提交：`0.0.7ar_261107_a`
+- 最后更新：2026-11-07
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7ar_261107_a`：将配方数据生成器拆分为合成、合金与熔炼三个生成器；保留 `ModRecipesProvider` 作为唯一数据生成入口，避免重复的 `Recipes` provider 名称；配方生成结果保持不变。
 - `0.0.7aq_261106_b`：为合金仪加入 JEI 配方分类与机器催化剂，显示最多三组带数量的原料、加工箭头、成品槽、总耗能与加工时间；补充四语 JEI 文本。
 - `0.0.7ap_261106_a`：新增合金仪 MK1，提供 `320,000 FE` 缓存、三个原料槽、成品槽、放电槽和加工进度条；加入测试合金配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭，耗能 `20,000 FE`、耗时 `100 ticks`；补齐合金配方类型、序列化器、GUI、数据生成、四语名称与资源。
 - `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
@@ -304,13 +305,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7aq_261106_b`
-- Last updated: 2026-11-06
+- Latest version commit: `0.0.7ar_261107_a`
+- Last updated: 2026-11-07
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7ar_261107_a`: split recipe data generation into crafting, alloying, and smelting providers; kept `ModRecipesProvider` as the single data-generation entry point to avoid duplicate `Recipes` provider names; generated recipe output is unchanged.
 - `0.0.7aq_261106_b`: added the JEI recipe category and machine catalyst for the Alloying Machine, showing up to three counted inputs, a progress arrow, output, total energy, and processing time, with translations.
 - `0.0.7ap_261106_a`: added Alloying Machine MK1 with a `320,000 FE` buffer, three input slots, an output slot, a discharge slot, and a processing progress bar; added the test alloy recipe 4 gold ingots + 4 netherite scraps → 1 netherite ingot at `20,000 FE` and `100 ticks`; added the alloying recipe type, serializer, GUI, data generation, translations, and assets.
 - `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
