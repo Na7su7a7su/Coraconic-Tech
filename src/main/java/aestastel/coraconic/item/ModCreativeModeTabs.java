@@ -99,6 +99,7 @@ public class ModCreativeModeTabs {
           output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get());
           output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get());
           output.accept(ModBlocks.ALLOYING_MACHINE_MK1.get());
+          output.accept(ModBlocks.ALLOYING_MACHINE_MK2.get());
           output.accept(
             ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()
           );

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "coraconic:block/alloying_machine_mk2"
+  }
+}

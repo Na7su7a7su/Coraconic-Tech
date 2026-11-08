@@ -91,6 +91,7 @@
     "block.coraconic.energy_storage_unit_mk3":"Energy Storage Unit MK3",
     "block.coraconic.solar_generator_mk0":"Solar Generator MK0",
     "block.coraconic.alloying_machine_mk1":"Alloying Machine MK1",
+    "block.coraconic.alloying_machine_mk2":"Alloying Machine MK2",
     "block.coraconic.resonance_crystallizing_machine_mk1":"Resonance Crystallizing Machine MK1",
     "jei.coraconic.alloying":"Alloying Machine",
     "jei.coraconic.alloying.energy":"Energy: %s FE",

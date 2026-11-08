@@ -110,10 +110,21 @@ public record AlloyingRecipe(
    * <p>Consumes this recipe's ingredients from the container input slots.
    */
   public void consume(Container container) {
-    int inputSlots = Math.min(3, container.getContainerSize());
+    consume(container, 0);
+  }
+
+  /**
+   * 从指定起始槽位扣除本配方所需的物品。
+   *
+   * <p>Consumes this recipe's ingredients from three slots starting at
+   * {@code startSlot}.
+   */
+  public void consume(Container container, int startSlot) {
+    int firstSlot = Math.max(0, startSlot);
+    int lastSlot = Math.min(container.getContainerSize(), firstSlot + 3);
     for (AlloyingIngredient required : this.ingredients) {
       int remaining = required.count();
-      for (int slot = 0; slot < inputSlots && remaining > 0; slot++) {
+      for (int slot = firstSlot; slot < lastSlot && remaining > 0; slot++) {
         ItemStack stack = container.getItem(slot);
         if (stack.isEmpty() || !required.test(stack)) {
           continue;

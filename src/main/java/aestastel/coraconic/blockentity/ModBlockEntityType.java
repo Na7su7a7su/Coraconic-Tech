@@ -11,6 +11,7 @@ package aestastel.coraconic.blockentity;
 
 import aestastel.coraconic.CoraconicTech;
 import aestastel.coraconic.block.AlloyingMachineBlock;
+import aestastel.coraconic.block.AlloyingMachineMk2Block;
 import aestastel.coraconic.block.EnergyStorageUnitBlock;
 import aestastel.coraconic.block.GeomagneticGeneratorBlock;
 import aestastel.coraconic.block.ItemStorageUnitBlock;
@@ -162,6 +163,23 @@ public class ModBlockEntityType {
       BlockEntityType.Builder.of(
         ModBlockEntityType::createAlloyingMachineBlockEntity,
         ModBlocks.ALLOYING_MACHINE_MK1.get()
+      ).build(null)
+  );
+
+  /**
+   * 合金仪 MK2。
+   *
+   * <p>Alloying Machine MK2.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<AlloyingMachineMk2BlockEntity>
+  > ALLOYING_MACHINE_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "alloying_machine_mk2_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createAlloyingMachineMk2BlockEntity,
+        ModBlocks.ALLOYING_MACHINE_MK2.get()
       ).build(null)
   );
 
@@ -358,6 +376,28 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for alloying machine block entity: " + state
+    );
+  }
+
+  /**
+   * 合金仪 MK2 方块实体工厂。
+   *
+   * <p>Alloying machine MK2 block entity factory.
+   */
+  private static AlloyingMachineMk2BlockEntity
+  createAlloyingMachineMk2BlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof AlloyingMachineMk2Block machineBlock) {
+      return new AlloyingMachineMk2BlockEntity(
+        machineBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for alloying machine MK2 block entity: " + state
     );
   }
 

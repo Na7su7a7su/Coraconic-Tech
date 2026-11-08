@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7ay_261108_a`
+- 最近版本提交：`0.0.7bp_261108_b`
 - 最后更新：2026-11-08
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7bp_261108_b`：新增合金仪 MK2，提供 `1,040,000 FE` 缓存、`40,000 FE/t` 输入、三条可同时工作的独立生产线和共享放电槽；沿用现有合金配方；补齐方块、方块实体、菜单、GUI、能力、JEI 催化剂、掉落、四语名称与数据生成。
 - `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
 - `0.0.7ax_261107_g`：新增共振晶化仪 MK1，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
 - `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
@@ -40,11 +41,10 @@
 - `0.0.7as_261107_b`：将合成配方生成器进一步拆分为独立配方与公式配方两类；新增/调整合金仪配方：下界合金锭使用 2 金锭 + 4 下界合金碎片，核龙金属锭使用 1 铅 + 1 锡 + 1 核龙元素，腾龙金属锭使用 1 钻石 + 1 绿宝石 + 1 腾龙元素；同步核龙金属锭合成配方与生成资源。
 - `0.0.7ar_261107_a`：将配方数据生成器拆分为合成、合金与熔炼三个生成器；保留 `ModRecipesProvider` 作为唯一数据生成入口，避免重复的 `Recipes` provider 名称；配方生成结果保持不变。
 - `0.0.7aq_261106_b`：为合金仪加入 JEI 配方分类与机器催化剂，显示最多三组带数量的原料、加工箭头、成品槽、总耗能与加工时间；补充四语 JEI 文本。
-- `0.0.7ap_261106_a`：新增合金仪 MK1，提供 `320,000 FE` 缓存、三个原料槽、成品槽、放电槽和加工进度条；加入测试合金配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭，耗能 `20,000 FE`、耗时 `100 ticks`；补齐合金配方类型、序列化器、GUI、数据生成、四语名称与资源。
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1、共振晶化仪 MK1、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪 MK1、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -126,6 +126,19 @@
 - 测试配方耗能 `20,000 FE`，加工时间 `100 ticks`
 - JEI 提供独立的合金仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
 - 破坏方块时保留缓存能量、五个槽位的内容和加工进度
+- 当前仅通过创造模式获取，机器本体尚未添加合成配方
+
+#### 合金仪 MK2
+
+- 内部缓存：`1,040,000 FE`，从所有面接收能量，最高 `40,000 FE/t`
+- 三条独立生产线，每条拥有三个原料槽和一个成品槽，可同时加工
+- 所有生产线共用能量缓存和一个放电槽
+- 成品槽只能取出，不能放入
+- 放电槽只接受可提取能量的物品，每 tick 最多向缓存输入 `40,000 FE`，不会给物品充电
+- 三条生产线各自显示独立加工进度条
+- 使用现有合金配方，不需要新增配方类型
+- JEI 合金仪分类同时显示 MK1 与 MK2 催化剂
+- 破坏方块时保留缓存能量、13 个槽位的内容和三条生产线的进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
 #### 共振晶化仪 MK1
@@ -307,13 +320,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7ay_261108_a`
+- Latest version commit: `0.0.7bp_261108_b`
 - Last updated: 2026-11-08
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7bp_261108_b`: added Alloying Machine MK2 with a `1,040,000 FE` buffer, `40,000 FE/t` input, three independent production lines that can work simultaneously, and a shared discharge slot; reused the existing alloying recipes; added block, block entity, menu, GUI, capability, JEI catalysts, loot, translations, and data generation.
 - `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine MK1 with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
 - `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
@@ -323,11 +337,10 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7as_261107_b`: split crafting recipe generation into standalone and formula-based providers; added and adjusted alloying recipes for netherite, coraconic, and aviraconic ingots; updated the coraconic ingot crafting recipe and generated resources.
 - `0.0.7ar_261107_a`: split recipe data generation into crafting, alloying, and smelting providers; kept `ModRecipesProvider` as the single data-generation entry point to avoid duplicate `Recipes` provider names; generated recipe output is unchanged.
 - `0.0.7aq_261106_b`: added the JEI recipe category and machine catalyst for the Alloying Machine, showing up to three counted inputs, a progress arrow, output, total energy, and processing time, with translations.
-- `0.0.7ap_261106_a`: added Alloying Machine MK1 with a `320,000 FE` buffer, three input slots, an output slot, a discharge slot, and a processing progress bar; added the test alloy recipe 4 gold ingots + 4 netherite scraps → 1 netherite ingot at `20,000 FE` and `100 ticks`; added the alloying recipe type, serializer, GUI, data generation, translations, and assets.
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machine MK1, Resonance Crystallizing Machine MK1, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine MK1, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -409,6 +422,19 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The test recipe costs `20,000 FE` and takes `100 ticks`
 - JEI provides a dedicated Alloying Machine category with counted inputs, a progress arrow, output, energy, and time information
 - Breaking the block preserves stored energy, all five slot contents, and progress
+- Currently obtained in creative mode only; the machine itself has no crafting recipe yet
+
+#### Alloying Machine MK2
+
+- Internal buffer: `1,040,000 FE`, receiving energy from every side at up to `40,000 FE/t`
+- Three independent production lines, each with three input slots and one output slot; all three can work at the same time
+- All lines share the energy buffer and one discharge slot
+- Output slots only allow extraction
+- The discharge slot only accepts energy-extractable items and feeds up to `40,000 FE/t` into the buffer; it never charges the item
+- Each production line has its own processing progress bar
+- Reuses the existing alloying recipes without adding a new recipe type
+- The JEI Alloying Machine category lists both MK1 and MK2 as catalysts
+- Breaking the block preserves stored energy, all 13 slot contents, and all three production-line progress values
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
 #### Resonance Crystallizing Machine MK1
