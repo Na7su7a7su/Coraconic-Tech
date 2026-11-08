@@ -45,7 +45,6 @@ public class EnergyStorageUnitScreen
   private static final int BAR_HEIGHT = 54;
   /** #4FD784，alpha 154（0x9A）。 */
   private static final int ENERGY_COLOR = 0x9A4FD784;
-  private static final int BAR_BACKGROUND = 0xFF373737;
 
   private static final int ENERGY_TEXT_Y = 78;
 
@@ -167,13 +166,6 @@ public class EnergyStorageUnitScreen
 
     int x = this.leftPos + BAR_X;
     int y = this.topPos + BAR_Y;
-    graphics.fill(
-      x,
-      y,
-      x + BAR_WIDTH,
-      y + BAR_HEIGHT,
-      BAR_BACKGROUND
-    );
 
     long capacity = menu.getCapacity();
     double ratio = capacity <= 0L
@@ -182,10 +174,10 @@ public class EnergyStorageUnitScreen
     int filled = (int) Math.round((BAR_HEIGHT - 2) * ratio);
     if (filled > 0) {
       graphics.fill(
-        x + 1,
-        y + BAR_HEIGHT - 1 - filled,
-        x + BAR_WIDTH - 1,
-        y + BAR_HEIGHT - 1,
+        x,
+        y + BAR_HEIGHT - 2 - filled,
+        x + BAR_WIDTH,
+        y + BAR_HEIGHT,
         ENERGY_COLOR
       );
     }

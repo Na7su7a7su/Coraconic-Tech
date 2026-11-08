@@ -128,25 +128,25 @@ public class ResonanceCrystallizingMachineMenu
       this.data = new SimpleContainerData(DATA_COUNT);
     }
 
-    addSlot(new Slot(container, 0, 34, 26) {
+    addSlot(new Slot(container, 0, 37, 26) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return true;
       }
     });
-    addSlot(new Slot(container, 1, 34, 50) {
+    addSlot(new Slot(container, 1, 37, 50) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return true;
       }
     });
-    addSlot(new Slot(container, OUTPUT_SLOT, 99, 38) {
+    addSlot(new Slot(container, OUTPUT_SLOT, 102, 38) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return false;
       }
     });
-    addSlot(new Slot(container, ENERGY_SLOT, 146, 38) {
+    addSlot(new Slot(container, ENERGY_SLOT, 148, 72) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return canCharge(stack);

@@ -132,31 +132,31 @@ public class AlloyingMachineMenu extends AbstractContainerMenu {
       this.data = new SimpleContainerData(DATA_COUNT);
     }
 
-    addSlot(new Slot(container, 0, 55, 17) {
+    addSlot(new Slot(container, 0, 59, 17) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return true;
       }
     });
-    addSlot(new Slot(container, 1, 34, 38) {
+    addSlot(new Slot(container, 1, 38, 38) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return true;
       }
     });
-    addSlot(new Slot(container, 2, 55, 59) {
+    addSlot(new Slot(container, 2, 59, 59) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return true;
       }
     });
-    addSlot(new Slot(container, OUTPUT_SLOT, 99, 38) {
+    addSlot(new Slot(container, OUTPUT_SLOT, 103, 38) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return false;
       }
     });
-    addSlot(new Slot(container, DISCHARGE_SLOT, 146, 38) {
+    addSlot(new Slot(container, DISCHARGE_SLOT, 148, 72) {
       @Override
       public boolean mayPlace(ItemStack stack) {
         return canDischarge(stack);

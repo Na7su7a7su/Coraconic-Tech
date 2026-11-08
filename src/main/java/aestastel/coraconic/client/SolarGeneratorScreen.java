@@ -39,12 +39,11 @@ public class SolarGeneratorScreen
       "textures/gui/solar_generator_mk0.png"
     );
 
-  private static final int BAR_X = 8;
+  private static final int BAR_X = 9;
   private static final int BAR_Y = 20;
-  private static final int BAR_WIDTH = 16;
+  private static final int BAR_WIDTH = 14;
   private static final int BAR_HEIGHT = 54;
   private static final int ENERGY_COLOR = 0x9A4FD784;
-  private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_TEXT_Y = 78;
 
   private static final int CLI_TEXT_X = 36;
@@ -151,7 +150,6 @@ public class SolarGeneratorScreen
 
     int x = this.leftPos + BAR_X;
     int y = this.topPos + BAR_Y;
-    graphics.fill(x, y, x + BAR_WIDTH, y + BAR_HEIGHT, BAR_BACKGROUND);
 
     int capacity = menu.getCapacity();
     double ratio =
@@ -161,10 +159,10 @@ public class SolarGeneratorScreen
     int filled = (int) Math.round((BAR_HEIGHT - 2) * ratio);
     if (filled > 0) {
       graphics.fill(
-        x + 1,
-        y + BAR_HEIGHT - 1 - filled,
-        x + BAR_WIDTH - 1,
-        y + BAR_HEIGHT - 1,
+        x,
+        y + BAR_HEIGHT - 2 - filled,
+        x + BAR_WIDTH,
+        y + BAR_HEIGHT,
         ENERGY_COLOR
       );
     }

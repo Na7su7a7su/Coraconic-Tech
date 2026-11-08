@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7ax_261107_g`
-- 最后更新：2026-11-07
+- 最近版本提交：`0.0.7ay_261108_a`
+- 最后更新：2026-11-08
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
 - `0.0.7ax_261107_g`：新增共振晶化仪 MK1，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
 - `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
 - `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
@@ -40,7 +41,6 @@
 - `0.0.7ar_261107_a`：将配方数据生成器拆分为合成、合金与熔炼三个生成器；保留 `ModRecipesProvider` 作为唯一数据生成入口，避免重复的 `Recipes` provider 名称；配方生成结果保持不变。
 - `0.0.7aq_261106_b`：为合金仪加入 JEI 配方分类与机器催化剂，显示最多三组带数量的原料、加工箭头、成品槽、总耗能与加工时间；补充四语 JEI 文本。
 - `0.0.7ap_261106_a`：新增合金仪 MK1，提供 `320,000 FE` 缓存、三个原料槽、成品槽、放电槽和加工进度条；加入测试合金配方：4 个金锭 + 4 个下界合金碎片 → 1 个下界合金锭，耗能 `20,000 FE`、耗时 `100 ticks`；补齐合金配方类型、序列化器、GUI、数据生成、四语名称与资源。
-- `0.0.6fs_261105_b`：新增地磁发电机 MK1–MK3，复用对应太阳能等级的缓存与输出，按 `Overworld` / `Nether` / `End` 提供分级功率；补齐方块、方块实体、能力、创造栏、战利品表、四语名称、纹理与数据生成；I/O 按钮右侧再加宽 1 像素。
 
 ### 快速开始
 
@@ -307,13 +307,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7ax_261107_g`
-- Last updated: 2026-11-07
+- Latest version commit: `0.0.7ay_261108_a`
+- Last updated: 2026-11-08
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine MK1 with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
 - `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
 - `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
@@ -323,7 +324,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7ar_261107_a`: split recipe data generation into crafting, alloying, and smelting providers; kept `ModRecipesProvider` as the single data-generation entry point to avoid duplicate `Recipes` provider names; generated recipe output is unchanged.
 - `0.0.7aq_261106_b`: added the JEI recipe category and machine catalyst for the Alloying Machine, showing up to three counted inputs, a progress arrow, output, total energy, and processing time, with translations.
 - `0.0.7ap_261106_a`: added Alloying Machine MK1 with a `320,000 FE` buffer, three input slots, an output slot, a discharge slot, and a processing progress bar; added the test alloy recipe 4 gold ingots + 4 netherite scraps → 1 netherite ingot at `20,000 FE` and `100 ticks`; added the alloying recipe type, serializer, GUI, data generation, translations, and assets.
-- `0.0.6fs_261105_b`: added Geomagnetic Generators MK1–MK3 with the matching solar tier buffers and output rates, tiered `Overworld` / `Nether` / `End` generation, registration, capabilities, creative-tab entries, loot tables, translations, textures, and data generation; widened the I/O button by one more pixel on the right.
 
 ### Quick Start
 

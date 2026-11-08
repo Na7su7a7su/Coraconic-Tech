@@ -40,14 +40,13 @@ public class AlloyingMachineScreen
       "textures/gui/alloying_machine.png"
     );
 
-  private static final int BAR_X = 8;
-  private static final int BAR_Y = 20;
-  private static final int BAR_WIDTH = 16;
+  private static final int BAR_X = 149;
+  private static final int BAR_Y = 13;
+  private static final int BAR_WIDTH = 14;
   private static final int BAR_HEIGHT = 54;
-  private static final int BAR_BACKGROUND = 0xFF373737;
   private static final int ENERGY_COLOR = 0x9A4FD784;
 
-  private static final int PROGRESS_X = 59;
+  private static final int PROGRESS_X = 63;
   private static final int PROGRESS_Y = 42;
   private static final int PROGRESS_WIDTH = 30;
   private static final int PROGRESS_HEIGHT = 8;
@@ -106,13 +105,6 @@ public class AlloyingMachineScreen
 
     int energyX = this.leftPos + BAR_X;
     int energyY = this.topPos + BAR_Y;
-    graphics.fill(
-      energyX,
-      energyY,
-      energyX + BAR_WIDTH,
-      energyY + BAR_HEIGHT,
-      BAR_BACKGROUND
-    );
 
     long capacity = menu.getCapacity();
     double energyRatio = capacity <= 0L
@@ -127,10 +119,10 @@ public class AlloyingMachineScreen
     );
     if (energyFilled > 0) {
       graphics.fill(
-        energyX + 1,
-        energyY + BAR_HEIGHT - 1 - energyFilled,
-        energyX + BAR_WIDTH - 1,
-        energyY + BAR_HEIGHT - 1,
+        energyX,
+        energyY + BAR_HEIGHT - 2 - energyFilled,
+        energyX + BAR_WIDTH,
+        energyY + BAR_HEIGHT,
         ENERGY_COLOR
       );
     }
