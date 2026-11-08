@@ -1,0 +1,23 @@
+{
+  "type": "coraconic:resonance_crystallizing",
+  "energy": 1000000,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:diamond"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:elements/aviraconic"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:aviraconic_diamond-structured_crystal"
+  },
+  "time": 600
+}

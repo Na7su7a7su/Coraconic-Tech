@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7bp_261108_b`
+- 最近版本提交：`0.0.7bq_261108_c`
 - 最后更新：2026-11-08
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7bq_261108_c`：调整共振晶化仪测试配方时间为 `150 ticks`，并新增钻石/煤炭、核龙/腾龙钻石结构晶体、石英/下界岩、绿宝石/粗铜等配方。
 - `0.0.7bp_261108_b`：新增合金仪 MK2，提供 `1,040,000 FE` 缓存、`40,000 FE/t` 输入、三条可同时工作的独立生产线和共享放电槽；沿用现有合金配方；补齐方块、方块实体、菜单、GUI、能力、JEI 催化剂、掉落、四语名称与数据生成。
 - `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
 - `0.0.7ax_261107_g`：新增共振晶化仪 MK1，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
@@ -40,7 +41,6 @@
 - `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
 - `0.0.7as_261107_b`：将合成配方生成器进一步拆分为独立配方与公式配方两类；新增/调整合金仪配方：下界合金锭使用 2 金锭 + 4 下界合金碎片，核龙金属锭使用 1 铅 + 1 锡 + 1 核龙元素，腾龙金属锭使用 1 钻石 + 1 绿宝石 + 1 腾龙元素；同步核龙金属锭合成配方与生成资源。
 - `0.0.7ar_261107_a`：将配方数据生成器拆分为合成、合金与熔炼三个生成器；保留 `ModRecipesProvider` 作为唯一数据生成入口，避免重复的 `Recipes` provider 名称；配方生成结果保持不变。
-- `0.0.7aq_261106_b`：为合金仪加入 JEI 配方分类与机器催化剂，显示最多三组带数量的原料、加工箭头、成品槽、总耗能与加工时间；补充四语 JEI 文本。
 
 ### 快速开始
 
@@ -147,8 +147,13 @@
 - 两个原料槽、一个成品槽和一个能源槽；成品槽只能取出，不能放入
 - 能源槽只接受可接收能量的物品，每 tick 最多从缓存充能 `1,000 FE`
 - GUI 中央提供加工进度条
-- 测试配方：1 个钻石 + 1 个木炭 → 2 个钻石
-- 测试配方耗能 `100,000 FE`，加工时间 `3,000 ticks`
+- 当前配方：
+  - 1 个钻石 + 1 个木炭 → 2 个钻石（`100,000 FE`，`150 ticks`）
+  - 2 个钻石 + 1 个煤炭 → 3 个钻石（`100,000 FE`，`150 ticks`）
+  - 1 个钻石 + 1 个核龙元素 → 1 个核龙钻石结构晶体（`1,000,000 FE`，`600 ticks`）
+  - 1 个钻石 + 1 个腾龙元素 → 1 个腾龙钻石结构晶体（`1,000,000 FE`，`600 ticks`）
+  - 1 个石英 + 1 个下界岩 → 2 个石英（`10,000 FE`，`80 ticks`）
+  - 1 个绿宝石 + 1 个粗铜 → 2 个绿宝石（`100,000 FE`，`50 ticks`）
 - JEI 提供独立的共振晶化仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
 - 破坏方块时保留缓存能量、四个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
@@ -320,13 +325,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7bp_261108_b`
+- Latest version commit: `0.0.7bq_261108_c`
 - Last updated: 2026-11-08
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7bq_261108_c`: changed the Resonance Crystallizing Machine test recipe to `150 ticks` and added diamond/coal, coraconic/aviraconic diamond crystal, quartz/netherrack, and emerald/raw-copper recipes.
 - `0.0.7bp_261108_b`: added Alloying Machine MK2 with a `1,040,000 FE` buffer, `40,000 FE/t` input, three independent production lines that can work simultaneously, and a shared discharge slot; reused the existing alloying recipes; added block, block entity, menu, GUI, capability, JEI catalysts, loot, translations, and data generation.
 - `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine MK1 with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
@@ -336,7 +342,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
 - `0.0.7as_261107_b`: split crafting recipe generation into standalone and formula-based providers; added and adjusted alloying recipes for netherite, coraconic, and aviraconic ingots; updated the coraconic ingot crafting recipe and generated resources.
 - `0.0.7ar_261107_a`: split recipe data generation into crafting, alloying, and smelting providers; kept `ModRecipesProvider` as the single data-generation entry point to avoid duplicate `Recipes` provider names; generated recipe output is unchanged.
-- `0.0.7aq_261106_b`: added the JEI recipe category and machine catalyst for the Alloying Machine, showing up to three counted inputs, a progress arrow, output, total energy, and processing time, with translations.
 
 ### Quick Start
 
@@ -443,8 +448,13 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Two input slots, one output slot, and one energy slot; the output slot only allows extraction
 - The energy slot only accepts energy-receiving items and charges them from the buffer at up to `1,000 FE/t`
 - A central processing progress bar is present
-- Test recipe: 1 diamond + 1 charcoal → 2 diamonds
-- The test recipe costs `100,000 FE` and takes `3,000 ticks`
+- Current recipes:
+  - 1 diamond + 1 charcoal → 2 diamonds (`100,000 FE`, `150 ticks`)
+  - 2 diamonds + 1 coal → 3 diamonds (`100,000 FE`, `150 ticks`)
+  - 1 diamond + 1 coraconic element → 1 coraconic diamond structured crystal (`1,000,000 FE`, `600 ticks`)
+  - 1 diamond + 1 aviraconic element → 1 aviraconic diamond structured crystal (`1,000,000 FE`, `600 ticks`)
+  - 1 quartz + 1 netherrack → 2 quartz (`10,000 FE`, `80 ticks`)
+  - 1 emerald + 1 raw copper → 2 emeralds (`100,000 FE`, `50 ticks`)
 - JEI provides a dedicated Resonance Crystallizing Machine category with counted inputs, a progress arrow, output, energy, and time information
 - Breaking the block preserves stored energy, all four slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet

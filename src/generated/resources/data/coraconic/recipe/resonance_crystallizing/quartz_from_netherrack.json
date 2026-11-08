@@ -1,0 +1,23 @@
+{
+  "type": "coraconic:resonance_crystallizing",
+  "energy": 10000,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:quartz"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:netherrack"
+      }
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "minecraft:quartz"
+  },
+  "time": 80
+}
