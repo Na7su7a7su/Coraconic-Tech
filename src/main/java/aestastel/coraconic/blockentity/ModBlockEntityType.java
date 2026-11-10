@@ -17,6 +17,7 @@ import aestastel.coraconic.block.GeomagneticGeneratorBlock;
 import aestastel.coraconic.block.ItemStorageUnitBlock;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.block.ResonanceCrystallizingMachineBlock;
+import aestastel.coraconic.block.SmeltingMetallurgyMachineBlock;
 import aestastel.coraconic.block.SolarGeneratorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -198,6 +199,24 @@ public class ModBlockEntityType {
         BlockEntityType.Builder.of(
           ModBlockEntityType::createResonanceCrystallizingMachineBlockEntity,
           ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
+        ).build(null)
+    );
+
+  /**
+   * 熔炼冶金炉 MK1。
+   *
+   * <p>Smelting-Metallurgy Machine MK1.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<SmeltingMetallurgyMachineBlockEntity>
+  > SMELTING_METALLURGY_MACHINE_MK1_ENTITY =
+    BLOCK_ENTITY_TYPES.register(
+      "smelting_metallurgy_machine_mk1_entity",
+      () ->
+        BlockEntityType.Builder.of(
+          ModBlockEntityType::createSmeltingMetallurgyMachineBlockEntity,
+          ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
         ).build(null)
     );
 
@@ -423,6 +442,32 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for resonance crystallizing machine block entity: " +
+      state
+    );
+  }
+
+  /**
+   * 熔炼冶金炉方块实体工厂。
+   *
+   * <p>Smelting-metallurgy machine block entity factory.
+   */
+  private static SmeltingMetallurgyMachineBlockEntity
+  createSmeltingMetallurgyMachineBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (
+      state.getBlock() instanceof
+        SmeltingMetallurgyMachineBlock machineBlock
+    ) {
+      return new SmeltingMetallurgyMachineBlockEntity(
+        machineBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for smelting-metallurgy machine block entity: " +
       state
     );
   }

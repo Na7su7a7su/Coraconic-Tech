@@ -74,6 +74,17 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
+    MenuType<SmeltingMetallurgyMachineMenu>
+  > SMELTING_METALLURGY_MACHINE = MENU_TYPES.register(
+    "smelting_metallurgy_machine",
+    () ->
+      IMenuTypeExtension.create(
+        SmeltingMetallurgyMachineMenu::fromNetwork
+      )
+  );
+
+  public static final DeferredHolder<
+    MenuType<?>,
     MenuType<ResonanceCrystallizingMachineMenu>
   > RESONANCE_CRYSTALLIZING_MACHINE = MENU_TYPES.register(
     "resonance_crystallizing_machine",

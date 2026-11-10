@@ -112,6 +112,12 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
       )
     );
+    add(
+      ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get(),
+      createBlockEntityDataDrop(
+        ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
+      )
+    );
 
     // 太阳能发电机：掉落自身并复制缓存能量；输出槽内容在方块移除时单独掉落。
     // Solar generator: drops itself with buffered energy; output-slot contents

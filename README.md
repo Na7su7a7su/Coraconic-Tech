@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7c`
-- 最近版本提交：`0.0.7cq_261110_d`
+- 最近版本提交：`0.0.7dp_261110_e`
 - 最后更新：2026-11-10
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7dp_261110_e`：新增熔炼冶金炉 MK1，提供 `320,000 FE` 缓存、`10,000 FE/t` 输入、一个原料槽、一个成品槽和一个电源槽；使用全部原版熔炼配方，每运行 tick 消耗 `2 FE`；加入数值列表文档。
 - `0.0.7cq_261110_d`：将创造物品栏从 `item` 包拆分到 `creativetab` 包，拆分为主创造栏与工具创造栏两个独立类，保留 `ModCreativeModeTabs` 作为统一注册入口；主版本号提升为 `0.0.7c`。
 - `0.0.7cp_261110_c`：移除共振晶化仪所有 MK1 表述，注册 ID 改为 `resonance_crystallizing_machine`；旧存档中的原 MK1 方块不会自动迁移；本版本声明不兼容过去存档。
 - `0.0.7bs_261110_b`：统一合金仪 MK1、MK2 与共振晶化仪的加工状态恢复；保存配方 ID 与进度，加载时通过配方管理器重新解析并校验输入；重新计算最大进度，补齐能量与库存边界保护。
@@ -40,11 +41,10 @@
 - `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
 - `0.0.7ax_261107_g`：新增共振晶化仪，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
 - `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
-- `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金炉 MK1、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -157,6 +157,17 @@
   - 1 个绿宝石 + 1 个粗铜 → 2 个绿宝石（`100,000 FE`，`50 ticks`）
 - JEI 提供独立的共振晶化仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
 - 破坏方块时保留缓存能量、四个槽位的内容和加工进度
+- 当前仅通过创造模式获取，机器本体尚未添加合成配方
+
+#### 熔炼冶金炉 MK1
+
+- 内部缓存：`320,000 FE`，从所有面接收能量，最高 `10,000 FE/t`
+- 一个原料槽、一个成品槽和一个电源槽；成品槽只能取出，不能放入
+- 电源槽只接受可提取能量的物品，每 tick 最多向缓存输入 `10,000 FE`，不会给物品充电
+- 使用全部原版熔炼配方，不使用燃料，也不产生经验
+- 每运行一个 tick 消耗 `2 FE`，能量不足或成品槽已满时暂停
+- GUI 中央提供加工进度条
+- 破坏方块时保留缓存能量、三个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
 #### 太阳能发电机 MK0
@@ -326,13 +337,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7c`
-- Latest version commit: `0.0.7cq_261110_d`
+- Latest version commit: `0.0.7dp_261110_e`
 - Last updated: 2026-11-10
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7dp_261110_e`: added Smelting-Metallurgy Machine MK1 with a `320,000 FE` buffer, `10,000 FE/t` input, one input slot, one output slot, and one power slot; it uses all vanilla smelting recipes and consumes `2 FE` per processing tick; added the value-list document.
 - `0.0.7cq_261110_d`: moved creative tabs from the `item` package into `creativetab`, split the main and tool tabs into separate classes, kept `ModCreativeModeTabs` as the unified registration entry point, and raised the main mod version to `0.0.7c`.
 - `0.0.7cp_261110_c`: removed all MK1 wording from the Resonance Crystallizing Machine and renamed its registry IDs to `resonance_crystallizing_machine`; existing MK1 blocks are not migrated, and this version is not compatible with previous saves.
 - `0.0.7bs_261110_b`: unified processing-state recovery for Alloying Machines MK1 and MK2 and the Resonance Crystallizing Machine; recipe IDs and progress are saved, recipes are resolved again through the recipe manager, inputs are revalidated, maximum progress is recomputed, and energy and inventory boundaries are enforced.
@@ -342,11 +354,10 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
 - `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
-- `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -459,6 +470,17 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
   - 1 emerald + 1 raw copper → 2 emeralds (`100,000 FE`, `50 ticks`)
 - JEI provides a dedicated Resonance Crystallizing Machine category with counted inputs, a progress arrow, output, energy, and time information
 - Breaking the block preserves stored energy, all four slot contents, and progress
+- Currently obtained in creative mode only; the machine itself has no crafting recipe yet
+
+#### Smelting-Metallurgy Machine MK1
+
+- Internal buffer: `320,000 FE`, receiving energy from every side at up to `10,000 FE/t`
+- One input slot, one output slot, and one power slot; the output slot only allows extraction
+- The power slot only accepts energy-extractable items and feeds up to `10,000 FE/t` into the buffer; it never charges the item
+- Uses all vanilla smelting recipes, consumes no fuel, and produces no experience
+- Consumes `2 FE` per processing tick; pauses when energy is insufficient or the output slot is full
+- A central processing progress bar is present
+- Breaking the block preserves stored energy, all three slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
 #### Solar Generator MK0

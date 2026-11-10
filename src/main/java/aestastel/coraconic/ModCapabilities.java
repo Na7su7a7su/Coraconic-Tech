@@ -91,6 +91,11 @@ public final class ModCapabilities {
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
+      ModBlockEntityType.SMELTING_METALLURGY_MACHINE_MK1_ENTITY.get(),
+      (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
+    );
+    event.registerBlockEntity(
+      Capabilities.EnergyStorage.BLOCK,
       ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );

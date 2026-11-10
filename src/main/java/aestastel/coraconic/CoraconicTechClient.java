@@ -14,6 +14,7 @@ import aestastel.coraconic.client.AlloyingMachineScreen;
 import aestastel.coraconic.client.EnergyStorageUnitScreen;
 import aestastel.coraconic.client.ItemStorageUnitScreen;
 import aestastel.coraconic.client.ResonanceCrystallizingMachineScreen;
+import aestastel.coraconic.client.SmeltingMetallurgyMachineScreen;
 import aestastel.coraconic.client.SolarGeneratorScreen;
 import aestastel.coraconic.menu.ModMenuType;
 import net.neoforged.api.distmarker.Dist;
@@ -74,6 +75,10 @@ public class CoraconicTechClient {
     event.register(
       ModMenuType.RESONANCE_CRYSTALLIZING_MACHINE.get(),
       ResonanceCrystallizingMachineScreen::new
+    );
+    event.register(
+      ModMenuType.SMELTING_METALLURGY_MACHINE.get(),
+      SmeltingMetallurgyMachineScreen::new
     );
   }
 }

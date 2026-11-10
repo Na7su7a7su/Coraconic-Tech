@@ -93,6 +93,7 @@
     "block.coraconic.alloying_machine_mk1":"Alloying Machine MK1",
     "block.coraconic.alloying_machine_mk2":"Alloying Machine MK2",
     "block.coraconic.resonance_crystallizing_machine":"Resonance Crystallizing Machine",
+    "block.coraconic.smelting_metallurgy_machine_mk1":"Smelting-Metallurgy Machine MK1",
     "jei.coraconic.alloying":"Alloying Machine",
     "jei.coraconic.alloying.energy":"Energy: %s FE",
     "jei.coraconic.alloying.time":"Time: %s ticks",
