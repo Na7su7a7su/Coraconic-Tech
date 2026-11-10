@@ -43,11 +43,13 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p>提供 1,040,000 FE 缓存、三条独立生产线、一个共享放电槽和独立
  * 进度同步。每条生产线拥有三个原料槽和一个成品槽，三条生产线可以同时工作。
+ * 默认处理速度为 MK1 的 1.2 倍，单次配方总耗能保持不变。
  *
  * <p>Alloying Machine MK2 block entity. It provides a 1,040,000 FE buffer,
  * three independent production lines, one shared discharge slot, and separate
  * progress synchronization. Each line has three input slots and one output slot,
- * and all three lines can work at the same time.
+ * and all three lines can work at the same time. Processing runs at 1.2x the
+ * MK1 speed while preserving each recipe's total energy cost.
  */
 public class AlloyingMachineMk2BlockEntity
   extends BlockEntity
@@ -64,6 +66,8 @@ public class AlloyingMachineMk2BlockEntity
   public static final long CAPACITY = 1_040_000L;
   public static final long MAX_RECEIVE = 40_000L;
   public static final int MAX_PROGRESS = 100;
+  public static final int SPEED_MULTIPLIER_NUMERATOR = 6;
+  public static final int SPEED_MULTIPLIER_DENOMINATOR = 5;
 
   private final ModEnergyStorage energyStorage = new ModEnergyStorage(
     CAPACITY,
@@ -129,7 +133,8 @@ public class AlloyingMachineMk2BlockEntity
         resetLineProgressOnly(line);
         return;
       }
-      line.maxProgress = line.currentRecipe.time();
+      line.maxProgress =
+        line.currentRecipe.time() * SPEED_MULTIPLIER_DENOMINATOR;
       line.progress = 0;
       setChanged();
     }
@@ -139,18 +144,53 @@ public class AlloyingMachineMk2BlockEntity
       return;
     }
 
-    int energyPerTick = line.currentRecipe.energyPerTick();
+    int energyPerTick = energyForTick(
+      line.currentRecipe,
+      line.progress,
+      line.maxProgress
+    );
     if (this.energyStorage.getEnergyStoredLong() < energyPerTick) {
       return;
     }
 
     this.energyStorage.consumeEnergy(energyPerTick);
-    line.progress++;
+    line.progress += SPEED_MULTIPLIER_NUMERATOR;
     setChanged();
 
     if (line.progress >= line.maxProgress) {
       finishLine(lineIndex, line, input);
     }
+  }
+
+  /**
+   * 计算当前 tick 的能量消耗，并保持整条配方的总耗能不变。
+   *
+   * <p>Calculates the current tick's energy cost while preserving the recipe's
+   * total energy cost.
+   */
+  private int energyForTick(
+    AlloyingRecipe recipe,
+    int progress,
+    int maxProgress
+  ) {
+    int totalTicks = Math.max(
+      1,
+      (maxProgress + SPEED_MULTIPLIER_NUMERATOR - 1) /
+        SPEED_MULTIPLIER_NUMERATOR
+    );
+    int tickIndex = Math.min(
+      progress / SPEED_MULTIPLIER_NUMERATOR,
+      totalTicks - 1
+    );
+    long totalEnergy = Math.max(0L, recipe.energy());
+    long before =
+      totalEnergy * tickIndex / totalTicks;
+    long after =
+      totalEnergy * (tickIndex + 1L) / totalTicks;
+    return (int) Math.min(
+      Integer.MAX_VALUE,
+      Math.max(0L, after - before)
+    );
   }
 
   private AlloyingRecipeInput createInput(int lineIndex) {
