@@ -154,8 +154,11 @@ public class AlloyingMachineMk2BlockEntity
     }
 
     AlloyingRecipe recipe = state.getRecipe();
-    if (recipe == null || !canAcceptResult(lineIndex, recipe)) {
+    if (recipe == null) {
       resetLine(line);
+      return;
+    }
+    if (!canAcceptResult(lineIndex, recipe)) {
       return;
     }
 

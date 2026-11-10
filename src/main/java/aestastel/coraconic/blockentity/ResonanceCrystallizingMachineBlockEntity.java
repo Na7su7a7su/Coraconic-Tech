@@ -141,8 +141,11 @@ public class ResonanceCrystallizingMachineBlockEntity
     }
 
     ResonanceCrystallizingRecipe recipe = this.processState.getRecipe();
-    if (recipe == null || !canAcceptResult(recipe)) {
+    if (recipe == null) {
       resetProcessing();
+      return;
+    }
+    if (!canAcceptResult(recipe)) {
       return;
     }
 

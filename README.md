@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.7c`
-- 最近版本提交：`0.0.7dp_261110_e`
+- `mod_version`：`0.0.7d`
+- 最近版本提交：`0.0.7dq_261110_f`
 - 最后更新：2026-11-10
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7dq_261110_f`：修复加工机器成品槽阻塞时错误清空加工进度的问题；成品槽无法接收产物时暂停并保留配方与进度，不继续消耗能量，清空后可继续加工；主版本号提升为 `0.0.7d`。
 - `0.0.7dp_261110_e`：新增熔炼冶金炉 MK1，提供 `320,000 FE` 缓存、`10,000 FE/t` 输入、一个原料槽、一个成品槽和一个电源槽；使用全部原版熔炼配方，每运行 tick 消耗 `2 FE`；加入数值列表文档。
 - `0.0.7cq_261110_d`：将创造物品栏从 `item` 包拆分到 `creativetab` 包，拆分为主创造栏与工具创造栏两个独立类，保留 `ModCreativeModeTabs` 作为统一注册入口；主版本号提升为 `0.0.7c`。
 - `0.0.7cp_261110_c`：移除共振晶化仪所有 MK1 表述，注册 ID 改为 `resonance_crystallizing_machine`；旧存档中的原 MK1 方块不会自动迁移；本版本声明不兼容过去存档。
@@ -40,7 +41,6 @@
 - `0.0.7bp_261108_b`：新增合金仪 MK2，提供 `1,040,000 FE` 缓存、`40,000 FE/t` 输入、三条可同时工作的独立生产线和共享放电槽；沿用现有合金配方；补齐方块、方块实体、菜单、GUI、能力、JEI 催化剂、掉落、四语名称与数据生成。
 - `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
 - `0.0.7ax_261107_g`：新增共振晶化仪，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
-- `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
 
 ### 快速开始
 
@@ -336,14 +336,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.7c`
-- Latest version commit: `0.0.7dp_261110_e`
+- `mod_version`: `0.0.7d`
+- Latest version commit: `0.0.7dq_261110_f`
 - Last updated: 2026-11-10
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7dq_261110_f`: fixed processing machines clearing their progress when the output slot is blocked; they now pause with recipe and progress preserved, consume no further energy, and resume after the output is cleared; raised the main mod version to `0.0.7d`.
 - `0.0.7dp_261110_e`: added Smelting-Metallurgy Machine MK1 with a `320,000 FE` buffer, `10,000 FE/t` input, one input slot, one output slot, and one power slot; it uses all vanilla smelting recipes and consumes `2 FE` per processing tick; added the value-list document.
 - `0.0.7cq_261110_d`: moved creative tabs from the `item` package into `creativetab`, split the main and tool tabs into separate classes, kept `ModCreativeModeTabs` as the unified registration entry point, and raised the main mod version to `0.0.7c`.
 - `0.0.7cp_261110_c`: removed all MK1 wording from the Resonance Crystallizing Machine and renamed its registry IDs to `resonance_crystallizing_machine`; existing MK1 blocks are not migrated, and this version is not compatible with previous saves.
@@ -353,7 +354,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7bp_261108_b`: added Alloying Machine MK2 with a `1,040,000 FE` buffer, `40,000 FE/t` input, three independent production lines that can work simultaneously, and a shared discharge slot; reused the existing alloying recipes; added block, block entity, menu, GUI, capability, JEI catalysts, loot, translations, and data generation.
 - `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
-- `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
 
 ### Quick Start
 
