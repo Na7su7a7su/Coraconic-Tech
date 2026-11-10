@@ -12,12 +12,14 @@ package aestastel.coraconic;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.client.AlloyingRecipeCategory;
 import aestastel.coraconic.client.ResonanceCrystallizingRecipeCategory;
+import aestastel.coraconic.client.SmeltingMetallurgyRecipeCategory;
 import aestastel.coraconic.recipe.AlloyingRecipe;
 import aestastel.coraconic.recipe.ModRecipes;
 import aestastel.coraconic.recipe.ResonanceCrystallizingRecipe;
 import java.util.List;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -26,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 
 @JeiPlugin
@@ -49,6 +52,15 @@ public class CoraconicJeiPlugin implements IModPlugin {
     )
   );
 
+  public static final RecipeType<
+    RecipeHolder<SmeltingRecipe>
+  > SMELTING_METALLURGY_RECIPE_TYPE = RecipeType.createRecipeHolderType(
+    ResourceLocation.fromNamespaceAndPath(
+      CoraconicTech.MODID,
+      "smelting_metallurgy"
+    )
+  );
+
   @Override
   public ResourceLocation getPluginUid() {
     return ResourceLocation.fromNamespaceAndPath(
@@ -66,6 +78,9 @@ public class CoraconicJeiPlugin implements IModPlugin {
         registration.getJeiHelpers().getGuiHelper()
       ),
       new ResonanceCrystallizingRecipeCategory(
+        registration.getJeiHelpers().getGuiHelper()
+      ),
+      new SmeltingMetallurgyRecipeCategory(
         registration.getJeiHelpers().getGuiHelper()
       )
     );
@@ -91,6 +106,16 @@ public class CoraconicJeiPlugin implements IModPlugin {
       RESONANCE_CRYSTALLIZING_RECIPE_TYPE,
       resonanceRecipes
     );
+
+    List<RecipeHolder<SmeltingRecipe>> smeltingRecipes = level
+      .getRecipeManager()
+      .getAllRecipesFor(
+        net.minecraft.world.item.crafting.RecipeType.SMELTING
+      );
+    registration.addRecipes(
+      SMELTING_METALLURGY_RECIPE_TYPE,
+      smeltingRecipes
+    );
   }
 
   @Override
@@ -108,6 +133,14 @@ public class CoraconicJeiPlugin implements IModPlugin {
     registration.addRecipeCatalyst(
       new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()),
       RESONANCE_CRYSTALLIZING_RECIPE_TYPE
+    );
+    registration.addRecipeCatalyst(
+      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()),
+      RecipeTypes.SMELTING
+    );
+    registration.addRecipeCatalyst(
+      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()),
+      SMELTING_METALLURGY_RECIPE_TYPE
     );
   }
 }

@@ -95,6 +95,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       .addTag(ModBlockTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC);
 
+    // 四种金属块可以作为信标基座。
+    // All four metal blocks can be used as beacon base blocks.
+    tag(BlockTags.BEACON_BASE_BLOCKS).add(
+      ModBlocks.TIN_BLOCK.get(),
+      ModBlocks.LEAD_BLOCK.get(),
+      ModBlocks.CORACONIC_METAL_BLOCK.get(),
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get()
+    );
+
     // 四种金属块与四种矿石可由镐加速挖掘。
     // All four metal blocks and all four ores can be mined faster with a pickaxe.
     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
