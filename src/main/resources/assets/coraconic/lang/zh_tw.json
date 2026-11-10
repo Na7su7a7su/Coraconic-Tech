@@ -92,7 +92,7 @@
     "block.coraconic.solar_generator_mk0":"太陽能發電機 MK0",
     "block.coraconic.alloying_machine_mk1":"合金儀 MK1",
     "block.coraconic.alloying_machine_mk2":"合金儀 MK2",
-    "block.coraconic.resonance_crystallizing_machine_mk1":"共振晶化儀 MK1",
+    "block.coraconic.resonance_crystallizing_machine":"共振晶化儀",
     "jei.coraconic.alloying":"合金儀",
     "jei.coraconic.alloying.energy":"能量：%s FE",
     "jei.coraconic.alloying.time":"時間：%s ticks",

@@ -184,20 +184,20 @@ public class ModBlockEntityType {
   );
 
   /**
-   * 共振晶化仪 MK1。
+   * 共振晶化仪。
    *
-   * <p>Resonance Crystallizing Machine MK1.
+   * <p>Resonance Crystallizing Machine.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<ResonanceCrystallizingMachineBlockEntity>
-  > RESONANCE_CRYSTALLIZING_MACHINE_MK1_ENTITY =
+  > RESONANCE_CRYSTALLIZING_MACHINE_ENTITY =
     BLOCK_ENTITY_TYPES.register(
-      "resonance_crystallizing_machine_mk1_entity",
+      "resonance_crystallizing_machine_entity",
       () ->
         BlockEntityType.Builder.of(
           ModBlockEntityType::createResonanceCrystallizingMachineBlockEntity,
-          ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()
+          ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
         ).build(null)
     );
 

@@ -24,27 +24,27 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7bs_261110_b`
+- 最近版本提交：`0.0.7cp_261110_c`
 - 最后更新：2026-11-10
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
-- 暂不保证存档兼容
+- **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7cp_261110_c`：移除共振晶化仪所有 MK1 表述，注册 ID 改为 `resonance_crystallizing_machine`；旧存档中的原 MK1 方块不会自动迁移；本版本声明不兼容过去存档。
 - `0.0.7bs_261110_b`：统一合金仪 MK1、MK2 与共振晶化仪的加工状态恢复；保存配方 ID 与进度，加载时通过配方管理器重新解析并校验输入；重新计算最大进度，补齐能量与库存边界保护。
 - `0.0.7br_261110_a`：合金仪 MK2 默认处理速度提升至 MK1 的 `1.2` 倍，三条生产线统一生效，单次配方总耗能保持不变；清理合金配方生成器未使用的 import。
 - `0.0.7bq_261108_c`：调整共振晶化仪测试配方时间为 `150 ticks`，并新增钻石/煤炭、核龙/腾龙钻石结构晶体、石英/下界岩、绿宝石/粗铜等配方。
 - `0.0.7bp_261108_b`：新增合金仪 MK2，提供 `1,040,000 FE` 缓存、`40,000 FE/t` 输入、三条可同时工作的独立生产线和共享放电槽；沿用现有合金配方；补齐方块、方块实体、菜单、GUI、能力、JEI 催化剂、掉落、四语名称与数据生成。
 - `0.0.7ay_261108_a`：适配重绘后的合金仪、共振晶化仪与太阳能 GUI；同步槽位、能量条和进度条位置；所有能量条取消深色背景，仅保留绿色填充并向四周扩展 1 像素；合金仪与共振晶化仪的电源槽下移 2 像素。
-- `0.0.7ax_261107_g`：新增共振晶化仪 MK1，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
+- `0.0.7ax_261107_g`：新增共振晶化仪，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
 - `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
 - `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
 - `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
-- `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
 
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪 MK1、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -142,7 +142,7 @@
 - 破坏方块时保留缓存能量、13 个槽位的内容和三条生产线的进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 共振晶化仪 MK1
+#### 共振晶化仪
 
 - 内部缓存：`640,000 FE`，从所有面接收能量，最高 `1,000 FE/t`
 - 两个原料槽、一个成品槽和一个能源槽；成品槽只能取出，不能放入
@@ -279,7 +279,7 @@
 - 物品存储单元、能量存储单元与太阳能发电机尚未加入生存模式合成配方。
 - JEI 插件仍为空实现，没有额外的配方展示。
 - 工具攻击力、攻击速度、等级与耐久仍处于早期平衡阶段。
-- 早期开发阶段不保证存档兼容。
+- 本版本不兼容过去存档。
 - 能量与物品存储单元允许嵌套存放；这是当前设计行为，不提供防嵌套限制。
 
 ### 后续计划
@@ -326,27 +326,27 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7bs_261110_b`
+- Latest version commit: `0.0.7cp_261110_c`
 - Last updated: 2026-11-10
 - Early development: registry names, recipes, stats, textures, and data formats may still change
-- Save compatibility is not guaranteed yet
+- **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7cp_261110_c`: removed all MK1 wording from the Resonance Crystallizing Machine and renamed its registry IDs to `resonance_crystallizing_machine`; existing MK1 blocks are not migrated, and this version is not compatible with previous saves.
 - `0.0.7bs_261110_b`: unified processing-state recovery for Alloying Machines MK1 and MK2 and the Resonance Crystallizing Machine; recipe IDs and progress are saved, recipes are resolved again through the recipe manager, inputs are revalidated, maximum progress is recomputed, and energy and inventory boundaries are enforced.
 - `0.0.7br_261110_a`: increased Alloying Machine MK2 processing speed to `1.2x` MK1 across all three production lines while preserving each recipe's total energy cost; removed unused imports from the alloying recipe provider.
 - `0.0.7bq_261108_c`: changed the Resonance Crystallizing Machine test recipe to `150 ticks` and added diamond/coal, coraconic/aviraconic diamond crystal, quartz/netherrack, and emerald/raw-copper recipes.
 - `0.0.7bp_261108_b`: added Alloying Machine MK2 with a `1,040,000 FE` buffer, `40,000 FE/t` input, three independent production lines that can work simultaneously, and a shared discharge slot; reused the existing alloying recipes; added block, block entity, menu, GUI, capability, JEI catalysts, loot, translations, and data generation.
 - `0.0.7ay_261108_a`: adapted the redrawn Alloying Machine, Resonance Crystallizing Machine, and Solar Generator GUIs; aligned slots, energy bars, and progress bars; removed the dark energy-bar backgrounds and kept only the green fill, expanded by one pixel on every side; moved the Alloying Machine and Resonance Crystallizing Machine power slots down by two pixels.
-- `0.0.7ax_261107_g`: added Resonance Crystallizing Machine MK1 with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
+- `0.0.7ax_261107_g`: added Resonance Crystallizing Machine with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
 - `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
 - `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
 - `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
-- `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
 
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine MK1, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -444,7 +444,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block preserves stored energy, all 13 slot contents, and all three production-line progress values
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Resonance Crystallizing Machine MK1
+#### Resonance Crystallizing Machine
 
 - Internal buffer: `640,000 FE`, receiving energy from every side at up to `1,000 FE/t`
 - Two input slots, one output slot, and one energy slot; the output slot only allows extraction
@@ -581,7 +581,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Item storage units, energy storage units, and the solar generator do not have survival crafting recipes yet.
 - The JEI plugin is still empty and provides no extra recipe information.
 - Tool attack damage, attack speed, tier, and durability values are still being balanced.
-- Save compatibility is not guaranteed during early development.
+- This version is not compatible with previous saves.
 - Storage units may be nested inside each other by design; there is no anti-nesting restriction.
 
 ### Roadmap

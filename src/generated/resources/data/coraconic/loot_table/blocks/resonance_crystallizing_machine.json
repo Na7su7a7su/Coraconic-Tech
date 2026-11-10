@@ -21,11 +21,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "coraconic:resonance_crystallizing_machine_mk1"
+          "name": "coraconic:resonance_crystallizing_machine"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "coraconic:blocks/resonance_crystallizing_machine_mk1"
+  "random_sequence": "coraconic:blocks/resonance_crystallizing_machine"
 }

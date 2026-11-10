@@ -106,7 +106,7 @@ public class CoraconicJeiPlugin implements IModPlugin {
       ALLOYING_RECIPE_TYPE
     );
     registration.addRecipeCatalyst(
-      new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()),
+      new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()),
       RESONANCE_CRYSTALLIZING_RECIPE_TYPE
     );
   }

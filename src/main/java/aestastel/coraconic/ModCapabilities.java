@@ -86,7 +86,7 @@ public final class ModCapabilities {
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.RESONANCE_CRYSTALLIZING_MACHINE_MK1_ENTITY.get(),
+      ModBlockEntityType.RESONANCE_CRYSTALLIZING_MACHINE_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(

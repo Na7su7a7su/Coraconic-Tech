@@ -25,11 +25,11 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
- * 共振晶化仪 MK1 菜单：两个原料槽、一个成品槽、一个能源槽和玩家背包。
+ * 共振晶化仪 菜单：两个原料槽、一个成品槽、一个能源槽和玩家背包。
  *
  * <p>能量、加工进度与最大进度通过数据槽同步。
  *
- * <p>Resonance Crystallizing Machine MK1 menu with two input slots, one output
+ * <p>Resonance Crystallizing Machine menu with two input slots, one output
  * slot, one energy slot, and the player inventory. Energy, progress, and maximum
  * progress are synchronized through data slots.
  */

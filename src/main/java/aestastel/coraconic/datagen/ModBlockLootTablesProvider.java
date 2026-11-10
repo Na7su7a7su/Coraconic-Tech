@@ -107,9 +107,9 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_MK2.get())
     );
     add(
-      ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get(),
+      ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get(),
       createBlockEntityDataDrop(
-        ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get()
+        ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
       )
     );
 

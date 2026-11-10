@@ -39,12 +39,12 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 共振晶化仪 MK1 方块实体。
+ * 共振晶化仪 方块实体。
  *
  * <p>提供两个原料槽、一个成品槽、一个能源槽和 640,000 FE 缓存。
  * 支持共振晶化配方，能源槽只负责从缓存为物品充能。
  *
- * <p>Resonance Crystallizing Machine MK1 block entity. It provides two input
+ * <p>Resonance Crystallizing Machine block entity. It provides two input
  * slots, one output slot, one energy slot, and a 640,000 FE buffer. It supports
  * resonance crystallizing recipes; the energy slot only charges items from the
  * buffer.

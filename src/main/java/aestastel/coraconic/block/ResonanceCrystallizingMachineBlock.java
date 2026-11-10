@@ -29,11 +29,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * 共振晶化仪 MK1 方块。
+ * 共振晶化仪 方块。
  *
  * <p>负责创建方块实体、打开界面，并在破坏时保留缓存和槽位内容。
  *
- * <p>Resonance Crystallizing Machine MK1 block. It creates the block entity,
+ * <p>Resonance Crystallizing Machine block. It creates the block entity,
  * opens the GUI, and preserves the buffer and slot contents when broken.
  */
 public class ResonanceCrystallizingMachineBlock

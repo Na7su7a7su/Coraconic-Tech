@@ -51,7 +51,7 @@ public final class ResonanceCrystallizingRecipeCategory
       CoraconicJeiPlugin.RESONANCE_CRYSTALLIZING_RECIPE_TYPE,
       Component.translatable("jei.coraconic.resonance_crystallizing"),
       guiHelper.createDrawableItemStack(
-        new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE_MK1.get())
+        new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get())
       ),
       WIDTH,
       HEIGHT

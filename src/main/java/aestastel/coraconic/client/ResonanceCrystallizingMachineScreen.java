@@ -21,11 +21,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 共振晶化仪 MK1 的客户端界面。
+ * 共振晶化仪 的客户端界面。
  *
  * <p>显示两个原料槽、一个成品槽、一个能源槽、能量缓存和玩家背包。
  *
- * <p>Client screen for Resonance Crystallizing Machine MK1. It shows two input
+ * <p>Client screen for Resonance Crystallizing Machine. It shows two input
  * slots, one output slot, one energy slot, the energy buffer, and the player
  * inventory.
  */
@@ -36,7 +36,7 @@ public class ResonanceCrystallizingMachineScreen
   private static final ResourceLocation TEXTURE =
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "textures/gui/resonance_crystallizing_machine_mk1.png"
+      "textures/gui/resonance_crystallizing_machine.png"
     );
 
   private static final int BAR_X = 149;
