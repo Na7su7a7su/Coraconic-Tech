@@ -12,6 +12,7 @@ package aestastel.coraconic.blockentity;
 import aestastel.coraconic.energy.ModEnergyStorage;
 import aestastel.coraconic.menu.ResonanceCrystallizingMachineMenu;
 import aestastel.coraconic.recipe.ModRecipes;
+import aestastel.coraconic.recipe.RecipeProcessState;
 import aestastel.coraconic.recipe.ResonanceCrystallizingRecipe;
 import aestastel.coraconic.recipe.ResonanceCrystallizingRecipeInput;
 import java.util.List;
@@ -22,7 +23,6 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -75,11 +75,10 @@ public class ResonanceCrystallizingMachineBlockEntity
     }
   };
 
-  private ResonanceCrystallizingRecipe currentRecipe;
-  private ResourceLocation currentRecipeId;
-  private ResourceLocation savedRecipeId;
-  private int progress;
-  private int maxProgress;
+  private final RecipeProcessState<
+    ResonanceCrystallizingRecipeInput,
+    ResonanceCrystallizingRecipe
+  > processState = new RecipeProcessState<>(0);
 
   public ResonanceCrystallizingMachineBlockEntity(
     BlockEntityType<?> type,
@@ -106,13 +105,25 @@ public class ResonanceCrystallizingMachineBlockEntity
   private void processRecipe() {
     ResonanceCrystallizingRecipeInput input = createInput();
     if (
-      this.currentRecipe != null &&
-      !this.currentRecipe.matches(input, this.level)
+      !this.processState.hasRecipe() &&
+      this.processState.getRecipeId() != null
+    ) {
+      this.processState.restore(
+        this.level,
+        ModRecipes.RESONANCE_CRYSTALLIZING_TYPE.get(),
+        input,
+        ResonanceCrystallizingRecipe::time
+      );
+    }
+
+    if (
+      this.processState.hasRecipe() &&
+      !this.processState.getRecipe().matches(input, this.level)
     ) {
       resetProcessing();
     }
 
-    if (this.currentRecipe == null) {
+    if (!this.processState.hasRecipe()) {
       RecipeHolder<ResonanceCrystallizingRecipe> holder = this.level
         .getRecipeManager()
         .getRecipeFor(
@@ -125,23 +136,19 @@ public class ResonanceCrystallizingMachineBlockEntity
         resetProgressOnly();
         return;
       }
-
-      this.currentRecipe = holder.value();
-      this.currentRecipeId = holder.id();
-      if (!this.currentRecipeId.equals(this.savedRecipeId)) {
-        this.progress = 0;
-      }
-      this.savedRecipeId = null;
-      this.maxProgress = this.currentRecipe.time();
+      this.processState.select(holder, holder.value().time());
       setChanged();
     }
 
-    if (!canAcceptResult(this.currentRecipe)) {
+    ResonanceCrystallizingRecipe recipe = this.processState.getRecipe();
+    if (recipe == null || !canAcceptResult(recipe)) {
       resetProcessing();
       return;
     }
 
-    int energyForTick = this.currentRecipe.energyForTick(this.progress);
+    int energyForTick = recipe.energyForTick(
+      this.processState.getProgress()
+    );
     if (
       energyForTick > 0 &&
       this.energyStorage.getEnergyStoredLong() < energyForTick
@@ -152,10 +159,13 @@ public class ResonanceCrystallizingMachineBlockEntity
       this.energyStorage.consumeEnergy(energyForTick);
     }
 
-    this.progress++;
+    this.processState.addProgress(1);
     setChanged();
 
-    if (this.progress >= this.maxProgress) {
+    if (
+      this.processState.getProgress() >=
+      this.processState.getMaxProgress()
+    ) {
       finishRecipe(input);
     }
   }
@@ -185,10 +195,11 @@ public class ResonanceCrystallizingMachineBlockEntity
   }
 
   private void finishRecipe(ResonanceCrystallizingRecipeInput input) {
-    if (this.currentRecipe == null || this.level == null) {
+    ResonanceCrystallizingRecipe recipe = this.processState.getRecipe();
+    if (recipe == null || this.level == null) {
       return;
     }
-    ItemStack result = this.currentRecipe.assemble(
+    ItemStack result = recipe.assemble(
       input,
       this.level.registryAccess()
     );
@@ -200,29 +211,27 @@ public class ResonanceCrystallizingMachineBlockEntity
       this.inventory.setStackInSlot(OUTPUT_SLOT, output);
     }
 
-    this.currentRecipe.consume(this);
+    recipe.consume(this);
     resetProcessing();
   }
 
   private void resetProcessing() {
     if (
-      this.currentRecipe != null ||
-      this.progress != 0 ||
-      this.maxProgress != 0
+      this.processState.hasRecipe() ||
+      this.processState.hasProgress() ||
+      this.processState.getMaxProgress() != 0
     ) {
-      this.currentRecipe = null;
-      this.currentRecipeId = null;
-      this.savedRecipeId = null;
-      this.progress = 0;
-      this.maxProgress = 0;
+      this.processState.reset();
       setChanged();
     }
   }
 
   private void resetProgressOnly() {
-    if (this.progress != 0 || this.maxProgress != 0) {
-      this.progress = 0;
-      this.maxProgress = 0;
+    if (
+      this.processState.hasProgress() ||
+      this.processState.getMaxProgress() != 0
+    ) {
+      this.processState.resetProgressOnly();
       setChanged();
     }
   }
@@ -287,11 +296,11 @@ public class ResonanceCrystallizingMachineBlockEntity
   }
 
   public int getProgress() {
-    return this.progress;
+    return this.processState.getProgress();
   }
 
   public int getMaxProgress() {
-    return this.maxProgress;
+    return this.processState.getMaxProgress();
   }
 
   public ItemStackHandler getInventory() {
@@ -375,7 +384,7 @@ public class ResonanceCrystallizingMachineBlockEntity
     if (
       this.energyStorage.getEnergyStoredLong() <= 0L &&
       isEmpty() &&
-      this.progress <= 0
+      !this.processState.hasProgress()
     ) {
       return;
     }
@@ -411,13 +420,7 @@ public class ResonanceCrystallizingMachineBlockEntity
     super.saveAdditional(tag, registries);
     tag.putLong("energy", this.energyStorage.getEnergyStoredLong());
     tag.put("inventory", this.inventory.serializeNBT(registries));
-    tag.putInt("progress", this.progress);
-    ResourceLocation recipeId = this.currentRecipeId != null
-      ? this.currentRecipeId
-      : this.savedRecipeId;
-    if (recipeId != null) {
-      tag.putString("recipe", recipeId.toString());
-    }
+    this.processState.saveTo(tag, "recipe", "progress");
   }
 
   @Override
@@ -426,16 +429,13 @@ public class ResonanceCrystallizingMachineBlockEntity
     HolderLookup.Provider registries
   ) {
     super.loadAdditional(tag, registries);
-    this.energyStorage.setEnergyStored(tag.getLong("energy"));
+    this.energyStorage.setEnergyStored(
+      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+    );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
-    this.progress = Math.max(0, tag.getInt("progress"));
-    this.savedRecipeId = tag.contains("recipe")
-      ? ResourceLocation.tryParse(tag.getString("recipe"))
-      : null;
-    this.currentRecipe = null;
-    this.currentRecipeId = null;
-    this.maxProgress = 0;
+    MachineStateSupport.sanitizeInventory(this.inventory, SLOT_COUNT);
+    this.processState.loadFrom(tag, "recipe", "progress");
   }
 }

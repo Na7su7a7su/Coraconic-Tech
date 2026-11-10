@@ -14,6 +14,7 @@ import aestastel.coraconic.menu.AlloyingMachineMk2Menu;
 import aestastel.coraconic.recipe.AlloyingRecipe;
 import aestastel.coraconic.recipe.AlloyingRecipeInput;
 import aestastel.coraconic.recipe.ModRecipes;
+import aestastel.coraconic.recipe.RecipeProcessState;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -115,49 +116,63 @@ public class AlloyingMachineMk2BlockEntity
 
   private void processLine(int lineIndex) {
     Line line = this.lines[lineIndex];
+    RecipeProcessState<
+      AlloyingRecipeInput,
+      AlloyingRecipe
+    > state = line.state;
     AlloyingRecipeInput input = createInput(lineIndex);
+    if (!state.hasRecipe() && state.getRecipeId() != null) {
+      state.restore(
+        this.level,
+        ModRecipes.ALLOYING_TYPE.get(),
+        input,
+        recipe -> recipe.time() * SPEED_MULTIPLIER_DENOMINATOR
+      );
+    }
+
     if (
-      line.currentRecipe != null &&
-      !line.currentRecipe.matches(input, this.level)
+      state.hasRecipe() &&
+      !state.getRecipe().matches(input, this.level)
     ) {
       resetLine(line);
     }
 
-    if (line.currentRecipe == null) {
-      line.currentRecipe = this.level
+    if (!state.hasRecipe()) {
+      RecipeHolder<AlloyingRecipe> holder = this.level
         .getRecipeManager()
         .getRecipeFor(ModRecipes.ALLOYING_TYPE.get(), input, this.level)
-        .map(RecipeHolder::value)
         .orElse(null);
-      if (line.currentRecipe == null) {
+      if (holder == null) {
         resetLineProgressOnly(line);
         return;
       }
-      line.maxProgress =
-        line.currentRecipe.time() * SPEED_MULTIPLIER_DENOMINATOR;
-      line.progress = 0;
+      state.select(
+        holder,
+        holder.value().time() * SPEED_MULTIPLIER_DENOMINATOR
+      );
       setChanged();
     }
 
-    if (!canAcceptResult(lineIndex, line.currentRecipe)) {
+    AlloyingRecipe recipe = state.getRecipe();
+    if (recipe == null || !canAcceptResult(lineIndex, recipe)) {
       resetLine(line);
       return;
     }
 
     int energyPerTick = energyForTick(
-      line.currentRecipe,
-      line.progress,
-      line.maxProgress
+      recipe,
+      state.getProgress(),
+      state.getMaxProgress()
     );
     if (this.energyStorage.getEnergyStoredLong() < energyPerTick) {
       return;
     }
 
     this.energyStorage.consumeEnergy(energyPerTick);
-    line.progress += SPEED_MULTIPLIER_NUMERATOR;
+    state.addProgress(SPEED_MULTIPLIER_NUMERATOR);
     setChanged();
 
-    if (line.progress >= line.maxProgress) {
+    if (state.getProgress() >= state.getMaxProgress()) {
       finishLine(lineIndex, line, input);
     }
   }
@@ -229,10 +244,11 @@ public class AlloyingMachineMk2BlockEntity
     Line line,
     AlloyingRecipeInput input
   ) {
-    if (line.currentRecipe == null || this.level == null) {
+    AlloyingRecipe recipe = line.state.getRecipe();
+    if (recipe == null || this.level == null) {
       return;
     }
-    ItemStack result = line.currentRecipe.assemble(
+    ItemStack result = recipe.assemble(
       input,
       this.level.registryAccess()
     );
@@ -245,30 +261,27 @@ public class AlloyingMachineMk2BlockEntity
       this.inventory.setStackInSlot(outputSlot, output);
     }
 
-    line.currentRecipe.consume(
-      this,
-      lineIndex * INPUTS_PER_LINE
-    );
+    recipe.consume(this, lineIndex * INPUTS_PER_LINE);
     resetLine(line);
   }
 
   private void resetLine(Line line) {
     if (
-      line.currentRecipe != null ||
-      line.progress != 0 ||
-      line.maxProgress != MAX_PROGRESS
+      line.state.hasRecipe() ||
+      line.state.hasProgress() ||
+      line.state.getMaxProgress() != MAX_PROGRESS
     ) {
-      line.currentRecipe = null;
-      line.progress = 0;
-      line.maxProgress = MAX_PROGRESS;
+      line.state.reset();
       setChanged();
     }
   }
 
   private void resetLineProgressOnly(Line line) {
-    if (line.progress != 0 || line.maxProgress != MAX_PROGRESS) {
-      line.progress = 0;
-      line.maxProgress = MAX_PROGRESS;
+    if (
+      line.state.hasProgress() ||
+      line.state.getMaxProgress() != MAX_PROGRESS
+    ) {
+      line.state.resetProgressOnly();
       setChanged();
     }
   }
@@ -336,19 +349,19 @@ public class AlloyingMachineMk2BlockEntity
     if (lineIndex < 0 || lineIndex >= LINE_COUNT) {
       return 0;
     }
-    return this.lines[lineIndex].progress;
+    return this.lines[lineIndex].state.getProgress();
   }
 
   public int getMaxProgress(int lineIndex) {
     if (lineIndex < 0 || lineIndex >= LINE_COUNT) {
       return MAX_PROGRESS;
     }
-    return this.lines[lineIndex].maxProgress;
+    return this.lines[lineIndex].state.getMaxProgress();
   }
 
   public boolean hasProgress() {
     for (Line line : this.lines) {
-      if (line.progress > 0) {
+      if (line.state.hasProgress()) {
         return true;
       }
     }
@@ -461,6 +474,7 @@ public class AlloyingMachineMk2BlockEntity
     tag.remove("energy");
     tag.remove("inventory");
     for (int lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
+      tag.remove("recipe" + lineIndex);
       tag.remove("progress" + lineIndex);
     }
   }
@@ -474,7 +488,11 @@ public class AlloyingMachineMk2BlockEntity
     tag.putLong("energy", this.energyStorage.getEnergyStoredLong());
     tag.put("inventory", this.inventory.serializeNBT(registries));
     for (int lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
-      tag.putInt("progress" + lineIndex, this.lines[lineIndex].progress);
+      this.lines[lineIndex].state.saveTo(
+        tag,
+        "recipe" + lineIndex,
+        "progress" + lineIndex
+      );
     }
   }
 
@@ -484,22 +502,27 @@ public class AlloyingMachineMk2BlockEntity
     HolderLookup.Provider registries
   ) {
     super.loadAdditional(tag, registries);
-    this.energyStorage.setEnergyStored(tag.getLong("energy"));
+    this.energyStorage.setEnergyStored(
+      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+    );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
+    MachineStateSupport.sanitizeInventory(this.inventory, SLOT_COUNT);
     for (int lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
-      Line line = this.lines[lineIndex];
-      line.currentRecipe = null;
-      line.progress = Math.max(0, tag.getInt("progress" + lineIndex));
-      line.maxProgress = MAX_PROGRESS;
+      this.lines[lineIndex].state.loadFrom(
+        tag,
+        "recipe" + lineIndex,
+        "progress" + lineIndex
+      );
     }
   }
 
   private static final class Line {
 
-    private AlloyingRecipe currentRecipe;
-    private int progress;
-    private int maxProgress = MAX_PROGRESS;
+    private final RecipeProcessState<
+      AlloyingRecipeInput,
+      AlloyingRecipe
+    > state = new RecipeProcessState<>(MAX_PROGRESS);
   }
 }

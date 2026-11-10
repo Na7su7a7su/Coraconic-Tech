@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7br_261110_a`
+- 最近版本提交：`0.0.7bs_261110_b`
 - 最后更新：2026-11-10
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - 暂不保证存档兼容
 
 ### 最近更新
 
+- `0.0.7bs_261110_b`：统一合金仪 MK1、MK2 与共振晶化仪的加工状态恢复；保存配方 ID 与进度，加载时通过配方管理器重新解析并校验输入；重新计算最大进度，补齐能量与库存边界保护。
 - `0.0.7br_261110_a`：合金仪 MK2 默认处理速度提升至 MK1 的 `1.2` 倍，三条生产线统一生效，单次配方总耗能保持不变；清理合金配方生成器未使用的 import。
 - `0.0.7bq_261108_c`：调整共振晶化仪测试配方时间为 `150 ticks`，并新增钻石/煤炭、核龙/腾龙钻石结构晶体、石英/下界岩、绿宝石/粗铜等配方。
 - `0.0.7bp_261108_b`：新增合金仪 MK2，提供 `1,040,000 FE` 缓存、`40,000 FE/t` 输入、三条可同时工作的独立生产线和共享放电槽；沿用现有合金配方；补齐方块、方块实体、菜单、GUI、能力、JEI 催化剂、掉落、四语名称与数据生成。
@@ -40,7 +41,6 @@
 - `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
 - `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
 - `0.0.7at_261107_c`：将核龙/腾龙金属块的注册 ID、配方 ID、资源路径与语言键统一改为 `coraconic_metal_block` / `aviraconic_metal_block`；同步标签、方块状态、模型、掉落表、配方、解锁进度与四语名称。
-- `0.0.7as_261107_b`：将合成配方生成器进一步拆分为独立配方与公式配方两类；新增/调整合金仪配方：下界合金锭使用 2 金锭 + 4 下界合金碎片，核龙金属锭使用 1 铅 + 1 锡 + 1 核龙元素，腾龙金属锭使用 1 钻石 + 1 绿宝石 + 1 腾龙元素；同步核龙金属锭合成配方与生成资源。
 
 ### 快速开始
 
@@ -326,13 +326,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7br_261110_a`
+- Latest version commit: `0.0.7bs_261110_b`
 - Last updated: 2026-11-10
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - Save compatibility is not guaranteed yet
 
 ### Recent Changes
 
+- `0.0.7bs_261110_b`: unified processing-state recovery for Alloying Machines MK1 and MK2 and the Resonance Crystallizing Machine; recipe IDs and progress are saved, recipes are resolved again through the recipe manager, inputs are revalidated, maximum progress is recomputed, and energy and inventory boundaries are enforced.
 - `0.0.7br_261110_a`: increased Alloying Machine MK2 processing speed to `1.2x` MK1 across all three production lines while preserving each recipe's total energy cost; removed unused imports from the alloying recipe provider.
 - `0.0.7bq_261108_c`: changed the Resonance Crystallizing Machine test recipe to `150 ticks` and added diamond/coal, coraconic/aviraconic diamond crystal, quartz/netherrack, and emerald/raw-copper recipes.
 - `0.0.7bp_261108_b`: added Alloying Machine MK2 with a `1,040,000 FE` buffer, `40,000 FE/t` input, three independent production lines that can work simultaneously, and a shared discharge slot; reused the existing alloying recipes; added block, block entity, menu, GUI, capability, JEI catalysts, loot, translations, and data generation.
@@ -342,7 +343,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
 - `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
 - `0.0.7at_261107_c`: renamed the coraconic and aviraconic metal block registry IDs, recipe IDs, resource paths, and language keys to `coraconic_metal_block` / `aviraconic_metal_block`; regenerated tags, blockstates, models, loot tables, recipes, advancements, and translations.
-- `0.0.7as_261107_b`: split crafting recipe generation into standalone and formula-based providers; added and adjusted alloying recipes for netherite, coraconic, and aviraconic ingots; updated the coraconic ingot crafting recipe and generated resources.
 
 ### Quick Start
 

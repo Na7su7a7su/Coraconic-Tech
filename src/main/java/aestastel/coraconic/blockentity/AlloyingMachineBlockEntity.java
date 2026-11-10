@@ -14,6 +14,7 @@ import aestastel.coraconic.menu.AlloyingMachineMenu;
 import aestastel.coraconic.recipe.AlloyingRecipe;
 import aestastel.coraconic.recipe.AlloyingRecipeInput;
 import aestastel.coraconic.recipe.ModRecipes;
+import aestastel.coraconic.recipe.RecipeProcessState;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,6 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -76,9 +76,10 @@ public class AlloyingMachineBlockEntity
     }
   };
 
-  private AlloyingRecipe currentRecipe;
-  private int progress;
-  private int maxProgress = MAX_PROGRESS;
+  private final RecipeProcessState<
+    AlloyingRecipeInput,
+    AlloyingRecipe
+  > processState = new RecipeProcessState<>(MAX_PROGRESS);
 
   public AlloyingMachineBlockEntity(
     BlockEntityType<?> type,
@@ -105,42 +106,56 @@ public class AlloyingMachineBlockEntity
   private void processRecipe() {
     AlloyingRecipeInput input = createInput();
     if (
-      this.currentRecipe != null &&
-      !this.currentRecipe.matches(input, this.level)
+      !this.processState.hasRecipe() &&
+      this.processState.getRecipeId() != null
+    ) {
+      this.processState.restore(
+        this.level,
+        ModRecipes.ALLOYING_TYPE.get(),
+        input,
+        AlloyingRecipe::time
+      );
+    }
+
+    if (
+      this.processState.hasRecipe() &&
+      !this.processState.getRecipe().matches(input, this.level)
     ) {
       resetProcessing();
     }
 
-    if (this.currentRecipe == null) {
-      this.currentRecipe = this.level
+    if (!this.processState.hasRecipe()) {
+      RecipeHolder<AlloyingRecipe> holder = this.level
         .getRecipeManager()
         .getRecipeFor(ModRecipes.ALLOYING_TYPE.get(), input, this.level)
-        .map(RecipeHolder::value)
         .orElse(null);
-      if (this.currentRecipe == null) {
+      if (holder == null) {
         resetProgressOnly();
         return;
       }
-      this.maxProgress = this.currentRecipe.time();
-      this.progress = 0;
+      this.processState.select(holder, holder.value().time());
       setChanged();
     }
 
-    if (!canAcceptResult(this.currentRecipe)) {
+    AlloyingRecipe recipe = this.processState.getRecipe();
+    if (recipe == null || !canAcceptResult(recipe)) {
       resetProcessing();
       return;
     }
 
-    int energyPerTick = this.currentRecipe.energyPerTick();
+    int energyPerTick = recipe.energyPerTick();
     if (this.energyStorage.getEnergyStoredLong() < energyPerTick) {
       return;
     }
 
     this.energyStorage.consumeEnergy(energyPerTick);
-    this.progress++;
+    this.processState.addProgress(1);
     setChanged();
 
-    if (this.progress >= this.maxProgress) {
+    if (
+      this.processState.getProgress() >=
+      this.processState.getMaxProgress()
+    ) {
       finishRecipe(input);
     }
   }
@@ -211,11 +226,11 @@ public class AlloyingMachineBlockEntity
   }
 
   public int getProgress() {
-    return this.progress;
+    return this.processState.getProgress();
   }
 
   public int getMaxProgress() {
-    return this.maxProgress;
+    return this.processState.getMaxProgress();
   }
 
   public ItemStackHandler getInventory() {
@@ -248,10 +263,11 @@ public class AlloyingMachineBlockEntity
   }
 
   private void finishRecipe(AlloyingRecipeInput input) {
-    if (this.currentRecipe == null || this.level == null) {
+    AlloyingRecipe recipe = this.processState.getRecipe();
+    if (recipe == null || this.level == null) {
       return;
     }
-    ItemStack result = this.currentRecipe.assemble(
+    ItemStack result = recipe.assemble(
       input,
       this.level.registryAccess()
     );
@@ -263,27 +279,27 @@ public class AlloyingMachineBlockEntity
       this.inventory.setStackInSlot(OUTPUT_SLOT, output);
     }
 
-    this.currentRecipe.consume(this);
+    recipe.consume(this);
     resetProcessing();
   }
 
   private void resetProcessing() {
     if (
-      this.currentRecipe != null ||
-      this.progress != 0 ||
-      this.maxProgress != MAX_PROGRESS
+      this.processState.hasRecipe() ||
+      this.processState.hasProgress() ||
+      this.processState.getMaxProgress() != MAX_PROGRESS
     ) {
-      this.currentRecipe = null;
-      this.progress = 0;
-      this.maxProgress = MAX_PROGRESS;
+      this.processState.reset();
       setChanged();
     }
   }
 
   private void resetProgressOnly() {
-    if (this.progress != 0 || this.maxProgress != MAX_PROGRESS) {
-      this.progress = 0;
-      this.maxProgress = MAX_PROGRESS;
+    if (
+      this.processState.hasProgress() ||
+      this.processState.getMaxProgress() != MAX_PROGRESS
+    ) {
+      this.processState.resetProgressOnly();
       setChanged();
     }
   }
@@ -373,7 +389,7 @@ public class AlloyingMachineBlockEntity
     if (
       this.energyStorage.getEnergyStoredLong() <= 0L &&
       isEmpty() &&
-      this.progress <= 0
+      !this.processState.hasProgress()
     ) {
       return;
     }
@@ -397,6 +413,7 @@ public class AlloyingMachineBlockEntity
   public void removeComponentsFromTag(CompoundTag tag) {
     tag.remove("energy");
     tag.remove("inventory");
+    tag.remove("recipe");
     tag.remove("progress");
   }
 
@@ -412,7 +429,7 @@ public class AlloyingMachineBlockEntity
     super.saveAdditional(tag, registries);
     tag.putLong("energy", this.energyStorage.getEnergyStoredLong());
     tag.put("inventory", this.inventory.serializeNBT(registries));
-    tag.putInt("progress", this.progress);
+    this.processState.saveTo(tag, "recipe", "progress");
   }
 
   @Override
@@ -421,10 +438,13 @@ public class AlloyingMachineBlockEntity
     HolderLookup.Provider registries
   ) {
     super.loadAdditional(tag, registries);
-    this.energyStorage.setEnergyStored(tag.getLong("energy"));
+    this.energyStorage.setEnergyStored(
+      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+    );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
-    this.progress = Mth.clamp(tag.getInt("progress"), 0, MAX_PROGRESS);
+    MachineStateSupport.sanitizeInventory(this.inventory, SLOT_COUNT);
+    this.processState.loadFrom(tag, "recipe", "progress");
   }
 }
