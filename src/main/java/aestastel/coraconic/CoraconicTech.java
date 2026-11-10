@@ -11,7 +11,7 @@ package aestastel.coraconic;
 
 import aestastel.coraconic.blockentity.ModBlockEntityType;
 import aestastel.coraconic.block.ModBlocks;
-import aestastel.coraconic.item.ModCreativeModeTabs;
+import aestastel.coraconic.creativetab.ModCreativeModeTabs;
 import aestastel.coraconic.item.ModItems;
 import aestastel.coraconic.loot.ModLootConditions;
 import aestastel.coraconic.loot.ModLootModifiers;

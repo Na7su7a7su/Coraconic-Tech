@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.7a`
-- 最近版本提交：`0.0.7cp_261110_c`
+- `mod_version`：`0.0.7c`
+- 最近版本提交：`0.0.7cq_261110_d`
 - 最后更新：2026-11-10
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7cq_261110_d`：将创造物品栏从 `item` 包拆分到 `creativetab` 包，拆分为主创造栏与工具创造栏两个独立类，保留 `ModCreativeModeTabs` 作为统一注册入口；主版本号提升为 `0.0.7c`。
 - `0.0.7cp_261110_c`：移除共振晶化仪所有 MK1 表述，注册 ID 改为 `resonance_crystallizing_machine`；旧存档中的原 MK1 方块不会自动迁移；本版本声明不兼容过去存档。
 - `0.0.7bs_261110_b`：统一合金仪 MK1、MK2 与共振晶化仪的加工状态恢复；保存配方 ID 与进度，加载时通过配方管理器重新解析并校验输入；重新计算最大进度，补齐能量与库存边界保护。
 - `0.0.7br_261110_a`：合金仪 MK2 默认处理速度提升至 MK1 的 `1.2` 倍，三条生产线统一生效，单次配方总耗能保持不变；清理合金配方生成器未使用的 import。
@@ -40,7 +41,6 @@
 - `0.0.7ax_261107_g`：新增共振晶化仪，提供 `640,000 FE` 缓存、`1,000 FE/t` 输入、两个原料槽、成品槽、能源槽、加工进度与 JEI 分类；加入测试配方：1 钻石 + 1 木炭 → 2 钻石，耗能 `100,000 FE`、耗时 `3,000 ticks`；同步创造栏、能力、掉落、纹理与四语名称。
 - `0.0.7aw_261107_f`：将方块实体相关类从 `aestastel.coraconic.block` 拆分到 `aestastel.coraconic.blockentity`；同步方块、菜单、注册器与能力引用，注册 ID、资源与 NBT 保持不变。
 - `0.0.7av_261107_e`：将 README 的“最近更新”与“Recent Changes”列表截断为最近 10 次提交。
-- `0.0.7au_261107_d`：新增太阳能 `Radiation` 模式；仅 MK3 支持，主世界 `Y >= 315` 或其余维度 `Y >= 250` 时优先触发，发电 `1,440 FE/t`，覆盖其他所有模式；补齐中英文说明。
 
 ### 快速开始
 
@@ -325,14 +325,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.7a`
-- Latest version commit: `0.0.7cp_261110_c`
+- `mod_version`: `0.0.7c`
+- Latest version commit: `0.0.7cq_261110_d`
 - Last updated: 2026-11-10
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7cq_261110_d`: moved creative tabs from the `item` package into `creativetab`, split the main and tool tabs into separate classes, kept `ModCreativeModeTabs` as the unified registration entry point, and raised the main mod version to `0.0.7c`.
 - `0.0.7cp_261110_c`: removed all MK1 wording from the Resonance Crystallizing Machine and renamed its registry IDs to `resonance_crystallizing_machine`; existing MK1 blocks are not migrated, and this version is not compatible with previous saves.
 - `0.0.7bs_261110_b`: unified processing-state recovery for Alloying Machines MK1 and MK2 and the Resonance Crystallizing Machine; recipe IDs and progress are saved, recipes are resolved again through the recipe manager, inputs are revalidated, maximum progress is recomputed, and energy and inventory boundaries are enforced.
 - `0.0.7br_261110_a`: increased Alloying Machine MK2 processing speed to `1.2x` MK1 across all three production lines while preserving each recipe's total energy cost; removed unused imports from the alloying recipe provider.
@@ -342,7 +343,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7ax_261107_g`: added Resonance Crystallizing Machine with a `640,000 FE` buffer, `1,000 FE/t` input, two input slots, an output slot, an energy slot, processing progress, and a JEI category; added the test recipe 1 diamond + 1 charcoal → 2 diamonds at `100,000 FE` and `3,000 ticks`; added creative-tab, capability, loot, texture, and four-language support.
 - `0.0.7aw_261107_f`: split block entity classes from `aestastel.coraconic.block` into `aestastel.coraconic.blockentity` and updated block, menu, registry, and capability references; registry IDs, resources, and NBT remain unchanged.
 - `0.0.7av_261107_e`: limited the README "Recent Changes" lists to the latest 10 entries.
-- `0.0.7au_261107_d`: added the solar `Radiation` mode, available only on MK3; it triggers ahead of all other modes at `Y >= 315` in the Overworld or `Y >= 250` in other dimensions and generates `1,440 FE/t`; updated the Chinese and English documentation.
 
 ### Quick Start
 
