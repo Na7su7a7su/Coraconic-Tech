@@ -12,7 +12,6 @@ package aestastel.coraconic.block;
 import aestastel.coraconic.blockentity.HeatGeneratorBlockEntity;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -141,15 +140,4 @@ public class HeatGeneratorBlock extends Block implements EntityBlock {
     return stack;
   }
 
-  @Override
-  protected void onRemove(
-    BlockState state,
-    Level level,
-    BlockPos pos,
-    BlockState newState,
-    boolean movedByPiston
-  ) {
-    Containers.dropContentsOnDestroy(state, newState, level, pos);
-    super.onRemove(state, level, pos, newState, movedByPiston);
-  }
 }
