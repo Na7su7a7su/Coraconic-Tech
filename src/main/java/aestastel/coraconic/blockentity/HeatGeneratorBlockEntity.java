@@ -28,6 +28,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -110,6 +113,10 @@ public class HeatGeneratorBlockEntity
     if (stack.isEmpty()) {
       return;
     }
+    if (tryConvertFluidFuel(stack)) {
+      return;
+    }
+
     int burnTime = stack.getBurnTime(RecipeType.SMELTING);
     if (burnTime <= 0) {
       return;
@@ -118,25 +125,85 @@ public class HeatGeneratorBlockEntity
       return;
     }
 
-    this.inventory.extractItem(FUEL_SLOT, 1, false);
+    ItemStack remainder = stack.getCraftingRemainingItem();
+    if (remainder.isEmpty()) {
+      this.inventory.extractItem(FUEL_SLOT, 1, false);
+    } else {
+      this.inventory.setStackInSlot(FUEL_SLOT, remainder);
+    }
     this.heat += burnTime;
+  }
+
+  private boolean tryConvertFluidFuel(ItemStack stack) {
+    IFluidHandlerItem handler = stack.getCapability(
+      Capabilities.FluidHandler.ITEM
+    );
+    if (handler == null) {
+      return false;
+    }
+
+    int tank = FuelFluidHelper.findFuelTank(handler);
+    if (tank < 0) {
+      return false;
+    }
+
+    FluidStack fluid = handler.getFluidInTank(tank);
+    int burnTime = FuelFluidHelper.getBurnTime(fluid);
+    if (burnTime <= 0) {
+      return false;
+    }
+    if (this.heat + burnTime > HEAT_CAPACITY) {
+      return true;
+    }
+
+    FluidStack request = fluid.copyWithAmount(
+      FuelFluidHelper.BUCKET_VOLUME
+    );
+    if (
+      handler.drain(request, IFluidHandler.FluidAction.SIMULATE).getAmount() !=
+      FuelFluidHelper.BUCKET_VOLUME
+    ) {
+      return true;
+    }
+    if (
+      handler.drain(request, IFluidHandler.FluidAction.EXECUTE).getAmount() !=
+      FuelFluidHelper.BUCKET_VOLUME
+    ) {
+      return true;
+    }
+
+    this.inventory.setStackInSlot(FUEL_SLOT, handler.getContainer());
+    this.heat += burnTime;
+    return true;
   }
 
   private void generateEnergy() {
     this.currentGeneration = 0;
     int lavaCount = getAdjacentLavaCount();
 
-    if (lavaCount > 0 && this.heat >= HEAT_PER_TICK) {
-      int generation =
-        GENERATION_PER_TICK + MIX_BONUS_PER_LAVA * lavaCount;
+    if (this.heat > 0) {
+      int consumed = Math.min(HEAT_PER_TICK, this.heat);
+      int generation;
+      HeatGeneratorMode mode;
+      if (lavaCount > 0) {
+        generation =
+          consumed *
+          (GENERATION_PER_TICK + MIX_BONUS_PER_LAVA * lavaCount) /
+          HEAT_PER_TICK;
+        mode = HeatGeneratorMode.MIX;
+      } else {
+        generation = consumed * FE_PER_HEAT;
+        mode = HeatGeneratorMode.INITIACTIVE;
+      }
+
       if (
         this.energyStorage.getEnergyStoredLong() <=
         CAPACITY - generation
       ) {
-        this.heat -= HEAT_PER_TICK;
+        this.heat -= consumed;
         this.energyStorage.receiveEnergy(generation, false);
         this.currentGeneration = generation;
-        this.currentMode = HeatGeneratorMode.MIX;
+        this.currentMode = mode;
       } else {
         this.currentMode = HeatGeneratorMode.NULL;
       }
@@ -158,19 +225,7 @@ public class HeatGeneratorBlockEntity
       return;
     }
 
-    if (this.heat < HEAT_PER_TICK) {
-      this.currentMode = HeatGeneratorMode.NULL;
-      return;
-    }
-    if (this.energyStorage.getEnergyStoredLong() > CAPACITY - GENERATION_PER_TICK) {
-      this.currentMode = HeatGeneratorMode.NULL;
-      return;
-    }
-
-    this.heat -= HEAT_PER_TICK;
-    this.energyStorage.receiveEnergy(GENERATION_PER_TICK, false);
-    this.currentGeneration = GENERATION_PER_TICK;
-    this.currentMode = HeatGeneratorMode.INITIACTIVE;
+    this.currentMode = HeatGeneratorMode.NULL;
   }
 
   public int getAdjacentLavaCount() {

@@ -10,6 +10,7 @@
 package aestastel.coraconic.menu;
 
 import aestastel.coraconic.block.HeatGeneratorMode;
+import aestastel.coraconic.blockentity.FuelFluidHelper;
 import aestastel.coraconic.blockentity.HeatGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -286,6 +287,12 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
   }
 
   private static boolean isFuel(ItemStack stack) {
-    return !stack.isEmpty() && stack.getBurnTime(RecipeType.SMELTING) > 0;
+    return (
+      !stack.isEmpty() &&
+      (
+        stack.getBurnTime(RecipeType.SMELTING) > 0 ||
+        FuelFluidHelper.hasFuelFluid(stack)
+      )
+    );
   }
 }
