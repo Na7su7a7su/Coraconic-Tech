@@ -74,6 +74,14 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
+    MenuType<HeatGeneratorMenu>
+  > HEAT_GENERATOR = MENU_TYPES.register(
+    "heat_generator",
+    () -> IMenuTypeExtension.create(HeatGeneratorMenu::fromNetwork)
+  );
+
+  public static final DeferredHolder<
+    MenuType<?>,
     MenuType<SmeltingMetallurgyMachineMenu>
   > SMELTING_METALLURGY_MACHINE = MENU_TYPES.register(
     "smelting_metallurgy_machine",

@@ -12,6 +12,7 @@ package aestastel.coraconic;
 import aestastel.coraconic.client.AlloyingMachineMk2Screen;
 import aestastel.coraconic.client.AlloyingMachineScreen;
 import aestastel.coraconic.client.EnergyStorageUnitScreen;
+import aestastel.coraconic.client.HeatGeneratorScreen;
 import aestastel.coraconic.client.ItemStorageUnitScreen;
 import aestastel.coraconic.client.ResonanceCrystallizingMachineScreen;
 import aestastel.coraconic.client.SmeltingMetallurgyMachineScreen;
@@ -59,6 +60,10 @@ public class CoraconicTechClient {
     event.register(
       ModMenuType.ENERGY_STORAGE_UNIT.get(),
       EnergyStorageUnitScreen::new
+    );
+    event.register(
+      ModMenuType.HEAT_GENERATOR.get(),
+      HeatGeneratorScreen::new
     );
     event.register(
       ModMenuType.SOLAR_GENERATOR.get(),

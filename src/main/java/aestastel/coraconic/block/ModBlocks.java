@@ -236,6 +236,15 @@ public class ModBlocks {
           ModBlockEntityType.SMELTING_METALLURGY_MACHINE_MK1_ENTITY.get()
       )
     );
+  public static final DeferredBlock<Block> HEAT_GENERATOR_MK0 =
+    registerBlocks("heat_generator_mk0", () ->
+      new HeatGeneratorBlock(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL),
+        () -> ModBlockEntityType.HEAT_GENERATOR_MK0_ENTITY.get()
+      )
+    );
   public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 = registerBlocks(
     "solar_generator_mk0",
     () ->

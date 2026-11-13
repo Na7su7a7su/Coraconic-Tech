@@ -14,6 +14,7 @@ import aestastel.coraconic.block.AlloyingMachineBlock;
 import aestastel.coraconic.block.AlloyingMachineMk2Block;
 import aestastel.coraconic.block.EnergyStorageUnitBlock;
 import aestastel.coraconic.block.GeomagneticGeneratorBlock;
+import aestastel.coraconic.block.HeatGeneratorBlock;
 import aestastel.coraconic.block.ItemStorageUnitBlock;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.block.ResonanceCrystallizingMachineBlock;
@@ -219,6 +220,23 @@ public class ModBlockEntityType {
           ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
         ).build(null)
     );
+
+  /**
+   * 热力发电机 MK0。
+   *
+   * <p>Heat Generator MK0.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<HeatGeneratorBlockEntity>
+  > HEAT_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "heat_generator_mk0_entity",
+    () ->
+      BlockEntityType.Builder.of(
+        ModBlockEntityType::createHeatGeneratorBlockEntity,
+        ModBlocks.HEAT_GENERATOR_MK0.get()
+      ).build(null)
+  );
 
   /**
    * 太阳能发电机 MK0–MK3：共用方块实体逻辑，等级由所属方块提供。
@@ -469,6 +487,27 @@ public class ModBlockEntityType {
     throw new IllegalStateException(
       "Unexpected block for smelting-metallurgy machine block entity: " +
       state
+    );
+  }
+
+  /**
+   * 热力发电机方块实体工厂。
+   *
+   * <p>Heat generator block entity factory.
+   */
+  private static HeatGeneratorBlockEntity createHeatGeneratorBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (state.getBlock() instanceof HeatGeneratorBlock generatorBlock) {
+      return new HeatGeneratorBlockEntity(
+        generatorBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for heat generator block entity: " + state
     );
   }
 

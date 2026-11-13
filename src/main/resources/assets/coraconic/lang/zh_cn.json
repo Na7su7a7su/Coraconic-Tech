@@ -94,6 +94,7 @@
     "block.coraconic.alloying_machine_mk2":"合金仪 MK2",
     "block.coraconic.resonance_crystallizing_machine":"共振晶化仪",
     "block.coraconic.smelting_metallurgy_machine_mk1":"熔炼冶金仪 MK1",
+    "block.coraconic.heat_generator_mk0":"热力发电机 MK0",
     "jei.coraconic.alloying":"合金仪",
     "jei.coraconic.alloying.energy":"能量：%s FE",
     "jei.coraconic.alloying.time":"时间：%s ticks",
