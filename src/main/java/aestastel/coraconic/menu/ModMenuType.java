@@ -58,6 +58,15 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
+    MenuType<GeomagneticGeneratorMenu>
+  > GEOMAGNETIC_GENERATOR = MENU_TYPES.register(
+    "geomagnetic_generator",
+    () ->
+      IMenuTypeExtension.create(GeomagneticGeneratorMenu::fromNetwork)
+  );
+
+  public static final DeferredHolder<
+    MenuType<?>,
     MenuType<AlloyingMachineMenu>
   > ALLOYING_MACHINE = MENU_TYPES.register(
     "alloying_machine",

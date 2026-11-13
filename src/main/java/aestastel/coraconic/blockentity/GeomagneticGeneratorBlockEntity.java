@@ -13,7 +13,7 @@ import aestastel.coraconic.block.GeomagneticGeneratorMode;
 import aestastel.coraconic.block.GeomagneticGeneratorRules;
 import aestastel.coraconic.block.GeomagneticGeneratorTier;
 import aestastel.coraconic.block.SolarGeneratorStatus;
-import aestastel.coraconic.menu.SolarGeneratorMenu;
+import aestastel.coraconic.menu.GeomagneticGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -68,16 +68,15 @@ public class GeomagneticGeneratorBlockEntity
   }
 
   @Override
-  public SolarGeneratorMenu createMenu(
+  public GeomagneticGeneratorMenu createMenu(
     int containerId,
     Inventory playerInventory,
     Player player
   ) {
-    return new SolarGeneratorMenu(
+    return new GeomagneticGeneratorMenu(
       containerId,
       playerInventory,
-      this,
-      true
+      this
     );
   }
 }

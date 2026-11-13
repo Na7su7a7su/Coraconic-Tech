@@ -15,6 +15,7 @@ import aestastel.coraconic.menu.HeatGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -59,6 +60,10 @@ public class HeatGeneratorBlockEntity
   public static final int HEAT_PER_TICK = 40;
   public static final int FE_PER_HEAT = 2;
   public static final int GENERATION_PER_TICK = HEAT_PER_TICK * FE_PER_HEAT;
+  public static final int PASSIVE_GENERATION_PER_TICK = 10;
+  public static final int MIX_BONUS = 5;
+  public static final int MIX_GENERATION_PER_TICK =
+    GENERATION_PER_TICK + MIX_BONUS;
 
   private final ModEnergyStorage energyStorage = new ModEnergyStorage(
     CAPACITY,
@@ -121,6 +126,43 @@ public class HeatGeneratorBlockEntity
 
   private void generateEnergy() {
     this.currentGeneration = 0;
+    boolean hasLava = hasAdjacentLava();
+
+    if (hasLava && this.heat >= HEAT_PER_TICK) {
+      if (
+        this.energyStorage.getEnergyStoredLong() <=
+        CAPACITY - MIX_GENERATION_PER_TICK
+      ) {
+        this.heat -= HEAT_PER_TICK;
+        this.energyStorage.receiveEnergy(
+          MIX_GENERATION_PER_TICK,
+          false
+        );
+        this.currentGeneration = MIX_GENERATION_PER_TICK;
+        this.currentMode = HeatGeneratorMode.MIX;
+      } else {
+        this.currentMode = HeatGeneratorMode.NULL;
+      }
+      return;
+    }
+
+    if (hasLava) {
+      if (
+        this.energyStorage.getEnergyStoredLong() <=
+        CAPACITY - PASSIVE_GENERATION_PER_TICK
+      ) {
+        this.energyStorage.receiveEnergy(
+          PASSIVE_GENERATION_PER_TICK,
+          false
+        );
+        this.currentGeneration = PASSIVE_GENERATION_PER_TICK;
+        this.currentMode = HeatGeneratorMode.PASSIVE;
+      } else {
+        this.currentMode = HeatGeneratorMode.NULL;
+      }
+      return;
+    }
+
     if (this.heat < HEAT_PER_TICK) {
       this.currentMode = HeatGeneratorMode.NULL;
       return;
@@ -134,6 +176,25 @@ public class HeatGeneratorBlockEntity
     this.energyStorage.receiveEnergy(GENERATION_PER_TICK, false);
     this.currentGeneration = GENERATION_PER_TICK;
     this.currentMode = HeatGeneratorMode.INITIACTIVE;
+  }
+
+  private boolean hasAdjacentLava() {
+    return getAdjacentLavaCount() > 0;
+  }
+
+  public int getAdjacentLavaCount() {
+    int count = 0;
+    for (Direction direction : Direction.values()) {
+      if (
+        this.level
+          .getBlockState(this.worldPosition.relative(direction))
+          .getFluidState()
+          .is(FluidTags.LAVA)
+      ) {
+        count++;
+      }
+    }
+    return count;
   }
 
   private void chargeOutputItem() {

@@ -12,6 +12,7 @@ package aestastel.coraconic;
 import aestastel.coraconic.client.AlloyingMachineMk2Screen;
 import aestastel.coraconic.client.AlloyingMachineScreen;
 import aestastel.coraconic.client.EnergyStorageUnitScreen;
+import aestastel.coraconic.client.GeomagneticGeneratorScreen;
 import aestastel.coraconic.client.HeatGeneratorScreen;
 import aestastel.coraconic.client.ItemStorageUnitScreen;
 import aestastel.coraconic.client.ResonanceCrystallizingMachineScreen;
@@ -68,6 +69,10 @@ public class CoraconicTechClient {
     event.register(
       ModMenuType.SOLAR_GENERATOR.get(),
       SolarGeneratorScreen::new
+    );
+    event.register(
+      ModMenuType.GEOMAGNETIC_GENERATOR.get(),
+      GeomagneticGeneratorScreen::new
     );
     event.register(
       ModMenuType.ALLOYING_MACHINE.get(),

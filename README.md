@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7e`
-- 最近版本提交：`0.0.7eq_261113_b`
+- 最近版本提交：`0.0.7er_261113_c`
 - 最后更新：2026-11-13
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7er_261113_c`：热力发电机新增 `Passive` 与 `Mix` 模式；地磁发电机拆分为独立菜单与客户端 CLI；三类发电机 CLI 最后一栏统一为特色栏，分别显示世界时间/维度、机器 Y 坐标/维度、剩余热量/相邻熔岩数。
 - `0.0.7eq_261113_b`：修复热力发电机拆除时槽内物品同时掉落并保留在方块物品中的重复问题；槽位内容现在只保留在方块物品数据中，不再生成额外掉落物；主版本号提升为 `0.0.7e`。
 - `0.0.7ep_261113_a`：新增热力发电机 MK0，提供 `96,000 FE` 缓存、每面 `600 FE/t` 输入输出、`600 FE/t` 物品充能、`640,000` 热量缓存和燃料槽；每 tick 消耗 `40` 热量并产生 `80 FE`，无热量或能量空间不足时进入 `Null` 模式。
 - `0.0.7dr_261110_g`：新增熔炼冶金仪独立 JEI 分类，同时保留原版熔炼分类催化剂；四种金属块加入信标基座标签；中文译名统一为“熔炼冶金仪”。
@@ -40,7 +41,6 @@
 - `0.0.7cp_261110_c`：移除共振晶化仪所有 MK1 表述，注册 ID 改为 `resonance_crystallizing_machine`；旧存档中的原 MK1 方块不会自动迁移；本版本声明不兼容过去存档。
 - `0.0.7bs_261110_b`：统一合金仪 MK1、MK2 与共振晶化仪的加工状态恢复；保存配方 ID 与进度，加载时通过配方管理器重新解析并校验输入；重新计算最大进度，补齐能量与库存边界保护。
 - `0.0.7br_261110_a`：合金仪 MK2 默认处理速度提升至 MK1 的 `1.2` 倍，三条生产线统一生效，单次配方总耗能保持不变；清理合金配方生成器未使用的 import。
-- `0.0.7bq_261108_c`：调整共振晶化仪测试配方时间为 `150 ticks`，并新增钻石/煤炭、核龙/腾龙钻石结构晶体、石英/下界岩、绿宝石/粗铜等配方。
 
 ### 快速开始
 
@@ -180,7 +180,10 @@
 - 热量缓存上限：`640,000`
 - 燃烧时间无法完整放入热量缓存时停止转化
 - 主动模式 `Initiactive`：每 tick 消耗 `40` 单位热量，每单位热量产生 `2 FE`，即 `80 FE/t`
-- 热量不足或能量缓存空间不足时进入 `Null` 模式，不消耗热量
+- 被动模式 `Passive`：六个相邻方块中至少一个为熔岩或流动熔岩时触发，发电 `10 FE/t`，不消耗热量
+- 混合模式 `Mix`：同时存在热量和相邻熔岩时触发，每 tick 消耗 `40` 热量，发电 `85 FE/t`
+- 模式优先级：`Mix > Passive > Initiactive > Null`
+- 热量不足、无相邻熔岩或能量缓存空间不足时进入 `Null` 模式，不消耗热量
 - 热量缓存不提供外部输入/输出能力
 - 破坏方块时保留缓存能量、热量与两个槽位的内容
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
@@ -352,13 +355,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7e`
-- Latest version commit: `0.0.7eq_261113_b`
+- Latest version commit: `0.0.7er_261113_c`
 - Last updated: 2026-11-13
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7er_261113_c`: added `Passive` and `Mix` modes to the Heat Generator, split the Geomagnetic Generator into its own menu and client CLI, and unified the final CLI line across all three generator families as a feature line showing world time/dimension, machine Y/dimension, and remaining heat/adjacent lava count.
 - `0.0.7eq_261113_b`: fixed Heat Generator slot contents duplicating when broken; contents now stay only in the block item data and no extra drops are spawned; raised the main mod version to `0.0.7e`.
 - `0.0.7ep_261113_a`: added Heat Generator MK0 with a `96,000 FE` buffer, `600 FE/t` per-face input/output, `600 FE/t` item charging, a `640,000` heat buffer, and a fuel slot; it consumes `40` heat per tick to generate `80 FE` and enters `Null` mode when heat or energy space is insufficient.
 - `0.0.7dr_261110_g`: added a dedicated JEI category for the Smelting-Metallurgy Machine while keeping the vanilla smelting catalyst, added the four metal blocks to the beacon base tag, and unified the Chinese name as `熔炼冶金仪`.
@@ -368,7 +372,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7cp_261110_c`: removed all MK1 wording from the Resonance Crystallizing Machine and renamed its registry IDs to `resonance_crystallizing_machine`; existing MK1 blocks are not migrated, and this version is not compatible with previous saves.
 - `0.0.7bs_261110_b`: unified processing-state recovery for Alloying Machines MK1 and MK2 and the Resonance Crystallizing Machine; recipe IDs and progress are saved, recipes are resolved again through the recipe manager, inputs are revalidated, maximum progress is recomputed, and energy and inventory boundaries are enforced.
 - `0.0.7br_261110_a`: increased Alloying Machine MK2 processing speed to `1.2x` MK1 across all three production lines while preserving each recipe's total energy cost; removed unused imports from the alloying recipe provider.
-- `0.0.7bq_261108_c`: changed the Resonance Crystallizing Machine test recipe to `150 ticks` and added diamond/coal, coraconic/aviraconic diamond crystal, quartz/netherrack, and emerald/raw-copper recipes.
 
 ### Quick Start
 
@@ -508,7 +511,10 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Heat buffer capacity: `640,000`
 - Stops converting fuel when the full burn time cannot fit
 - `Initiactive` mode consumes `40` heat per tick and generates `2 FE` per heat unit, for `80 FE/t`
-- Enters `Null` mode without consuming heat when heat or energy space is insufficient
+- `Passive` mode triggers when at least one of the six adjacent blocks is lava or flowing lava, generating `10 FE/t` without consuming heat
+- `Mix` mode triggers when both heat and adjacent lava are present, consuming `40` heat and generating `85 FE/t`
+- Mode priority is `Mix > Passive > Initiactive > Null`
+- Enters `Null` mode without consuming heat when heat is insufficient, no lava is adjacent, or energy space is insufficient
 - The heat buffer has no external input/output capability
 - Breaking the block preserves stored energy, heat, and both slot contents
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet

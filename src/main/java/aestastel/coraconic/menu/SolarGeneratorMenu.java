@@ -26,6 +26,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -125,7 +126,29 @@ public class SolarGeneratorMenu
     SolarGeneratorTier tier,
     boolean geomagnetic
   ) {
-    super(ModMenuType.SOLAR_GENERATOR.get(), containerId);
+    this(
+      ModMenuType.SOLAR_GENERATOR.get(),
+      containerId,
+      playerInventory,
+      container,
+      blockEntity,
+      capacity,
+      tier,
+      geomagnetic
+    );
+  }
+
+  protected SolarGeneratorMenu(
+    MenuType<?> menuType,
+    int containerId,
+    Inventory playerInventory,
+    Container container,
+    SolarGeneratorBlockEntity blockEntity,
+    int capacity,
+    SolarGeneratorTier tier,
+    boolean geomagnetic
+  ) {
+    super(menuType, containerId);
     checkContainerSize(container, MACHINE_SLOTS);
     this.blockEntity = blockEntity;
     this.capacity = capacity;
@@ -284,6 +307,13 @@ public class SolarGeneratorMenu
   /** {@return 当前等级缓存容量（FE）} */
   public int getCapacity() {
     return this.capacity;
+  }
+
+  /** {@return 机器方块 Y 坐标；客户端方块实体缺失时为 0} */
+  public int getBlockY() {
+    return this.blockEntity != null
+      ? this.blockEntity.getBlockPos().getY()
+      : 0;
   }
 
   /** {@return 当前太阳能等级} */

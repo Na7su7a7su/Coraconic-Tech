@@ -17,6 +17,8 @@ package aestastel.coraconic.block;
  */
 public enum HeatGeneratorMode implements GeneratorMode {
   INITIACTIVE("Initiactive"),
+  MIX("Mix"),
+  PASSIVE("Passive"),
   NULL("Null");
 
   private final String displayName;

@@ -87,9 +87,7 @@ public class HeatGeneratorScreen
         mouseY
       );
     }
-    if (
-      isHovering(HEAT_X, HEAT_Y, HEAT_WIDTH, HEAT_HEIGHT, mouseX, mouseY)
-    ) {
+    if (isHovering(HEAT_X, HEAT_Y, HEAT_WIDTH, HEAT_HEIGHT, mouseX, mouseY)) {
       graphics.renderTooltip(
         this.font,
         Component.literal(heatText()),
@@ -125,9 +123,7 @@ public class HeatGeneratorScreen
       0.0D,
       1.0D
     );
-    int energyFilled = (int) Math.round(
-      (BAR_HEIGHT - 2) * energyRatio
-    );
+    int energyFilled = (int) Math.round((BAR_HEIGHT - 2) * energyRatio);
     if (energyFilled > 0) {
       graphics.fill(
         energyX,
@@ -157,14 +153,14 @@ public class HeatGeneratorScreen
 
   private void renderCli(GuiGraphics graphics) {
     String[] lines = {
-      ">Heat Generating System",
+      ">Heat Energy Generating System",
       ">Generation MK0 - Version " + modVersion(),
       ">Power: " + this.menu.getCurrentGeneration() + " FE/t",
       ">Mode: " + this.menu.getMode().displayName(),
-      ">Heat: " +
+      ">Heat " +
         this.menu.getHeat() +
-        " / " +
-        this.menu.getHeatCapacity(),
+        " | Lava " +
+        this.menu.getAdjacentLavaCount(),
     };
 
     graphics.pose().pushPose();
@@ -210,12 +206,7 @@ public class HeatGeneratorScreen
   }
 
   private String heatText() {
-    return (
-      menu.getHeat() +
-      " / " +
-      menu.getHeatCapacity() +
-      " heat"
-    );
+    return menu.getHeat() + " / " + menu.getHeatCapacity() + " heat";
   }
 
   private static String modVersion() {

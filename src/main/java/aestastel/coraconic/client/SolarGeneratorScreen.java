@@ -12,6 +12,7 @@ package aestastel.coraconic.client;
 import aestastel.coraconic.CoraconicTech;
 import aestastel.coraconic.energy.EnergyFormat;
 import aestastel.coraconic.menu.SolarGeneratorMenu;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -166,7 +167,6 @@ public class SolarGeneratorScreen
         ENERGY_COLOR
       );
     }
-
   }
 
   @Override
@@ -185,18 +185,7 @@ public class SolarGeneratorScreen
   }
 
   private void renderCli(GuiGraphics graphics) {
-    String[] lines = {
-      ">Power Generating System",
-      ">Generation " +
-        this.menu.getTier().name() +
-        " - Version " +
-        modVersion(),
-      ">Power: " + this.menu.getCurrentRate() + " FE/t",
-      ">Mode: " + this.menu.getMode().displayName(),
-      this.menu.isGeomagnetic()
-        ? ">Geomagnetic Energy"
-        : ">Solar Energy",
-    };
+    String[] lines = cliLines();
 
     graphics.pose().pushPose();
     graphics
@@ -220,7 +209,29 @@ public class SolarGeneratorScreen
     graphics.pose().popPose();
   }
 
-  private static String modVersion() {
+  protected String[] cliLines() {
+    long dayTime =
+      Minecraft.getInstance().level == null
+        ? 0L
+        : Minecraft.getInstance().level.getDayTime();
+    String dimension =
+      Minecraft.getInstance().level == null
+        ? "unknown"
+        : Minecraft.getInstance().level.dimension().location().toString();
+
+    return new String[] {
+      ">Solar Energy Generating System",
+      ">Generation " +
+        this.menu.getTier().name() +
+        " - Version " +
+        modVersion(),
+      ">Power: " + this.menu.getCurrentRate() + " FE/t",
+      ">Mode: " + this.menu.getMode().displayName(),
+      ">Time " + dayTime + " | " + dimension,
+    };
+  }
+
+  protected static String modVersion() {
     return ModList.get()
       .getModContainerById(CoraconicTech.MODID)
       .map(container -> container.getModInfo().getVersion().toString())

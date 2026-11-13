@@ -46,7 +46,8 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
   private static final int HEAT_INDEX = 1;
   private static final int GENERATION_INDEX = 2;
   private static final int MODE_INDEX = 3;
-  private static final int DATA_COUNT = 4;
+  private static final int LAVA_COUNT_INDEX = 4;
+  private static final int DATA_COUNT = 5;
 
   private final HeatGeneratorBlockEntity blockEntity;
   private final ContainerData data;
@@ -55,6 +56,7 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
   private int heat;
   private int currentGeneration;
   private HeatGeneratorMode currentMode = HeatGeneratorMode.NULL;
+  private int adjacentLavaCount;
 
   public HeatGeneratorMenu(
     int containerId,
@@ -85,6 +87,7 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
       this.heat = blockEntity.getHeat();
       this.currentGeneration = blockEntity.getCurrentGeneration();
       this.currentMode = blockEntity.getCurrentMode();
+      this.adjacentLavaCount = blockEntity.getAdjacentLavaCount();
 
       this.data = new ContainerData() {
         @Override
@@ -102,9 +105,14 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
               ? currentGeneration
               : blockEntity.getCurrentGeneration();
           }
-          return (
-            clientSide ? currentMode : blockEntity.getCurrentMode()
-          ).ordinal();
+          if (index == MODE_INDEX) {
+            return (
+              clientSide ? currentMode : blockEntity.getCurrentMode()
+            ).ordinal();
+          }
+          return clientSide
+            ? adjacentLavaCount
+            : blockEntity.getAdjacentLavaCount();
         }
 
         @Override
@@ -118,8 +126,10 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
             heat = value;
           } else if (index == GENERATION_INDEX) {
             currentGeneration = value;
-          } else {
+          } else if (index == MODE_INDEX) {
             currentMode = HeatGeneratorMode.byOrdinal(value);
+          } else {
+            adjacentLavaCount = value;
           }
         }
 
@@ -216,6 +226,10 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
 
   public HeatGeneratorMode getMode() {
     return HeatGeneratorMode.byOrdinal(this.data.get(MODE_INDEX));
+  }
+
+  public int getAdjacentLavaCount() {
+    return this.data.get(LAVA_COUNT_INDEX);
   }
 
   @Override
