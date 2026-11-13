@@ -219,6 +219,8 @@ public class SolarGeneratorScreen
         ? "unknown"
         : Minecraft.getInstance().level.dimension().location().toString();
 
+    long showDayTime = Math.floorMod(dayTime, 24000);
+
     return new String[] {
       ">Solar Energy Generating System",
       ">Generation " +
@@ -227,7 +229,7 @@ public class SolarGeneratorScreen
         modVersion(),
       ">Power: " + this.menu.getCurrentRate() + " FE/t",
       ">Mode: " + this.menu.getMode().displayName(),
-      ">Time " + dayTime + " | " + dimension,
+      ">Time " + showDayTime + " | " + dimension,
     };
   }
 
