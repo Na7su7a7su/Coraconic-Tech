@@ -131,7 +131,7 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
           new AlloyingIngredient(Ingredient.of(Items.COPPER_BLOCK), 1)
         ),
         new ItemStack(ModBlocks.ROSE_GOLD_BLOCK.get(), 4),
-        6400,
+        51400,
         50
       ),
       null
@@ -166,7 +166,7 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
           )
         ),
         new ItemStack(ModBlocks.AMBER_GOLD_BLOCK, 2),
-        6400,
+        51400,
         50
       ),
       null
