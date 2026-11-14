@@ -62,11 +62,15 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(ModItemTags.INGOTS_AVIRACONIC).add(
       ModItems.AVIRACONIC_METAL_INGOT.get()
     );
+    tag(ModItemTags.INGOTS_ROSE_GOLD).add(ModItems.ROSE_GOLD_INGOT.get());
+    tag(ModItemTags.INGOTS_AMBER_GOLD).add(ModItems.AMBER_GOLD_INGOT.get());
     tag(Tags.Items.INGOTS)
       .addTag(ModItemTags.INGOTS_TIN)
       .addTag(ModItemTags.INGOTS_LEAD)
       .addTag(ModItemTags.INGOTS_CORACONIC)
-      .addTag(ModItemTags.INGOTS_AVIRACONIC);
+      .addTag(ModItemTags.INGOTS_AVIRACONIC)
+      .addTag(ModItemTags.INGOTS_ROSE_GOLD)
+      .addTag(ModItemTags.INGOTS_AMBER_GOLD);
 
     // 粒：注册具体金属标签，并挂到 c:nuggets 父标签。
     // Nuggets: register metal-specific tags and attach them to the c:nuggets parent tag.
@@ -74,11 +78,19 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(ModItemTags.NUGGETS_LEAD).add(ModItems.LEAD_NUGGET.get());
     tag(ModItemTags.NUGGETS_CORACONIC).add(ModItems.CORACONIC_NUGGET.get());
     tag(ModItemTags.NUGGETS_AVIRACONIC).add(ModItems.AVIRACONIC_NUGGET.get());
+    tag(ModItemTags.NUGGETS_ROSE_GOLD).add(
+      ModItems.ROSE_GOLD_NUGGET.get()
+    );
+    tag(ModItemTags.NUGGETS_AMBER_GOLD).add(
+      ModItems.AMBER_GOLD_NUGGET.get()
+    );
     tag(Tags.Items.NUGGETS)
       .addTag(ModItemTags.NUGGETS_TIN)
       .addTag(ModItemTags.NUGGETS_LEAD)
       .addTag(ModItemTags.NUGGETS_CORACONIC)
-      .addTag(ModItemTags.NUGGETS_AVIRACONIC);
+      .addTag(ModItemTags.NUGGETS_AVIRACONIC)
+      .addTag(ModItemTags.NUGGETS_ROSE_GOLD)
+      .addTag(ModItemTags.NUGGETS_AMBER_GOLD);
 
     // 粗矿：注册粗锡/粗铅并挂到 c:raw_materials 父标签。
     // Raw materials: register raw tin/lead and attach them to the c:raw_materials parent tag.
@@ -113,11 +125,21 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       ModBlockTags.STORAGE_BLOCKS_AVIRACONIC,
       ModItemTags.STORAGE_BLOCKS_AVIRACONIC
     );
+    copy(
+      ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD,
+      ModItemTags.STORAGE_BLOCKS_ROSE_GOLD
+    );
+    copy(
+      ModBlockTags.STORAGE_BLOCKS_AMBER_GOLD,
+      ModItemTags.STORAGE_BLOCKS_AMBER_GOLD
+    );
     tag(Tags.Items.STORAGE_BLOCKS)
       .addTag(ModItemTags.STORAGE_BLOCKS_TIN)
       .addTag(ModItemTags.STORAGE_BLOCKS_LEAD)
       .addTag(ModItemTags.STORAGE_BLOCKS_CORACONIC)
-      .addTag(ModItemTags.STORAGE_BLOCKS_AVIRACONIC);
+      .addTag(ModItemTags.STORAGE_BLOCKS_AVIRACONIC)
+      .addTag(ModItemTags.STORAGE_BLOCKS_ROSE_GOLD)
+      .addTag(ModItemTags.STORAGE_BLOCKS_AMBER_GOLD);
 
     // 元素：注册核龙元素与腾龙元素的通用标签。
     // Elements: register common tags for coraconic and aviraconic elements.

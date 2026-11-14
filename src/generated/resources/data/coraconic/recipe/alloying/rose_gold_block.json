@@ -1,0 +1,23 @@
+{
+  "type": "coraconic:alloying",
+  "energy": 6400,
+  "ingredients": [
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:gold_block"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:copper_block"
+      }
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "coraconic:rose_gold_block"
+  },
+  "time": 50
+}

@@ -1,0 +1,23 @@
+{
+  "type": "coraconic:alloying",
+  "energy": 6400,
+  "ingredients": [
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:copper_ingot"
+      }
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "coraconic:rose_gold_ingot"
+  },
+  "time": 50
+}

@@ -3,6 +3,8 @@
     "#c:storage_blocks/tin",
     "#c:storage_blocks/lead",
     "#c:storage_blocks/coraconic",
-    "#c:storage_blocks/aviraconic"
+    "#c:storage_blocks/aviraconic",
+    "#c:storage_blocks/rose_gold",
+    "#c:storage_blocks/amber_gold"
   ]
 }

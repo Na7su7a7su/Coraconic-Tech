@@ -10,6 +10,7 @@
 package aestastel.coraconic.datagen;
 
 import aestastel.coraconic.CoraconicTech;
+import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.item.ModItems;
 import aestastel.coraconic.recipe.AlloyingIngredient;
 import aestastel.coraconic.recipe.AlloyingRecipe;
@@ -97,6 +98,39 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
           )
         ),
         new ItemStack(ModItems.AVIRACONIC_METAL_INGOT.get()),
+        6400,
+        50
+      ),
+      null
+    );
+
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/rose_gold_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 3),
+          new AlloyingIngredient(Ingredient.of(Items.COPPER_INGOT), 1)
+        ),
+        new ItemStack(ModItems.ROSE_GOLD_INGOT.get(), 4),
+        6400,
+        50
+      ),
+      null
+    );
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/rose_gold_block"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_BLOCK), 3),
+          new AlloyingIngredient(Ingredient.of(Items.COPPER_BLOCK), 1)
+        ),
+        new ItemStack(ModBlocks.ROSE_GOLD_BLOCK.get(), 4),
         6400,
         50
       ),

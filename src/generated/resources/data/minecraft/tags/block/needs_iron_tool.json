@@ -1,6 +1,8 @@
 {
   "values": [
     "coraconic:tin_block",
-    "coraconic:lead_block"
+    "coraconic:lead_block",
+    "coraconic:rose_gold_block",
+    "coraconic:amber_gold_block"
   ]
 }

@@ -43,10 +43,14 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.LEAD_INGOT);
           output.accept(ModItems.CORACONIC_METAL_INGOT);
           output.accept(ModItems.AVIRACONIC_METAL_INGOT);
+          output.accept(ModItems.ROSE_GOLD_INGOT);
+          output.accept(ModItems.AMBER_GOLD_INGOT);
           output.accept(ModItems.TIN_NUGGET);
           output.accept(ModItems.LEAD_NUGGET);
           output.accept(ModItems.CORACONIC_NUGGET);
           output.accept(ModItems.AVIRACONIC_NUGGET);
+          output.accept(ModItems.ROSE_GOLD_NUGGET);
+          output.accept(ModItems.AMBER_GOLD_NUGGET);
           output.accept(ModItems.COMMONMETAL_CORE);
           output.accept(ModItems.CORACONIC_CORE);
           output.accept(ModItems.AVIRACONIC_CORE);
@@ -65,6 +69,8 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModBlocks.LEAD_BLOCK.get());
           output.accept(ModBlocks.CORACONIC_METAL_BLOCK.get());
           output.accept(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
+          output.accept(ModBlocks.ROSE_GOLD_BLOCK.get());
+          output.accept(ModBlocks.AMBER_GOLD_BLOCK.get());
           output.accept(ModBlocks.TIN_ORE.get());
           output.accept(ModBlocks.LEAD_ORE.get());
           output.accept(ModBlocks.DEEPSLAT_TIN_ORE.get());

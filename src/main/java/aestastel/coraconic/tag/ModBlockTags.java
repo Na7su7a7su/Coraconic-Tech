@@ -47,6 +47,12 @@ public class ModBlockTags {
   public static final TagKey<Block> STORAGE_BLOCKS_AVIRACONIC = commonTag(
     "storage_blocks/aviraconic"
   );
+  public static final TagKey<Block> STORAGE_BLOCKS_ROSE_GOLD = commonTag(
+    "storage_blocks/rose_gold"
+  );
+  public static final TagKey<Block> STORAGE_BLOCKS_AMBER_GOLD = commonTag(
+    "storage_blocks/amber_gold"
+  );
 
   public static final TagKey<Block> INCORRECT_FOR_TIN_TOOL = commonTag(
     "incorrect_for_tin_tool"

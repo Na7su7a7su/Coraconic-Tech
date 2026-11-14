@@ -89,11 +89,19 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC).add(
       ModBlocks.AVIRACONIC_METAL_BLOCK.get()
     );
+    tag(ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD).add(
+      ModBlocks.ROSE_GOLD_BLOCK.get()
+    );
+    tag(ModBlockTags.STORAGE_BLOCKS_AMBER_GOLD).add(
+      ModBlocks.AMBER_GOLD_BLOCK.get()
+    );
     tag(Tags.Blocks.STORAGE_BLOCKS)
       .addTag(ModBlockTags.STORAGE_BLOCKS_TIN)
       .addTag(ModBlockTags.STORAGE_BLOCKS_LEAD)
       .addTag(ModBlockTags.STORAGE_BLOCKS_CORACONIC)
-      .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC);
+      .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_AMBER_GOLD);
 
     // 四种金属块可以作为信标基座。
     // All four metal blocks can be used as beacon base blocks.
@@ -111,6 +119,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       ModBlocks.LEAD_BLOCK.get(),
       ModBlocks.CORACONIC_METAL_BLOCK.get(),
       ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
+      ModBlocks.ROSE_GOLD_BLOCK.get(),
+      ModBlocks.AMBER_GOLD_BLOCK.get(),
       ModBlocks.TIN_ORE.get(),
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
       ModBlocks.LEAD_ORE.get(),
@@ -132,7 +142,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     // Tin and lead blocks require an iron pickaxe or better.
     tag(BlockTags.NEEDS_IRON_TOOL).add(
       ModBlocks.TIN_BLOCK.get(),
-      ModBlocks.LEAD_BLOCK.get()
+      ModBlocks.LEAD_BLOCK.get(),
+      ModBlocks.ROSE_GOLD_BLOCK.get(),
+      ModBlocks.AMBER_GOLD_BLOCK.get()
     );
 
     // 核龙金属块和腾龙金属块需要钻石镐或更高级工具。

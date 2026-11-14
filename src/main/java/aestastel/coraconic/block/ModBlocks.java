@@ -97,6 +97,26 @@ public class ModBlocks {
           .requiresCorrectToolForDrops()
       )
   );
+  public static final DeferredBlock<Block> ROSE_GOLD_BLOCK = registerBlocks(
+    "rose_gold_block",
+    () ->
+      new Block(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL)
+          .requiresCorrectToolForDrops()
+      )
+  );
+  public static final DeferredBlock<Block> AMBER_GOLD_BLOCK = registerBlocks(
+    "amber_gold_block",
+    () ->
+      new Block(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL)
+          .requiresCorrectToolForDrops()
+      )
+  );
   public static final DeferredBlock<Block> TIN_ORE = registerBlocks(
     "tin_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))

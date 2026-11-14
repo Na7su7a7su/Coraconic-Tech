@@ -78,6 +78,14 @@ public class ModItems {
     ITEMS.register("aviraconic_metal_ingot", () ->
       new Item(new Item.Properties())
     );
+  public static final DeferredItem<Item> ROSE_GOLD_INGOT = ITEMS.register(
+    "rose_gold_ingot",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> AMBER_GOLD_INGOT = ITEMS.register(
+    "amber_gold_ingot",
+    () -> new Item(new Item.Properties())
+  );
   public static final DeferredItem<Item> TIN_NUGGET = ITEMS.register(
     "tin_nugget",
     () -> new Item(new Item.Properties())
@@ -92,6 +100,14 @@ public class ModItems {
   );
   public static final DeferredItem<Item> AVIRACONIC_NUGGET = ITEMS.register(
     "aviraconic_nugget",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> ROSE_GOLD_NUGGET = ITEMS.register(
+    "rose_gold_nugget",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> AMBER_GOLD_NUGGET = ITEMS.register(
+    "amber_gold_nugget",
     () -> new Item(new Item.Properties())
   );
   public static final DeferredItem<Item> CORACONIC_CORE = ITEMS.register(

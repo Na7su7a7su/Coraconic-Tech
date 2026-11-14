@@ -31,6 +31,12 @@ public class ModItemTags {
   public static final TagKey<Item> INGOTS_AVIRACONIC = commonTag(
     "ingots/aviraconic"
   );
+  public static final TagKey<Item> INGOTS_ROSE_GOLD = commonTag(
+    "ingots/rose_gold"
+  );
+  public static final TagKey<Item> INGOTS_AMBER_GOLD = commonTag(
+    "ingots/amber_gold"
+  );
 
   public static final TagKey<Item> NUGGETS_TIN = commonTag("nuggets/tin");
   public static final TagKey<Item> NUGGETS_LEAD = commonTag("nuggets/lead");
@@ -39,6 +45,12 @@ public class ModItemTags {
   );
   public static final TagKey<Item> NUGGETS_AVIRACONIC = commonTag(
     "nuggets/aviraconic"
+  );
+  public static final TagKey<Item> NUGGETS_ROSE_GOLD = commonTag(
+    "nuggets/rose_gold"
+  );
+  public static final TagKey<Item> NUGGETS_AMBER_GOLD = commonTag(
+    "nuggets/amber_gold"
   );
 
   public static final TagKey<Item> RAW_MATERIALS_TIN = commonTag(
@@ -62,6 +74,12 @@ public class ModItemTags {
   );
   public static final TagKey<Item> STORAGE_BLOCKS_AVIRACONIC = commonTag(
     "storage_blocks/aviraconic"
+  );
+  public static final TagKey<Item> STORAGE_BLOCKS_ROSE_GOLD = commonTag(
+    "storage_blocks/rose_gold"
+  );
+  public static final TagKey<Item> STORAGE_BLOCKS_AMBER_GOLD = commonTag(
+    "storage_blocks/amber_gold"
   );
   public static final TagKey<Item> ELEMENTS_CORACONIC = commonTag(
     "elements/coraconic"
