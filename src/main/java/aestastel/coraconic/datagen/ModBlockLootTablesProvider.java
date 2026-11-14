@@ -61,6 +61,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     // Metal blocks use dropSelf: they drop themselves when mined normally, with explosion decay.
     dropSelf(ModBlocks.TIN_BLOCK.get());
     dropSelf(ModBlocks.LEAD_BLOCK.get());
+    dropSelf(ModBlocks.SILVER_BLOCK.get());
     dropSelf(ModBlocks.CORACONIC_METAL_BLOCK.get());
     dropSelf(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
     dropSelf(ModBlocks.ROSE_GOLD_BLOCK.get());
@@ -172,6 +173,12 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     // shares the same rule.
     add(ModBlocks.LEAD_ORE.get(), this::createLeadOreDrops);
     add(ModBlocks.DEEPSLAT_LEAD_ORE.get(), this::createLeadOreDrops);
+
+    // 银矿石：精准采集掉落矿石本身，否则掉落 1-2 个粗银；深层变种规则相同。
+    // Silver ores: silk touch drops the ore itself; otherwise 1-2 raw silver. The deepslate
+    // variant shares the same rule.
+    add(ModBlocks.SILVER_ORE.get(), this::createSilverOreDrops);
+    add(ModBlocks.DEEPSLATE_SILVER_ORE.get(), this::createSilverOreDrops);
   }
 
   /**
@@ -256,6 +263,32 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       (LootPoolEntryContainer.Builder<?>) this.applyExplosionDecay(
         block,
         LootItem.lootTableItem(ModItems.RAW_LEAD.get())
+          .apply(
+            SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))
+          )
+          .apply(
+            ApplyBonusCount.addOreBonusCount(
+              enchantments.getOrThrow(Enchantments.FORTUNE)
+            )
+          )
+      )
+    );
+  }
+
+  /**
+   * 构建银矿掉落表：精准采集时掉落矿石本身，否则掉落 1-2 个粗银，并应用时运加成与爆炸衰减。
+   *
+   * <p>Builds the silver ore loot table: silk touch drops the ore itself; otherwise 1-2 raw silver
+   * with fortune bonus and explosion decay applied.
+   */
+  private LootTable.Builder createSilverOreDrops(Block block) {
+    HolderLookup.RegistryLookup<Enchantment> enchantments =
+      this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+    return this.createSilkTouchDispatchTable(
+      block,
+      (LootPoolEntryContainer.Builder<?>) this.applyExplosionDecay(
+        block,
+        LootItem.lootTableItem(ModItems.RAW_SILVER.get())
           .apply(
             SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))
           )

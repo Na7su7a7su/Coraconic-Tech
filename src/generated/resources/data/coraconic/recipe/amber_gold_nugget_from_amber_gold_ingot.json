@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coraconic:amber_gold_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "coraconic:amber_gold_nugget"
+  }
+}

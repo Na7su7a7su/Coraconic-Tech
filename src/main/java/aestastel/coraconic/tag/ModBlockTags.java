@@ -25,6 +25,7 @@ public class ModBlockTags {
 
   public static final TagKey<Block> ORES_TIN = commonTag("ores/tin");
   public static final TagKey<Block> ORES_LEAD = commonTag("ores/lead");
+  public static final TagKey<Block> ORES_SILVER = commonTag("ores/silver");
 
   /**
    * 额外掉落核龙元素的方块标签：石头、深板岩、下界岩、末地石。
@@ -40,6 +41,9 @@ public class ModBlockTags {
   );
   public static final TagKey<Block> STORAGE_BLOCKS_LEAD = commonTag(
     "storage_blocks/lead"
+  );
+  public static final TagKey<Block> STORAGE_BLOCKS_SILVER = commonTag(
+    "storage_blocks/silver"
   );
   public static final TagKey<Block> STORAGE_BLOCKS_CORACONIC = commonTag(
     "storage_blocks/coraconic"

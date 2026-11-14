@@ -136,5 +136,40 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
       ),
       null
     );
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/amber_gold_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 1),
+          new AlloyingIngredient(Ingredient.of(ModItemTags.INGOTS_SILVER), 1)
+        ),
+        new ItemStack(ModItems.AMBER_GOLD_INGOT.get(), 2),
+        6400,
+        50
+      ),
+      null
+    );
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/amber_gold_block"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_BLOCK), 1),
+          new AlloyingIngredient(
+            Ingredient.of(ModItemTags.STORAGE_BLOCKS_SILVER),
+            1
+          )
+        ),
+        new ItemStack(ModBlocks.AMBER_GOLD_BLOCK, 2),
+        6400,
+        50
+      ),
+      null
+    );
   }
 }

@@ -66,6 +66,10 @@ public class ModItems {
     "lead_ingot",
     () -> new Item(new Item.Properties())
   );
+  public static final DeferredItem<Item> SILVER_INGOT = ITEMS.register(
+    "silver_ingot",
+    () -> new Item(new Item.Properties())
+  );
   public static final DeferredItem<Item> COMMONMETAL_CORE = ITEMS.register(
     "commonmetal_core",
     () -> new Item(new Item.Properties())
@@ -92,6 +96,10 @@ public class ModItems {
   );
   public static final DeferredItem<Item> LEAD_NUGGET = ITEMS.register(
     "lead_nugget",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> SILVER_NUGGET = ITEMS.register(
+    "silver_nugget",
     () -> new Item(new Item.Properties())
   );
   public static final DeferredItem<Item> CORACONIC_NUGGET = ITEMS.register(
@@ -124,6 +132,10 @@ public class ModItems {
   );
   public static final DeferredItem<Item> RAW_LEAD = ITEMS.register(
     "raw_lead",
+    () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> RAW_SILVER = ITEMS.register(
+    "raw_silver",
     () -> new Item(new Item.Properties())
   );
   public static final DeferredItem<Item> CORACONIC_ELEMENT = ITEMS.register(

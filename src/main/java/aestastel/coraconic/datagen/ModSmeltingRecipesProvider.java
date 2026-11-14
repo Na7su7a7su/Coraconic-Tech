@@ -139,5 +139,59 @@ public class ModSmeltingRecipesProvider extends RecipeProvider {
         CoraconicTech.MODID + ":lead_ingot_from_blasting_lead_ore"
       );
 
+    // 粗银：熔炉与高炉均可冶炼为银锭。
+    // Raw silver: smelt or blast into a silver ingot.
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItems.RAW_SILVER.get()),
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_raw_silver", has(ModItems.RAW_SILVER.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":silver_ingot_from_smelting_raw_silver"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItems.RAW_SILVER.get()),
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_raw_silver", has(ModItems.RAW_SILVER.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":silver_ingot_from_blasting_raw_silver"
+      );
+
+    // 银矿石：使用矿物标签，同时覆盖普通矿石与深板岩变种。
+    // Silver ores: use the ore tag so both stone and deepslate variants are covered.
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItemTags.ORES_SILVER),
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      0.7F,
+      200
+    )
+      .unlockedBy("has_silver_ore", has(ModItemTags.ORES_SILVER))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":silver_ingot_from_smelting_silver_ore"
+      );
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItemTags.ORES_SILVER),
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      0.7F,
+      100
+    )
+      .unlockedBy("has_silver_ore", has(ModItemTags.ORES_SILVER))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":silver_ingot_from_blasting_silver_ore"
+      );
+
   }
 }

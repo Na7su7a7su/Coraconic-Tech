@@ -12,7 +12,7 @@
 
 ### 项目简介
 
-核龙科技是一个面向 Minecraft 1.21.1 / NeoForge 的早期开发科技模组。当前内容围绕锡、铅、核龙金属、腾龙金属四种材料展开，并已加入物品存储单元、能量存储单元、能量物品交互与相关数据生成体系。
+核龙科技是一个面向 Minecraft 1.21.1 / NeoForge 的早期开发科技模组。当前内容围绕锡、铅、银、核龙金属、腾龙金属、玫瑰金与琥珀金等材料展开，并已加入物品存储单元、能量存储单元、能量物品交互与相关数据生成体系。
 
 ### 目标环境
 
@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7e`
-- 最近版本提交：`0.0.7fp_261114_a`
+- 最近版本提交：`0.0.7fq_261114_b`
 - 最后更新：2026-11-14
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
 - `0.0.7fp_261114_a`：注册玫瑰金与琥珀金材料，新增锭、粒、存储块、通用标签、创造栏与四语名称；加入玫瑰金合金配方，并修正玫瑰金配方 ID 冲突。
 - `0.0.7et_261113_e`：热力发电机支持流体容器燃料，每次消耗 `1000 mB` 并按对应桶装物品的燃烧时间转化为热量；热量不足 `40` 时按剩余热量发电并消耗至 `0`，热量耗尽后才进入 `Passive`。
 - `0.0.7es_261113_d`：热力发电机 `Passive` 功率改为每格熔岩 `10 FE/t`，`Mix` 功率改为主动模式 `80 FE/t` + 每格熔岩 `5 FE/t`；太阳能 CLI 的世界时间改为按 `24000 ticks` 周期显示。
@@ -40,8 +41,6 @@
 - `0.0.7dr_261110_g`：新增熔炼冶金仪独立 JEI 分类，同时保留原版熔炼分类催化剂；四种金属块加入信标基座标签；中文译名统一为“熔炼冶金仪”。
 - `0.0.7dq_261110_f`：修复加工机器成品槽阻塞时错误清空加工进度的问题；成品槽无法接收产物时暂停并保留配方与进度，不继续消耗能量，清空后可继续加工；主版本号提升为 `0.0.7d`。
 - `0.0.7dp_261110_e`：新增熔炼冶金仪 MK1，提供 `320,000 FE` 缓存、`10,000 FE/t` 输入、一个原料槽、一个成品槽和一个电源槽；使用全部原版熔炼配方，每运行 tick 消耗 `2 FE`；加入数值列表文档。
-- `0.0.7cq_261110_d`：将创造物品栏从 `item` 包拆分到 `creativetab` 包，拆分为主创造栏与工具创造栏两个独立类，保留 `ModCreativeModeTabs` 作为统一注册入口；主版本号提升为 `0.0.7c`。
-
 ### 快速开始
 
 1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
@@ -53,8 +52,8 @@
 
 #### 材料与基础物品
 
-- 锡、铅、核龙金属、腾龙金属
-- 对应的金属锭、金属粒与粗矿物品
+- 锡、铅、银、核龙金属、腾龙金属、玫瑰金、琥珀金
+- 对应的金属锭与金属粒；锡、铅、银的粗矿物品
 - 常金属核心、核龙金属核心、腾龙金属核心、效应放大核心、空间放缩核心、相位同步核心、质能补偿核心、中枢计算核心
 - 五个特殊核心当前仅通过创造模式获取，暂未添加合成配方
 - 核龙元素、腾龙元素
@@ -75,9 +74,9 @@
 
 #### 方块与世界
 
-- 锡块、铅块、核龙金属块、腾龙金属块
-- 锡矿石、铅矿石
-- 深板岩锡矿石、深板岩铅矿石
+- 锡块、铅块、银块、核龙金属块、腾龙金属块、玫瑰金块、琥珀金块
+- 锡矿石、铅矿石、银矿石
+- 深板岩锡矿石、深板岩铅矿石、深板岩银矿石
 - 矿石方块、掉落物与标签已完成，但尚未实现自然生成
 
 #### 物品存储单元
@@ -345,7 +344,7 @@ Copyright (c) 2026 Aestastel
 
 ### Overview
 
-Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. Its current content revolves around tin, lead, coraconic metal, and aviraconic metal, and now includes item storage units, energy storage units, energy-capable storage items, and the related data-generation foundation.
+Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. Its current content revolves around tin, lead, silver, coraconic metal, aviraconic metal, rose gold, and amber gold, and now includes item storage units, energy storage units, energy-capable storage items, and the related data-generation foundation.
 
 ### Target Environment
 
@@ -357,13 +356,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7e`
-- Latest version commit: `0.0.7fp_261114_a`
+- Latest version commit: `0.0.7fq_261114_b`
 - Last updated: 2026-11-14
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
 - `0.0.7fp_261114_a`: registered rose gold and amber gold materials with ingots, nuggets, storage blocks, common tags, creative-tab entries, and four-language names; added rose gold alloying recipes and fixed their recipe ID collisions.
 - `0.0.7et_261113_e`: added fluid-container fuel support to the Heat Generator, consuming `1000 mB` at a time and deriving heat from the matching bucket item's burn time; partial heat below `40` is now consumed proportionally down to `0`, and `Passive` is used only after heat is exhausted.
 - `0.0.7es_261113_d`: changed Heat Generator `Passive` output to `10 FE/t` per lava block and `Mix` output to the `80 FE/t` active rate plus `5 FE/t` per lava block; changed the solar CLI world time to a `24000 ticks` cycle.
@@ -373,8 +373,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7dr_261110_g`: added a dedicated JEI category for the Smelting-Metallurgy Machine while keeping the vanilla smelting catalyst, added the four metal blocks to the beacon base tag, and unified the Chinese name as `熔炼冶金仪`.
 - `0.0.7dq_261110_f`: fixed processing machines clearing their progress when the output slot is blocked; they now pause with recipe and progress preserved, consume no further energy, and resume after the output is cleared; raised the main mod version to `0.0.7d`.
 - `0.0.7dp_261110_e`: added Smelting-Metallurgy Machine MK1 with a `320,000 FE` buffer, `10,000 FE/t` input, one input slot, one output slot, and one power slot; it uses all vanilla smelting recipes and consumes `2 FE` per processing tick; added the value-list document.
-- `0.0.7cq_261110_d`: moved creative tabs from the `item` package into `creativetab`, split the main and tool tabs into separate classes, kept `ModCreativeModeTabs` as the unified registration entry point, and raised the main mod version to `0.0.7c`.
-
 ### Quick Start
 
 1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
@@ -386,8 +384,8 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 #### Materials and Basic Items
 
-- Tin, lead, coraconic metal, and aviraconic metal
-- Matching ingots, nuggets, and raw ore items
+- Tin, lead, silver, coraconic metal, aviraconic metal, rose gold, and amber gold
+- Matching ingots and nuggets; raw ore items for tin, lead, and silver
 - Common-metal, coraconic, aviraconic, effect amplification, spatial scaling, phase synchronization, mass-energy compensation, and central computation cores
 - The five special cores are currently creative-only and do not have crafting recipes yet
 - Coraconic and aviraconic elements
@@ -408,9 +406,9 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 #### Blocks and World
 
-- Tin, lead, coraconic metal, and aviraconic metal blocks
-- Tin ore and lead ore
-- Deepslate tin ore and deepslate lead ore
+- Tin, lead, silver, coraconic metal, aviraconic metal, rose gold, and amber gold blocks
+- Tin ore, lead ore, and silver ore
+- Deepslate tin ore, deepslate lead ore, and deepslate silver ore
 - Ore blocks, drops, and tags are implemented; natural world generation is not
 
 #### Item Storage Units

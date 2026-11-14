@@ -115,6 +115,39 @@ public class ModFormulaCraftingRecipesProvider extends RecipeProvider {
     packingRecipe(
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
+      ModBlocks.SILVER_BLOCK.get(),
+      ModItems.SILVER_INGOT.get(),
+      "silver_block",
+      "has_silver_ingot"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      ModBlocks.SILVER_BLOCK.get(),
+      "silver_ingot_from_silver_block",
+      "has_silver_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.SILVER_INGOT.get(),
+      ModItems.SILVER_NUGGET.get(),
+      "silver_ingot_from_silver_nuggets",
+      "has_silver_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.SILVER_NUGGET.get(),
+      ModItems.SILVER_INGOT.get(),
+      "silver_nugget_from_silver_ingot",
+      "has_silver_ingot"
+    );
+
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.CORACONIC_METAL_BLOCK.get(),
       ModItems.CORACONIC_METAL_INGOT.get(),
       "coraconic_metal_block",
@@ -177,6 +210,73 @@ public class ModFormulaCraftingRecipesProvider extends RecipeProvider {
       "aviraconic_nugget_from_aviraconic_metal_ingot",
       "has_aviraconic_metal_ingot"
     );
+
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
+      ModBlocks.ROSE_GOLD_BLOCK.get(),
+      ModItems.ROSE_GOLD_INGOT.get(),
+      "rose_gold_block",
+      "has_rose_gold_ingot"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.ROSE_GOLD_INGOT.get(),
+      ModBlocks.ROSE_GOLD_BLOCK.get(),
+      "rose_gold_ingot_from_rose_gold_block",
+      "has_rose_gold_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.ROSE_GOLD_INGOT.get(),
+      ModItems.ROSE_GOLD_NUGGET.get(),
+      "rose_gold_ingot_from_rose_gold_nuggets",
+      "has_rose_gold_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.ROSE_GOLD_NUGGET.get(),
+      ModItems.ROSE_GOLD_INGOT.get(),
+      "rose_gold_nugget_from_rose_gold_ingot",
+      "has_rose_gold_ingot"
+    );
+
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
+      ModBlocks.AMBER_GOLD_BLOCK.get(),
+      ModItems.AMBER_GOLD_INGOT.get(),
+      "amber_gold_block",
+      "has_amber_gold_ingot"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.AMBER_GOLD_INGOT.get(),
+      ModBlocks.AMBER_GOLD_BLOCK.get(),
+      "amber_gold_ingot_from_amber_gold_block",
+      "has_amber_gold_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.AMBER_GOLD_INGOT.get(),
+      ModItems.AMBER_GOLD_NUGGET.get(),
+      "amber_gold_ingot_from_amber_gold_nuggets",
+      "has_amber_gold_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.AMBER_GOLD_NUGGET.get(),
+      ModItems.AMBER_GOLD_INGOT.get(),
+      "amber_gold_nugget_from_amber_gold_ingot",
+      "has_amber_gold_ingot"
+    );
+
     swordRecipe(
       recipeOutput,
       ModItems.TIN_SWORD.get(),

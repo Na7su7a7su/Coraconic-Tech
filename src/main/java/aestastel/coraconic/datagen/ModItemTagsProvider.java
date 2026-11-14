@@ -58,6 +58,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Ingots: register metal-specific tags and attach them to the c:ingots parent tag.
     tag(ModItemTags.INGOTS_TIN).add(ModItems.TIN_INGOT.get());
     tag(ModItemTags.INGOTS_LEAD).add(ModItems.LEAD_INGOT.get());
+    tag(ModItemTags.INGOTS_SILVER).add(ModItems.SILVER_INGOT.get());
     tag(ModItemTags.INGOTS_CORACONIC).add(ModItems.CORACONIC_METAL_INGOT.get());
     tag(ModItemTags.INGOTS_AVIRACONIC).add(
       ModItems.AVIRACONIC_METAL_INGOT.get()
@@ -67,6 +68,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(Tags.Items.INGOTS)
       .addTag(ModItemTags.INGOTS_TIN)
       .addTag(ModItemTags.INGOTS_LEAD)
+      .addTag(ModItemTags.INGOTS_SILVER)
       .addTag(ModItemTags.INGOTS_CORACONIC)
       .addTag(ModItemTags.INGOTS_AVIRACONIC)
       .addTag(ModItemTags.INGOTS_ROSE_GOLD)
@@ -76,6 +78,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Nuggets: register metal-specific tags and attach them to the c:nuggets parent tag.
     tag(ModItemTags.NUGGETS_TIN).add(ModItems.TIN_NUGGET.get());
     tag(ModItemTags.NUGGETS_LEAD).add(ModItems.LEAD_NUGGET.get());
+    tag(ModItemTags.NUGGETS_SILVER).add(ModItems.SILVER_NUGGET.get());
     tag(ModItemTags.NUGGETS_CORACONIC).add(ModItems.CORACONIC_NUGGET.get());
     tag(ModItemTags.NUGGETS_AVIRACONIC).add(ModItems.AVIRACONIC_NUGGET.get());
     tag(ModItemTags.NUGGETS_ROSE_GOLD).add(
@@ -87,6 +90,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(Tags.Items.NUGGETS)
       .addTag(ModItemTags.NUGGETS_TIN)
       .addTag(ModItemTags.NUGGETS_LEAD)
+      .addTag(ModItemTags.NUGGETS_SILVER)
       .addTag(ModItemTags.NUGGETS_CORACONIC)
       .addTag(ModItemTags.NUGGETS_AVIRACONIC)
       .addTag(ModItemTags.NUGGETS_ROSE_GOLD)
@@ -96,17 +100,21 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Raw materials: register raw tin/lead and attach them to the c:raw_materials parent tag.
     tag(ModItemTags.RAW_MATERIALS_TIN).add(ModItems.RAW_TIN.get());
     tag(ModItemTags.RAW_MATERIALS_LEAD).add(ModItems.RAW_LEAD.get());
+    tag(ModItemTags.RAW_MATERIALS_SILVER).add(ModItems.RAW_SILVER.get());
     tag(Tags.Items.RAW_MATERIALS)
       .addTag(ModItemTags.RAW_MATERIALS_TIN)
-      .addTag(ModItemTags.RAW_MATERIALS_LEAD);
+      .addTag(ModItemTags.RAW_MATERIALS_LEAD)
+      .addTag(ModItemTags.RAW_MATERIALS_SILVER);
 
     // 矿石：从方块标签复制，按矿物类型与生成岩层归类。
     // Ores: copy from block tags and classify by mineral type and host stone.
     copy(ModBlockTags.ORES_TIN, ModItemTags.ORES_TIN);
     copy(ModBlockTags.ORES_LEAD, ModItemTags.ORES_LEAD);
+    copy(ModBlockTags.ORES_SILVER, ModItemTags.ORES_SILVER);
     tag(Tags.Items.ORES)
       .addTag(ModItemTags.ORES_TIN)
-      .addTag(ModItemTags.ORES_LEAD);
+      .addTag(ModItemTags.ORES_LEAD)
+      .addTag(ModItemTags.ORES_SILVER);
     copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE);
     copy(
       Tags.Blocks.ORES_IN_GROUND_DEEPSLATE,
@@ -117,6 +125,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     // Storage blocks: copy from block tags and attach them to the c:storage_blocks parent tag.
     copy(ModBlockTags.STORAGE_BLOCKS_TIN, ModItemTags.STORAGE_BLOCKS_TIN);
     copy(ModBlockTags.STORAGE_BLOCKS_LEAD, ModItemTags.STORAGE_BLOCKS_LEAD);
+    copy(
+      ModBlockTags.STORAGE_BLOCKS_SILVER,
+      ModItemTags.STORAGE_BLOCKS_SILVER
+    );
     copy(
       ModBlockTags.STORAGE_BLOCKS_CORACONIC,
       ModItemTags.STORAGE_BLOCKS_CORACONIC
@@ -136,6 +148,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(Tags.Items.STORAGE_BLOCKS)
       .addTag(ModItemTags.STORAGE_BLOCKS_TIN)
       .addTag(ModItemTags.STORAGE_BLOCKS_LEAD)
+      .addTag(ModItemTags.STORAGE_BLOCKS_SILVER)
       .addTag(ModItemTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModItemTags.STORAGE_BLOCKS_AVIRACONIC)
       .addTag(ModItemTags.STORAGE_BLOCKS_ROSE_GOLD)

@@ -58,16 +58,23 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       ModBlocks.LEAD_ORE.get(),
       ModBlocks.DEEPSLAT_LEAD_ORE.get()
     );
+    tag(ModBlockTags.ORES_SILVER).add(
+      ModBlocks.SILVER_ORE.get(),
+      ModBlocks.DEEPSLATE_SILVER_ORE.get()
+    );
     tag(Tags.Blocks.ORES)
       .addTag(ModBlockTags.ORES_TIN)
-      .addTag(ModBlockTags.ORES_LEAD);
+      .addTag(ModBlockTags.ORES_LEAD)
+      .addTag(ModBlockTags.ORES_SILVER);
     tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(
       ModBlocks.TIN_ORE.get(),
-      ModBlocks.LEAD_ORE.get()
+      ModBlocks.LEAD_ORE.get(),
+      ModBlocks.SILVER_ORE.get()
     );
     tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
-      ModBlocks.DEEPSLAT_LEAD_ORE.get()
+      ModBlocks.DEEPSLAT_LEAD_ORE.get(),
+      ModBlocks.DEEPSLATE_SILVER_ORE.get()
     );
 
     // 核龙元素的额外掉落来源：石头、深板岩、下界岩、末地石。
@@ -83,6 +90,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     // Common storage block tags: register metal blocks and attach them to c:storage_blocks.
     tag(ModBlockTags.STORAGE_BLOCKS_TIN).add(ModBlocks.TIN_BLOCK.get());
     tag(ModBlockTags.STORAGE_BLOCKS_LEAD).add(ModBlocks.LEAD_BLOCK.get());
+    tag(ModBlockTags.STORAGE_BLOCKS_SILVER).add(
+      ModBlocks.SILVER_BLOCK.get()
+    );
     tag(ModBlockTags.STORAGE_BLOCKS_CORACONIC).add(
       ModBlocks.CORACONIC_METAL_BLOCK.get()
     );
@@ -98,6 +108,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(Tags.Blocks.STORAGE_BLOCKS)
       .addTag(ModBlockTags.STORAGE_BLOCKS_TIN)
       .addTag(ModBlockTags.STORAGE_BLOCKS_LEAD)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_SILVER)
       .addTag(ModBlockTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC)
       .addTag(ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD)
@@ -117,6 +128,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
       ModBlocks.TIN_BLOCK.get(),
       ModBlocks.LEAD_BLOCK.get(),
+      ModBlocks.SILVER_BLOCK.get(),
       ModBlocks.CORACONIC_METAL_BLOCK.get(),
       ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
       ModBlocks.ROSE_GOLD_BLOCK.get(),
@@ -124,7 +136,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       ModBlocks.TIN_ORE.get(),
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
       ModBlocks.LEAD_ORE.get(),
-      ModBlocks.DEEPSLAT_LEAD_ORE.get()
+      ModBlocks.DEEPSLAT_LEAD_ORE.get(),
+      ModBlocks.SILVER_ORE.get(),
+      ModBlocks.DEEPSLATE_SILVER_ORE.get()
     );
 
     // 锡块、铅块和四种矿石至少需要石镐。
@@ -135,7 +149,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       ModBlocks.TIN_ORE.get(),
       ModBlocks.DEEPSLAT_TIN_ORE.get(),
       ModBlocks.LEAD_ORE.get(),
-      ModBlocks.DEEPSLAT_LEAD_ORE.get()
+      ModBlocks.DEEPSLAT_LEAD_ORE.get(),
+      ModBlocks.SILVER_ORE.get(),
+      ModBlocks.DEEPSLATE_SILVER_ORE.get()
     );
 
     // 锡块和铅块需要铁镐或更高级工具。
@@ -143,6 +159,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(BlockTags.NEEDS_IRON_TOOL).add(
       ModBlocks.TIN_BLOCK.get(),
       ModBlocks.LEAD_BLOCK.get(),
+      ModBlocks.SILVER_BLOCK.get(),
       ModBlocks.ROSE_GOLD_BLOCK.get(),
       ModBlocks.AMBER_GOLD_BLOCK.get()
     );

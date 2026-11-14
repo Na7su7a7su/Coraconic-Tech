@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    },
+    {
+      "item": "coraconic:amber_gold_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:amber_gold_block"
+  }
+}

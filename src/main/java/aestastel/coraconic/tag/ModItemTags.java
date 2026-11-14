@@ -25,6 +25,7 @@ public class ModItemTags {
 
   public static final TagKey<Item> INGOTS_TIN = commonTag("ingots/tin");
   public static final TagKey<Item> INGOTS_LEAD = commonTag("ingots/lead");
+  public static final TagKey<Item> INGOTS_SILVER = commonTag("ingots/silver");
   public static final TagKey<Item> INGOTS_CORACONIC = commonTag(
     "ingots/coraconic"
   );
@@ -40,6 +41,7 @@ public class ModItemTags {
 
   public static final TagKey<Item> NUGGETS_TIN = commonTag("nuggets/tin");
   public static final TagKey<Item> NUGGETS_LEAD = commonTag("nuggets/lead");
+  public static final TagKey<Item> NUGGETS_SILVER = commonTag("nuggets/silver");
   public static final TagKey<Item> NUGGETS_CORACONIC = commonTag(
     "nuggets/coraconic"
   );
@@ -59,15 +61,22 @@ public class ModItemTags {
   public static final TagKey<Item> RAW_MATERIALS_LEAD = commonTag(
     "raw_materials/lead"
   );
+  public static final TagKey<Item> RAW_MATERIALS_SILVER = commonTag(
+    "raw_materials/silver"
+  );
 
   public static final TagKey<Item> ORES_TIN = commonTag("ores/tin");
   public static final TagKey<Item> ORES_LEAD = commonTag("ores/lead");
+  public static final TagKey<Item> ORES_SILVER = commonTag("ores/silver");
 
   public static final TagKey<Item> STORAGE_BLOCKS_TIN = commonTag(
     "storage_blocks/tin"
   );
   public static final TagKey<Item> STORAGE_BLOCKS_LEAD = commonTag(
     "storage_blocks/lead"
+  );
+  public static final TagKey<Item> STORAGE_BLOCKS_SILVER = commonTag(
+    "storage_blocks/silver"
   );
   public static final TagKey<Item> STORAGE_BLOCKS_CORACONIC = commonTag(
     "storage_blocks/coraconic"

@@ -2,6 +2,7 @@
   "values": [
     "coraconic:tin_block",
     "coraconic:lead_block",
+    "coraconic:silver_block",
     "coraconic:coraconic_metal_block",
     "coraconic:aviraconic_metal_block",
     "coraconic:rose_gold_block",
@@ -9,6 +10,8 @@
     "coraconic:tin_ore",
     "coraconic:deepslate_tin_ore",
     "coraconic:lead_ore",
-    "coraconic:deepslate_lead_ore"
+    "coraconic:deepslate_lead_ore",
+    "coraconic:silver_ore",
+    "coraconic:deepslate_silver_ore"
   ]
 }

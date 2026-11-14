@@ -79,6 +79,16 @@ public class ModBlocks {
           .requiresCorrectToolForDrops()
       )
   );
+  public static final DeferredBlock<Block> SILVER_BLOCK = registerBlocks(
+    "silver_block",
+    () ->
+      new Block(
+        BlockBehaviour.Properties.of()
+          .strength(3.0F, 6.0F)
+          .sound(SoundType.METAL)
+          .requiresCorrectToolForDrops()
+      )
+  );
   public static final DeferredBlock<Block> CORACONIC_METAL_BLOCK = registerBlocks(
     "coraconic_metal_block",
     () ->
@@ -134,6 +144,15 @@ public class ModBlocks {
   public static final DeferredBlock<Block> LEAD_ORE = registerBlocks(
     "lead_ore",
     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
+  );
+  public static final DeferredBlock<Block> SILVER_ORE = registerBlocks(
+    "silver_ore",
+    () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE))
+  );
+  public static final DeferredBlock<Block> DEEPSLATE_SILVER_ORE = registerBlocks(
+    "deepslate_silver_ore",
+    () ->
+      new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_IRON_ORE))
   );
   public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK1 =
     registerBlocks(
