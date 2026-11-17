@@ -111,6 +111,17 @@ public class ModMenuType {
       )
   );
 
+  public static final DeferredHolder<
+    MenuType<?>,
+    MenuType<InstrumentAssemblingMachineMenu>
+  > INSTRUMENT_ASSEMBLING_MACHINE = MENU_TYPES.register(
+    "instrument_assembling_machine",
+    () ->
+      IMenuTypeExtension.create(
+        InstrumentAssemblingMachineMenu::fromNetwork
+      )
+  );
+
   /**
    * 将菜单类型注册器挂到模组事件总线。
    *

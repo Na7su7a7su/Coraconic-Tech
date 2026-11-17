@@ -95,6 +95,9 @@ public final class CoraconicTechCreativeTab {
           output.accept(
             ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
           );
+          output.accept(
+            ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get()
+          );
           output.accept(ModBlocks.HEAT_GENERATOR_MK0.get());
           output.accept(ModBlocks.SOLAR_GENERATOR_MK0.get());
           output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get());

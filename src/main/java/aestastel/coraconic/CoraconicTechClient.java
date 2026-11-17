@@ -14,6 +14,7 @@ import aestastel.coraconic.client.AlloyingMachineScreen;
 import aestastel.coraconic.client.EnergyStorageUnitScreen;
 import aestastel.coraconic.client.GeomagneticGeneratorScreen;
 import aestastel.coraconic.client.HeatGeneratorScreen;
+import aestastel.coraconic.client.InstrumentAssemblingMachineScreen;
 import aestastel.coraconic.client.ItemStorageUnitScreen;
 import aestastel.coraconic.client.ResonanceCrystallizingMachineScreen;
 import aestastel.coraconic.client.SmeltingMetallurgyMachineScreen;
@@ -85,6 +86,10 @@ public class CoraconicTechClient {
     event.register(
       ModMenuType.RESONANCE_CRYSTALLIZING_MACHINE.get(),
       ResonanceCrystallizingMachineScreen::new
+    );
+    event.register(
+      ModMenuType.INSTRUMENT_ASSEMBLING_MACHINE.get(),
+      InstrumentAssemblingMachineScreen::new
     );
     event.register(
       ModMenuType.SMELTING_METALLURGY_MACHINE.get(),

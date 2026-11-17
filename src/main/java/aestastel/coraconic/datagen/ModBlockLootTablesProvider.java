@@ -122,6 +122,12 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       )
     );
     add(
+      ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get(),
+      createBlockEntityDataDrop(
+        ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get()
+      )
+    );
+    add(
       ModBlocks.HEAT_GENERATOR_MK0.get(),
       createBlockEntityDataDrop(ModBlocks.HEAT_GENERATOR_MK0.get())
     );

@@ -11,9 +11,11 @@ package aestastel.coraconic;
 
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.client.AlloyingRecipeCategory;
+import aestastel.coraconic.client.InstrumentAssemblingRecipeCategory;
 import aestastel.coraconic.client.ResonanceCrystallizingRecipeCategory;
 import aestastel.coraconic.client.SmeltingMetallurgyRecipeCategory;
 import aestastel.coraconic.recipe.AlloyingRecipe;
+import aestastel.coraconic.recipe.InstrumentAssemblingRecipe;
 import aestastel.coraconic.recipe.ModRecipes;
 import aestastel.coraconic.recipe.ResonanceCrystallizingRecipe;
 import java.util.List;
@@ -53,6 +55,16 @@ public class CoraconicJeiPlugin implements IModPlugin {
   );
 
   public static final RecipeType<
+    RecipeHolder<InstrumentAssemblingRecipe>
+  > INSTRUMENT_ASSEMBLING_RECIPE_TYPE =
+    RecipeType.createRecipeHolderType(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "instrument_assembling"
+      )
+    );
+
+  public static final RecipeType<
     RecipeHolder<SmeltingRecipe>
   > SMELTING_METALLURGY_RECIPE_TYPE = RecipeType.createRecipeHolderType(
     ResourceLocation.fromNamespaceAndPath(
@@ -78,6 +90,9 @@ public class CoraconicJeiPlugin implements IModPlugin {
         registration.getJeiHelpers().getGuiHelper()
       ),
       new ResonanceCrystallizingRecipeCategory(
+        registration.getJeiHelpers().getGuiHelper()
+      ),
+      new InstrumentAssemblingRecipeCategory(
         registration.getJeiHelpers().getGuiHelper()
       ),
       new SmeltingMetallurgyRecipeCategory(
@@ -107,6 +122,17 @@ public class CoraconicJeiPlugin implements IModPlugin {
       resonanceRecipes
     );
 
+    List<RecipeHolder<InstrumentAssemblingRecipe>> instrumentRecipes =
+      level
+        .getRecipeManager()
+        .getAllRecipesFor(
+          ModRecipes.INSTRUMENT_ASSEMBLING_TYPE.get()
+        );
+    registration.addRecipes(
+      INSTRUMENT_ASSEMBLING_RECIPE_TYPE,
+      instrumentRecipes
+    );
+
     List<RecipeHolder<SmeltingRecipe>> smeltingRecipes = level
       .getRecipeManager()
       .getAllRecipesFor(
@@ -133,6 +159,10 @@ public class CoraconicJeiPlugin implements IModPlugin {
     registration.addRecipeCatalyst(
       new ItemStack(ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()),
       RESONANCE_CRYSTALLIZING_RECIPE_TYPE
+    );
+    registration.addRecipeCatalyst(
+      new ItemStack(ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get()),
+      INSTRUMENT_ASSEMBLING_RECIPE_TYPE
     );
     registration.addRecipeCatalyst(
       new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()),

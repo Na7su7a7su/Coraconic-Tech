@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.7f`
-- 最近版本提交：`0.0.7fr_261117_c`
+- `mod_version`：`0.0.7g`
+- 最近版本提交：`0.0.7g'A_261117_a`
 - 最后更新：2026-11-17
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7g'A_261117_a`：新增器械组合仪，提供 `256,000,000 FE` 缓存、`19,600 FE/t` 最大输入、5 个原料槽、1 个成品槽和 1 个充电槽；新增 `coraconic:instrument_assembling` 配方类型、独立原料类、JEI 分类与数据生成接入点；加入太阳能发电机 MK0 的器械组合配方；主版本号提升为 `0.0.7g`。
 - `0.0.7fr_261117_c`：将玫瑰金块与琥珀金块的合金配方总耗能调整为 `51,400 FE`；主版本号提升为 `0.0.7f`。
 - `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
 - `0.0.7fp_261114_a`：注册玫瑰金与琥珀金材料，新增锭、粒、存储块、通用标签、创造栏与四语名称；加入玫瑰金合金配方，并修正玫瑰金配方 ID 冲突。
@@ -40,10 +41,9 @@
 - `0.0.7eq_261113_b`：修复热力发电机拆除时槽内物品同时掉落并保留在方块物品中的重复问题；槽位内容现在只保留在方块物品数据中，不再生成额外掉落物；主版本号提升为 `0.0.7e`。
 - `0.0.7ep_261113_a`：新增热力发电机 MK0，提供 `96,000 FE` 缓存、每面 `600 FE/t` 输入输出、`600 FE/t` 物品充能、`640,000` 热量缓存和燃料槽；每 tick 消耗 `40` 热量并产生 `80 FE`，无热量或能量空间不足时进入 `Null` 模式。
 - `0.0.7dr_261110_g`：新增熔炼冶金仪独立 JEI 分类，同时保留原版熔炼分类催化剂；四种金属块加入信标基座标签；中文译名统一为“熔炼冶金仪”。
-- `0.0.7dq_261110_f`：修复加工机器成品槽阻塞时错误清空加工进度的问题；成品槽无法接收产物时暂停并保留配方与进度，不继续消耗能量，清空后可继续加工；主版本号提升为 `0.0.7d`。
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、器械组合仪、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -167,6 +167,18 @@
 - 每运行一个 tick 消耗 `2 FE`，能量不足或成品槽已满时暂停
 - GUI 中央提供加工进度条
 - 破坏方块时保留缓存能量、三个槽位的内容和加工进度
+- 当前仅通过创造模式获取，机器本体尚未添加合成配方
+
+#### 器械组合仪
+
+- 内部缓存：`256,000,000 FE`，从所有面接收能量，最高 `19,600 FE/t`
+- 五个原料槽、一个成品槽和一个充电槽；成品槽只能取出，不能放入
+- 充电槽只接受可接收能量的物品，每 tick 最多从缓存充能 `19,600 FE`
+- GUI 中央提供加工进度条
+- 当前配方：
+  - 1 个常金属核心 + 1 个玻璃板标签（`c:glass_panes`） → 1 个太阳能发电机 MK0（`640 FE`，`40 ticks`）
+- JEI 提供独立的器械组合仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
+- 破坏方块时保留缓存能量、七个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
 #### 热力发电机 MK0
@@ -355,14 +367,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.7f`
-- Latest version commit: `0.0.7fr_261117_c`
+- `mod_version`: `0.0.7g`
+- Latest version commit: `0.0.7g'A_261117_a`
 - Last updated: 2026-11-17
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7g'A_261117_a`: added the Instrument Assembling Machine with a `256,000,000 FE` buffer, `19,600 FE/t` maximum input, five input slots, one output slot, and one charging slot; added the `coraconic:instrument_assembling` recipe type, a dedicated ingredient class, JEI category, and data-generation integration; added the Solar Generator MK0 instrument assembling recipe; raised the main mod version to `0.0.7g`.
 - `0.0.7fr_261117_c`: raised the total energy cost of the rose gold block and amber gold block alloying recipes to `51,400 FE`; raised the main mod version to `0.0.7f`.
 - `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
 - `0.0.7fp_261114_a`: registered rose gold and amber gold materials with ingots, nuggets, storage blocks, common tags, creative-tab entries, and four-language names; added rose gold alloying recipes and fixed their recipe ID collisions.
@@ -372,10 +385,9 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7eq_261113_b`: fixed Heat Generator slot contents duplicating when broken; contents now stay only in the block item data and no extra drops are spawned; raised the main mod version to `0.0.7e`.
 - `0.0.7ep_261113_a`: added Heat Generator MK0 with a `96,000 FE` buffer, `600 FE/t` per-face input/output, `600 FE/t` item charging, a `640,000` heat buffer, and a fuel slot; it consumes `40` heat per tick to generate `80 FE` and enters `Null` mode when heat or energy space is insufficient.
 - `0.0.7dr_261110_g`: added a dedicated JEI category for the Smelting-Metallurgy Machine while keeping the vanilla smelting catalyst, added the four metal blocks to the beacon base tag, and unified the Chinese name as `熔炼冶金仪`.
-- `0.0.7dq_261110_f`: fixed processing machines clearing their progress when the output slot is blocked; they now pause with recipe and progress preserved, consume no further energy, and resume after the output is cleared; raised the main mod version to `0.0.7d`.
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Instrument Assembling Machine, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -499,6 +511,18 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Consumes `2 FE` per processing tick; pauses when energy is insufficient or the output slot is full
 - A central processing progress bar is present
 - Breaking the block preserves stored energy, all three slot contents, and progress
+- Currently obtained in creative mode only; the machine itself has no crafting recipe yet
+
+#### Instrument Assembling Machine
+
+- Internal buffer: `256,000,000 FE`, receiving energy from every side at up to `19,600 FE/t`
+- Five input slots, one output slot, and one charging slot; the output slot only allows extraction
+- The charging slot only accepts energy-receiving items and charges them from the buffer at up to `19,600 FE/t`
+- A central processing progress bar is present
+- Current recipe:
+  - 1 common-metal core + 1 glass pane tag (`c:glass_panes`) → 1 Solar Generator MK0 (`640 FE`, `40 ticks`)
+- JEI provides a dedicated Instrument Assembling Machine category with counted inputs, a progress arrow, output, energy, and time information
+- Breaking the block preserves stored energy, all seven slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
 #### Heat Generator MK0

@@ -79,6 +79,29 @@ public final class ModRecipes {
       ResonanceCrystallizingRecipeSerializer::new
     );
 
+  public static final DeferredHolder<
+    RecipeType<?>,
+    RecipeType<InstrumentAssemblingRecipe>
+  > INSTRUMENT_ASSEMBLING_TYPE = RECIPE_TYPES.register(
+    "instrument_assembling",
+    () ->
+      RecipeType.simple(
+        ResourceLocation.fromNamespaceAndPath(
+          CoraconicTech.MODID,
+          "instrument_assembling"
+        )
+      )
+  );
+
+  public static final DeferredHolder<
+    RecipeSerializer<?>,
+    RecipeSerializer<InstrumentAssemblingRecipe>
+  > INSTRUMENT_ASSEMBLING_SERIALIZER =
+    RECIPE_SERIALIZERS.register(
+      "instrument_assembling",
+      InstrumentAssemblingRecipeSerializer::new
+    );
+
   private ModRecipes() {}
 
   public static void register(IEventBus eventBus) {

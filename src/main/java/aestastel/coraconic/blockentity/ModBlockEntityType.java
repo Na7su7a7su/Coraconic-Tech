@@ -15,6 +15,7 @@ import aestastel.coraconic.block.AlloyingMachineMk2Block;
 import aestastel.coraconic.block.EnergyStorageUnitBlock;
 import aestastel.coraconic.block.GeomagneticGeneratorBlock;
 import aestastel.coraconic.block.HeatGeneratorBlock;
+import aestastel.coraconic.block.InstrumentAssemblingMachineBlock;
 import aestastel.coraconic.block.ItemStorageUnitBlock;
 import aestastel.coraconic.block.ModBlocks;
 import aestastel.coraconic.block.ResonanceCrystallizingMachineBlock;
@@ -200,6 +201,24 @@ public class ModBlockEntityType {
         BlockEntityType.Builder.of(
           ModBlockEntityType::createResonanceCrystallizingMachineBlockEntity,
           ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
+        ).build(null)
+    );
+
+  /**
+   * 器械组合仪。
+   *
+   * <p>Instrument Assembling Machine.
+   */
+  public static final DeferredHolder<
+    BlockEntityType<?>,
+    BlockEntityType<InstrumentAssemblingMachineBlockEntity>
+  > INSTRUMENT_ASSEMBLING_MACHINE_ENTITY =
+    BLOCK_ENTITY_TYPES.register(
+      "instrument_assembling_machine_entity",
+      () ->
+        BlockEntityType.Builder.of(
+          ModBlockEntityType::createInstrumentAssemblingMachineBlockEntity,
+          ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get()
         ).build(null)
     );
 
@@ -460,6 +479,32 @@ public class ModBlockEntityType {
     }
     throw new IllegalStateException(
       "Unexpected block for resonance crystallizing machine block entity: " +
+      state
+    );
+  }
+
+  /**
+   * 器械组合仪方块实体工厂。
+   *
+   * <p>Instrument assembling machine block entity factory.
+   */
+  private static InstrumentAssemblingMachineBlockEntity
+  createInstrumentAssemblingMachineBlockEntity(
+    BlockPos pos,
+    BlockState state
+  ) {
+    if (
+      state.getBlock() instanceof
+        InstrumentAssemblingMachineBlock machineBlock
+    ) {
+      return new InstrumentAssemblingMachineBlockEntity(
+        machineBlock.getBlockEntityType(),
+        pos,
+        state
+      );
+    }
+    throw new IllegalStateException(
+      "Unexpected block for instrument assembling machine block entity: " +
       state
     );
   }
