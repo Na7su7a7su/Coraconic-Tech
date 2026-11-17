@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7g`
-- 最近版本提交：`0.0.7g'A_261117_a`
+- 最近版本提交：`0.0.7'B_261117_b`
 - 最后更新：2026-11-17
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7'B_261117_b`：更新 README 中的版本提交记录。
 - `0.0.7g'A_261117_a`：新增器械组合仪，提供 `256,000,000 FE` 缓存、`19,600 FE/t` 最大输入、5 个原料槽、1 个成品槽和 1 个充电槽；新增 `coraconic:instrument_assembling` 配方类型、独立原料类、JEI 分类与数据生成接入点；加入太阳能发电机 MK0 的器械组合配方；主版本号提升为 `0.0.7g`。
 - `0.0.7fr_261117_c`：将玫瑰金块与琥珀金块的合金配方总耗能调整为 `51,400 FE`；主版本号提升为 `0.0.7f`。
 - `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
@@ -40,7 +41,6 @@
 - `0.0.7er_261113_c`：热力发电机新增 `Passive` 与 `Mix` 模式；地磁发电机拆分为独立菜单与客户端 CLI；三类发电机 CLI 最后一栏统一为特色栏，分别显示世界时间/维度、机器 Y 坐标/维度、剩余热量/相邻熔岩数。
 - `0.0.7eq_261113_b`：修复热力发电机拆除时槽内物品同时掉落并保留在方块物品中的重复问题；槽位内容现在只保留在方块物品数据中，不再生成额外掉落物；主版本号提升为 `0.0.7e`。
 - `0.0.7ep_261113_a`：新增热力发电机 MK0，提供 `96,000 FE` 缓存、每面 `600 FE/t` 输入输出、`600 FE/t` 物品充能、`640,000` 热量缓存和燃料槽；每 tick 消耗 `40` 热量并产生 `80 FE`，无热量或能量空间不足时进入 `Null` 模式。
-- `0.0.7dr_261110_g`：新增熔炼冶金仪独立 JEI 分类，同时保留原版熔炼分类催化剂；四种金属块加入信标基座标签；中文译名统一为“熔炼冶金仪”。
 ### 快速开始
 
 1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、器械组合仪、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
@@ -368,13 +368,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7g`
-- Latest version commit: `0.0.7g'A_261117_a`
+- Latest version commit: `0.0.7'B_261117_b`
 - Last updated: 2026-11-17
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7'B_261117_b`: updated the release metadata in README.
 - `0.0.7g'A_261117_a`: added the Instrument Assembling Machine with a `256,000,000 FE` buffer, `19,600 FE/t` maximum input, five input slots, one output slot, and one charging slot; added the `coraconic:instrument_assembling` recipe type, a dedicated ingredient class, JEI category, and data-generation integration; added the Solar Generator MK0 instrument assembling recipe; raised the main mod version to `0.0.7g`.
 - `0.0.7fr_261117_c`: raised the total energy cost of the rose gold block and amber gold block alloying recipes to `51,400 FE`; raised the main mod version to `0.0.7f`.
 - `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
@@ -384,7 +385,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7er_261113_c`: added `Passive` and `Mix` modes to the Heat Generator, split the Geomagnetic Generator into its own menu and client CLI, and unified the final CLI line across all three generator families as a feature line showing world time/dimension, machine Y/dimension, and remaining heat/adjacent lava count.
 - `0.0.7eq_261113_b`: fixed Heat Generator slot contents duplicating when broken; contents now stay only in the block item data and no extra drops are spawned; raised the main mod version to `0.0.7e`.
 - `0.0.7ep_261113_a`: added Heat Generator MK0 with a `96,000 FE` buffer, `600 FE/t` per-face input/output, `600 FE/t` item charging, a `640,000` heat buffer, and a fuel slot; it consumes `40` heat per tick to generate `80 FE` and enters `Null` mode when heat or energy space is insufficient.
-- `0.0.7dr_261110_g`: added a dedicated JEI category for the Smelting-Metallurgy Machine while keeping the vanilla smelting catalyst, added the four metal blocks to the beacon base tag, and unified the Chinese name as `熔炼冶金仪`.
 ### Quick Start
 
 1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Instrument Assembling Machine, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
