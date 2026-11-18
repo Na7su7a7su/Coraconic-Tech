@@ -10,9 +10,9 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.item.SpannerItem;
-import aestastel.coraconic.item.SpannerMode;
-import aestastel.coraconic.network.SpannerModePayload;
+import aestastel.coraconic.common.item.SpannerItem;
+import aestastel.coraconic.common.item.SpannerMode;
+import aestastel.coraconic.common.network.SpannerModePayload;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

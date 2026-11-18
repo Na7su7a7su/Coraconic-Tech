@@ -19,7 +19,7 @@ import aestastel.coraconic.client.ItemStorageUnitScreen;
 import aestastel.coraconic.client.ResonanceCrystallizingMachineScreen;
 import aestastel.coraconic.client.SmeltingMetallurgyMachineScreen;
 import aestastel.coraconic.client.SolarGeneratorScreen;
-import aestastel.coraconic.menu.ModMenuType;
+import aestastel.coraconic.common.menu.ModMenuType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

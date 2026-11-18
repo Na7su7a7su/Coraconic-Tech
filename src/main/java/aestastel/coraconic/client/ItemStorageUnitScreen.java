@@ -10,7 +10,7 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.menu.ItemStorageUnitMenu;
+import aestastel.coraconic.common.menu.ItemStorageUnitMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

@@ -10,8 +10,8 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicJeiPlugin;
-import aestastel.coraconic.block.ModBlocks;
-import aestastel.coraconic.blockentity.SmeltingMetallurgyMachineBlockEntity;
+import aestastel.coraconic.common.block.ModBlocks;
+import aestastel.coraconic.common.blockentity.SmeltingMetallurgyMachineBlockEntity;
 import java.util.Arrays;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;

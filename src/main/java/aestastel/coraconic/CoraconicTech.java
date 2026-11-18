@@ -9,15 +9,15 @@
 
 package aestastel.coraconic;
 
-import aestastel.coraconic.blockentity.ModBlockEntityType;
-import aestastel.coraconic.block.ModBlocks;
-import aestastel.coraconic.creativetab.ModCreativeModeTabs;
-import aestastel.coraconic.item.ModItems;
-import aestastel.coraconic.loot.ModLootConditions;
-import aestastel.coraconic.loot.ModLootModifiers;
-import aestastel.coraconic.menu.ModMenuType;
-import aestastel.coraconic.network.ModNetwork;
-import aestastel.coraconic.recipe.ModRecipes;
+import aestastel.coraconic.common.blockentity.ModBlockEntityType;
+import aestastel.coraconic.common.block.ModBlocks;
+import aestastel.coraconic.common.creativetab.ModCreativeModeTabs;
+import aestastel.coraconic.common.item.ModItems;
+import aestastel.coraconic.common.loot.ModLootConditions;
+import aestastel.coraconic.common.loot.ModLootModifiers;
+import aestastel.coraconic.common.menu.ModMenuType;
+import aestastel.coraconic.common.network.ModNetwork;
+import aestastel.coraconic.common.recipe.ModRecipes;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;

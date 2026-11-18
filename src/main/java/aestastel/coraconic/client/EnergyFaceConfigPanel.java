@@ -9,8 +9,8 @@
 
 package aestastel.coraconic.client;
 
-import aestastel.coraconic.energy.EnergyFaceMode;
-import aestastel.coraconic.menu.EnergyFaceMenu;
+import aestastel.coraconic.common.energy.EnergyFaceMode;
+import aestastel.coraconic.common.menu.EnergyFaceMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

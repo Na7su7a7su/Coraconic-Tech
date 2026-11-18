@@ -10,9 +10,9 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicJeiPlugin;
-import aestastel.coraconic.block.ModBlocks;
-import aestastel.coraconic.recipe.InstrumentAssemblingIngredient;
-import aestastel.coraconic.recipe.InstrumentAssemblingRecipe;
+import aestastel.coraconic.common.block.ModBlocks;
+import aestastel.coraconic.common.recipe.InstrumentAssemblingIngredient;
+import aestastel.coraconic.common.recipe.InstrumentAssemblingRecipe;
 import java.util.Arrays;
 import java.util.List;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

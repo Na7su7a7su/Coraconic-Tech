@@ -9,9 +9,9 @@
 
 package aestastel.coraconic;
 
-import aestastel.coraconic.blockentity.ModBlockEntityType;
-import aestastel.coraconic.block.ModBlocks;
-import aestastel.coraconic.item.EnergyStorageUnitItem;
+import aestastel.coraconic.common.blockentity.ModBlockEntityType;
+import aestastel.coraconic.common.block.ModBlocks;
+import aestastel.coraconic.common.item.EnergyStorageUnitItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

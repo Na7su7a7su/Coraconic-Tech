@@ -9,15 +9,15 @@
 
 package aestastel.coraconic;
 
-import aestastel.coraconic.block.ModBlocks;
+import aestastel.coraconic.common.block.ModBlocks;
 import aestastel.coraconic.client.AlloyingRecipeCategory;
 import aestastel.coraconic.client.InstrumentAssemblingRecipeCategory;
 import aestastel.coraconic.client.ResonanceCrystallizingRecipeCategory;
 import aestastel.coraconic.client.SmeltingMetallurgyRecipeCategory;
-import aestastel.coraconic.recipe.AlloyingRecipe;
-import aestastel.coraconic.recipe.InstrumentAssemblingRecipe;
-import aestastel.coraconic.recipe.ModRecipes;
-import aestastel.coraconic.recipe.ResonanceCrystallizingRecipe;
+import aestastel.coraconic.common.recipe.AlloyingRecipe;
+import aestastel.coraconic.common.recipe.InstrumentAssemblingRecipe;
+import aestastel.coraconic.common.recipe.ModRecipes;
+import aestastel.coraconic.common.recipe.ResonanceCrystallizingRecipe;
 import java.util.List;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;

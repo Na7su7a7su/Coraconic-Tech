@@ -10,8 +10,8 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.energy.EnergyFormat;
-import aestastel.coraconic.menu.GeomagneticGeneratorMenu;
+import aestastel.coraconic.common.energy.EnergyFormat;
+import aestastel.coraconic.common.menu.GeomagneticGeneratorMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

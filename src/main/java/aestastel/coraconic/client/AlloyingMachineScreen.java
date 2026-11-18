@@ -10,8 +10,8 @@
 package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.energy.EnergyFormat;
-import aestastel.coraconic.menu.AlloyingMachineMenu;
+import aestastel.coraconic.common.energy.EnergyFormat;
+import aestastel.coraconic.common.menu.AlloyingMachineMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
