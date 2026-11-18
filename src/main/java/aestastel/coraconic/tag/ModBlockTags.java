@@ -51,6 +51,9 @@ public class ModBlockTags {
   public static final TagKey<Block> STORAGE_BLOCKS_AVIRACONIC = commonTag(
     "storage_blocks/aviraconic"
   );
+  public static final TagKey<Block> STORAGE_BLOCKS_EMBERACONIC = commonTag(
+    "storage_blocks/emberaconic"
+  );
   public static final TagKey<Block> STORAGE_BLOCKS_ROSE_GOLD = commonTag(
     "storage_blocks/rose_gold"
   );

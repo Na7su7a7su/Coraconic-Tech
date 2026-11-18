@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:echo_shard"
+    },
+    "C": {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    "G": {
+      "tag": "c:ingots/amber_gold"
+    },
+    "O": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "CGO",
+    "G#G",
+    "OGC"
+  ],
+  "result": {
+    "count": 2,
+    "id": "coraconic:emberaconic_core"
+  }
+}

@@ -98,8 +98,29 @@ public class ModAlloyingRecipesProvider extends RecipeProvider {
           )
         ),
         new ItemStack(ModItems.AVIRACONIC_METAL_INGOT.get()),
-        6400,
+        265300,
         50
+      ),
+      null
+    );
+
+    recipeOutput.accept(
+      ResourceLocation.fromNamespaceAndPath(
+        CoraconicTech.MODID,
+        "alloying/emberaconic_metal_ingot"
+      ),
+      new AlloyingRecipe(
+        List.of(
+          new AlloyingIngredient(Ingredient.of(Items.NETHERITE_INGOT), 1),
+          new AlloyingIngredient(Ingredient.of(Items.GOLD_INGOT), 1),
+          new AlloyingIngredient(
+            Ingredient.of(ModItemTags.ELEMENTS_EMBERACONIC),
+            1
+          )
+        ),
+        new ItemStack(ModItems.EMBERACONIC_METAL_INGOT.get()),
+        1069000,
+        60
       ),
       null
     );

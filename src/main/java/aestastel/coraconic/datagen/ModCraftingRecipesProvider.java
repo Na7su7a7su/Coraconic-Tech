@@ -92,6 +92,24 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
       )
       .save(recipeOutput);
 
+    ShapedRecipeBuilder.shaped(
+      RecipeCategory.MISC,
+      ModItems.EMBERACONIC_CORE.get(),
+      2
+    )
+      .define('C', ModItems.EMBERACONIC_METAL_INGOT.get())
+      .define('G', ModItemTags.INGOTS_AMBER_GOLD)
+      .define('O', Items.REDSTONE)
+      .define('#', Items.ECHO_SHARD)
+      .pattern("CGO")
+      .pattern("G#G")
+      .pattern("OGC")
+      .unlockedBy(
+        "has_emberaconic_metal_ingot",
+        has(ModItems.EMBERACONIC_METAL_INGOT.get())
+      )
+      .save(recipeOutput);
+
     // 常金属核心：铅锭、铁锭、红石、金锭与锡锭合成两个。
     // Common metal core: two cores from lead, iron, redstone, gold, and tin.
     ShapedRecipeBuilder.shaped(
@@ -139,6 +157,19 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
       .unlockedBy(
         "has_aviraconic_element",
         has(ModItems.AVIRACONIC_ELEMENT.get())
+      )
+      .save(recipeOutput);
+    ShapelessRecipeBuilder.shapeless(
+      RecipeCategory.MISC,
+      ModItems.EMBERACONIC_METAL_INGOT.get()
+    )
+      .requires(ModItems.AVIRACONIC_METAL_INGOT.get(), 1)
+      .requires(Items.GOLD_INGOT)
+      .requires(Items.NETHERITE_INGOT)
+      .requires(ModItems.EMBERACONIC_ELEMENT.get(), 4)
+      .unlockedBy(
+        "has_emberaconic_element",
+        has(ModItems.EMBERACONIC_ELEMENT.get())
       )
       .save(recipeOutput);
   }

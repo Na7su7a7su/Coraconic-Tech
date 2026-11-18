@@ -64,6 +64,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     dropSelf(ModBlocks.SILVER_BLOCK.get());
     dropSelf(ModBlocks.CORACONIC_METAL_BLOCK.get());
     dropSelf(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
+    dropSelf(ModBlocks.EMBERACONIC_METAL_BLOCK.get());
     dropSelf(ModBlocks.ROSE_GOLD_BLOCK.get());
     dropSelf(ModBlocks.AMBER_GOLD_BLOCK.get());
 

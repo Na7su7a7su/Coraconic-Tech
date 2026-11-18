@@ -63,6 +63,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(ModItemTags.INGOTS_AVIRACONIC).add(
       ModItems.AVIRACONIC_METAL_INGOT.get()
     );
+    tag(ModItemTags.INGOTS_EMBERACONIC).add(
+      ModItems.EMBERACONIC_METAL_INGOT.get()
+    );
     tag(ModItemTags.INGOTS_ROSE_GOLD).add(ModItems.ROSE_GOLD_INGOT.get());
     tag(ModItemTags.INGOTS_AMBER_GOLD).add(ModItems.AMBER_GOLD_INGOT.get());
     tag(Tags.Items.INGOTS)
@@ -71,6 +74,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.INGOTS_SILVER)
       .addTag(ModItemTags.INGOTS_CORACONIC)
       .addTag(ModItemTags.INGOTS_AVIRACONIC)
+      .addTag(ModItemTags.INGOTS_EMBERACONIC)
       .addTag(ModItemTags.INGOTS_ROSE_GOLD)
       .addTag(ModItemTags.INGOTS_AMBER_GOLD);
 
@@ -81,6 +85,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(ModItemTags.NUGGETS_SILVER).add(ModItems.SILVER_NUGGET.get());
     tag(ModItemTags.NUGGETS_CORACONIC).add(ModItems.CORACONIC_NUGGET.get());
     tag(ModItemTags.NUGGETS_AVIRACONIC).add(ModItems.AVIRACONIC_NUGGET.get());
+    tag(ModItemTags.NUGGETS_EMBERACONIC).add(
+      ModItems.EMBERACONIC_METAL_NUGGET.get()
+    );
     tag(ModItemTags.NUGGETS_ROSE_GOLD).add(
       ModItems.ROSE_GOLD_NUGGET.get()
     );
@@ -93,6 +100,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.NUGGETS_SILVER)
       .addTag(ModItemTags.NUGGETS_CORACONIC)
       .addTag(ModItemTags.NUGGETS_AVIRACONIC)
+      .addTag(ModItemTags.NUGGETS_EMBERACONIC)
       .addTag(ModItemTags.NUGGETS_ROSE_GOLD)
       .addTag(ModItemTags.NUGGETS_AMBER_GOLD);
 
@@ -138,6 +146,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       ModItemTags.STORAGE_BLOCKS_AVIRACONIC
     );
     copy(
+      ModBlockTags.STORAGE_BLOCKS_EMBERACONIC,
+      ModItemTags.STORAGE_BLOCKS_EMBERACONIC
+    );
+    copy(
       ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD,
       ModItemTags.STORAGE_BLOCKS_ROSE_GOLD
     );
@@ -151,13 +163,21 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.STORAGE_BLOCKS_SILVER)
       .addTag(ModItemTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModItemTags.STORAGE_BLOCKS_AVIRACONIC)
+      .addTag(ModItemTags.STORAGE_BLOCKS_EMBERACONIC)
       .addTag(ModItemTags.STORAGE_BLOCKS_ROSE_GOLD)
       .addTag(ModItemTags.STORAGE_BLOCKS_AMBER_GOLD);
+
+    // 硅：注册通用硅标签。
+    // Silicon: register the common silicon tag.
+    tag(ModItemTags.SILICON).add(ModItems.SILICON.get());
 
     // 元素：注册核龙元素与腾龙元素的通用标签。
     // Elements: register common tags for coraconic and aviraconic elements.
     tag(ModItemTags.ELEMENTS_CORACONIC).add(ModItems.CORACONIC_ELEMENT.get());
     tag(ModItemTags.ELEMENTS_AVIRACONIC).add(ModItems.AVIRACONIC_ELEMENT.get());
+    tag(ModItemTags.ELEMENTS_EMBERACONIC).add(
+      ModItems.EMBERACONIC_ELEMENT.get()
+    );
 
     // 晶体：注册核龙晶体与腾龙晶体的通用宝石标签，并挂到 c:gems 父标签。
     // Gems: register common gem tags for the coraconic and aviraconic crystals, and attach them to c:gems.
@@ -167,9 +187,13 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     tag(ModItemTags.GEMS_AVIRACONIC_DS).add(
       ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL.get()
     );
+    tag(ModItemTags.GEMS_EMBERACONIC_DS).add(
+      ModItems.EMBERACONIC_DIAMOND_STRUCTURED_CRYSTAL.get()
+    );
     tag(Tags.Items.GEMS)
       .addTag(ModItemTags.GEMS_CORACONIC_DS)
-      .addTag(ModItemTags.GEMS_AVIRACONIC_DS);
+      .addTag(ModItemTags.GEMS_AVIRACONIC_DS)
+      .addTag(ModItemTags.GEMS_EMBERACONIC_DS);
 
     // 工具：将锡、铅、核龙金属与腾龙金属四套工具挂到原版工具标签。
     // Tools: attach the tin, lead, coraconic, and aviraconic tool sets to vanilla tool tags.

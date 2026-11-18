@@ -1,0 +1,29 @@
+{
+  "type": "coraconic:alloying",
+  "energy": 1069000,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:netherite_ingot"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:elements/emberaconic"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:emberaconic_metal_ingot"
+  },
+  "time": 60
+}

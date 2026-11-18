@@ -82,6 +82,10 @@ public class ModItems {
     ITEMS.register("aviraconic_metal_ingot", () ->
       new Item(new Item.Properties())
     );
+  public static final DeferredItem<Item> EMBERACONIC_METAL_INGOT =
+    ITEMS.register("emberaconic_metal_ingot", () ->
+      new Item(new Item.Properties().fireResistant())
+    );
   public static final DeferredItem<Item> ROSE_GOLD_INGOT = ITEMS.register(
     "rose_gold_ingot",
     () -> new Item(new Item.Properties())
@@ -110,6 +114,10 @@ public class ModItems {
     "aviraconic_nugget",
     () -> new Item(new Item.Properties())
   );
+  public static final DeferredItem<Item> EMBERACONIC_METAL_NUGGET =
+    ITEMS.register("emberaconic_metal_nugget", () ->
+      new Item(new Item.Properties().fireResistant())
+    );
   public static final DeferredItem<Item> ROSE_GOLD_NUGGET = ITEMS.register(
     "rose_gold_nugget",
     () -> new Item(new Item.Properties())
@@ -125,6 +133,10 @@ public class ModItems {
   public static final DeferredItem<Item> AVIRACONIC_CORE = ITEMS.register(
     "aviraconic_core",
     () -> new Item(new Item.Properties())
+  );
+  public static final DeferredItem<Item> EMBERACONIC_CORE = ITEMS.register(
+    "emberaconic_core",
+    () -> new Item(new Item.Properties().fireResistant())
   );
   public static final DeferredItem<Item> RAW_TIN = ITEMS.register(
     "raw_tin",
@@ -146,6 +158,10 @@ public class ModItems {
     "aviraconic_element",
     () -> new Item(new Item.Properties())
   );
+  public static final DeferredItem<Item> EMBERACONIC_ELEMENT = ITEMS.register(
+    "emberaconic_element",
+    () -> new Item(new Item.Properties().fireResistant())
+  );
   public static final DeferredItem<Item> CORACONIC_DIAMOND_STRUCTURED_CRYSTAL =
     ITEMS.register("coraconic_diamond-structured_crystal", () ->
       new Item(new Item.Properties())
@@ -154,6 +170,12 @@ public class ModItems {
     ITEMS.register("aviraconic_diamond-structured_crystal", () ->
       new Item(new Item.Properties())
     );
+  public static final DeferredItem<
+    Item
+  > EMBERACONIC_DIAMOND_STRUCTURED_CRYSTAL = ITEMS.register(
+    "emberaconic_diamond-structured_crystal",
+    () -> new Item(new Item.Properties().fireResistant())
+  );
   public static final DeferredItem<Item> TIN_SWORD = ITEMS.register(
     "tin_sword",
     () ->
@@ -378,6 +400,11 @@ public class ModItems {
   public static final DeferredItem<Item> SPANNER = ITEMS.register(
     "spanner",
     () -> new SpannerItem(new Item.Properties().stacksTo(1))
+  );
+
+  public static final DeferredItem<Item> SILICON = ITEMS.register(
+    "silicon",
+    () -> new Item(new Item.Properties())
   );
 
   /**

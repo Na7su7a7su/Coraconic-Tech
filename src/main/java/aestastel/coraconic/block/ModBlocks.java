@@ -107,6 +107,16 @@ public class ModBlocks {
           .requiresCorrectToolForDrops()
       )
   );
+  public static final DeferredBlock<Block> EMBERACONIC_METAL_BLOCK = registerBlocks(
+    "emberaconic_metal_block",
+    () ->
+      new Block(
+        BlockBehaviour.Properties.of()
+          .strength(1.5F, 6.0F)
+          .requiresCorrectToolForDrops()
+      ),
+    (block, properties) -> new BlockItem(block, properties.fireResistant())
+  );
   public static final DeferredBlock<Block> ROSE_GOLD_BLOCK = registerBlocks(
     "rose_gold_block",
     () ->

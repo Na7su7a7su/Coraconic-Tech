@@ -44,6 +44,7 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.SILVER_INGOT);
           output.accept(ModItems.CORACONIC_METAL_INGOT);
           output.accept(ModItems.AVIRACONIC_METAL_INGOT);
+          output.accept(ModItems.EMBERACONIC_METAL_INGOT);
           output.accept(ModItems.ROSE_GOLD_INGOT);
           output.accept(ModItems.AMBER_GOLD_INGOT);
           output.accept(ModItems.TIN_NUGGET);
@@ -51,11 +52,13 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.SILVER_NUGGET);
           output.accept(ModItems.CORACONIC_NUGGET);
           output.accept(ModItems.AVIRACONIC_NUGGET);
+          output.accept(ModItems.EMBERACONIC_METAL_NUGGET);
           output.accept(ModItems.ROSE_GOLD_NUGGET);
           output.accept(ModItems.AMBER_GOLD_NUGGET);
           output.accept(ModItems.COMMONMETAL_CORE);
           output.accept(ModItems.CORACONIC_CORE);
           output.accept(ModItems.AVIRACONIC_CORE);
+          output.accept(ModItems.EMBERACONIC_CORE);
           output.accept(ModItems.EFFECT_AMPLIFICATION_CORE);
           output.accept(ModItems.SPATIAL_SCALING_CORE);
           output.accept(ModItems.PHASE_SYNCHRONIZATION_CORE);
@@ -66,13 +69,19 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.RAW_SILVER);
           output.accept(ModItems.CORACONIC_ELEMENT);
           output.accept(ModItems.AVIRACONIC_ELEMENT);
+          output.accept(ModItems.EMBERACONIC_ELEMENT);
+          output.accept(ModItems.SILICON);
           output.accept(ModItems.CORACONIC_DIAMOND_STRUCTURED_CRYSTAL);
           output.accept(ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL);
+          output.accept(
+            ModItems.EMBERACONIC_DIAMOND_STRUCTURED_CRYSTAL
+          );
           output.accept(ModBlocks.TIN_BLOCK.get());
           output.accept(ModBlocks.LEAD_BLOCK.get());
           output.accept(ModBlocks.SILVER_BLOCK.get());
           output.accept(ModBlocks.CORACONIC_METAL_BLOCK.get());
           output.accept(ModBlocks.AVIRACONIC_METAL_BLOCK.get());
+          output.accept(ModBlocks.EMBERACONIC_METAL_BLOCK.get());
           output.accept(ModBlocks.ROSE_GOLD_BLOCK.get());
           output.accept(ModBlocks.AMBER_GOLD_BLOCK.get());
           output.accept(ModBlocks.TIN_ORE.get());

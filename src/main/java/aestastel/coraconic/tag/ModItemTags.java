@@ -32,6 +32,9 @@ public class ModItemTags {
   public static final TagKey<Item> INGOTS_AVIRACONIC = commonTag(
     "ingots/aviraconic"
   );
+  public static final TagKey<Item> INGOTS_EMBERACONIC = commonTag(
+    "ingots/emberaconic"
+  );
   public static final TagKey<Item> INGOTS_ROSE_GOLD = commonTag(
     "ingots/rose_gold"
   );
@@ -47,6 +50,9 @@ public class ModItemTags {
   );
   public static final TagKey<Item> NUGGETS_AVIRACONIC = commonTag(
     "nuggets/aviraconic"
+  );
+  public static final TagKey<Item> NUGGETS_EMBERACONIC = commonTag(
+    "nuggets/emberaconic"
   );
   public static final TagKey<Item> NUGGETS_ROSE_GOLD = commonTag(
     "nuggets/rose_gold"
@@ -84,17 +90,25 @@ public class ModItemTags {
   public static final TagKey<Item> STORAGE_BLOCKS_AVIRACONIC = commonTag(
     "storage_blocks/aviraconic"
   );
+  public static final TagKey<Item> STORAGE_BLOCKS_EMBERACONIC = commonTag(
+    "storage_blocks/emberaconic"
+  );
   public static final TagKey<Item> STORAGE_BLOCKS_ROSE_GOLD = commonTag(
     "storage_blocks/rose_gold"
   );
   public static final TagKey<Item> STORAGE_BLOCKS_AMBER_GOLD = commonTag(
     "storage_blocks/amber_gold"
   );
+  public static final TagKey<Item> SILICON = commonTag("silicon");
+
   public static final TagKey<Item> ELEMENTS_CORACONIC = commonTag(
     "elements/coraconic"
   );
   public static final TagKey<Item> ELEMENTS_AVIRACONIC = commonTag(
     "elements/aviraconic"
+  );
+  public static final TagKey<Item> ELEMENTS_EMBERACONIC = commonTag(
+    "elements/emberaconic"
   );
 
   public static final TagKey<Item> GEMS_CORACONIC_DS = commonTag(
@@ -102,6 +116,9 @@ public class ModItemTags {
   );
   public static final TagKey<Item> GEMS_AVIRACONIC_DS = commonTag(
     "gems/aviraconic-diamond-structured"
+  );
+  public static final TagKey<Item> GEMS_EMBERACONIC_DS = commonTag(
+    "gems/emberaconic-diamond-structured"
   );
 
   private ModItemTags() {}

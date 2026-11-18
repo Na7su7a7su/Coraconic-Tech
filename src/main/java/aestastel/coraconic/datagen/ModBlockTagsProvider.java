@@ -99,6 +99,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     tag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC).add(
       ModBlocks.AVIRACONIC_METAL_BLOCK.get()
     );
+    tag(ModBlockTags.STORAGE_BLOCKS_EMBERACONIC).add(
+      ModBlocks.EMBERACONIC_METAL_BLOCK.get()
+    );
     tag(ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD).add(
       ModBlocks.ROSE_GOLD_BLOCK.get()
     );
@@ -111,6 +114,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       .addTag(ModBlockTags.STORAGE_BLOCKS_SILVER)
       .addTag(ModBlockTags.STORAGE_BLOCKS_CORACONIC)
       .addTag(ModBlockTags.STORAGE_BLOCKS_AVIRACONIC)
+      .addTag(ModBlockTags.STORAGE_BLOCKS_EMBERACONIC)
       .addTag(ModBlockTags.STORAGE_BLOCKS_ROSE_GOLD)
       .addTag(ModBlockTags.STORAGE_BLOCKS_AMBER_GOLD);
 
@@ -131,6 +135,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
       ModBlocks.SILVER_BLOCK.get(),
       ModBlocks.CORACONIC_METAL_BLOCK.get(),
       ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
+      ModBlocks.EMBERACONIC_METAL_BLOCK.get(),
       ModBlocks.ROSE_GOLD_BLOCK.get(),
       ModBlocks.AMBER_GOLD_BLOCK.get(),
       ModBlocks.TIN_ORE.get(),
@@ -168,7 +173,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     // Coraconic and aviraconic blocks require a diamond pickaxe or better.
     tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
       ModBlocks.CORACONIC_METAL_BLOCK.get(),
-      ModBlocks.AVIRACONIC_METAL_BLOCK.get()
+      ModBlocks.AVIRACONIC_METAL_BLOCK.get(),
+      ModBlocks.EMBERACONIC_METAL_BLOCK.get()
     );
   }
 }
