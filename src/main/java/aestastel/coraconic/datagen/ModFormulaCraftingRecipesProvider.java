@@ -214,6 +214,39 @@ public class ModFormulaCraftingRecipesProvider extends RecipeProvider {
     packingRecipe(
       recipeOutput,
       RecipeCategory.BUILDING_BLOCKS,
+      ModBlocks.EMBERACONIC_METAL_BLOCK.get(),
+      ModItems.EMBERACONIC_METAL_INGOT.get(),
+      "emberaconic_metal_block",
+      "has_emberaconic_metal_ingot"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.EMBERACONIC_METAL_INGOT.get(),
+      ModBlocks.EMBERACONIC_METAL_BLOCK.get(),
+      "emberaconic_metal_ingot_from_emberaconic_metal_block",
+      "has_emberaconic_metal_block"
+    );
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.EMBERACONIC_METAL_INGOT.get(),
+      ModItems.EMBERACONIC_METAL_NUGGET.get(),
+      "emberaconic_metal_ingot_from_emberaconic_metal_nuggets",
+      "has_emberaconic_metal_nugget"
+    );
+    unpackingRecipe(
+      recipeOutput,
+      RecipeCategory.MISC,
+      ModItems.EMBERACONIC_METAL_NUGGET.get(),
+      ModItems.EMBERACONIC_METAL_INGOT.get(),
+      "emberaconic_metal_nugget_from_emberaconic_metal_ingot",
+      "has_emberaconic_metal_ingot"
+    );
+
+    packingRecipe(
+      recipeOutput,
+      RecipeCategory.BUILDING_BLOCKS,
       ModBlocks.ROSE_GOLD_BLOCK.get(),
       ModItems.ROSE_GOLD_INGOT.get(),
       "rose_gold_block",

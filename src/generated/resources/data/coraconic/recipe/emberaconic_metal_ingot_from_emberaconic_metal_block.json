@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coraconic:emberaconic_metal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "coraconic:emberaconic_metal_ingot"
+  }
+}

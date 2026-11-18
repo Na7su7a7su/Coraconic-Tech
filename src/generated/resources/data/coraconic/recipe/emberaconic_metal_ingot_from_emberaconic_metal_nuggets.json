@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_nugget"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:emberaconic_metal_ingot"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    },
+    {
+      "item": "coraconic:emberaconic_metal_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:emberaconic_metal_block"
+  }
+}
