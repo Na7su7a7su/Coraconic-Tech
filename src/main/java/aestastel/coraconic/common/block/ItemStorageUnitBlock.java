@@ -37,9 +37,9 @@ import net.minecraft.world.phys.HitResult;
  * <p>三个等级共用本类，通过构造参数传入方块实体类型与容量。方块布局始终
  * 为 9 行，等级越高列数越多：
  * <ul>
- *   <li>MK1：9 行 × 9 列 = 81 格；</li>
- *   <li>MK2：9 行 × 18 列 = 162 格；</li>
- *   <li>MK3：9 行 × 27 列 = 243 格。</li>
+ *   <li>初始：9 行 × 9 列 = 81 格；</li>
+ *   <li>精善：9 行 × 18 列 = 162 格；</li>
+ *   <li>强化：9 行 × 27 列 = 243 格。</li>
  * </ul>
  *
  * <p>Item Storage Unit block shared by all tiers. The block entity type and capacity
@@ -48,9 +48,9 @@ import net.minecraft.world.phys.HitResult;
  */
 public class ItemStorageUnitBlock extends Block implements EntityBlock {
 
-  public static final int SLOTS_MK1 = 81;
-  public static final int SLOTS_MK2 = 162;
-  public static final int SLOTS_MK3 = 243;
+  public static final int SLOTS_PRIMITIVE = 81;
+  public static final int SLOTS_REFINED = 162;
+  public static final int SLOTS_ENHANCED = 243;
 
   public static final DirectionProperty FACING =
     HorizontalDirectionalBlock.FACING;

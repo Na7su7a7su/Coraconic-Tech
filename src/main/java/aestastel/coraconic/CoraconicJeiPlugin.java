@@ -149,11 +149,11 @@ public class CoraconicJeiPlugin implements IModPlugin {
     IRecipeCatalystRegistration registration
   ) {
     registration.addRecipeCatalyst(
-      new ItemStack(ModBlocks.ALLOYING_MACHINE_MK1.get()),
+      new ItemStack(ModBlocks.ALLOYING_MACHINE_REFINED.get()),
       ALLOYING_RECIPE_TYPE
     );
     registration.addRecipeCatalyst(
-      new ItemStack(ModBlocks.ALLOYING_MACHINE_MK2.get()),
+      new ItemStack(ModBlocks.ALLOYING_MACHINE_ENHANCED.get()),
       ALLOYING_RECIPE_TYPE
     );
     registration.addRecipeCatalyst(
@@ -165,11 +165,11 @@ public class CoraconicJeiPlugin implements IModPlugin {
       INSTRUMENT_ASSEMBLING_RECIPE_TYPE
     );
     registration.addRecipeCatalyst(
-      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()),
+      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get()),
       RecipeTypes.SMELTING
     );
     registration.addRecipeCatalyst(
-      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()),
+      new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get()),
       SMELTING_METALLURGY_RECIPE_TYPE
     );
   }

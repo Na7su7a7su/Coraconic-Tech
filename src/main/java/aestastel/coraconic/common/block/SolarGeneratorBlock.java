@@ -10,6 +10,8 @@
 package aestastel.coraconic.common.block;
 
 import aestastel.coraconic.common.blockentity.SolarGeneratorBlockEntity;
+import aestastel.coraconic.common.machine.MachineProfile;
+import aestastel.coraconic.common.machine.TieredMachine;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,16 +36,19 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * 太阳能发电机 MK0–MK3 的共用方块。
+ * 太阳能发电机 Primitive–Superior 的共用方块。
  *
  * <p>方块本身只负责创建方块实体、驱动服务端 ticker 和打开界面；发电判定、
  * 缓存与面向外部的能量能力由 {@link SolarGeneratorBlockEntity} 处理。
  *
- * <p>Shared solar generator block for MK0–MK3. It creates the block entity,
+ * <p>Shared solar generator block for Primitive–Superior. It creates the block entity,
  * runs the server-side ticker, and opens the GUI; generation and energy
  * handling live in {@link SolarGeneratorBlockEntity}.
  */
-public class SolarGeneratorBlock extends Block implements EntityBlock {
+public class SolarGeneratorBlock
+  extends Block
+  implements EntityBlock, TieredMachine
+{
 
   public static final DirectionProperty FACING =
     HorizontalDirectionalBlock.FACING;
@@ -112,6 +117,11 @@ public class SolarGeneratorBlock extends Block implements EntityBlock {
 
   /** {@return 本方块对应的太阳能发电机等级} */
   public SolarGeneratorTier getTier() {
+    return this.tier;
+  }
+
+  @Override
+  public MachineProfile machineProfile() {
     return this.tier;
   }
 

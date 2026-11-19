@@ -12,6 +12,7 @@ package aestastel.coraconic.common.menu;
 import aestastel.coraconic.common.block.HeatGeneratorMode;
 import aestastel.coraconic.common.blockentity.FuelFluidHelper;
 import aestastel.coraconic.common.blockentity.HeatGeneratorBlockEntity;
+import aestastel.coraconic.common.machine.MachineProfiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -28,18 +29,20 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
- * 热力发电机 MK0 菜单。
+ * 热力发电机 Primitive 菜单。
  *
  * <p>输出槽只接受可接收能量的物品；燃料槽只接受熔炉燃料。
  *
- * <p>Heat Generator MK0 menu. The output slot only accepts energy-receiving
+ * <p>Heat Generator Primitive menu. The output slot only accepts energy-receiving
  * items, and the fuel slot only accepts furnace fuel.
  */
 public class HeatGeneratorMenu extends AbstractContainerMenu {
 
-  public static final int MACHINE_SLOTS = 2;
-  public static final int OUTPUT_SLOT = 0;
-  public static final int FUEL_SLOT = 1;
+  public static final int MACHINE_SLOTS =
+    HeatGeneratorBlockEntity.SLOT_COUNT;
+  public static final int OUTPUT_SLOT =
+    HeatGeneratorBlockEntity.OUTPUT_SLOT;
+  public static final int FUEL_SLOT = HeatGeneratorBlockEntity.FUEL_SLOT;
 
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
@@ -210,7 +213,9 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
   }
 
   public long getCapacity() {
-    return HeatGeneratorBlockEntity.CAPACITY;
+    return this.blockEntity != null
+      ? this.blockEntity.getCapacity()
+      : MachineProfiles.HEAT_GENERATOR_PRIMITIVE.energyCapacity();
   }
 
   public int getHeat() {
@@ -218,7 +223,9 @@ public class HeatGeneratorMenu extends AbstractContainerMenu {
   }
 
   public int getHeatCapacity() {
-    return HeatGeneratorBlockEntity.HEAT_CAPACITY;
+    return this.blockEntity != null
+      ? this.blockEntity.getHeatCapacity()
+      : MachineProfiles.HEAT_GENERATOR_PRIMITIVE.heatCapacity();
   }
 
   public int getCurrentGeneration() {

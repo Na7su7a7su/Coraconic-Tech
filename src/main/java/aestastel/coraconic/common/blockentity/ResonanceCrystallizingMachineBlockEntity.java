@@ -10,6 +10,7 @@
 package aestastel.coraconic.common.blockentity;
 
 import aestastel.coraconic.common.energy.ModEnergyStorage;
+import aestastel.coraconic.common.machine.SimpleMachineProfile;
 import aestastel.coraconic.common.menu.ResonanceCrystallizingMachineMenu;
 import aestastel.coraconic.common.recipe.ModRecipes;
 import aestastel.coraconic.common.recipe.RecipeProcessState;
@@ -41,13 +42,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 共振晶化仪 方块实体。
  *
- * <p>提供两个原料槽、一个成品槽、一个能源槽和 640,000 FE 缓存。
+ * <p>提供两个原料槽、一个成品槽、一个能源槽。能量规格来自机器 profile，
  * 支持共振晶化配方，能源槽只负责从缓存为物品充能。
  *
- * <p>Resonance Crystallizing Machine block entity. It provides two input
- * slots, one output slot, one energy slot, and a 640,000 FE buffer. It supports
- * resonance crystallizing recipes; the energy slot only charges items from the
- * buffer.
+ * <p>Resonance Crystallizing Machine block entity. It provides two input slots,
+ * one output slot, and one energy slot. Energy specifications come from the
+ * machine profile; the energy slot only charges items from the buffer.
  */
 public class ResonanceCrystallizingMachineBlockEntity
   extends BlockEntity
@@ -58,15 +58,9 @@ public class ResonanceCrystallizingMachineBlockEntity
   public static final int OUTPUT_SLOT = 2;
   public static final int ENERGY_SLOT = 3;
   public static final int SLOT_COUNT = 4;
-  public static final long CAPACITY = 640_000L;
-  public static final long MAX_RECEIVE = 1_000L;
 
-  private final ModEnergyStorage energyStorage = new ModEnergyStorage(
-    CAPACITY,
-    MAX_RECEIVE,
-    0L,
-    this::setChanged
-  );
+  private final SimpleMachineProfile profile;
+  private final ModEnergyStorage energyStorage;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -83,9 +77,22 @@ public class ResonanceCrystallizingMachineBlockEntity
   public ResonanceCrystallizingMachineBlockEntity(
     BlockEntityType<?> type,
     BlockPos pos,
-    BlockState state
+    BlockState state,
+    SimpleMachineProfile profile
   ) {
     super(type, pos, state);
+    this.profile = profile;
+    this.energyStorage = new ModEnergyStorage(
+      profile.energyCapacity(),
+      profile.maxEnergyInput(),
+      0L,
+      this::setChanged
+    );
+  }
+
+  /** {@return 该机器的固定规格} */
+  public SimpleMachineProfile getProfile() {
+    return this.profile;
   }
 
   /**
@@ -258,7 +265,7 @@ public class ResonanceCrystallizingMachineBlockEntity
     }
 
     int request = (int) Math.min(
-      Math.min(stored, MAX_RECEIVE),
+      Math.min(stored, this.profile.maxEnergyInput()),
       Integer.MAX_VALUE
     );
     int accepted = itemEnergy.receiveEnergy(request, true);
@@ -291,7 +298,7 @@ public class ResonanceCrystallizingMachineBlockEntity
   }
 
   public long getCapacity() {
-    return CAPACITY;
+    return this.profile.energyCapacity();
   }
 
   public void setEnergyStored(long value) {
@@ -433,7 +440,10 @@ public class ResonanceCrystallizingMachineBlockEntity
   ) {
     super.loadAdditional(tag, registries);
     this.energyStorage.setEnergyStored(
-      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+      MachineStateSupport.clampEnergy(
+        tag.getLong("energy"),
+        this.profile.energyCapacity()
+      )
     );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));

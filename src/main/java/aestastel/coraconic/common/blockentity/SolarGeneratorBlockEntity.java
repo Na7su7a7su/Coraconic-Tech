@@ -45,10 +45,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 太阳能发电机通用方块实体。
  *
- * <p>MK0–MK3 共用缓存、输出槽、六面能量配置、主动传输和 NBT 逻辑；具体
+ * <p>Primitive–Superior 共用缓存、输出槽、六面能量配置、主动传输和 NBT 逻辑；具体
  * 容量、逐面输出、物品充能速率和发电规则由 {@link SolarGeneratorTier} 提供。
  *
- * <p>Shared solar generator block entity used by MK0–MK3. The tier supplies
+ * <p>Shared solar generator block entity used by Primitive–Superior. The tier supplies
  * capacity, per-face output, item charge rate, and the generation rule; the
  * common buffer, output slot, face configuration, transfer, and persistence
  * logic lives here.

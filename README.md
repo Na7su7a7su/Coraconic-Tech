@@ -23,27 +23,27 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.7i`
-- 最近版本提交：`0.0.7i|C_261119_b`
+- `mod_version`：`0.0.8a`
+- 最近版本提交：`0.0.8a_A_261119_d`
 - 最后更新：2026-11-19
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.8a_A_261119_d`：完成机器 Tier 迁移与语义化命名；移除机器、存储单元、语言键、纹理与配方中的 MK 命名；统一中英文为“机器名 + 等级后缀”，中文等级为初始/精善/强化/卓越，英文为 Primitive/Refined/Enhanced/Superior；物品存储单元改用 `item_storage_unit_primitive` / `refined` / `enhanced`，但不接入 Tier 系统；新增 NeoForge GameTest 覆盖 Tier、持久化、Capability 与生产线布局；主版本号提升为 `0.0.8a`。
 - `0.0.7i|C_261119_b`：修复器械组合仪原料竞争时的匹配与扣除逻辑，改用最大流分配；增加能耗非负校验；将 `insassemble` 配方路径更正为 `instrument_assembling`，并清理旧资源。
 - `0.0.7i'B_261119_a`：注册能量中心芯片 LV0–LV3；将扳手重命名为配置手柄，更新物品 ID、类名、网络包与纹理；新增配置手柄合成配方。
 - `0.0.7i'A_261118_c`：将公共代码移动到 `aestastel.coraconic.common` 包，保留根包入口类与 `client` 包；将数据生成器按 `recipe`、`tag`、`model`、`loot` 分类；主版本号提升为 `0.0.7i`。
 - `0.0.7h'B_261118_b`：添加烬龙金属锭、烬龙金属粒与烬龙金属块的压缩和分解配方。
 - `0.0.7h'A_261118_a`：注册硅与烬龙系列，新增硅、烬龙金属锭、烬龙金属粒、烬龙金刚晶体、烬龙金属块、烬龙元素与烬龙核心，补齐通用标签、创造栏与四语名称；所有烬龙物品与方块物品加入抗火属性；新增烬龙核心合成配方、烬龙金属锭合成与合金配方，并调整腾龙金属锭合金耗能；主版本号提升为 `0.0.7h`。
 - `0.0.7'B_261117_b`：更新 README 中的版本提交记录。
-- `0.0.7g'A_261117_a`：新增器械组合仪，提供 `256,000,000 FE` 缓存、`19,600 FE/t` 最大输入、5 个原料槽、1 个成品槽和 1 个充电槽；新增 `coraconic:instrument_assembling` 配方类型、独立原料类、JEI 分类与数据生成接入点；加入太阳能发电机 MK0 的器械组合配方；主版本号提升为 `0.0.7g`。
+- `0.0.7g'A_261117_a`：新增器械组合仪，提供 `256,000,000 FE` 缓存、`19,600 FE/t` 最大输入、5 个原料槽、1 个成品槽和 1 个充电槽；新增 `coraconic:instrument_assembling` 配方类型、独立原料类、JEI 分类与数据生成接入点；加入太阳能发电机 初始的器械组合配方；主版本号提升为 `0.0.7g`。
 - `0.0.7fr_261117_c`：将玫瑰金块与琥珀金块的合金配方总耗能调整为 `51,400 FE`；主版本号提升为 `0.0.7f`。
 - `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
-- `0.0.7fp_261114_a`：注册玫瑰金与琥珀金材料，新增锭、粒、存储块、通用标签、创造栏与四语名称；加入玫瑰金合金配方，并修正玫瑰金配方 ID 冲突。
 ### 快速开始
 
-1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、器械组合仪、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
+1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 精善 / 合金仪 强化、共振晶化仪 精善、熔炼冶金仪 精善、器械组合仪 精善、热力发电机 初始、太阳能发电机 初始至卓越、地磁发电机 初始至卓越。
 2. `核龙科技工具` 创造栏包含四种材料的完整五件套工具。
 3. 物品存储单元支持潜影盒式内容保存；能量存储单元提供充电槽、放电槽、能量条与玩家背包。
 4. 能量单元物品既可以直接放置，也可以放入其他能量单元的槽位中充放电；悬浮物品即可查看电量。
@@ -87,10 +87,11 @@
 
 | 等级 |        槽位 | 界面尺寸 | 说明         |
 | ---- | ----------: | -------- | ------------ |
-| MK1  |   81（9×9） | 176×276  | 基础物品存储 |
-| MK2  | 162（9×18） | 338×276  | 中型物品存储 |
-| MK3  | 243（9×27） | 500×276  | 大型物品存储 |
+| 初始 |   81（9×9） | 176×276  | 初始物品存储 |
+| 精善 | 162（9×18） | 338×276  | 精善物品存储 |
+| 强化 | 243（9×27） | 500×276  | 强化物品存储 |
 
+- 物品存储单元的显示名沿用等级后缀形式（初始 / 精善 / 强化），但不接入机器 Tier 系统
 - 支持漏斗、管道等自动化设施通过 `Capabilities.ItemHandler.BLOCK` 访问
 - 破坏方块、创造模式破坏与中键选取时，库存写入 `minecraft:container` 组件，放置后恢复
 - 物品 tooltip 显示内容是否已保存以及非空槽位数量
@@ -102,22 +103,22 @@
 
 | 等级 |             容量 |    传输速率 |
 | ---- | ---------------: | ----------: |
-| MK1  |    32,000,000 FE |  4,000,000 FE/t |
-| MK2  |   320,000,000 FE | 16,000,000 FE/t |
-| MK3  | 3,200,000,000 FE | 64,000,000 FE/t |
+| 精善 |    32,000,000 FE |  4,000,000 FE/t |
+| 强化 |   320,000,000 FE | 16,000,000 FE/t |
+| 卓越 | 3,200,000,000 FE | 64,000,000 FE/t |
 
 - 每个单元提供两个机器槽位：
     - 充电槽：把单元能量输入到物品
     - 放电槽：把物品能量输入到单元
 - GUI 显示当前能量、容量、能量条与玩家背包
 - 能量显示在 1,000 以上使用 `k FE`，1,000,000 以上使用 `M FE`，1,000,000,000 以上使用 `G FE`；保留两位小数，按住 Shift 显示完整 FE 数值
-- MK3 等超过 `Integer.MAX_VALUE` 的容量会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
+- 卓越等级的容量超过 `Integer.MAX_VALUE` 时会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
 - 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输入/输出
 - GUI 左侧外部上方提供统一的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，并与配置手柄的配置模式共用同一套设置
 - 输入面会主动从相邻能量方块抽取能量，输出面会主动向相邻能量方块发送能量；阻断面拒绝所有外部输入输出
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
-#### 合金仪 MK1
+#### 合金仪 精善
 
 - 内部缓存：`320,000 FE`，从所有面接收能量，最高 `10,000 FE/t`
 - 三个原料槽、一个成品槽和一个放电槽；成品槽只能取出，不能放入
@@ -129,21 +130,21 @@
 - 破坏方块时保留缓存能量、五个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 合金仪 MK2
+#### 合金仪 强化
 
 - 内部缓存：`1,040,000 FE`，从所有面接收能量，最高 `40,000 FE/t`
 - 三条独立生产线，每条拥有三个原料槽和一个成品槽，可同时加工
 - 所有生产线共用能量缓存和一个放电槽
-- 默认处理速度为 MK1 的 `1.2` 倍，单次配方总耗能保持不变
+- 默认处理速度为合金仪 精善的 `1.2` 倍，单次配方总耗能保持不变
 - 成品槽只能取出，不能放入
 - 放电槽只接受可提取能量的物品，每 tick 最多向缓存输入 `40,000 FE`，不会给物品充电
 - 三条生产线各自显示独立加工进度条
 - 使用现有合金配方，不需要新增配方类型
-- JEI 合金仪分类同时显示 MK1 与 MK2 催化剂
+- JEI 合金仪分类同时显示精善与强化催化剂
 - 破坏方块时保留缓存能量、13 个槽位的内容和三条生产线的进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 共振晶化仪
+#### 共振晶化仪 精善
 
 - 内部缓存：`640,000 FE`，从所有面接收能量，最高 `1,000 FE/t`
 - 两个原料槽、一个成品槽和一个能源槽；成品槽只能取出，不能放入
@@ -160,7 +161,7 @@
 - 破坏方块时保留缓存能量、四个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 熔炼冶金仪 MK1
+#### 熔炼冶金仪 精善
 
 - 内部缓存：`320,000 FE`，从所有面接收能量，最高 `10,000 FE/t`
 - 一个原料槽、一个成品槽和一个电源槽；成品槽只能取出，不能放入
@@ -171,19 +172,19 @@
 - 破坏方块时保留缓存能量、三个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 器械组合仪
+#### 器械组合仪 精善
 
 - 内部缓存：`256,000,000 FE`，从所有面接收能量，最高 `19,600 FE/t`
 - 五个原料槽、一个成品槽和一个充电槽；成品槽只能取出，不能放入
 - 充电槽只接受可接收能量的物品，每 tick 最多从缓存充能 `19,600 FE`
 - GUI 中央提供加工进度条
 - 当前配方：
-  - 1 个常金属核心 + 1 个玻璃板标签（`c:glass_panes`） → 1 个太阳能发电机 MK0（`640 FE`，`40 ticks`）
+  - 1 个常金属核心 + 1 个玻璃板标签（`c:glass_panes`） → 1 个太阳能发电机 初始（`640 FE`，`40 ticks`）
 - JEI 提供独立的器械组合仪配方分类、带数量的原料槽、加工箭头、成品槽与耗能/时间信息
 - 破坏方块时保留缓存能量、七个槽位的内容和加工进度
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 热力发电机 MK0
+#### 热力发电机 初始
 
 - 内部缓存：`96,000 FE`，每面最大输入/输出 `600 FE/t`
 - 输出槽充能速率：`600 FE/t`
@@ -203,7 +204,7 @@
 - 破坏方块时保留缓存能量、热量与两个槽位的内容
 - 当前仅通过创造模式获取，机器本体尚未添加合成配方
 
-#### 太阳能发电机 MK0
+#### 太阳能发电机 初始
 
 - 内部缓存：`96,000 FE`
 - 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `30 FE/t`
@@ -211,20 +212,20 @@
 - GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用配置手柄的配置模式
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
-- CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
-- 模式优先级为 `Radiation (MK3) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；MK0/MK1 白天天空光不足时模式为 `Null`；功率由模式决定，`Power` 不因缓存已满而归零
+- CLI 显示 `>Power Generating System`、`>Generation <tier> - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
+- 模式优先级为 `Radiation (卓越) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`；末地无遮挡时固定为 `Solar`，遮挡时仍为 `Reflection`；初始 / 精善白天天空光不足时模式为 `Null`；功率由模式决定，`Power` 不因缓存已满而归零
 - 输出槽只接受可接收能量的物品；缓存优先给输出槽物品充能，剩余能量再对外开放
 - 破坏方块时，方块物品保留缓存能量与面配置；输出槽物品单独掉落
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
-#### 地磁发电机 MK0–MK3
+#### 地磁发电机 初始至卓越
 
 | 等级 |     缓存容量 |   每面输出 |   物品充能 | Overworld | Nether | End |
 | ---- | -----------: | ---------: | ---------: | --------: | -----: | --: |
-| MK0  |    96,000 FE |  600 FE/t |  600 FE/t |    2 FE/t | 3 FE/t | 6 FE/t |
-| MK1  |   192,000 FE | 1,200 FE/t | 1,200 FE/t |    6 FE/t | 16 FE/t | 32 FE/t |
-| MK2  |   480,000 FE | 2,400 FE/t | 2,400 FE/t |   32 FE/t | 56 FE/t | 112 FE/t |
-| MK3  | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |  112 FE/t | 320 FE/t | 640 FE/t |
+| 初始 |    96,000 FE |  600 FE/t |  600 FE/t |    2 FE/t | 3 FE/t | 6 FE/t |
+| 精善 |   192,000 FE | 1,200 FE/t | 1,200 FE/t |    6 FE/t | 16 FE/t | 32 FE/t |
+| 强化 |   480,000 FE | 2,400 FE/t | 2,400 FE/t |   32 FE/t | 56 FE/t | 112 FE/t |
+| 卓越 | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |  112 FE/t | 320 FE/t | 640 FE/t |
 
 - 各等级复用对应太阳能等级的缓存、每面输出、物品充能、输出槽、面配置、GUI 与掉落保留逻辑
 - 主世界：Y 坐标必须小于 -59
@@ -233,22 +234,22 @@
 - 下界与其他模组维度：正下方为基岩时工作，发电 `3 FE/t`，模式为 `Nether`
 - 末地：正下方没有方块时工作，发电 `6 FE/t`，模式为 `End`
 - 其他情况模式为 `Null`，发电 `0 FE/t`
-- GUI 复用太阳能 MK0 贴图与 CLI，最后一行显示 `>Geomagnetic Energy`
+- GUI 复用太阳能发电机贴图与 CLI，最后一行显示 `>Geomagnetic Energy`
 - 当前仅通过创造模式获取，尚未添加合成配方
 
-#### 太阳能发电机 MK1–MK3
+#### 太阳能发电机 精善至卓越
 
 | 等级 |     缓存容量 |   每面输出 |   物品充能 |
 | ---- | -----------: | ---------: | ---------: |
-| MK1  |   192,000 FE | 1,200 FE/t | 1,200 FE/t |
-| MK2  |   480,000 FE | 2,400 FE/t | 2,400 FE/t |
-| MK3  | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |
+| 精善 |   192,000 FE | 1,200 FE/t | 1,200 FE/t |
+| 强化 |   480,000 FE | 2,400 FE/t | 2,400 FE/t |
+| 卓越 | 1,920,000 FE | 9,600 FE/t | 9,600 FE/t |
 
-- 三个新等级共用 MK0 的输出槽、面模式配置、GUI 与掉落保留逻辑
-- MK1：维度不是下界、白天、天空光大于 10、上方无完整不透明遮挡时发电 `120 FE/t`；雷暴时天空光为 10，因此不发电
-- MK2：维度不是下界且上方无完整遮挡时工作；雷暴 `120 FE/t`；白天 `240 FE/t`；黑夜 `120 FE/t`
-- MK3：下界始终 `80 FE/t`；非下界有完整遮挡时 `80 FE/t`；无遮挡时雷暴 `360 FE/t`、白天 `960 FE/t`、黑夜 `240 FE/t`
-- MK3：主世界 `Y >= 315`，下界、末地与其他模组维度 `Y >= 250` 时进入 `Radiation` 模式，优先于其他所有模式，发电 `1,440 FE/t`；MK0–MK2 不支持该模式
+- 三个新等级共用太阳能发电机 初始的输出槽、面模式配置、GUI 与掉落保留逻辑
+- 精善：维度不是下界、白天、天空光大于 10、上方无完整不透明遮挡时发电 `120 FE/t`；雷暴时天空光为 10，因此不发电
+- 强化：维度不是下界且上方无完整遮挡时工作；雷暴 `120 FE/t`；白天 `240 FE/t`；黑夜 `120 FE/t`
+- 卓越：下界始终 `80 FE/t`；非下界有完整遮挡时 `80 FE/t`；无遮挡时雷暴 `360 FE/t`、白天 `960 FE/t`、黑夜 `240 FE/t`
+- 卓越：主世界 `Y >= 315`，下界、末地与其他模组维度 `Y >= 250` 时进入 `Radiation` 模式，优先于其他所有模式，发电 `1,440 FE/t`；初始至强化不支持该模式
 - 当前仅通过创造模式获取，尚未添加合成配方
 
 #### 能量存储单元物品
@@ -308,7 +309,7 @@
 | 晶体       | 完成       | 物品、纹理、标签与四语名称                              |
 | 物品存储   | 完成       | 三级容量、GUI、组件保存、自动化能力与自定义模型         |
 | 能量存储   | 完成       | 三级容量、GUI、多段能量、线缆能力与物品充放电           |
-| 太阳能发电 | 完成       | MK0–MK3、分级缓存/输出与维度/天气/遮挡规则              |
+| 太阳能发电 | 完成       | 初始至卓越、分级缓存/输出与维度/天气/遮挡规则              |
 | 配方与标签 | 大部分完成 | 基础材料与工具完成；存储单元配方待补                    |
 | 本地化     | 完成       | `en_us`、`zh_cn`、`zh_hk`、`zh_tw`                      |
 | 数据生成   | 完成       | 模型、标签、配方、进度、战利品与全局修饰器              |
@@ -370,27 +371,27 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.7i`
-- Latest version commit: `0.0.7i|C_261119_b`
+- `mod_version`: `0.0.8a`
+- Latest version commit: `0.0.8a_A_261119_d`
 - Last updated: 2026-11-19
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.8a_A_261119_d`: completed the machine Tier migration and semantic naming; removed MK naming from machines, storage units, language keys, textures, and recipes; standardized Chinese and English names to `<machine> <tier>` with 初始/精善/强化/卓越 and Primitive/Refined/Enhanced/Superior; changed item storage IDs to `item_storage_unit_primitive` / `refined` / `enhanced` without connecting them to the Tier system; added NeoForge GameTests for tiers, persistence, capabilities, and production-line layout; raised the main mod version to `0.0.8a`.
 - `0.0.7i|C_261119_b`: fixed Instrument Assembling Machine ingredient matching and consumption under item competition with a max-flow assignment; added non-negative energy validation; corrected the `insassemble` recipe path to `instrument_assembling` and cleaned up old resources.
 - `0.0.7i'B_261119_a`: registered Energy Center Chips LV0–LV3; renamed the Spanner to Configurance Handle with updated item ID, classes, network payload, and texture; added a Configurance Handle crafting recipe.
 - `0.0.7i'A_261118_c`: moved common code into `aestastel.coraconic.common` while keeping the root entry classes and `client` package in place; split data generators into `recipe`, `tag`, `model`, and `loot` packages; raised the main mod version to `0.0.7i`.
 - `0.0.7h'B_261118_b`: added packing and unpacking recipes for emberaconic ingots, nuggets, and the metal block.
 - `0.0.7h'A_261118_a`: registered silicon and the emberaconic series, adding silicon, emberaconic ingot, nugget, diamond-structured crystal, metal block, element, and core with common tags, creative-tab entries, and four-language names; made every emberaconic item form fire-resistant; added emberaconic core crafting, emberaconic ingot crafting and alloying recipes, and adjusted aviraconic ingot alloying energy; raised the main mod version to `0.0.7h`.
 - `0.0.7'B_261117_b`: updated the release metadata in README.
-- `0.0.7g'A_261117_a`: added the Instrument Assembling Machine with a `256,000,000 FE` buffer, `19,600 FE/t` maximum input, five input slots, one output slot, and one charging slot; added the `coraconic:instrument_assembling` recipe type, a dedicated ingredient class, JEI category, and data-generation integration; added the Solar Generator MK0 instrument assembling recipe; raised the main mod version to `0.0.7g`.
+- `0.0.7g'A_261117_a`: added the Instrument Assembling Machine with a `256,000,000 FE` buffer, `19,600 FE/t` maximum input, five input slots, one output slot, and one charging slot; added the `coraconic:instrument_assembling` recipe type, a dedicated ingredient class, JEI category, and data-generation integration; added the Solar Generator Primitive instrument assembling recipe; raised the main mod version to `0.0.7g`.
 - `0.0.7fr_261117_c`: raised the total energy cost of the rose gold block and amber gold block alloying recipes to `51,400 FE`; raised the main mod version to `0.0.7f`.
 - `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
-- `0.0.7fp_261114_a`: registered rose gold and amber gold materials with ingots, nuggets, storage blocks, common tags, creative-tab entries, and four-language names; added rose gold alloying recipes and fixed their recipe ID collisions.
 ### Quick Start
 
-1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Instrument Assembling Machine, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
+1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machine Refined, Alloying Machine Enhanced, Resonance Crystallizing Machine Refined, Smelting-Metallurgy Machine Refined, Instrument Assembling Machine Refined, Heat Generator Primitive, Solar Generators Primitive–Superior, and Geomagnetic Generators Primitive–Superior.
 2. The `Coraconic Tech Tools` tab contains complete five-piece tool sets for all four materials.
 3. Item storage units preserve contents like shulker boxes; energy storage units provide a charge slot, a discharge slot, an energy display, and the player inventory.
 4. Energy storage unit items can be placed as blocks or charged/discharged in another unit's slots; hover over the item to inspect its charge.
@@ -434,10 +435,11 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 | Tier |      Slots | GUI size | Notes               |
 | ---- | ---------: | -------- | ------------------- |
-| MK1  |   81 (9×9) | 176×276  | Basic item storage  |
-| MK2  | 162 (9×18) | 338×276  | Medium item storage |
-| MK3  | 243 (9×27) | 500×276  | Large item storage  |
+| Primitive |   81 (9×9) | 176×276  | Primitive item storage |
+| Refined   | 162 (9×18) | 338×276  | Refined item storage   |
+| Enhanced  | 243 (9×27) | 500×276  | Enhanced item storage  |
 
+- Item storage unit display names follow the tier suffix form, but these units are not connected to the machine Tier system
 - Hoppers, pipes, and other automation can access the inventory through `Capabilities.ItemHandler.BLOCK`
 - Breaking, creative-breaking, or pick-blocking the unit stores its inventory in the `minecraft:container` component; it is restored when placed
 - The item tooltip reports whether contents are saved and how many slots are occupied
@@ -449,22 +451,22 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 
 | Tier |         Capacity | Transfer rate |
 | ---- | ---------------: | ------------: |
-| MK1  |    32,000,000 FE |    4,000,000 FE/t |
-| MK2  |   320,000,000 FE |   16,000,000 FE/t |
-| MK3  | 3,200,000,000 FE |   64,000,000 FE/t |
+| Refined  |    32,000,000 FE |    4,000,000 FE/t |
+| Enhanced |   320,000,000 FE |   16,000,000 FE/t |
+| Superior | 3,200,000,000 FE |   64,000,000 FE/t |
 
 - Each unit has two machine slots:
     - Charge slot: transfers energy from the unit into an item
     - Discharge slot: transfers energy from an item into the unit
 - The GUI shows current energy, capacity, a large energy display, and the player inventory
 - Energy is abbreviated with `k FE`, `M FE`, or `G FE` above the corresponding thresholds, with two decimal places; hold Shift to show the full FE values
-- Capacities above `Integer.MAX_VALUE`, such as MK3, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
+- Capacities above `Integer.MAX_VALUE`, such as Superior, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
 - Each face can independently be set to input, output, input/output, or blocked; all faces default to input/output
 - The GUI has a shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the Configurance Handle configure mode edits the same settings
 - Input faces actively pull from adjacent energy blocks, output faces actively push to them, and blocked faces reject all external input/output
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
-#### Alloying Machine MK1
+#### Alloying Machine Refined
 
 - Internal buffer: `320,000 FE`, receiving energy from every side at up to `10,000 FE/t`
 - Three input slots, one output slot, and one discharge slot; the output slot only allows extraction
@@ -476,21 +478,21 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block preserves stored energy, all five slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Alloying Machine MK2
+#### Alloying Machine Enhanced
 
 - Internal buffer: `1,040,000 FE`, receiving energy from every side at up to `40,000 FE/t`
 - Three independent production lines, each with three input slots and one output slot; all three can work at the same time
 - All lines share the energy buffer and one discharge slot
-- Processing runs at `1.2x` MK1 speed by default while preserving each recipe's total energy cost
+- Processing runs at `1.2x` Refined speed by default while preserving each recipe's total energy cost
 - Output slots only allow extraction
 - The discharge slot only accepts energy-extractable items and feeds up to `40,000 FE/t` into the buffer; it never charges the item
 - Each production line has its own processing progress bar
 - Reuses the existing alloying recipes without adding a new recipe type
-- The JEI Alloying Machine category lists both MK1 and MK2 as catalysts
+- The JEI Alloying Machine category lists both Refined and Enhanced tiers as catalysts
 - Breaking the block preserves stored energy, all 13 slot contents, and all three production-line progress values
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Resonance Crystallizing Machine
+#### Resonance Crystallizing Machine Refined
 
 - Internal buffer: `640,000 FE`, receiving energy from every side at up to `1,000 FE/t`
 - Two input slots, one output slot, and one energy slot; the output slot only allows extraction
@@ -507,7 +509,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block preserves stored energy, all four slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Smelting-Metallurgy Machine MK1
+#### Smelting-Metallurgy Machine Refined
 
 - Internal buffer: `320,000 FE`, receiving energy from every side at up to `10,000 FE/t`
 - One input slot, one output slot, and one power slot; the output slot only allows extraction
@@ -518,19 +520,19 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block preserves stored energy, all three slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Instrument Assembling Machine
+#### Instrument Assembling Machine Refined
 
 - Internal buffer: `256,000,000 FE`, receiving energy from every side at up to `19,600 FE/t`
 - Five input slots, one output slot, and one charging slot; the output slot only allows extraction
 - The charging slot only accepts energy-receiving items and charges them from the buffer at up to `19,600 FE/t`
 - A central processing progress bar is present
 - Current recipe:
-  - 1 common-metal core + 1 glass pane tag (`c:glass_panes`) → 1 Solar Generator MK0 (`640 FE`, `40 ticks`)
+  - 1 common-metal core + 1 glass pane tag (`c:glass_panes`) → 1 Solar Generator Primitive (`640 FE`, `40 ticks`)
 - JEI provides a dedicated Instrument Assembling Machine category with counted inputs, a progress arrow, output, energy, and time information
 - Breaking the block preserves stored energy, all seven slot contents, and progress
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Heat Generator MK0
+#### Heat Generator Primitive
 
 - Internal buffer: `96,000 FE`, with up to `600 FE/t` input/output per face
 - Output-slot charge rate: `600 FE/t`
@@ -550,7 +552,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Breaking the block preserves stored energy, heat, and both slot contents
 - Currently obtained in creative mode only; the machine itself has no crafting recipe yet
 
-#### Solar Generator MK0
+#### Solar Generator Primitive
 
 - Internal buffer: `96,000 FE`
 - Generates `30 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
@@ -558,20 +560,20 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the Configurance Handle configure mode remains available
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
-- The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
-- Mode priority is `Radiation (MK3) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; MK0/MK1 use `Null` during daytime with insufficient sky light; generation is bound to the mode, and `Power` does not drop to zero merely because the buffer is full
+- The CLI shows `>Power Generating System`, `>Generation <tier> - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`
+- Mode priority is `Radiation (Superior) > Nether > Reflection > End/Solar > Thunder > Solar/Lunar`; the End is always in `Solar` mode when unobstructed and remains `Reflection` when obstructed; Primitive/Refined use `Null` during daytime with insufficient sky light; generation is bound to the mode, and `Power` does not drop to zero merely because the buffer is full
 - The output slot only accepts energy-receiving items; the buffer charges that item first, then exposes the remainder to external sides
 - Breaking the block keeps buffered energy and face configuration in the block item; output-slot contents drop separately
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
-#### Geomagnetic Generators MK0–MK3
+#### Geomagnetic Generators Primitive–Superior
 
 | Tier |      Capacity | Per-face output | Item charge | Overworld | Nether | End |
 | ---- | ------------: | --------------: | ----------: | --------: | -----: | --: |
-| MK0  |    96,000 FE |        600 FE/t |    600 FE/t |   2 FE/t | 3 FE/t | 6 FE/t |
-| MK1  |   192,000 FE |      1,200 FE/t |  1,200 FE/t |   6 FE/t | 16 FE/t | 32 FE/t |
-| MK2  |   480,000 FE |      2,400 FE/t |  2,400 FE/t |  32 FE/t | 56 FE/t | 112 FE/t |
-| MK3  | 1,920,000 FE |      9,600 FE/t |  9,600 FE/t | 112 FE/t | 320 FE/t | 640 FE/t |
+| Primitive |    96,000 FE |        600 FE/t |    600 FE/t |   2 FE/t | 3 FE/t | 6 FE/t |
+| Refined   |   192,000 FE |      1,200 FE/t |  1,200 FE/t |   6 FE/t | 16 FE/t | 32 FE/t |
+| Enhanced  |   480,000 FE |      2,400 FE/t |  2,400 FE/t |  32 FE/t | 56 FE/t | 112 FE/t |
+| Superior  | 1,920,000 FE |      9,600 FE/t |  9,600 FE/t | 112 FE/t | 320 FE/t | 640 FE/t |
 
 - Each tier reuses the matching solar tier's buffer, per-face output, item charging, output slot, face configuration, GUI, and drop persistence
 - The Overworld requires Y &lt; -59
@@ -580,22 +582,22 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - The Nether and modded dimensions: require bedrock directly below and generate `3 FE/t` in `Nether` mode
 - The End: requires empty space directly below and generates `6 FE/t` in `End` mode
 - Any other case uses `Null` mode and generates `0 FE/t`
-- The GUI reuses the Solar Generator MK0 texture and CLI, with `>Geomagnetic Energy` on the last line
+- The GUI reuses the Solar Generator Primitive texture and CLI, with `>Geomagnetic Energy` on the last line
 - Currently obtained in creative mode only; no crafting recipes yet
 
-#### Solar Generators MK1–MK3
+#### Solar Generators Refined–Superior
 
 | Tier |      Capacity | Per-face output | Item charge |
 | ---- | ------------: | --------------: | ----------: |
-| MK1  |   192,000 FE |    1,200 FE/t | 1,200 FE/t |
-| MK2  |   480,000 FE |    2,400 FE/t | 2,400 FE/t |
-| MK3  | 1,920,000 FE |    9,600 FE/t | 9,600 FE/t |
+| Refined  |   192,000 FE |    1,200 FE/t | 1,200 FE/t |
+| Enhanced |   480,000 FE |    2,400 FE/t | 2,400 FE/t |
+| Superior | 1,920,000 FE |    9,600 FE/t | 9,600 FE/t |
 
-- MK1–MK3 share MK0's output slot, face-mode configuration, GUI, and drop persistence
-- MK1: outside the Nether, during daytime, with sky light above 10 and no full opaque obstruction above, generates `120 FE/t`; thunderstorms reduce sky light to 10, so generation stops
-- MK2: outside the Nether with no full opaque obstruction above; thunder `120 FE/t`, daytime `240 FE/t`, night `120 FE/t`
-- MK3: always `80 FE/t` in the Nether; outside the Nether with obstruction `80 FE/t`; without obstruction, thunder `360 FE/t`, daytime `960 FE/t`, night `240 FE/t`
-- MK3: at `Y >= 315` in the Overworld or `Y >= 250` in the Nether, the End, and other modded dimensions, enters `Radiation` mode ahead of all other modes and generates `1,440 FE/t`; MK0–MK2 never use this mode
+- Solar Generators Refined–Superior share the Solar Generator Primitive's output slot, face-mode configuration, GUI, and drop persistence
+- Refined: outside the Nether, during daytime, with sky light above 10 and no full opaque obstruction above, generates `120 FE/t`; thunderstorms reduce sky light to 10, so generation stops
+- Enhanced: outside the Nether with no full opaque obstruction above; thunder `120 FE/t`, daytime `240 FE/t`, night `120 FE/t`
+- Superior: always `80 FE/t` in the Nether; outside the Nether with obstruction `80 FE/t`; without obstruction, thunder `360 FE/t`, daytime `960 FE/t`, night `240 FE/t`
+- Superior: at `Y >= 315` in the Overworld or `Y >= 250` in the Nether, the End, and other modded dimensions, enters `Radiation` mode ahead of all other modes and generates `1,440 FE/t`; Primitive–Enhanced never use this mode
 - Currently obtained in creative mode only; no crafting recipes yet
 
 #### Energy Storage Unit Items
@@ -655,7 +657,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 | Crystals         | Complete        | Items, textures, tags, and four-language names                                    |
 | Item storage     | Complete        | Three tiers, GUI, component persistence, automation capability, and custom models |
 | Energy storage   | Complete        | Three tiers, GUI, multi-bank storage, cable capability, and item charging         |
-| Solar generator  | Complete        | MK0–MK3, tiered buffers/output, and dimension/weather/obstruction rules            |
+| Solar generator  | Complete        | Primitive–Superior, tiered buffers/output, and dimension/weather/obstruction rules        |
 | Recipes and tags | Mostly complete | Materials and tools done; storage recipes pending                                 |
 | Localization     | Complete        | `en_us`, `zh_cn`, `zh_hk`, `zh_tw`                                                |
 | Data generation  | Complete        | Models, tags, recipes, advancements, loot tables, and global modifiers            |

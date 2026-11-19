@@ -10,6 +10,8 @@
 package aestastel.coraconic.common.block;
 
 import aestastel.coraconic.common.blockentity.HeatGeneratorBlockEntity;
+import aestastel.coraconic.common.machine.HeatGeneratorProfile;
+import aestastel.coraconic.common.machine.TieredMachine;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -28,21 +30,27 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * 热力发电机 MK0 方块。
+ * 热力发电机（Primitive）方块。
  *
- * <p>Heat Generator MK0 block. It creates the block entity, opens the GUI, and
- * preserves buffered energy, heat, and slot contents when broken.
+ * <p>Heat Generator Primitive block. It creates the block entity, opens the
+ * GUI, and preserves buffered energy, heat, and slot contents when broken.
  */
-public class HeatGeneratorBlock extends Block implements EntityBlock {
+public class HeatGeneratorBlock
+  extends Block
+  implements EntityBlock, TieredMachine
+{
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
+  private final HeatGeneratorProfile profile;
 
   public HeatGeneratorBlock(
     Properties properties,
-    Supplier<BlockEntityType<?>> typeSupplier
+    Supplier<BlockEntityType<?>> typeSupplier,
+    HeatGeneratorProfile profile
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
+    this.profile = profile;
   }
 
   @Override
@@ -50,8 +58,14 @@ public class HeatGeneratorBlock extends Block implements EntityBlock {
     return new HeatGeneratorBlockEntity(
       this.typeSupplier.get(),
       pos,
-      state
+      state,
+      this.profile
     );
+  }
+
+  @Override
+  public HeatGeneratorProfile machineProfile() {
+    return this.profile;
   }
 
   public BlockEntityType<?> getBlockEntityType() {

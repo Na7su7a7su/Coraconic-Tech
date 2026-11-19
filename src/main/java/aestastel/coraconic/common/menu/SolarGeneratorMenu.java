@@ -34,13 +34,13 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
- * 太阳能发电机 MK0–MK3 的共用菜单。
+ * 太阳能发电机 Primitive–Superior 的共用菜单。
  *
  * <p>输出槽只接受具有物品 FE 能力且能够接收能量的物品。缓存优先向该槽位
  * 中的物品充能，剩余能量由外部面抽取。容量由打开界面时服务端发送，避免
  * 每个等级硬编码在菜单类中。
  *
- * <p>Shared solar generator menu for MK0–MK3. The output slot accepts only
+ * <p>Shared solar generator menu for Primitive–Superior. The output slot accepts only
  * energy-receiving items; the buffer charges that item before external sides
  * consume the remainder. Capacity is sent by the server when the menu opens.
  */

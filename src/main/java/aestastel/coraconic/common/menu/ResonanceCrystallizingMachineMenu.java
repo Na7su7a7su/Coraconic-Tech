@@ -37,10 +37,14 @@ public class ResonanceCrystallizingMachineMenu
   extends AbstractContainerMenu
 {
 
-  public static final int MACHINE_SLOTS = 4;
-  public static final int INPUT_SLOTS = 2;
-  public static final int OUTPUT_SLOT = 2;
-  public static final int ENERGY_SLOT = 3;
+  public static final int MACHINE_SLOTS =
+    ResonanceCrystallizingMachineBlockEntity.SLOT_COUNT;
+  public static final int INPUT_SLOTS =
+    ResonanceCrystallizingMachineBlockEntity.INPUT_SLOT_COUNT;
+  public static final int OUTPUT_SLOT =
+    ResonanceCrystallizingMachineBlockEntity.OUTPUT_SLOT;
+  public static final int ENERGY_SLOT =
+    ResonanceCrystallizingMachineBlockEntity.ENERGY_SLOT;
 
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
@@ -67,7 +71,7 @@ public class ResonanceCrystallizingMachineMenu
       playerInventory,
       blockEntity,
       blockEntity,
-      ResonanceCrystallizingMachineBlockEntity.CAPACITY
+      blockEntity.getCapacity()
     );
   }
 
@@ -186,6 +190,7 @@ public class ResonanceCrystallizingMachineMenu
     RegistryFriendlyByteBuf buffer
   ) {
     BlockPos pos = buffer.readBlockPos();
+    long capacity = buffer.readLong();
     ResonanceCrystallizingMachineBlockEntity blockEntity =
       playerInventory.player.level().getBlockEntity(pos)
         instanceof ResonanceCrystallizingMachineBlockEntity machine
@@ -199,7 +204,7 @@ public class ResonanceCrystallizingMachineMenu
       playerInventory,
       container,
       blockEntity,
-      ResonanceCrystallizingMachineBlockEntity.CAPACITY
+      capacity
     );
   }
 

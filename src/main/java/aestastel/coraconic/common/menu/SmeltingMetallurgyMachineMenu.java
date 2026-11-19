@@ -25,17 +25,21 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
- * 熔炼冶金炉 MK1 菜单：一个原料槽、一个成品槽、一个电源槽和玩家背包。
+ * 熔炼冶金炉 Refined 菜单：一个原料槽、一个成品槽、一个电源槽和玩家背包。
  *
- * <p>Smelting-Metallurgy Machine MK1 menu with one input slot, one output slot,
+ * <p>Smelting-Metallurgy Machine Refined menu with one input slot, one output slot,
  * one power slot, and the player inventory.
  */
 public class SmeltingMetallurgyMachineMenu extends AbstractContainerMenu {
 
-  public static final int MACHINE_SLOTS = 3;
-  public static final int INPUT_SLOT = 0;
-  public static final int OUTPUT_SLOT = 1;
-  public static final int POWER_SLOT = 2;
+  public static final int MACHINE_SLOTS =
+    SmeltingMetallurgyMachineBlockEntity.SLOT_COUNT;
+  public static final int INPUT_SLOT =
+    SmeltingMetallurgyMachineBlockEntity.INPUT_SLOT;
+  public static final int OUTPUT_SLOT =
+    SmeltingMetallurgyMachineBlockEntity.OUTPUT_SLOT;
+  public static final int POWER_SLOT =
+    SmeltingMetallurgyMachineBlockEntity.POWER_SLOT;
 
   private static final int PLAYER_INVENTORY_Y = 102;
   private static final int HOTBAR_Y = 160;
@@ -65,7 +69,7 @@ public class SmeltingMetallurgyMachineMenu extends AbstractContainerMenu {
       playerInventory,
       blockEntity,
       blockEntity,
-      SmeltingMetallurgyMachineBlockEntity.CAPACITY
+      blockEntity.getCapacity()
     );
   }
 

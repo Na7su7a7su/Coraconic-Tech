@@ -10,6 +10,8 @@
 package aestastel.coraconic.common.block;
 
 import aestastel.coraconic.common.blockentity.ResonanceCrystallizingMachineBlockEntity;
+import aestastel.coraconic.common.machine.SimpleMachineProfile;
+import aestastel.coraconic.common.machine.TieredMachine;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -38,17 +40,20 @@ import net.minecraft.world.phys.HitResult;
  */
 public class ResonanceCrystallizingMachineBlock
   extends Block
-  implements EntityBlock
+  implements EntityBlock, TieredMachine
 {
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
+  private final SimpleMachineProfile profile;
 
   public ResonanceCrystallizingMachineBlock(
     Properties properties,
-    Supplier<BlockEntityType<?>> typeSupplier
+    Supplier<BlockEntityType<?>> typeSupplier,
+    SimpleMachineProfile profile
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
+    this.profile = profile;
   }
 
   @Override
@@ -56,8 +61,14 @@ public class ResonanceCrystallizingMachineBlock
     return new ResonanceCrystallizingMachineBlockEntity(
       this.typeSupplier.get(),
       pos,
-      state
+      state,
+      this.profile
     );
+  }
+
+  @Override
+  public SimpleMachineProfile machineProfile() {
+    return this.profile;
   }
 
   public BlockEntityType<?> getBlockEntityType() {
@@ -98,7 +109,10 @@ public class ResonanceCrystallizingMachineBlock
       level.getBlockEntity(pos) instanceof
         ResonanceCrystallizingMachineBlockEntity blockEntity
     ) {
-      player.openMenu(blockEntity, buffer -> buffer.writeBlockPos(pos));
+      player.openMenu(blockEntity, buffer -> {
+        buffer.writeBlockPos(pos);
+        buffer.writeLong(blockEntity.getCapacity());
+      });
     }
     return InteractionResult.CONSUME;
   }

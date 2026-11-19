@@ -10,6 +10,7 @@
 package aestastel.coraconic.common.blockentity;
 
 import aestastel.coraconic.common.energy.ModEnergyStorage;
+import aestastel.coraconic.common.machine.SmeltingMetallurgyMachineProfile;
 import aestastel.coraconic.common.menu.SmeltingMetallurgyMachineMenu;
 import aestastel.coraconic.common.recipe.RecipeProcessState;
 import net.minecraft.core.BlockPos;
@@ -38,12 +39,12 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 熔炼冶金炉 MK1 方块实体。
+ * 熔炼冶金炉 Refined 方块实体。
  *
  * <p>提供一个原料槽、一个成品槽、一个电源槽和 320,000 FE 缓存。
  * 使用原版熔炼配方，每运行一个 tick 消耗 2 FE。
  *
- * <p>Smelting-Metallurgy Machine MK1 block entity. It provides one input slot,
+ * <p>Smelting-Metallurgy Machine Refined block entity. It provides one input slot,
  * one output slot, one power slot, and a 320,000 FE buffer. It uses vanilla
  * smelting recipes and consumes 2 FE per processing tick.
  */
@@ -56,17 +57,10 @@ public class SmeltingMetallurgyMachineBlockEntity
   public static final int OUTPUT_SLOT = 1;
   public static final int POWER_SLOT = 2;
   public static final int SLOT_COUNT = 3;
-  public static final long CAPACITY = 320_000L;
-  public static final long MAX_RECEIVE = 10_000L;
-  public static final int ENERGY_PER_TICK = 2;
   public static final int DEFAULT_COOK_TIME = 200;
 
-  private final ModEnergyStorage energyStorage = new ModEnergyStorage(
-    CAPACITY,
-    MAX_RECEIVE,
-    0L,
-    this::setChanged
-  );
+  private final SmeltingMetallurgyMachineProfile profile;
+  private final ModEnergyStorage energyStorage;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -83,9 +77,22 @@ public class SmeltingMetallurgyMachineBlockEntity
   public SmeltingMetallurgyMachineBlockEntity(
     BlockEntityType<?> type,
     BlockPos pos,
-    BlockState state
+    BlockState state,
+    SmeltingMetallurgyMachineProfile profile
   ) {
     super(type, pos, state);
+    this.profile = profile;
+    this.energyStorage = new ModEnergyStorage(
+      profile.energyCapacity(),
+      profile.maxEnergyInput(),
+      0L,
+      this::setChanged
+    );
+  }
+
+  /** {@return 该机器的固定规格} */
+  public SmeltingMetallurgyMachineProfile getProfile() {
+    return this.profile;
   }
 
   /**
@@ -147,11 +154,12 @@ public class SmeltingMetallurgyMachineBlockEntity
       return;
     }
 
-    if (this.energyStorage.getEnergyStoredLong() < ENERGY_PER_TICK) {
+    int energyPerTick = this.profile.energyPerTick();
+    if (this.energyStorage.getEnergyStoredLong() < energyPerTick) {
       return;
     }
 
-    this.energyStorage.consumeEnergy(ENERGY_PER_TICK);
+    this.energyStorage.consumeEnergy(energyPerTick);
     this.processState.addProgress(1);
     setChanged();
 
@@ -204,10 +212,10 @@ public class SmeltingMetallurgyMachineBlockEntity
   }
 
   /**
-   * 从电源槽向缓存提取能量，单 tick 最高 {@link #MAX_RECEIVE} FE。
+   * 从电源槽向缓存提取能量，单 tick 上限由机器 profile 的最大输入决定。
    *
-   * <p>Extracts energy from the power-slot item into the buffer, up to
-   * {@link #MAX_RECEIVE} FE per tick. It never charges the item.
+   * <p>Extracts energy from the power-slot item into the buffer, up to the
+   * profile's maximum energy input per tick. It never charges the item.
    */
   private void dischargePowerSlot() {
     ItemStack stack = this.inventory.getStackInSlot(POWER_SLOT);
@@ -221,12 +229,14 @@ public class SmeltingMetallurgyMachineBlockEntity
       return;
     }
 
-    long space = CAPACITY - this.energyStorage.getEnergyStoredLong();
+    long space =
+      this.profile.energyCapacity() -
+      this.energyStorage.getEnergyStoredLong();
     if (space <= 0L) {
       return;
     }
     int request = (int) Math.min(
-      Math.min(space, MAX_RECEIVE),
+      Math.min(space, this.profile.maxEnergyInput()),
       Integer.MAX_VALUE
     );
     int available = itemEnergy.extractEnergy(request, true);
@@ -282,7 +292,7 @@ public class SmeltingMetallurgyMachineBlockEntity
   }
 
   public long getCapacity() {
-    return CAPACITY;
+    return this.profile.energyCapacity();
   }
 
   public void setEnergyStored(long value) {
@@ -428,7 +438,10 @@ public class SmeltingMetallurgyMachineBlockEntity
   ) {
     super.loadAdditional(tag, registries);
     this.energyStorage.setEnergyStored(
-      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+      MachineStateSupport.clampEnergy(
+        tag.getLong("energy"),
+        this.profile.energyCapacity()
+      )
     );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));

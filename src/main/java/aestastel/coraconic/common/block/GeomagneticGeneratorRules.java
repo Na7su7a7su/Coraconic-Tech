@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * 地磁发电机 MK0 的发电规则。
+ * 地磁发电机 Primitive 的发电规则。
  *
  * <p>主世界要求 Y&lt;-59 且正下方为基岩；下界和其他模组维度要求 Y&lt;6
  * 且正下方为基岩；末地要求 Y&lt;6 且正下方没有方块。条件只选择模式，

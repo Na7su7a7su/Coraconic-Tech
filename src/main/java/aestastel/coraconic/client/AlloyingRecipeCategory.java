@@ -51,7 +51,7 @@ public final class AlloyingRecipeCategory
       CoraconicJeiPlugin.ALLOYING_RECIPE_TYPE,
       Component.translatable("jei.coraconic.alloying"),
       guiHelper.createDrawableItemStack(
-        new ItemStack(ModBlocks.ALLOYING_MACHINE_MK1.get())
+        new ItemStack(ModBlocks.ALLOYING_MACHINE_REFINED.get())
       ),
       WIDTH,
       HEIGHT

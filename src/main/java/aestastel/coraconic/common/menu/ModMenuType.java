@@ -67,18 +67,18 @@ public class ModMenuType {
 
   public static final DeferredHolder<
     MenuType<?>,
-    MenuType<AlloyingMachineMenu>
+    MenuType<AlloyingMachineRefinedMenu>
   > ALLOYING_MACHINE = MENU_TYPES.register(
     "alloying_machine",
-    () -> IMenuTypeExtension.create(AlloyingMachineMenu::fromNetwork)
+    () -> IMenuTypeExtension.create(AlloyingMachineRefinedMenu::fromNetwork)
   );
 
   public static final DeferredHolder<
     MenuType<?>,
-    MenuType<AlloyingMachineMk2Menu>
-  > ALLOYING_MACHINE_MK2 = MENU_TYPES.register(
-    "alloying_machine_mk2",
-    () -> IMenuTypeExtension.create(AlloyingMachineMk2Menu::fromNetwork)
+    MenuType<AlloyingMachineEnhancedMenu>
+  > ALLOYING_MACHINE_ENHANCED = MENU_TYPES.register(
+    "alloying_machine_enhanced",
+    () -> IMenuTypeExtension.create(AlloyingMachineEnhancedMenu::fromNetwork)
   );
 
   public static final DeferredHolder<

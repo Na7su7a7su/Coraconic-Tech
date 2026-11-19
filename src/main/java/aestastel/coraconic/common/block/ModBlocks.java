@@ -14,6 +14,7 @@ import aestastel.coraconic.common.blockentity.ModBlockEntityType;
 import aestastel.coraconic.common.item.EnergyStorageUnitItem;
 import aestastel.coraconic.common.item.ItemStorageUnitItem;
 import aestastel.coraconic.common.item.ModItems;
+import aestastel.coraconic.common.machine.MachineProfiles;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import net.minecraft.world.item.BlockItem;
@@ -164,103 +165,102 @@ public class ModBlocks {
     () ->
       new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_IRON_ORE))
   );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK1 =
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_PRIMITIVE =
     registerBlocks(
-      "item_storage_unit_mk1",
+      "item_storage_unit_primitive",
       () ->
         new ItemStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(2.5F, 6.0F)
             .sound(SoundType.STONE),
-          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
-          ItemStorageUnitBlock.SLOTS_MK1
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_PRIMITIVE_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_PRIMITIVE
         ),
       ItemStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK2 =
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_REFINED =
     registerBlocks(
-      "item_storage_unit_mk2",
+      "item_storage_unit_refined",
       () ->
         new ItemStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(3.0F, 6.0F)
             .sound(SoundType.STONE),
-          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
-          ItemStorageUnitBlock.SLOTS_MK2
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_REFINED_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_REFINED
         ),
       ItemStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_MK3 =
+  public static final DeferredBlock<Block> ITEM_STORAGE_UNIT_ENHANCED =
     registerBlocks(
-      "item_storage_unit_mk3",
+      "item_storage_unit_enhanced",
       () ->
         new ItemStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(3.5F, 6.0F)
             .sound(SoundType.STONE),
-          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
-          ItemStorageUnitBlock.SLOTS_MK3
+          () -> ModBlockEntityType.ITEM_STORAGE_UNIT_ENHANCED_ENTITY.get(),
+          ItemStorageUnitBlock.SLOTS_ENHANCED
         ),
       ItemStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK1 =
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_REFINED =
     registerBlocks(
-      "energy_storage_unit_mk1",
+      "energy_storage_unit_refined",
       () ->
         new EnergyStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(2.5F, 6.0F)
             .sound(SoundType.METAL),
-          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK1_ENTITY.get(),
-          32_000_000L,
-          4_000_000L
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_REFINED_ENTITY.get(),
+          MachineProfiles.ENERGY_STORAGE_REFINED
         ),
       EnergyStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK2 =
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_ENHANCED =
     registerBlocks(
-      "energy_storage_unit_mk2",
+      "energy_storage_unit_enhanced",
       () ->
         new EnergyStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(3.0F, 6.0F)
             .sound(SoundType.METAL),
-          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK2_ENTITY.get(),
-          320_000_000L,
-          16_000_000L
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_ENHANCED_ENTITY.get(),
+          MachineProfiles.ENERGY_STORAGE_ENHANCED
         ),
       EnergyStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_MK3 =
+  public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT_SUPERIOR =
     registerBlocks(
-      "energy_storage_unit_mk3",
+      "energy_storage_unit_superior",
       () ->
         new EnergyStorageUnitBlock(
           BlockBehaviour.Properties.of()
             .strength(3.5F, 6.0F)
             .sound(SoundType.METAL),
-          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_MK3_ENTITY.get(),
-          3_200_000_000L,
-          64_000_000L
+          () -> ModBlockEntityType.ENERGY_STORAGE_UNIT_SUPERIOR_ENTITY.get(),
+          MachineProfiles.ENERGY_STORAGE_SUPERIOR
         ),
       EnergyStorageUnitItem::new
     );
-  public static final DeferredBlock<Block> ALLOYING_MACHINE_MK1 =
-    registerBlocks("alloying_machine_mk1", () ->
-      new AlloyingMachineBlock(
+  public static final DeferredBlock<Block> ALLOYING_MACHINE_REFINED =
+    registerBlocks("alloying_machine_refined", () ->
+      new AlloyingMachineRefinedBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.ALLOYING_MACHINE_MK1_ENTITY.get()
+        () -> ModBlockEntityType.ALLOYING_MACHINE_REFINED_ENTITY.get(),
+        MachineProfiles.ALLOYING_REFINED
       )
     );
-  public static final DeferredBlock<Block> ALLOYING_MACHINE_MK2 =
-    registerBlocks("alloying_machine_mk2", () ->
-      new AlloyingMachineMk2Block(
+  public static final DeferredBlock<Block> ALLOYING_MACHINE_ENHANCED =
+    registerBlocks("alloying_machine_enhanced", () ->
+      new AlloyingMachineEnhancedBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.ALLOYING_MACHINE_MK2_ENTITY.get()
+        () -> ModBlockEntityType.ALLOYING_MACHINE_ENHANCED_ENTITY.get(),
+        MachineProfiles.ALLOYING_ENHANCED
       )
     );
   public static final DeferredBlock<Block> RESONANCE_CRYSTALLIZING_MACHINE =
@@ -270,19 +270,21 @@ public class ModBlocks {
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
         () ->
-          ModBlockEntityType.RESONANCE_CRYSTALLIZING_MACHINE_ENTITY.get()
+          ModBlockEntityType.RESONANCE_CRYSTALLIZING_MACHINE_ENTITY.get(),
+        MachineProfiles.RESONANCE_CRYSTALLIZING_REFINED
       )
     );
   public static final DeferredBlock<
     Block
-  > SMELTING_METALLURGY_MACHINE_MK1 =
-    registerBlocks("smelting_metallurgy_machine_mk1", () ->
+  > SMELTING_METALLURGY_MACHINE_REFINED =
+    registerBlocks("smelting_metallurgy_machine_refined", () ->
       new SmeltingMetallurgyMachineBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
         () ->
-          ModBlockEntityType.SMELTING_METALLURGY_MACHINE_MK1_ENTITY.get()
+          ModBlockEntityType.SMELTING_METALLURGY_MACHINE_REFINED_ENTITY.get(),
+        MachineProfiles.SMELTING_METALLURGY_REFINED
       )
     );
   public static final DeferredBlock<
@@ -297,97 +299,98 @@ public class ModBlocks {
           ModBlockEntityType.INSTRUMENT_ASSEMBLING_MACHINE_ENTITY.get()
       )
     );
-  public static final DeferredBlock<Block> HEAT_GENERATOR_MK0 =
-    registerBlocks("heat_generator_mk0", () ->
+  public static final DeferredBlock<Block> HEAT_GENERATOR_PRIMITIVE =
+    registerBlocks("heat_generator_primitive", () ->
       new HeatGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(3.0F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.HEAT_GENERATOR_MK0_ENTITY.get()
+        () -> ModBlockEntityType.HEAT_GENERATOR_PRIMITIVE_ENTITY.get(),
+        MachineProfiles.HEAT_GENERATOR_PRIMITIVE
       )
     );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK0 = registerBlocks(
-    "solar_generator_mk0",
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_PRIMITIVE = registerBlocks(
+    "solar_generator_primitive",
     () ->
       new SolarGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(2.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
-        SolarGeneratorTier.MK0
+        () -> ModBlockEntityType.SOLAR_GENERATOR_PRIMITIVE_ENTITY.get(),
+        SolarGeneratorTier.PRIMITIVE
       )
   );
-  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK0 =
-    registerBlocks("geomagnetic_generator_mk0", () ->
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_PRIMITIVE =
+    registerBlocks("geomagnetic_generator_primitive", () ->
       new GeomagneticGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(2.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK0_ENTITY.get(),
-        GeomagneticGeneratorTier.MK0
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_PRIMITIVE_ENTITY.get(),
+        GeomagneticGeneratorTier.PRIMITIVE
       )
     );
-  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK1 =
-    registerBlocks("geomagnetic_generator_mk1", () ->
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_REFINED =
+    registerBlocks("geomagnetic_generator_refined", () ->
       new GeomagneticGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(3.0F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK1_ENTITY.get(),
-        GeomagneticGeneratorTier.MK1
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_REFINED_ENTITY.get(),
+        GeomagneticGeneratorTier.REFINED
       )
     );
-  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK2 =
-    registerBlocks("geomagnetic_generator_mk2", () ->
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_ENHANCED =
+    registerBlocks("geomagnetic_generator_enhanced", () ->
       new GeomagneticGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK2_ENTITY.get(),
-        GeomagneticGeneratorTier.MK2
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_ENHANCED_ENTITY.get(),
+        GeomagneticGeneratorTier.ENHANCED
       )
     );
-  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_MK3 =
-    registerBlocks("geomagnetic_generator_mk3", () ->
+  public static final DeferredBlock<Block> GEOMAGNETIC_GENERATOR_SUPERIOR =
+    registerBlocks("geomagnetic_generator_superior", () ->
       new GeomagneticGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(4.0F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK3_ENTITY.get(),
-        GeomagneticGeneratorTier.MK3
+        () -> ModBlockEntityType.GEOMAGNETIC_GENERATOR_SUPERIOR_ENTITY.get(),
+        GeomagneticGeneratorTier.SUPERIOR
       )
     );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK1 = registerBlocks(
-    "solar_generator_mk1",
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_REFINED = registerBlocks(
+    "solar_generator_refined",
     () ->
       new SolarGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(3.0F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
-        SolarGeneratorTier.MK1
+        () -> ModBlockEntityType.SOLAR_GENERATOR_REFINED_ENTITY.get(),
+        SolarGeneratorTier.REFINED
       )
   );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK2 = registerBlocks(
-    "solar_generator_mk2",
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_ENHANCED = registerBlocks(
+    "solar_generator_enhanced",
     () ->
       new SolarGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(3.5F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
-        SolarGeneratorTier.MK2
+        () -> ModBlockEntityType.SOLAR_GENERATOR_ENHANCED_ENTITY.get(),
+        SolarGeneratorTier.ENHANCED
       )
   );
-  public static final DeferredBlock<Block> SOLAR_GENERATOR_MK3 = registerBlocks(
-    "solar_generator_mk3",
+  public static final DeferredBlock<Block> SOLAR_GENERATOR_SUPERIOR = registerBlocks(
+    "solar_generator_superior",
     () ->
       new SolarGeneratorBlock(
         BlockBehaviour.Properties.of()
           .strength(4.0F, 6.0F)
           .sound(SoundType.METAL),
-        () -> ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
-        SolarGeneratorTier.MK3
+        () -> ModBlockEntityType.SOLAR_GENERATOR_SUPERIOR_ENTITY.get(),
+        SolarGeneratorTier.SUPERIOR
       )
   );
 

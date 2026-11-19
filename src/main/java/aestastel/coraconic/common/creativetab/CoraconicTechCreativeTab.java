@@ -94,32 +94,32 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModBlocks.DEEPSLAT_TIN_ORE.get());
           output.accept(ModBlocks.DEEPSLAT_LEAD_ORE.get());
           output.accept(ModBlocks.DEEPSLATE_SILVER_ORE.get());
-          output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK1.get());
-          output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK2.get());
-          output.accept(ModBlocks.ITEM_STORAGE_UNIT_MK3.get());
-          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get());
-          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get());
-          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get());
-          output.accept(ModBlocks.ALLOYING_MACHINE_MK1.get());
-          output.accept(ModBlocks.ALLOYING_MACHINE_MK2.get());
+          output.accept(ModBlocks.ITEM_STORAGE_UNIT_PRIMITIVE.get());
+          output.accept(ModBlocks.ITEM_STORAGE_UNIT_REFINED.get());
+          output.accept(ModBlocks.ITEM_STORAGE_UNIT_ENHANCED.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_REFINED.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_ENHANCED.get());
+          output.accept(ModBlocks.ENERGY_STORAGE_UNIT_SUPERIOR.get());
+          output.accept(ModBlocks.ALLOYING_MACHINE_REFINED.get());
+          output.accept(ModBlocks.ALLOYING_MACHINE_ENHANCED.get());
           output.accept(
             ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get()
           );
           output.accept(
-            ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
+            ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get()
           );
           output.accept(
             ModBlocks.INSTRUMENT_ASSEMBLING_MACHINE.get()
           );
-          output.accept(ModBlocks.HEAT_GENERATOR_MK0.get());
-          output.accept(ModBlocks.SOLAR_GENERATOR_MK0.get());
-          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get());
-          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_MK1.get());
-          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_MK2.get());
-          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_MK3.get());
-          output.accept(ModBlocks.SOLAR_GENERATOR_MK1.get());
-          output.accept(ModBlocks.SOLAR_GENERATOR_MK2.get());
-          output.accept(ModBlocks.SOLAR_GENERATOR_MK3.get());
+          output.accept(ModBlocks.HEAT_GENERATOR_PRIMITIVE.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_PRIMITIVE.get());
+          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_PRIMITIVE.get());
+          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_REFINED.get());
+          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_ENHANCED.get());
+          output.accept(ModBlocks.GEOMAGNETIC_GENERATOR_SUPERIOR.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_REFINED.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_ENHANCED.get());
+          output.accept(ModBlocks.SOLAR_GENERATOR_SUPERIOR.get());
         })
         .build()
     );

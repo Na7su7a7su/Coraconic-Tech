@@ -48,9 +48,9 @@ public class ModBlockStatesProvider extends BlockStateProvider {
       // All three item storage units use hand-authored models; skip datagen.
       Block blockObject = block.get();
       if (
-        blockObject == ModBlocks.ITEM_STORAGE_UNIT_MK1.get() ||
-        blockObject == ModBlocks.ITEM_STORAGE_UNIT_MK2.get() ||
-        blockObject == ModBlocks.ITEM_STORAGE_UNIT_MK3.get()
+        blockObject == ModBlocks.ITEM_STORAGE_UNIT_PRIMITIVE.get() ||
+        blockObject == ModBlocks.ITEM_STORAGE_UNIT_REFINED.get() ||
+        blockObject == ModBlocks.ITEM_STORAGE_UNIT_ENHANCED.get()
       ) {
         continue;
       }

@@ -21,11 +21,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 熔炼冶金炉 MK1 的客户端界面。
+ * 熔炼冶金炉 Refined 的客户端界面。
  *
  * <p>显示一个原料槽、一个成品槽、一个电源槽、能量缓存与加工进度。
  *
- * <p>Client screen for Smelting-Metallurgy Machine MK1. It shows one input slot,
+ * <p>Client screen for Smelting-Metallurgy Machine Refined. It shows one input slot,
  * one output slot, one power slot, the energy buffer, and processing progress.
  */
 public class SmeltingMetallurgyMachineScreen

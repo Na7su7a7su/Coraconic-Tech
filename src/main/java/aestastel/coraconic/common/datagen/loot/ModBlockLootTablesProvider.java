@@ -72,43 +72,43 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     // Item storage units drop themselves and copy their contents into the item
     // components (like shulker boxes).
     add(
-      ModBlocks.ITEM_STORAGE_UNIT_MK1.get(),
-      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK1.get())
+      ModBlocks.ITEM_STORAGE_UNIT_PRIMITIVE.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_PRIMITIVE.get())
     );
     add(
-      ModBlocks.ITEM_STORAGE_UNIT_MK2.get(),
-      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK2.get())
+      ModBlocks.ITEM_STORAGE_UNIT_REFINED.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_REFINED.get())
     );
     add(
-      ModBlocks.ITEM_STORAGE_UNIT_MK3.get(),
-      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_MK3.get())
+      ModBlocks.ITEM_STORAGE_UNIT_ENHANCED.get(),
+      createShulkerBoxDrop(ModBlocks.ITEM_STORAGE_UNIT_ENHANCED.get())
     );
 
     // 能量存储单元：掉落自身并复制方块实体数据（能量与两个机器槽位）。
     // Energy storage units drop themselves and copy the block entity data
     // (stored energy and both machine slots).
     add(
-      ModBlocks.ENERGY_STORAGE_UNIT_MK1.get(),
-      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK1.get())
+      ModBlocks.ENERGY_STORAGE_UNIT_REFINED.get(),
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_REFINED.get())
     );
     add(
-      ModBlocks.ENERGY_STORAGE_UNIT_MK2.get(),
-      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK2.get())
+      ModBlocks.ENERGY_STORAGE_UNIT_ENHANCED.get(),
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_ENHANCED.get())
     );
     add(
-      ModBlocks.ENERGY_STORAGE_UNIT_MK3.get(),
-      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_MK3.get())
+      ModBlocks.ENERGY_STORAGE_UNIT_SUPERIOR.get(),
+      createBlockEntityDataDrop(ModBlocks.ENERGY_STORAGE_UNIT_SUPERIOR.get())
     );
 
     // 合金仪：掉落自身并复制缓存能量与四个槽位。
     // Alloying machine: drops itself with buffered energy and all four slots.
     add(
-      ModBlocks.ALLOYING_MACHINE_MK1.get(),
-      createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_MK1.get())
+      ModBlocks.ALLOYING_MACHINE_REFINED.get(),
+      createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_REFINED.get())
     );
     add(
-      ModBlocks.ALLOYING_MACHINE_MK2.get(),
-      createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_MK2.get())
+      ModBlocks.ALLOYING_MACHINE_ENHANCED.get(),
+      createBlockEntityDataDrop(ModBlocks.ALLOYING_MACHINE_ENHANCED.get())
     );
     add(
       ModBlocks.RESONANCE_CRYSTALLIZING_MACHINE.get(),
@@ -117,9 +117,9 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       )
     );
     add(
-      ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get(),
+      ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get(),
       createBlockEntityDataDrop(
-        ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
+        ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get()
       )
     );
     add(
@@ -129,44 +129,44 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
       )
     );
     add(
-      ModBlocks.HEAT_GENERATOR_MK0.get(),
-      createBlockEntityDataDrop(ModBlocks.HEAT_GENERATOR_MK0.get())
+      ModBlocks.HEAT_GENERATOR_PRIMITIVE.get(),
+      createBlockEntityDataDrop(ModBlocks.HEAT_GENERATOR_PRIMITIVE.get())
     );
 
     // 太阳能发电机：掉落自身并复制缓存能量；输出槽内容在方块移除时单独掉落。
     // Solar generator: drops itself with buffered energy; output-slot contents
     // drop separately when the block is removed.
     add(
-      ModBlocks.SOLAR_GENERATOR_MK0.get(),
-      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK0.get())
+      ModBlocks.SOLAR_GENERATOR_PRIMITIVE.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_PRIMITIVE.get())
     );
     add(
-      ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get(),
-      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get())
+      ModBlocks.GEOMAGNETIC_GENERATOR_PRIMITIVE.get(),
+      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_PRIMITIVE.get())
     );
     add(
-      ModBlocks.GEOMAGNETIC_GENERATOR_MK1.get(),
-      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_MK1.get())
+      ModBlocks.GEOMAGNETIC_GENERATOR_REFINED.get(),
+      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_REFINED.get())
     );
     add(
-      ModBlocks.GEOMAGNETIC_GENERATOR_MK2.get(),
-      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_MK2.get())
+      ModBlocks.GEOMAGNETIC_GENERATOR_ENHANCED.get(),
+      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_ENHANCED.get())
     );
     add(
-      ModBlocks.GEOMAGNETIC_GENERATOR_MK3.get(),
-      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_MK3.get())
+      ModBlocks.GEOMAGNETIC_GENERATOR_SUPERIOR.get(),
+      createBlockEntityDataDrop(ModBlocks.GEOMAGNETIC_GENERATOR_SUPERIOR.get())
     );
     add(
-      ModBlocks.SOLAR_GENERATOR_MK1.get(),
-      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK1.get())
+      ModBlocks.SOLAR_GENERATOR_REFINED.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_REFINED.get())
     );
     add(
-      ModBlocks.SOLAR_GENERATOR_MK2.get(),
-      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK2.get())
+      ModBlocks.SOLAR_GENERATOR_ENHANCED.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_ENHANCED.get())
     );
     add(
-      ModBlocks.SOLAR_GENERATOR_MK3.get(),
-      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_MK3.get())
+      ModBlocks.SOLAR_GENERATOR_SUPERIOR.get(),
+      createBlockEntityDataDrop(ModBlocks.SOLAR_GENERATOR_SUPERIOR.get())
     );
 
     // 锡矿石：精准采集掉落矿石本身，否则掉落 2-5 个粗锡；深层变种规则相同。

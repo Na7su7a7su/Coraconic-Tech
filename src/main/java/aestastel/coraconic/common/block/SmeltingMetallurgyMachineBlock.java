@@ -10,6 +10,8 @@
 package aestastel.coraconic.common.block;
 
 import aestastel.coraconic.common.blockentity.SmeltingMetallurgyMachineBlockEntity;
+import aestastel.coraconic.common.machine.SmeltingMetallurgyMachineProfile;
+import aestastel.coraconic.common.machine.TieredMachine;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -29,26 +31,29 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * 熔炼冶金炉 MK1 方块。
+ * 熔炼冶金炉 Refined 方块。
  *
  * <p>负责创建方块实体、打开界面，并在破坏时保留缓存、槽位与加工进度。
  *
- * <p>Smelting-Metallurgy Machine MK1 block. It creates the block entity, opens
+ * <p>Smelting-Metallurgy Machine Refined block. It creates the block entity, opens
  * the GUI, and preserves the buffer, slots, and progress when broken.
  */
 public class SmeltingMetallurgyMachineBlock
   extends Block
-  implements EntityBlock
+  implements EntityBlock, TieredMachine
 {
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
+  private final SmeltingMetallurgyMachineProfile profile;
 
   public SmeltingMetallurgyMachineBlock(
     Properties properties,
-    Supplier<BlockEntityType<?>> typeSupplier
+    Supplier<BlockEntityType<?>> typeSupplier,
+    SmeltingMetallurgyMachineProfile profile
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
+    this.profile = profile;
   }
 
   @Override
@@ -56,8 +61,14 @@ public class SmeltingMetallurgyMachineBlock
     return new SmeltingMetallurgyMachineBlockEntity(
       this.typeSupplier.get(),
       pos,
-      state
+      state,
+      this.profile
     );
+  }
+
+  @Override
+  public SmeltingMetallurgyMachineProfile machineProfile() {
+    return this.profile;
   }
 
   public BlockEntityType<?> getBlockEntityType() {
@@ -100,7 +111,7 @@ public class SmeltingMetallurgyMachineBlock
     ) {
       player.openMenu(blockEntity, buffer -> {
         buffer.writeBlockPos(pos);
-        buffer.writeLong(SmeltingMetallurgyMachineBlockEntity.CAPACITY);
+        buffer.writeLong(blockEntity.getCapacity());
       });
     }
     return InteractionResult.CONSUME;

@@ -14,6 +14,7 @@ import aestastel.coraconic.common.energy.EnergyFaceMode;
 import aestastel.coraconic.common.energy.EnergyFaceStorage;
 import aestastel.coraconic.common.energy.EnergyFaceTransfer;
 import aestastel.coraconic.common.energy.ModEnergyStorage;
+import aestastel.coraconic.common.machine.EnergyStorageUnitProfile;
 import aestastel.coraconic.common.menu.EnergyStorageUnitMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
  * 能量通过 NeoForge 的 {@code Capabilities.EnergyStorage.BLOCK} 能力暴露，
  * 物品能量通过 {@code Capabilities.EnergyStorage.ITEM} 能力读写。
  *
- * <p>当总容量超过 {@link Integer#MAX_VALUE}（例如 MK3 的 3.2G）时，内部会
+ * <p>当总容量超过 {@link Integer#MAX_VALUE}（例如 Superior 的 3.2G）时，内部会
  * 自动拆分为多个不超过 int 上限的能量段，并按查询面暴露不同段；线缆连接
  * 不同面即可访问完整容量。GUI 与充放电槽始终使用所有段的总和。
  * 六个面还可分别配置输入、输出、输入/输出或阻断模式，并主动与相邻能量
@@ -73,6 +74,7 @@ public class EnergyStorageUnitBlockEntity
   /** 机器槽位总数。 */
   public static final int SLOT_COUNT = 2;
 
+  private final EnergyStorageUnitProfile profile;
   private final ModEnergyStorage[] banks;
   private final long totalCapacity;
   private final long transfer;
@@ -91,12 +93,14 @@ public class EnergyStorageUnitBlockEntity
     BlockEntityType<?> type,
     BlockPos pos,
     BlockState state,
-    long capacity,
-    long maxTransfer
+    EnergyStorageUnitProfile profile
   ) {
     super(type, pos, state);
-    this.transfer = maxTransfer;
-    this.totalCapacity = capacity;
+    this.profile = profile;
+    this.transfer = profile.transfer();
+    this.totalCapacity = profile.energyCapacity();
+    long capacity = this.totalCapacity;
+    long maxTransfer = this.transfer;
 
     // 将总容量拆分为若干不超过 int 上限的段，供能力系统按面暴露。
     // Split the total capacity into int-sized segments exposed per side.
@@ -240,7 +244,7 @@ public class EnergyStorageUnitBlockEntity
   /**
    * 按面返回带模式门控的能量能力。
    *
-   * <p>容量不超过 int 上限时只有一个段；MK3 被拆成两个 1.6G 段，不同面会
+   * <p>容量不超过 int 上限时只有一个段；Superior 被拆成两个 1.6G 段，不同面会
    * 暴露不同段，线缆连接不同面即可访问完整的 3.2G。返回的视图会根据该面
    * 的输入/输出模式拒绝不允许的操作。
    *
@@ -459,6 +463,11 @@ public class EnergyStorageUnitBlockEntity
       stored += bank.getEnergyStoredLong();
     }
     return stored;
+  }
+
+  /** {@return 该机器的固定规格} */
+  public EnergyStorageUnitProfile getProfile() {
+    return this.profile;
   }
 
   /** {@return 总容量（FE）} */

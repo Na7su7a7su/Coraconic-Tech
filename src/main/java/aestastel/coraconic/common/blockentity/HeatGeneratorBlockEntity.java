@@ -11,6 +11,7 @@ package aestastel.coraconic.common.blockentity;
 
 import aestastel.coraconic.common.block.HeatGeneratorMode;
 import aestastel.coraconic.common.energy.ModEnergyStorage;
+import aestastel.coraconic.common.machine.HeatGeneratorProfile;
 import aestastel.coraconic.common.menu.HeatGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,12 +40,12 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 热力发电机 MK0 方块实体。
+ * 热力发电机 Primitive 方块实体。
  *
  * <p>燃料槽中的熔炉燃料会被转换为热量，每 1 tick 燃烧时间等于 1 单位热量。
  * 主动模式每 tick 消耗 40 单位热量并产生 80 FE。
  *
- * <p>Heat Generator MK0 block entity. Furnace fuel in the fuel slot is
+ * <p>Heat Generator Primitive block entity. Furnace fuel in the fuel slot is
  * converted into heat, with 1 tick of burn time equal to 1 heat unit. The
  * Initiactive mode consumes 40 heat and generates 80 FE per tick.
  */
@@ -56,22 +57,9 @@ public class HeatGeneratorBlockEntity
   public static final int OUTPUT_SLOT = 0;
   public static final int FUEL_SLOT = 1;
   public static final int SLOT_COUNT = 2;
-  public static final long CAPACITY = 96_000L;
-  public static final long MAX_TRANSFER = 600L;
-  public static final int ITEM_CHARGE_RATE = 600;
-  public static final int HEAT_CAPACITY = 640_000;
-  public static final int HEAT_PER_TICK = 40;
-  public static final int FE_PER_HEAT = 2;
-  public static final int GENERATION_PER_TICK = HEAT_PER_TICK * FE_PER_HEAT;
-  public static final int PASSIVE_GENERATION_PER_LAVA = 10;
-  public static final int MIX_BONUS_PER_LAVA = 5;
 
-  private final ModEnergyStorage energyStorage = new ModEnergyStorage(
-    CAPACITY,
-    MAX_TRANSFER,
-    MAX_TRANSFER,
-    this::setChanged
-  );
+  private final HeatGeneratorProfile profile;
+  private final ModEnergyStorage energyStorage;
 
   private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
     @Override
@@ -87,9 +75,22 @@ public class HeatGeneratorBlockEntity
   public HeatGeneratorBlockEntity(
     BlockEntityType<?> type,
     BlockPos pos,
-    BlockState state
+    BlockState state,
+    HeatGeneratorProfile profile
   ) {
     super(type, pos, state);
+    this.profile = profile;
+    this.energyStorage = new ModEnergyStorage(
+      profile.energyCapacity(),
+      profile.maxTransfer(),
+      profile.maxTransfer(),
+      this::setChanged
+    );
+  }
+
+  /** {@return 该机器的固定规格} */
+  public HeatGeneratorProfile getProfile() {
+    return this.profile;
   }
 
   /**
@@ -121,7 +122,7 @@ public class HeatGeneratorBlockEntity
     if (burnTime <= 0) {
       return;
     }
-    if (this.heat + burnTime > HEAT_CAPACITY) {
+    if (this.heat + burnTime > this.profile.heatCapacity()) {
       return;
     }
 
@@ -152,7 +153,7 @@ public class HeatGeneratorBlockEntity
     if (burnTime <= 0) {
       return false;
     }
-    if (this.heat + burnTime > HEAT_CAPACITY) {
+    if (this.heat + burnTime > this.profile.heatCapacity()) {
       return true;
     }
 
@@ -182,23 +183,26 @@ public class HeatGeneratorBlockEntity
     int lavaCount = getAdjacentLavaCount();
 
     if (this.heat > 0) {
-      int consumed = Math.min(HEAT_PER_TICK, this.heat);
+      int consumed = Math.min(this.profile.heatPerTick(), this.heat);
       int generation;
       HeatGeneratorMode mode;
       if (lavaCount > 0) {
         generation =
           consumed *
-          (GENERATION_PER_TICK + MIX_BONUS_PER_LAVA * lavaCount) /
-          HEAT_PER_TICK;
+          (
+            this.profile.generationPerTick() +
+            this.profile.mixBonusPerLava() * lavaCount
+          ) /
+          this.profile.heatPerTick();
         mode = HeatGeneratorMode.MIX;
       } else {
-        generation = consumed * FE_PER_HEAT;
+        generation = consumed * this.profile.fePerHeat();
         mode = HeatGeneratorMode.INITIACTIVE;
       }
 
       if (
         this.energyStorage.getEnergyStoredLong() <=
-        CAPACITY - generation
+        this.profile.energyCapacity() - generation
       ) {
         this.heat -= consumed;
         this.energyStorage.receiveEnergy(generation, false);
@@ -211,10 +215,10 @@ public class HeatGeneratorBlockEntity
     }
 
     if (lavaCount > 0) {
-      int generation = PASSIVE_GENERATION_PER_LAVA * lavaCount;
+      int generation = this.profile.passiveGenerationPerLava() * lavaCount;
       if (
         this.energyStorage.getEnergyStoredLong() <=
-        CAPACITY - generation
+        this.profile.energyCapacity() - generation
       ) {
         this.energyStorage.receiveEnergy(generation, false);
         this.currentGeneration = generation;
@@ -258,7 +262,7 @@ public class HeatGeneratorBlockEntity
     int available = (int) Math.min(
       Math.min(
         this.energyStorage.getEnergyStoredLong(),
-        ITEM_CHARGE_RATE
+        this.profile.itemChargeRate()
       ),
       Integer.MAX_VALUE
     );
@@ -286,7 +290,7 @@ public class HeatGeneratorBlockEntity
   }
 
   public long getCapacity() {
-    return CAPACITY;
+    return this.profile.energyCapacity();
   }
 
   public void setEnergyStored(long value) {
@@ -298,11 +302,14 @@ public class HeatGeneratorBlockEntity
   }
 
   public int getHeatCapacity() {
-    return HEAT_CAPACITY;
+    return this.profile.heatCapacity();
   }
 
   public void setHeat(int value) {
-    this.heat = Math.max(0, Math.min(value, HEAT_CAPACITY));
+    this.heat = Math.max(
+      0,
+      Math.min(value, this.profile.heatCapacity())
+    );
   }
 
   public int getCurrentGeneration() {
@@ -435,9 +442,15 @@ public class HeatGeneratorBlockEntity
   ) {
     super.loadAdditional(tag, registries);
     this.energyStorage.setEnergyStored(
-      MachineStateSupport.clampEnergy(tag.getLong("energy"), CAPACITY)
+      MachineStateSupport.clampEnergy(
+        tag.getLong("energy"),
+        this.profile.energyCapacity()
+      )
     );
-    this.heat = Math.max(0, Math.min(tag.getInt("heat"), HEAT_CAPACITY));
+    this.heat = Math.max(
+      0,
+      Math.min(tag.getInt("heat"), this.profile.heatCapacity())
+    );
     if (tag.contains("inventory")) {
       this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }

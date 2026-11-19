@@ -40,17 +40,17 @@ public final class ModCapabilities {
   public static void registerCapabilities(RegisterCapabilitiesEvent event) {
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_UNIT_MK1_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_PRIMITIVE_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_UNIT_MK2_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK,
-      ModBlockEntityType.ITEM_STORAGE_UNIT_MK3_ENTITY.get(),
+      ModBlockEntityType.ITEM_STORAGE_UNIT_ENHANCED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getItemHandler()
     );
 
@@ -58,17 +58,17 @@ public final class ModCapabilities {
     // Energy storage units: expose their FE storage on every side.
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.ENERGY_STORAGE_UNIT_MK1_ENTITY.get(),
+      ModBlockEntityType.ENERGY_STORAGE_UNIT_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.ENERGY_STORAGE_UNIT_MK2_ENTITY.get(),
+      ModBlockEntityType.ENERGY_STORAGE_UNIT_ENHANCED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.ENERGY_STORAGE_UNIT_MK3_ENTITY.get(),
+      ModBlockEntityType.ENERGY_STORAGE_UNIT_SUPERIOR_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
 
@@ -76,12 +76,12 @@ public final class ModCapabilities {
     // Solar generators: expose face-mode-gated buffer access on every side.
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.ALLOYING_MACHINE_MK1_ENTITY.get(),
+      ModBlockEntityType.ALLOYING_MACHINE_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.ALLOYING_MACHINE_MK2_ENTITY.get(),
+      ModBlockEntityType.ALLOYING_MACHINE_ENHANCED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
@@ -96,60 +96,60 @@ public final class ModCapabilities {
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.SMELTING_METALLURGY_MACHINE_MK1_ENTITY.get(),
+      ModBlockEntityType.SMELTING_METALLURGY_MACHINE_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.HEAT_GENERATOR_MK0_ENTITY.get(),
+      ModBlockEntityType.HEAT_GENERATOR_PRIMITIVE_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.SOLAR_GENERATOR_MK0_ENTITY.get(),
+      ModBlockEntityType.SOLAR_GENERATOR_PRIMITIVE_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK0_ENTITY.get(),
+      ModBlockEntityType.GEOMAGNETIC_GENERATOR_PRIMITIVE_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK1_ENTITY.get(),
+      ModBlockEntityType.GEOMAGNETIC_GENERATOR_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK2_ENTITY.get(),
+      ModBlockEntityType.GEOMAGNETIC_GENERATOR_ENHANCED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.GEOMAGNETIC_GENERATOR_MK3_ENTITY.get(),
+      ModBlockEntityType.GEOMAGNETIC_GENERATOR_SUPERIOR_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.SOLAR_GENERATOR_MK1_ENTITY.get(),
+      ModBlockEntityType.SOLAR_GENERATOR_REFINED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.SOLAR_GENERATOR_MK2_ENTITY.get(),
+      ModBlockEntityType.SOLAR_GENERATOR_ENHANCED_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
     event.registerBlockEntity(
       Capabilities.EnergyStorage.BLOCK,
-      ModBlockEntityType.SOLAR_GENERATOR_MK3_ENTITY.get(),
+      ModBlockEntityType.SOLAR_GENERATOR_SUPERIOR_ENTITY.get(),
       (blockEntity, side) -> blockEntity.getEnergyStorageForSide(side)
     );
 
     // 能量存储单元物品：让物品本身也能作为 FE 容器被充放电。
     // Energy storage unit items: expose their own FE storage for charging.
-    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_MK1.get());
-    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_MK2.get());
-    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_MK3.get());
+    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_REFINED.get());
+    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_ENHANCED.get());
+    registerEnergyItem(event, ModBlocks.ENERGY_STORAGE_UNIT_SUPERIOR.get());
   }
 
   private static void registerEnergyItem(

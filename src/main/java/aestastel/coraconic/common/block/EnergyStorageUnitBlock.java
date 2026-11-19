@@ -10,6 +10,8 @@
 package aestastel.coraconic.common.block;
 
 import aestastel.coraconic.common.blockentity.EnergyStorageUnitBlockEntity;
+import aestastel.coraconic.common.machine.EnergyStorageUnitProfile;
+import aestastel.coraconic.common.machine.TieredMachine;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,28 +43,33 @@ import net.minecraft.world.phys.HitResult;
  * <p>Energy storage unit block shared by all tiers. It creates the block entity,
  * provides a server-side ticker for item charge/discharge, and opens the GUI.
  */
-public class EnergyStorageUnitBlock extends Block implements EntityBlock {
+public class EnergyStorageUnitBlock
+  extends Block
+  implements EntityBlock, TieredMachine
+{
 
   public static final DirectionProperty FACING =
     HorizontalDirectionalBlock.FACING;
 
   private final Supplier<BlockEntityType<?>> typeSupplier;
-  private final long capacity;
-  private final long transfer;
+  private final EnergyStorageUnitProfile profile;
 
   public EnergyStorageUnitBlock(
     Properties properties,
     Supplier<BlockEntityType<?>> typeSupplier,
-    long capacity,
-    long transfer
+    EnergyStorageUnitProfile profile
   ) {
     super(properties);
     this.typeSupplier = typeSupplier;
-    this.capacity = capacity;
-    this.transfer = transfer;
+    this.profile = profile;
     registerDefaultState(
       this.stateDefinition.any().setValue(FACING, Direction.NORTH)
     );
+  }
+
+  @Override
+  public EnergyStorageUnitProfile machineProfile() {
+    return this.profile;
   }
 
   @Override
@@ -86,8 +93,7 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
       typeSupplier.get(),
       pos,
       state,
-      capacity,
-      transfer
+      this.profile
     );
   }
 
@@ -119,12 +125,12 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
 
   /** {@return 本等级的容量（FE）} */
   public long getCapacity() {
-    return capacity;
+    return this.profile.energyCapacity();
   }
 
   /** {@return 本等级的输入/输出上限（FE/t）} */
   public long getTransfer() {
-    return transfer;
+    return this.profile.transfer();
   }
 
   /**
@@ -146,7 +152,7 @@ public class EnergyStorageUnitBlock extends Block implements EntityBlock {
     if (level.getBlockEntity(pos) instanceof EnergyStorageUnitBlockEntity blockEntity) {
       player.openMenu(blockEntity, buffer -> {
         buffer.writeBlockPos(pos);
-        buffer.writeLong(capacity);
+        buffer.writeLong(blockEntity.getCapacityLong());
       });
     }
     return InteractionResult.CONSUME;

@@ -11,7 +11,7 @@ package aestastel.coraconic.client;
 
 import aestastel.coraconic.CoraconicJeiPlugin;
 import aestastel.coraconic.common.block.ModBlocks;
-import aestastel.coraconic.common.blockentity.SmeltingMetallurgyMachineBlockEntity;
+import aestastel.coraconic.common.machine.MachineProfiles;
 import java.util.Arrays;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -50,7 +50,7 @@ public final class SmeltingMetallurgyRecipeCategory
       CoraconicJeiPlugin.SMELTING_METALLURGY_RECIPE_TYPE,
       Component.translatable("jei.coraconic.smelting_metallurgy"),
       guiHelper.createDrawableItemStack(
-        new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get())
+        new ItemStack(ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get())
       ),
       WIDTH,
       HEIGHT
@@ -99,7 +99,7 @@ public final class SmeltingMetallurgyRecipeCategory
       Component.translatable(
         "jei.coraconic.smelting_metallurgy.energy",
         recipe.getCookingTime() *
-          SmeltingMetallurgyMachineBlockEntity.ENERGY_PER_TICK
+          MachineProfiles.SMELTING_METALLURGY_REFINED.energyPerTick()
       ).getString(),
       8,
       46,

@@ -18,12 +18,12 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 地磁发电机 MK0–MK3 的专用菜单。
+ * 地磁发电机 Primitive–Superior 的专用菜单。
  *
  * <p>保留太阳能发电机的通用缓存、输出槽、面配置和同步逻辑，但使用独立的
  * 菜单类型与客户端界面，便于单独显示地磁 CLI。
  *
- * <p>Dedicated menu for Geomagnetic Generators MK0–MK3. It reuses the solar
+ * <p>Dedicated menu for Geomagnetic Generators Primitive–Superior. It reuses the solar
  * generator's buffer, output slot, face configuration, and synchronization
  * logic while using its own menu type and client screen.
  */

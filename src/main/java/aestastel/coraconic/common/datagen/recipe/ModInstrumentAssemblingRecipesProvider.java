@@ -47,7 +47,7 @@ public class ModInstrumentAssemblingRecipesProvider extends RecipeProvider {
     recipeOutput.accept(
       ResourceLocation.fromNamespaceAndPath(
         CoraconicTech.MODID,
-        "instrument_assembling/solar_generator_mk0"
+        "instrument_assembling/solar_generator_primitive"
       ),
       new InstrumentAssemblingRecipe(
         List.of(
@@ -72,7 +72,7 @@ public class ModInstrumentAssemblingRecipesProvider extends RecipeProvider {
             2
           )
         ),
-        new ItemStack(ModBlocks.SOLAR_GENERATOR_MK0, 1),
+        new ItemStack(ModBlocks.SOLAR_GENERATOR_PRIMITIVE, 1),
         640,
         40
       ),

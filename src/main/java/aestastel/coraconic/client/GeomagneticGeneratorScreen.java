@@ -23,12 +23,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.fml.ModList;
 
 /**
- * 地磁发电机 MK0–MK3 的专用客户端界面。
+ * 地磁发电机 Primitive–Superior 的专用客户端界面。
  *
  * <p>复用太阳能发电机的布局、能量条、面配置与渲染逻辑，但使用独立菜单和
  * 地磁 CLI。
  *
- * <p>Dedicated client screen for Geomagnetic Generators MK0–MK3. It reuses the
+ * <p>Dedicated client screen for Geomagnetic Generators Primitive–Superior. It reuses the
  * solar layout, energy bar, face configuration, and rendering logic while using
  * its own menu and geomagnetic CLI.
  */
@@ -39,7 +39,7 @@ public class GeomagneticGeneratorScreen
   private static final ResourceLocation TEXTURE =
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "textures/gui/solar_generator_mk0.png"
+      "textures/gui/solar_generator.png"
     );
 
   private static final int BAR_X = 9;

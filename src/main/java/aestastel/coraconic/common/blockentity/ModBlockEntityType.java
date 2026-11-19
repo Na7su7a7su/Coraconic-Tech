@@ -10,8 +10,8 @@
 package aestastel.coraconic.common.blockentity;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.common.block.AlloyingMachineBlock;
-import aestastel.coraconic.common.block.AlloyingMachineMk2Block;
+import aestastel.coraconic.common.block.AlloyingMachineRefinedBlock;
+import aestastel.coraconic.common.block.AlloyingMachineEnhancedBlock;
 import aestastel.coraconic.common.block.EnergyStorageUnitBlock;
 import aestastel.coraconic.common.block.GeomagneticGeneratorBlock;
 import aestastel.coraconic.common.block.HeatGeneratorBlock;
@@ -51,138 +51,138 @@ public class ModBlockEntityType {
     DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, CoraconicTech.MODID);
 
   /**
-   * 物品存储单元 MK1：81 格（9 行 × 9 列）。
+   * 物品存储单元 初始：81 格（9 行 × 9 列）。
    *
-   * <p>Item Storage Unit MK1: 81 slots (9 rows × 9 columns).
+   * <p>Item Storage Unit Primitive: 81 slots (9 rows × 9 columns).
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<ModBlockEntity>
-  > ITEM_STORAGE_UNIT_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "item_storage_unit_mk1_entity",
+  > ITEM_STORAGE_UNIT_PRIMITIVE_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "item_storage_unit_primitive_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createBlockEntity,
-        ModBlocks.ITEM_STORAGE_UNIT_MK1.get()
+        ModBlocks.ITEM_STORAGE_UNIT_PRIMITIVE.get()
       ).build(null)
   );
 
   /**
-   * 物品存储单元 MK2：162 格（9 行 × 18 列）。
+   * 物品存储单元 精善：162 格（9 行 × 18 列）。
    *
-   * <p>Item Storage Unit MK2: 162 slots (9 rows × 18 columns).
+   * <p>Item Storage Unit Refined: 162 slots (9 rows × 18 columns).
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<ModBlockEntity>
-  > ITEM_STORAGE_UNIT_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "item_storage_unit_mk2_entity",
+  > ITEM_STORAGE_UNIT_REFINED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "item_storage_unit_refined_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createBlockEntity,
-        ModBlocks.ITEM_STORAGE_UNIT_MK2.get()
+        ModBlocks.ITEM_STORAGE_UNIT_REFINED.get()
       ).build(null)
   );
 
   /**
-   * 物品存储单元 MK3：243 格（9 行 × 27 列）。
+   * 物品存储单元 强化：243 格（9 行 × 27 列）。
    *
-   * <p>Item Storage Unit MK3: 243 slots (9 rows × 27 columns).
+   * <p>Item Storage Unit Enhanced: 243 slots (9 rows × 27 columns).
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<ModBlockEntity>
-  > ITEM_STORAGE_UNIT_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "item_storage_unit_mk3_entity",
+  > ITEM_STORAGE_UNIT_ENHANCED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "item_storage_unit_enhanced_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createBlockEntity,
-        ModBlocks.ITEM_STORAGE_UNIT_MK3.get()
+        ModBlocks.ITEM_STORAGE_UNIT_ENHANCED.get()
       ).build(null)
   );
 
   /**
-   * 能量存储单元 MK1：32,000,000 FE，4,000,000 FE/t。
+   * 能量存储单元 精善：32,000,000 FE，4,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK1: 32,000,000 FE, 4,000,000 FE/t.
+   * <p>Energy Storage Unit Refined: 32,000,000 FE, 4,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<EnergyStorageUnitBlockEntity>
-  > ENERGY_STORAGE_UNIT_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "energy_storage_unit_mk1_entity",
+  > ENERGY_STORAGE_UNIT_REFINED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_refined_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createEnergyBlockEntity,
-        ModBlocks.ENERGY_STORAGE_UNIT_MK1.get()
+        ModBlocks.ENERGY_STORAGE_UNIT_REFINED.get()
       ).build(null)
   );
 
   /**
-   * 能量存储单元 MK2：320,000,000 FE，16,000,000 FE/t。
+   * 能量存储单元 强化：320,000,000 FE，16,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK2: 320,000,000 FE, 16,000,000 FE/t.
+   * <p>Energy Storage Unit Enhanced: 320,000,000 FE, 16,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<EnergyStorageUnitBlockEntity>
-  > ENERGY_STORAGE_UNIT_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "energy_storage_unit_mk2_entity",
+  > ENERGY_STORAGE_UNIT_ENHANCED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_enhanced_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createEnergyBlockEntity,
-        ModBlocks.ENERGY_STORAGE_UNIT_MK2.get()
+        ModBlocks.ENERGY_STORAGE_UNIT_ENHANCED.get()
       ).build(null)
   );
 
   /**
-   * 能量存储单元 MK3：3,200,000,000 FE（3.2G），64,000,000 FE/t。
+   * 能量存储单元 卓越：3,200,000,000 FE（3.2G），64,000,000 FE/t。
    *
-   * <p>Energy Storage Unit MK3: 3,200,000,000 FE (3.2G), 64,000,000 FE/t.
+   * <p>Energy Storage Unit Superior: 3,200,000,000 FE (3.2G), 64,000,000 FE/t.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<EnergyStorageUnitBlockEntity>
-  > ENERGY_STORAGE_UNIT_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "energy_storage_unit_mk3_entity",
+  > ENERGY_STORAGE_UNIT_SUPERIOR_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "energy_storage_unit_superior_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createEnergyBlockEntity,
-        ModBlocks.ENERGY_STORAGE_UNIT_MK3.get()
+        ModBlocks.ENERGY_STORAGE_UNIT_SUPERIOR.get()
       ).build(null)
   );
 
   /**
-   * 合金仪 MK1。
+   * 合金仪 精善。
    *
-   * <p>Alloying Machine MK1.
+   * <p>Alloying Machine Refined.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
-    BlockEntityType<AlloyingMachineBlockEntity>
-  > ALLOYING_MACHINE_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "alloying_machine_mk1_entity",
+    BlockEntityType<AlloyingMachineRefinedBlockEntity>
+  > ALLOYING_MACHINE_REFINED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "alloying_machine_refined_entity",
     () ->
       BlockEntityType.Builder.of(
-        ModBlockEntityType::createAlloyingMachineBlockEntity,
-        ModBlocks.ALLOYING_MACHINE_MK1.get()
+        ModBlockEntityType::createAlloyingMachineRefinedBlockEntity,
+        ModBlocks.ALLOYING_MACHINE_REFINED.get()
       ).build(null)
   );
 
   /**
-   * 合金仪 MK2。
+   * 合金仪 强化。
    *
-   * <p>Alloying Machine MK2.
+   * <p>Alloying Machine Enhanced.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
-    BlockEntityType<AlloyingMachineMk2BlockEntity>
-  > ALLOYING_MACHINE_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "alloying_machine_mk2_entity",
+    BlockEntityType<AlloyingMachineEnhancedBlockEntity>
+  > ALLOYING_MACHINE_ENHANCED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "alloying_machine_enhanced_entity",
     () ->
       BlockEntityType.Builder.of(
-        ModBlockEntityType::createAlloyingMachineMk2BlockEntity,
-        ModBlocks.ALLOYING_MACHINE_MK2.get()
+        ModBlockEntityType::createAlloyingMachineEnhancedBlockEntity,
+        ModBlocks.ALLOYING_MACHINE_ENHANCED.get()
       ).build(null)
   );
 
@@ -223,145 +223,145 @@ public class ModBlockEntityType {
     );
 
   /**
-   * 熔炼冶金炉 MK1。
+   * 熔炼冶金仪 精善。
    *
-   * <p>Smelting-Metallurgy Machine MK1.
+   * <p>Smelting-Metallurgy Machine Refined.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<SmeltingMetallurgyMachineBlockEntity>
-  > SMELTING_METALLURGY_MACHINE_MK1_ENTITY =
+  > SMELTING_METALLURGY_MACHINE_REFINED_ENTITY =
     BLOCK_ENTITY_TYPES.register(
-      "smelting_metallurgy_machine_mk1_entity",
+      "smelting_metallurgy_machine_refined_entity",
       () ->
         BlockEntityType.Builder.of(
           ModBlockEntityType::createSmeltingMetallurgyMachineBlockEntity,
-          ModBlocks.SMELTING_METALLURGY_MACHINE_MK1.get()
+          ModBlocks.SMELTING_METALLURGY_MACHINE_REFINED.get()
         ).build(null)
     );
 
   /**
-   * 热力发电机 MK0。
+   * 热力发电机 初始。
    *
-   * <p>Heat Generator MK0.
+   * <p>Heat Generator Primitive.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<HeatGeneratorBlockEntity>
-  > HEAT_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "heat_generator_mk0_entity",
+  > HEAT_GENERATOR_PRIMITIVE_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "heat_generator_primitive_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createHeatGeneratorBlockEntity,
-        ModBlocks.HEAT_GENERATOR_MK0.get()
+        ModBlocks.HEAT_GENERATOR_PRIMITIVE.get()
       ).build(null)
   );
 
   /**
-   * 太阳能发电机 MK0–MK3：共用方块实体逻辑，等级由所属方块提供。
+   * 太阳能发电机 初始至卓越：共用方块实体逻辑，等级由所属方块提供。
    *
-   * <p>Solar Generator MK0–MK3: shared block entity logic with the tier
+   * <p>Solar Generators Primitive–Superior: shared block entity logic with the tier
    * supplied by the owning block.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<SolarGeneratorBlockEntity>
-  > SOLAR_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "solar_generator_mk0_entity",
+  > SOLAR_GENERATOR_PRIMITIVE_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_primitive_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
-        ModBlocks.SOLAR_GENERATOR_MK0.get()
+        ModBlocks.SOLAR_GENERATOR_PRIMITIVE.get()
       ).build(null)
   );
 
   /**
-   * 地磁发电机 MK0：复用太阳能方块实体逻辑，独立注册便于能力绑定。
+   * 地磁发电机 初始：复用太阳能方块实体逻辑，独立注册便于能力绑定。
    *
-   * <p>Geomagnetic Generator MK0: reuses the solar block entity logic and is
+   * <p>Geomagnetic Generator Primitive: reuses the solar block entity logic and is
    * registered separately for capability binding.
    */
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<GeomagneticGeneratorBlockEntity>
-  > GEOMAGNETIC_GENERATOR_MK0_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "geomagnetic_generator_mk0_entity",
+  > GEOMAGNETIC_GENERATOR_PRIMITIVE_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_primitive_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
-        ModBlocks.GEOMAGNETIC_GENERATOR_MK0.get()
+        ModBlocks.GEOMAGNETIC_GENERATOR_PRIMITIVE.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<GeomagneticGeneratorBlockEntity>
-  > GEOMAGNETIC_GENERATOR_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "geomagnetic_generator_mk1_entity",
+  > GEOMAGNETIC_GENERATOR_REFINED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_refined_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
-        ModBlocks.GEOMAGNETIC_GENERATOR_MK1.get()
+        ModBlocks.GEOMAGNETIC_GENERATOR_REFINED.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<GeomagneticGeneratorBlockEntity>
-  > GEOMAGNETIC_GENERATOR_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "geomagnetic_generator_mk2_entity",
+  > GEOMAGNETIC_GENERATOR_ENHANCED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_enhanced_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
-        ModBlocks.GEOMAGNETIC_GENERATOR_MK2.get()
+        ModBlocks.GEOMAGNETIC_GENERATOR_ENHANCED.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<GeomagneticGeneratorBlockEntity>
-  > GEOMAGNETIC_GENERATOR_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "geomagnetic_generator_mk3_entity",
+  > GEOMAGNETIC_GENERATOR_SUPERIOR_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "geomagnetic_generator_superior_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createGeomagneticGeneratorBlockEntity,
-        ModBlocks.GEOMAGNETIC_GENERATOR_MK3.get()
+        ModBlocks.GEOMAGNETIC_GENERATOR_SUPERIOR.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<SolarGeneratorBlockEntity>
-  > SOLAR_GENERATOR_MK1_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "solar_generator_mk1_entity",
+  > SOLAR_GENERATOR_REFINED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_refined_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
-        ModBlocks.SOLAR_GENERATOR_MK1.get()
+        ModBlocks.SOLAR_GENERATOR_REFINED.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<SolarGeneratorBlockEntity>
-  > SOLAR_GENERATOR_MK2_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "solar_generator_mk2_entity",
+  > SOLAR_GENERATOR_ENHANCED_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_enhanced_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
-        ModBlocks.SOLAR_GENERATOR_MK2.get()
+        ModBlocks.SOLAR_GENERATOR_ENHANCED.get()
       ).build(null)
   );
 
   public static final DeferredHolder<
     BlockEntityType<?>,
     BlockEntityType<SolarGeneratorBlockEntity>
-  > SOLAR_GENERATOR_MK3_ENTITY = BLOCK_ENTITY_TYPES.register(
-    "solar_generator_mk3_entity",
+  > SOLAR_GENERATOR_SUPERIOR_ENTITY = BLOCK_ENTITY_TYPES.register(
+    "solar_generator_superior_entity",
     () ->
       BlockEntityType.Builder.of(
         ModBlockEntityType::createSolarGeneratorBlockEntity,
-        ModBlocks.SOLAR_GENERATOR_MK3.get()
+        ModBlocks.SOLAR_GENERATOR_SUPERIOR.get()
       ).build(null)
   );
 
@@ -405,8 +405,7 @@ public class ModBlockEntityType {
         energyBlock.getBlockEntityType(),
         pos,
         state,
-        energyBlock.getCapacity(),
-        energyBlock.getTransfer()
+        energyBlock.machineProfile()
       );
     }
     throw new IllegalStateException(
@@ -419,15 +418,16 @@ public class ModBlockEntityType {
    *
    * <p>Alloying machine block entity factory.
    */
-  private static AlloyingMachineBlockEntity createAlloyingMachineBlockEntity(
+  private static AlloyingMachineRefinedBlockEntity createAlloyingMachineRefinedBlockEntity(
     BlockPos pos,
     BlockState state
   ) {
-    if (state.getBlock() instanceof AlloyingMachineBlock machineBlock) {
-      return new AlloyingMachineBlockEntity(
+    if (state.getBlock() instanceof AlloyingMachineRefinedBlock machineBlock) {
+      return new AlloyingMachineRefinedBlockEntity(
         machineBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        machineBlock.machineProfile()
       );
     }
     throw new IllegalStateException(
@@ -436,24 +436,25 @@ public class ModBlockEntityType {
   }
 
   /**
-   * 合金仪 MK2 方块实体工厂。
+   * 合金仪 强化方块实体工厂。
    *
-   * <p>Alloying machine MK2 block entity factory.
+   * <p>Enhanced alloying machine block entity factory.
    */
-  private static AlloyingMachineMk2BlockEntity
-  createAlloyingMachineMk2BlockEntity(
+  private static AlloyingMachineEnhancedBlockEntity
+  createAlloyingMachineEnhancedBlockEntity(
     BlockPos pos,
     BlockState state
   ) {
-    if (state.getBlock() instanceof AlloyingMachineMk2Block machineBlock) {
-      return new AlloyingMachineMk2BlockEntity(
+    if (state.getBlock() instanceof AlloyingMachineEnhancedBlock machineBlock) {
+      return new AlloyingMachineEnhancedBlockEntity(
         machineBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        machineBlock.machineProfile()
       );
     }
     throw new IllegalStateException(
-      "Unexpected block for alloying machine MK2 block entity: " + state
+      "Unexpected block for enhanced alloying machine block entity: " + state
     );
   }
 
@@ -474,7 +475,8 @@ public class ModBlockEntityType {
       return new ResonanceCrystallizingMachineBlockEntity(
         machineBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        machineBlock.machineProfile()
       );
     }
     throw new IllegalStateException(
@@ -526,7 +528,8 @@ public class ModBlockEntityType {
       return new SmeltingMetallurgyMachineBlockEntity(
         machineBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        machineBlock.machineProfile()
       );
     }
     throw new IllegalStateException(
@@ -548,7 +551,8 @@ public class ModBlockEntityType {
       return new HeatGeneratorBlockEntity(
         generatorBlock.getBlockEntityType(),
         pos,
-        state
+        state,
+        generatorBlock.machineProfile()
       );
     }
     throw new IllegalStateException(

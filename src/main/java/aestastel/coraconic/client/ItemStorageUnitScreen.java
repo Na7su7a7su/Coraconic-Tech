@@ -22,9 +22,9 @@ import net.minecraft.world.entity.player.Inventory;
  *
  * <p>三个等级共用本界面，只按列数选择不同的背景纹理：
  * <ul>
- *   <li>9 列（MK1）使用 176 像素宽背景；</li>
- *   <li>18 列（MK2）使用 338 像素宽背景；</li>
- *   <li>27 列（MK3）使用 500 像素宽背景。</li>
+ *   <li>9 列（初始）使用 176 像素宽背景；</li>
+ *   <li>18 列（精善）使用 338 像素宽背景；</li>
+ *   <li>27 列（强化）使用 500 像素宽背景。</li>
  * </ul>
  * 玩家背包标题与槽位由菜单统一计算位置，界面只需按实际宽度绘制背景。
  *
@@ -64,9 +64,9 @@ public class ItemStorageUnitScreen
    */
   private static ResourceLocation textureFor(int columns) {
     String tier = switch (columns) {
-      case 18 -> "mk2";
-      case 27 -> "mk3";
-      default -> "mk1";
+      case 18 -> "refined";
+      case 27 -> "enhanced";
+      default -> "primitive";
     };
     return ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,

@@ -22,11 +22,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.fml.ModList;
 
 /**
- * 热力发电机 MK0 的客户端界面。
+ * 热力发电机 Primitive 的客户端界面。
  *
  * <p>显示输出槽、燃料槽、能量条、横向热量条和 CLI 状态。
  *
- * <p>Client screen for Heat Generator MK0. It shows the output slot, fuel slot,
+ * <p>Client screen for Heat Generator Primitive. It shows the output slot, fuel slot,
  * energy bar, horizontal heat bar, and CLI status.
  */
 public class HeatGeneratorScreen
@@ -36,7 +36,7 @@ public class HeatGeneratorScreen
   private static final ResourceLocation TEXTURE =
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "textures/gui/heat_generator_mk0.png"
+      "textures/gui/heat_generator_primitive.png"
     );
 
   private static final int BAR_X = 9;
@@ -154,7 +154,7 @@ public class HeatGeneratorScreen
   private void renderCli(GuiGraphics graphics) {
     String[] lines = {
       ">Heat Energy Generating System",
-      ">Generation MK0 - Version " + modVersion(),
+      ">Generation Primitive - Version " + modVersion(),
       ">Power: " + this.menu.getCurrentGeneration() + " FE/t",
       ">Mode: " + this.menu.getMode().displayName(),
       ">Heat " +

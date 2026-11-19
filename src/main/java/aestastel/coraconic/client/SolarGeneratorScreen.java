@@ -23,11 +23,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.fml.ModList;
 
 /**
- * 太阳能发电机 MK0–MK3 的共用客户端界面。
+ * 太阳能发电机 Primitive–Superior 的共用客户端界面。
  *
  * <p>显示输出槽、缓存能量条、当前/最大能量和玩家背包。
  *
- * <p>Shared client screen for Solar Generator MK0–MK3. It shows the output slot,
+ * <p>Shared client screen for Solar Generator Primitive–Superior. It shows the output slot,
  * buffered energy bar, current/max energy, and the player inventory.
  */
 public class SolarGeneratorScreen
@@ -37,7 +37,7 @@ public class SolarGeneratorScreen
   private static final ResourceLocation TEXTURE =
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "textures/gui/solar_generator_mk0.png"
+      "textures/gui/solar_generator.png"
     );
 
   private static final int BAR_X = 9;

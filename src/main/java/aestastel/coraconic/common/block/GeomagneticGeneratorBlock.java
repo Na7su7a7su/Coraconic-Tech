@@ -17,12 +17,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * 地磁发电机 MK0–MK3 方块。
+ * 地磁发电机 Primitive–Superior 方块。
  *
  * <p>复用太阳能发电机的朝向、ticker、界面打开和掉落逻辑，仅创建地磁
  * 方块实体以替换发电规则。
  *
- * <p>Geomagnetic Generator MK0–MK3 block. Reuses the solar generator's
+ * <p>Geomagnetic Generator Primitive–Superior block. Reuses the solar generator's
  * facing, ticker, menu opening, and drop handling, while creating the
  * geomagnetic block entity to supply the different generation rules.
  */
@@ -51,6 +51,11 @@ public class GeomagneticGeneratorBlock extends SolarGeneratorBlock {
 
   /** {@return 本地磁发电机等级} */
   public GeomagneticGeneratorTier getGeomagneticTier() {
+    return this.geomagneticTier;
+  }
+
+  @Override
+  public GeomagneticGeneratorTier machineProfile() {
     return this.geomagneticTier;
   }
 }

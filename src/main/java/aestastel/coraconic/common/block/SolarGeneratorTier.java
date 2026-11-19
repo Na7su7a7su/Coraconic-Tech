@@ -9,6 +9,9 @@
 
 package aestastel.coraconic.common.block;
 
+import aestastel.coraconic.common.machine.MachineProfile;
+import aestastel.coraconic.common.machine.MachineTier;
+import aestastel.coraconic.common.machine.MachineType;
 import java.util.function.BooleanSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -19,35 +22,73 @@ import net.minecraft.world.level.LightLayer;
  *
  * <p>缓存容量、每面输出和物品充能速率集中在这里声明；发电条件由
  * {@link #getGeneration(Level, BlockPos, BooleanSupplier)} 根据等级、维度、
- * 天气、时间和天空柱遮挡返回本 tick 的发电量。MK3 在高海拔时优先进入
+ * 天气、时间和天空柱遮挡返回本 tick 的发电量。SUPERIOR 在高海拔时优先进入
  * Radiation 模式。
  *
  * <p>Solar generator tiers and generation rules. Capacity, per-face output, and
  * item charge rate live here; the generation method evaluates dimension,
- * weather, time, sky light, and sky-column obstruction. MK3 enters Radiation
+ * weather, time, sky light, and sky-column obstruction. SUPERIOR enters Radiation
  * mode first at high altitude.
  */
-public enum SolarGeneratorTier {
-  MK0(96_000, 600, 600),
-  MK1(192_000, 1_200, 1_200),
-  MK2(480_000, 2_400, 2_400),
-  MK3(1_920_000, 9_600, 9_600);
+public enum SolarGeneratorTier implements MachineProfile {
+  PRIMITIVE(MachineTier.PRIMITIVE, 96_000, 600, 600),
+  REFINED(MachineTier.REFINED, 192_000, 1_200, 1_200),
+  ENHANCED(MachineTier.ENHANCED, 480_000, 2_400, 2_400),
+  SUPERIOR(MachineTier.SUPERIOR, 1_920_000, 9_600, 9_600);
 
   private static final int OVERWORLD_RADIATION_MIN_Y = 315;
   private static final int OTHER_DIMENSION_RADIATION_MIN_Y = 250;
 
+  private final MachineTier machineTier;
   private final int capacity;
   private final int outputPerSide;
   private final int itemChargeRate;
 
   SolarGeneratorTier(
+    MachineTier machineTier,
     int capacity,
     int outputPerSide,
     int itemChargeRate
   ) {
+    this.machineTier = machineTier;
     this.capacity = capacity;
     this.outputPerSide = outputPerSide;
     this.itemChargeRate = itemChargeRate;
+  }
+
+  @Override
+  public MachineType type() {
+    return MachineType.SOLAR_GENERATOR;
+  }
+
+  @Override
+  public MachineTier tier() {
+    return this.machineTier;
+  }
+
+  @Override
+  public long energyCapacity() {
+    return this.capacity;
+  }
+
+  @Override
+  public long maxEnergyInput() {
+    return 0L;
+  }
+
+  @Override
+  public long maxEnergyOutput() {
+    return this.outputPerSide;
+  }
+
+  @Override
+  public double processingSpeed() {
+    return 0.0D;
+  }
+
+  @Override
+  public int processingCapacity() {
+    return 0;
   }
 
   public int getCapacity() {
@@ -62,12 +103,12 @@ public enum SolarGeneratorTier {
     return itemChargeRate;
   }
 
-  /** {@return 按网络/数据序号还原等级；非法值回退到 MK0} */
+  /** {@return 按网络/数据序号还原等级；非法值回退到 PRIMITIVE} */
   public static SolarGeneratorTier byOrdinal(int ordinal) {
     SolarGeneratorTier[] tiers = values();
     return ordinal >= 0 && ordinal < tiers.length
       ? tiers[ordinal]
-      : MK0;
+      : PRIMITIVE;
   }
 
   /**
@@ -90,23 +131,23 @@ public enum SolarGeneratorTier {
   public int getGeneration(SolarGeneratorMode mode) {
     return switch (mode) {
       case SOLAR -> switch (this) {
-        case MK0 -> 30;
-        case MK1 -> 120;
-        case MK2 -> 240;
-        case MK3 -> 960;
+        case PRIMITIVE -> 30;
+        case REFINED -> 120;
+        case ENHANCED -> 240;
+        case SUPERIOR -> 960;
       };
       case LUNAR -> switch (this) {
-        case MK0, MK1 -> 0;
-        case MK2 -> 120;
-        case MK3 -> 240;
+        case PRIMITIVE, REFINED -> 0;
+        case ENHANCED -> 120;
+        case SUPERIOR -> 240;
       };
-      case REFLECTION, NETHER -> this == MK3 ? 80 : 0;
+      case REFLECTION, NETHER -> this == SUPERIOR ? 80 : 0;
       case THUNDER -> switch (this) {
-        case MK0, MK1 -> 0;
-        case MK2 -> 120;
-        case MK3 -> 360;
+        case PRIMITIVE, REFINED -> 0;
+        case ENHANCED -> 120;
+        case SUPERIOR -> 360;
       };
-      case RADIATION -> this == MK3 ? 1_440 : 0;
+      case RADIATION -> this == SUPERIOR ? 1_440 : 0;
       case NULL -> 0;
     };
   }
@@ -114,13 +155,13 @@ public enum SolarGeneratorTier {
   /**
    * 根据环境条件选择运行模式。
    *
-   * <p>优先级：高海拔 Radiation（仅 MK3）→ 下界 → 天空柱遮挡 → 末地 →
-   * 雷暴 → 白天/黑夜。末地在无遮挡时固定为 Solar；MK0/MK1 白天天空光不足
+   * <p>优先级：高海拔 Radiation（仅 SUPERIOR）→ 下界 → 天空柱遮挡 → 末地 →
+   * 雷暴 → 白天/黑夜。末地在无遮挡时固定为 Solar；PRIMITIVE/REFINED 白天天空光不足
    * 时返回 Null。
    *
-   * <p>Selects the runtime mode. Priority: high-altitude Radiation (MK3
+   * <p>Selects the runtime mode. Priority: high-altitude Radiation (SUPERIOR
    * only), Nether, obstruction, the End, thunder, then daytime/night. The End
-   * is always Solar when unobstructed; MK0/MK1 report Null during daytime with
+   * is always Solar when unobstructed; PRIMITIVE/REFINED report Null during daytime with
    * insufficient sky light.
    */
   public SolarGeneratorMode determineMode(
@@ -150,7 +191,7 @@ public enum SolarGeneratorTier {
 
     if (level.isDay()) {
       if (
-        (this == MK0 || this == MK1) &&
+        (this == PRIMITIVE || this == REFINED) &&
         !hasEnoughSkyLight(level, pos)
       ) {
         return SolarGeneratorMode.NULL;
@@ -180,7 +221,7 @@ public enum SolarGeneratorTier {
   }
 
   private boolean isInRadiationZone(Level level, BlockPos pos) {
-    if (this != MK3) {
+    if (this != SUPERIOR) {
       return false;
     }
 

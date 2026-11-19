@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "coraconic:block/smelting_metallurgy_machine_mk1"
-  }
-}

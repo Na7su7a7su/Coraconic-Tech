@@ -29,16 +29,16 @@ import net.minecraft.world.item.ItemStack;
  *
  * <p>三个等级共用本菜单，布局规则完全一致：
  * <ul>
- *   <li>MK1：9 行 × 9 列 = 81 格；</li>
- *   <li>MK2：9 行 × 18 列 = 162 格；</li>
- *   <li>MK3：9 行 × 27 列 = 243 格。</li>
+ *   <li>初始：9 行 × 9 列 = 81 格；</li>
+ *   <li>精善：9 行 × 18 列 = 162 格；</li>
+ *   <li>强化：9 行 × 27 列 = 243 格。</li>
  * </ul>
  * 槽位索引按“行优先”排列（索引 ÷ 列数 = 行，索引 % 列数 = 列），因此
- * MK1 的既有存档布局与之前完全一致。界面宽度随列数增长，玩家背包始终居中。
+ * 初始的既有存档布局与之前完全一致。界面宽度随列数增长，玩家背包始终居中。
  *
  * <p>Menu shared by all storage tiers: always 9 rows, with the column count
  * derived from the capacity. Slot indices are row-major, preserving the existing
- * MK1 save layout. The GUI widens with the column count while the player
+ * primitive save layout. The GUI widens with the column count while the player
  * inventory stays centered.
  */
 public class ItemStorageUnitMenu extends AbstractContainerMenu {
@@ -59,7 +59,7 @@ public class ItemStorageUnitMenu extends AbstractContainerMenu {
    * 单次拖拽允许改变的槽位上限。
    *
    * <p>{@code ServerboundContainerClickPacket} 的 changedSlots 映射上限为
-   * 128；超过后客户端无法编码数据包，会被直接踢出连接。MK2/MK3 的槽位
+   * 128；超过后客户端无法编码数据包，会被直接踢出连接。精善/强化的槽位
    * 总数超过 128，因此把单次拖拽限制在 120 格，留出安全余量。
    *
    * <p>Maximum slots a single drag may change. The click packet encodes its

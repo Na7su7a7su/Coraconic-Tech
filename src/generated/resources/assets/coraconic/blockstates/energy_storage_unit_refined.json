@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "coraconic:block/energy_storage_unit_refined",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "coraconic:block/energy_storage_unit_refined"
+    },
+    "facing=south": {
+      "model": "coraconic:block/energy_storage_unit_refined",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "coraconic:block/energy_storage_unit_refined",
+      "y": 270
+    }
+  }
+}
