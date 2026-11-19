@@ -144,6 +144,20 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
       )
       .save(recipeOutput);
 
+    ShapedRecipeBuilder.shaped(
+      RecipeCategory.TOOLS,
+      ModItems.CONFIGURANCE_HANDLE.get(),
+      1
+    )
+      .define('A', ModItemTags.INGOTS_SILVER)
+      .define('U', Items.GOLD_INGOT)
+      .define('F', Items.IRON_INGOT)
+      .pattern(" UF")
+      .pattern(" AU")
+      .pattern("A  ")
+      .unlockedBy("has_silver_ingot", has(ModItemTags.INGOTS_SILVER))
+      .save(recipeOutput);
+
     // 腾龙金属锭：两个钻石、绿宝石、核龙锭与四个腾龙元素无序合成。
     // Aviraconic ingot: shapeless recipe from diamonds, emerald, coraconic ingot, and four aviraconic elements.
     ShapelessRecipeBuilder.shapeless(

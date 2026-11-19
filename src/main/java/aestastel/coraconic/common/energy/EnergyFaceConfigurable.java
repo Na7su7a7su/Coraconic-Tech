@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 支持逐面配置能量输入/输出模式的方块实体。
  *
- * <p>当前由能量存储单元与太阳能发电机实现。扳手配置模式通过本接口读取和
+ * <p>当前由能量存储单元与太阳能发电机实现。配置手柄的配置模式通过本接口读取和
  * 切换模式；能力接口通过 {@link EnergyFaceStorage} 按面门控。
  *
- * <p>Implemented by energy-capable block entities. The wrench configuration
+ * <p>Implemented by energy-capable block entities. The Configurance Handle's
  * mode reads and cycles modes through this interface, while capabilities gate
  * each physical side through {@link EnergyFaceStorage}.
  */

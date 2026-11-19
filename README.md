@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7i`
-- 最近版本提交：`0.0.7i'A_261118_c`
-- 最后更新：2026-11-18
+- 最近版本提交：`0.0.7i'B_261119_a`
+- 最后更新：2026-11-19
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7i'B_261119_a`：注册能量中心芯片 LV0–LV3；将扳手重命名为配置手柄，更新物品 ID、类名、网络包与纹理；新增配置手柄合成配方。
 - `0.0.7i'A_261118_c`：将公共代码移动到 `aestastel.coraconic.common` 包，保留根包入口类与 `client` 包；将数据生成器按 `recipe`、`tag`、`model`、`loot` 分类；主版本号提升为 `0.0.7i`。
 - `0.0.7h'B_261118_b`：添加烬龙金属锭、烬龙金属粒与烬龙金属块的压缩和分解配方。
 - `0.0.7h'A_261118_a`：注册硅与烬龙系列，新增硅、烬龙金属锭、烬龙金属粒、烬龙金刚晶体、烬龙金属块、烬龙元素与烬龙核心，补齐通用标签、创造栏与四语名称；所有烬龙物品与方块物品加入抗火属性；新增烬龙核心合成配方、烬龙金属锭合成与合金配方，并调整腾龙金属锭合金耗能；主版本号提升为 `0.0.7h`。
@@ -40,7 +41,6 @@
 - `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
 - `0.0.7fp_261114_a`：注册玫瑰金与琥珀金材料，新增锭、粒、存储块、通用标签、创造栏与四语名称；加入玫瑰金合金配方，并修正玫瑰金配方 ID 冲突。
 - `0.0.7et_261113_e`：热力发电机支持流体容器燃料，每次消耗 `1000 mB` 并按对应桶装物品的燃烧时间转化为热量；热量不足 `40` 时按剩余热量发电并消耗至 `0`，热量耗尽后才进入 `Passive`。
-- `0.0.7es_261113_d`：热力发电机 `Passive` 功率改为每格熔岩 `10 FE/t`，`Mix` 功率改为主动模式 `80 FE/t` + 每格熔岩 `5 FE/t`；太阳能 CLI 的世界时间改为按 `24000 ticks` 周期显示。
 ### 快速开始
 
 1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、器械组合仪、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
@@ -56,6 +56,7 @@
 - 对应的金属锭与金属粒；锡、铅、银的粗矿物品
 - 常金属核心、核龙金属核心、腾龙金属核心、烬龙核心、效应放大核心、空间放缩核心、相位同步核心、质能补偿核心、中枢计算核心
 - 五个特殊核心当前仅通过创造模式获取，暂未添加合成配方
+- 能量中心芯片 LV0–LV3
 - 核龙元素、腾龙元素、烬龙元素
 - 核龙金刚晶体、腾龙金刚晶体、烬龙金刚晶体
 - 烬龙系列物品与方块物品具有抗火属性
@@ -67,7 +68,7 @@
     - 剑、镐、斧、锹、锄
 - 全部工具均有合成配方、解锁进度、手持模型与四语名称
 - 独立的工具创造栏
-- 扳手：Shift + 滚轮在旋转/扳手/配置模式间循环
+- 配置手柄：Shift + 滚轮在旋转/扳手/配置模式间循环
     - 旋转模式：右键顺时针旋转，Shift + 右键逆时针旋转
     - 扳手模式：右键正常交互，Shift + 右键拆除七种功能方块
     - 配置模式：不与功能方块正常交互；右键查看所点面的能量模式并打印到聊天栏，Shift + 右键按输入 → 输出 → 输入/输出 → 阻断 → 输入切换
@@ -112,7 +113,7 @@
 - 能量显示在 1,000 以上使用 `k FE`，1,000,000 以上使用 `M FE`，1,000,000,000 以上使用 `G FE`；保留两位小数，按住 Shift 显示完整 FE 数值
 - MK3 等超过 `Integer.MAX_VALUE` 的容量会拆分为多个 int 范围内的能量段；不同面可访问不同段，GUI 与内部充放电使用完整 long 值
 - 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输入/输出
-- GUI 左侧外部上方提供统一的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，并与扳手配置模式共用同一套设置
+- GUI 左侧外部上方提供统一的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，并与配置手柄的配置模式共用同一套设置
 - 输入面会主动从相邻能量方块抽取能量，输出面会主动向相邻能量方块发送能量；阻断面拒绝所有外部输入输出
 - 通过 `Capabilities.EnergyStorage.BLOCK` 向线缆与机器暴露经过面模式门控的能量能力
 
@@ -207,7 +208,7 @@
 - 内部缓存：`96,000 FE`
 - 白天、维度不是下界、天空光大于 10，且上方整条天空柱没有完整不透明方块遮挡时，每个 tick 发电 `30 FE/t`
 - 六个面可分别设置为输入、输出、输入/输出或阻断，默认全部为输出
-- GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用扳手配置模式
+- GUI 左侧外部上方提供与能量存储单元相同的面配置按钮与弹窗：左键正向循环、右键反向循环，展开后不遮挡物品栏或界面主体，也可使用配置手柄的配置模式
 - 输出面每面最高主动输出 `600 FE/t`，输入面也可主动抽取相邻能量；阻断面不接受外部输入输出
 - GUI 中央为黑底绿字 CLI 面板，输出/充电槽位于右侧，左侧保留竖直能量条、能量数值与玩家背包
 - CLI 显示 `>Power Generating System`、`>Generation MK* - Version <mod_version>`、`>Power: <规则速率> FE/t`、`>Mode: <模式>`
@@ -370,13 +371,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7i`
-- Latest version commit: `0.0.7i'A_261118_c`
-- Last updated: 2026-11-18
+- Latest version commit: `0.0.7i'B_261119_a`
+- Last updated: 2026-11-19
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7i'B_261119_a`: registered Energy Center Chips LV0–LV3; renamed the Spanner to Configurance Handle with updated item ID, classes, network payload, and texture; added a Configurance Handle crafting recipe.
 - `0.0.7i'A_261118_c`: moved common code into `aestastel.coraconic.common` while keeping the root entry classes and `client` package in place; split data generators into `recipe`, `tag`, `model`, and `loot` packages; raised the main mod version to `0.0.7i`.
 - `0.0.7h'B_261118_b`: added packing and unpacking recipes for emberaconic ingots, nuggets, and the metal block.
 - `0.0.7h'A_261118_a`: registered silicon and the emberaconic series, adding silicon, emberaconic ingot, nugget, diamond-structured crystal, metal block, element, and core with common tags, creative-tab entries, and four-language names; made every emberaconic item form fire-resistant; added emberaconic core crafting, emberaconic ingot crafting and alloying recipes, and adjusted aviraconic ingot alloying energy; raised the main mod version to `0.0.7h`.
@@ -386,7 +388,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
 - `0.0.7fp_261114_a`: registered rose gold and amber gold materials with ingots, nuggets, storage blocks, common tags, creative-tab entries, and four-language names; added rose gold alloying recipes and fixed their recipe ID collisions.
 - `0.0.7et_261113_e`: added fluid-container fuel support to the Heat Generator, consuming `1000 mB` at a time and deriving heat from the matching bucket item's burn time; partial heat below `40` is now consumed proportionally down to `0`, and `Passive` is used only after heat is exhausted.
-- `0.0.7es_261113_d`: changed Heat Generator `Passive` output to `10 FE/t` per lava block and `Mix` output to the `80 FE/t` active rate plus `5 FE/t` per lava block; changed the solar CLI world time to a `24000 ticks` cycle.
 ### Quick Start
 
 1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Instrument Assembling Machine, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.
@@ -402,6 +403,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - Matching ingots and nuggets; raw ore items for tin, lead, and silver
 - Common-metal, coraconic, aviraconic, emberaconic, effect amplification, spatial scaling, phase synchronization, mass-energy compensation, and central computation cores
 - The five special cores are currently creative-only and do not have crafting recipes yet
+- Energy Center Chips LV0–LV3
 - Coraconic, aviraconic, and emberaconic elements
 - Coraconic, aviraconic, and emberaconic diamond-structured crystals
 - Emberaconic items and block items are fire-resistant
@@ -413,7 +415,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
     - Sword, pickaxe, axe, shovel, hoe
 - Recipes, advancements, handheld models, and four-language names for every tool
 - A dedicated tool creative tab
-- Wrench: Shift + mouse wheel cycles rotate, wrench, and configure modes
+- Configurance Handle: Shift + mouse wheel cycles rotate, wrench, and configure modes
     - Rotate mode: right-click rotates clockwise; Shift + right-click rotates counter-clockwise
     - Wrench mode: right-click interacts normally; Shift + right-click dismantles the seven functional machines
     - Configure mode: does not interact with functional machines normally; right-click prints the clicked face's energy mode to chat, and Shift + right-click cycles input → output → input/output → blocked → input
@@ -458,7 +460,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Energy is abbreviated with `k FE`, `M FE`, or `G FE` above the corresponding thresholds, with two decimal places; hold Shift to show the full FE values
 - Capacities above `Integer.MAX_VALUE`, such as MK3, are split into multiple int-sized banks. Different faces expose different banks, while the GUI and internal item transfer use the full long value
 - Each face can independently be set to input, output, input/output, or blocked; all faces default to input/output
-- The GUI has a shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode edits the same settings
+- The GUI has a shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the Configurance Handle configure mode edits the same settings
 - Input faces actively pull from adjacent energy blocks, output faces actively push to them, and blocked faces reject all external input/output
 - Energy is exposed to cables and machines through `Capabilities.EnergyStorage.BLOCK` with per-face mode gating
 
@@ -553,7 +555,7 @@ All three tiers use a fixed 9 rows; the column count grows with the tier:
 - Internal buffer: `96,000 FE`
 - Generates `30 FE/t` during daytime, outside the Nether, while sky light is greater than 10 and no full opaque block blocks the entire sky column above
 - Each face can independently be set to input, output, input/output, or blocked; all faces default to output
-- The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the wrench configure mode remains available
+- The GUI has the same shared face configuration button and popup outside its upper-left edge: left-click cycles forward, right-click cycles backward, the expanded panel does not cover the inventory or main UI, and the Configurance Handle configure mode remains available
 - Output faces actively push up to `600 FE/t` per face, while input faces can also actively pull from adjacent energy blocks; blocked faces reject all external input/output
 - The GUI has a black/green CLI panel in the center, the output/charge slot on the right, and the vertical energy bar, energy text, and player inventory on the left
 - The CLI shows `>Power Generating System`, `>Generation MK* - Version <mod_version>`, `>Power: <rule rate> FE/t`, and `>Mode: <mode>`

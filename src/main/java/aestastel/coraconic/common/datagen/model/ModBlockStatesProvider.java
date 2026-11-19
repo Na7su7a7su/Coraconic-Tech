@@ -55,7 +55,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         continue;
       }
 
-      // 能量存储单元与太阳能发电机可被扳手水平旋转。
+      // 能量存储单元与太阳能发电机可被配置手柄水平旋转。
       // Energy storage units and the solar generator can be rotated horizontally.
       if (
         blockObject instanceof EnergyStorageUnitBlock ||

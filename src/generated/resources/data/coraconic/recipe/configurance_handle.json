@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/silver"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    },
+    "U": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " UF",
+    " AU",
+    "A  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "coraconic:configurance_handle"
+  }
+}

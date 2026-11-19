@@ -14,11 +14,12 @@ import java.util.Locale;
 /**
  * 能量方块单个面的输入/输出模式。
  *
- * <p>枚举顺序就是扳手配置模式下的切换顺序：
+ * <p>枚举顺序就是配置手柄的配置模式下的切换顺序：
  * 输入 → 输出 → 输入/输出 → 阻断 → 输入。
  *
  * <p>Per-face energy transfer mode. The enum order is also the order used by
- * the wrench configuration mode: input, output, input/output, blocked.
+ * the Configurance Handle's configure mode: input, output, input/output,
+ * blocked.
  */
 public enum EnergyFaceMode {
   INPUT(true, false),

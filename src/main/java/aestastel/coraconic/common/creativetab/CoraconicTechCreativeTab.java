@@ -64,6 +64,10 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.PHASE_SYNCHRONIZATION_CORE);
           output.accept(ModItems.MASS_ENERGY_COMPENSATION_CORE);
           output.accept(ModItems.CENTRAL_COMPUTATION_CORE);
+          output.accept(ModItems.ENERGY_CENTER_CHIP_LV0);
+          output.accept(ModItems.ENERGY_CENTER_CHIP_LV1);
+          output.accept(ModItems.ENERGY_CENTER_CHIP_LV2);
+          output.accept(ModItems.ENERGY_CENTER_CHIP_LV3);
           output.accept(ModItems.RAW_LEAD);
           output.accept(ModItems.RAW_TIN);
           output.accept(ModItems.RAW_SILVER);

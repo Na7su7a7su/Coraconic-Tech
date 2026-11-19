@@ -36,23 +36,23 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * 扳手：旋转、扳手与配置三种工作模式，可通过 Shift + 滚轮切换。
+ * 配置手柄：旋转、扳手与配置三种工作模式，可通过 Shift + 滚轮切换。
  *
  * <p>旋转模式：右键顺时针旋转功能方块，Shift + 右键逆时针旋转；
  * 扳手模式：右键正常与方块交互，Shift + 右键拆除功能方块；
  * 配置模式：不与功能方块正常交互，右键查看所点面的能量模式，
  * Shift + 右键按输入 → 输出 → 输入/输出 → 阻断循环。
  *
- * <p>Wrench with rotate, wrench, and configure modes toggled by Shift + mouse
- * wheel. Configure mode prints the clicked face's energy mode to chat and
- * cycles it with Shift + right-click.
+ * <p>Configurance Handle with rotate, wrench, and configure modes toggled by
+ * Shift + mouse wheel. Configure mode prints the clicked face's energy mode to
+ * chat and cycles it with Shift + right-click.
  */
-public class SpannerItem extends Item {
+public class ConfiguranceHandleItem extends Item {
 
-  private static final String MODE_KEY = "spanner_mode";
+  private static final String MODE_KEY = "configurance_handle_mode";
   private static final String LEGACY_WRENCH_MODE_KEY = "wrench_mode";
 
-  public SpannerItem(Properties properties) {
+  public ConfiguranceHandleItem(Properties properties) {
     super(properties);
   }
 
@@ -71,12 +71,12 @@ public class SpannerItem extends Item {
       return InteractionResult.PASS;
     }
 
-    SpannerMode mode = getMode(context.getItemInHand());
-    if (mode == SpannerMode.CONFIGURE) {
+    ConfiguranceHandleMode mode = getMode(context.getItemInHand());
+    if (mode == ConfiguranceHandleMode.CONFIGURE) {
       return configureFace(context, player, level, pos, state);
     }
 
-    boolean wrenchMode = mode == SpannerMode.WRENCH;
+    boolean wrenchMode = mode == ConfiguranceHandleMode.WRENCH;
     boolean reverse = player.isShiftKeyDown();
 
     if (level.isClientSide) {
@@ -206,45 +206,45 @@ public class SpannerItem extends Item {
     super.appendHoverText(stack, context, tooltip, flag);
     tooltip.add(
       Component.translatable(
-        "tooltip.coraconic.spanner.mode",
+        "tooltip.coraconic.configurance_handle.mode",
         Component.translatable(getMode(stack).translationKey())
       ).withStyle(ChatFormatting.GRAY)
     );
   }
 
-  /** {@return 玩家主手或副手中的扳手；没有则返回空栈} */
-  public static ItemStack findHeldWrench(Player player) {
+  /** {@return 玩家主手或副手中的配置手柄；没有则返回空栈} */
+  public static ItemStack findHeldHandle(Player player) {
     ItemStack mainHand = player.getMainHandItem();
-    if (mainHand.getItem() instanceof SpannerItem) {
+    if (mainHand.getItem() instanceof ConfiguranceHandleItem) {
       return mainHand;
     }
 
     ItemStack offHand = player.getOffhandItem();
-    return offHand.getItem() instanceof SpannerItem
+    return offHand.getItem() instanceof ConfiguranceHandleItem
       ? offHand
       : ItemStack.EMPTY;
   }
 
-  /** {@return 扳手当前模式；旧物品的布尔值会兼容读取} */
-  public static SpannerMode getMode(ItemStack stack) {
-    if (!(stack.getItem() instanceof SpannerItem)) {
-      return SpannerMode.ROTATE;
+  /** {@return 配置手柄当前模式；旧物品的布尔值会兼容读取} */
+  public static ConfiguranceHandleMode getMode(ItemStack stack) {
+    if (!(stack.getItem() instanceof ConfiguranceHandleItem)) {
+      return ConfiguranceHandleMode.ROTATE;
     }
     CompoundTag tag = stack
       .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
       .copyTag();
 
-    SpannerMode mode = SpannerMode.byName(tag.getString(MODE_KEY));
+    ConfiguranceHandleMode mode = ConfiguranceHandleMode.byName(tag.getString(MODE_KEY));
     if (mode != null) {
       return mode;
     }
     return tag.getBoolean(LEGACY_WRENCH_MODE_KEY)
-      ? SpannerMode.WRENCH
-      : SpannerMode.ROTATE;
+      ? ConfiguranceHandleMode.WRENCH
+      : ConfiguranceHandleMode.ROTATE;
   }
 
-  public static void setMode(ItemStack stack, SpannerMode mode) {
-    if (!(stack.getItem() instanceof SpannerItem)) {
+  public static void setMode(ItemStack stack, ConfiguranceHandleMode mode) {
+    if (!(stack.getItem() instanceof ConfiguranceHandleItem)) {
       return;
     }
     CompoundTag tag = stack
@@ -256,8 +256,8 @@ public class SpannerItem extends Item {
   }
 
   /** 切换到下一个模式并写入物品，供客户端滚轮事件使用。 */
-  public static SpannerMode cycleMode(ItemStack stack) {
-    SpannerMode next = getMode(stack).next();
+  public static ConfiguranceHandleMode cycleMode(ItemStack stack) {
+    ConfiguranceHandleMode next = getMode(stack).next();
     setMode(stack, next);
     return next;
   }

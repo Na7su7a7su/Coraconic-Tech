@@ -19,10 +19,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * 核龙科技工具创造物品栏。
  *
- * <p>按锡、铅、核龙金属、腾龙金属的顺序展示全套工具与扳手。
+ * <p>按锡、铅、核龙金属、腾龙金属的顺序展示全套工具与配置手柄。
  *
  * <p>Coraconic Tech tool creative tab. It displays each tool set in tin, lead,
- * coraconic, and aviraconic order, followed by the wrench.
+ * coraconic, and aviraconic order, followed by the Configurance Handle.
  */
 public final class CoraconicTechToolCreativeTab {
 
@@ -61,7 +61,7 @@ public final class CoraconicTechToolCreativeTab {
           output.accept(ModItems.AVIRACONIC_AXE);
           output.accept(ModItems.AVIRACONIC_SHOVEL);
           output.accept(ModItems.AVIRACONIC_HOE);
-          output.accept(ModItems.SPANNER);
+          output.accept(ModItems.CONFIGURANCE_HANDLE);
         })
         .build()
     );

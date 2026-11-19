@@ -24,9 +24,9 @@ public final class ModNetwork {
     event
       .registrar("1")
       .playToServer(
-        SpannerModePayload.TYPE,
-        SpannerModePayload.STREAM_CODEC,
-        SpannerModePayload::handle
+        ConfiguranceHandleModePayload.TYPE,
+        ConfiguranceHandleModePayload.STREAM_CODEC,
+        ConfiguranceHandleModePayload::handle
       );
   }
 }

@@ -10,8 +10,8 @@
 package aestastel.coraconic.common.network;
 
 import aestastel.coraconic.CoraconicTech;
-import aestastel.coraconic.common.item.SpannerItem;
-import aestastel.coraconic.common.item.SpannerMode;
+import aestastel.coraconic.common.item.ConfiguranceHandleItem;
+import aestastel.coraconic.common.item.ConfiguranceHandleMode;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,26 +22,27 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
- * 客户端到服务端的扳手模式同步包。
+ * 客户端到服务端的配置手柄模式同步包。
  *
- * <p>Client-to-server payload carrying the wrench mode selected by the player.
+ * <p>Client-to-server payload carrying the Configurance Handle mode selected by
+ * the player.
  */
-public record SpannerModePayload(SpannerMode mode)
+public record ConfiguranceHandleModePayload(ConfiguranceHandleMode mode)
   implements CustomPacketPayload
 {
 
-  public static final Type<SpannerModePayload> TYPE = new Type<>(
+  public static final Type<ConfiguranceHandleModePayload> TYPE = new Type<>(
     ResourceLocation.fromNamespaceAndPath(
       CoraconicTech.MODID,
-      "spanner_mode"
+      "configurance_handle_mode"
     )
   );
 
-  public static final StreamCodec<ByteBuf, SpannerModePayload> STREAM_CODEC =
+  public static final StreamCodec<ByteBuf, ConfiguranceHandleModePayload> STREAM_CODEC =
     StreamCodec.composite(
       ByteBufCodecs.VAR_INT,
       payload -> payload.mode().ordinal(),
-      id -> new SpannerModePayload(SpannerMode.byOrdinal(id))
+      id -> new ConfiguranceHandleModePayload(ConfiguranceHandleMode.byOrdinal(id))
     );
 
   @Override
@@ -50,17 +51,17 @@ public record SpannerModePayload(SpannerMode mode)
   }
 
   public static void handle(
-    SpannerModePayload payload,
+    ConfiguranceHandleModePayload payload,
     IPayloadContext context
   ) {
     context.enqueueWork(() -> {
       Player player = context.player();
-      ItemStack stack = SpannerItem.findHeldWrench(player);
+      ItemStack stack = ConfiguranceHandleItem.findHeldHandle(player);
       if (stack.isEmpty()) {
         return;
       }
 
-      SpannerItem.setMode(stack, payload.mode());
+      ConfiguranceHandleItem.setMode(stack, payload.mode());
       player.getInventory().setChanged();
       player.containerMenu.broadcastChanges();
     });

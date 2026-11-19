@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "coraconic:item/energy_center_chip_lv3"
+  }
+}

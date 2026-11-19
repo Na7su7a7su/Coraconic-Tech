@@ -397,15 +397,32 @@ public class ModItems {
     ITEMS.register("central_computation_core", () ->
       new Item(new Item.Properties())
     );
-  public static final DeferredItem<Item> SPANNER = ITEMS.register(
-    "spanner",
-    () -> new SpannerItem(new Item.Properties().stacksTo(1))
+  public static final DeferredItem<Item> CONFIGURANCE_HANDLE = ITEMS.register(
+    "configurance_handle",
+    () -> new ConfiguranceHandleItem(new Item.Properties().stacksTo(1))
   );
 
   public static final DeferredItem<Item> SILICON = ITEMS.register(
     "silicon",
     () -> new Item(new Item.Properties())
   );
+
+  public static final DeferredItem<Item> ENERGY_CENTER_CHIP_LV0 =
+    ITEMS.register("energy_center_chip_lv0", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> ENERGY_CENTER_CHIP_LV1 =
+    ITEMS.register("energy_center_chip_lv1", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> ENERGY_CENTER_CHIP_LV2 =
+    ITEMS.register("energy_center_chip_lv2", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> ENERGY_CENTER_CHIP_LV3 =
+    ITEMS.register("energy_center_chip_lv3", () ->
+      new Item(new Item.Properties())
+    );
 
   /**
    * 将物品延迟注册器挂到模组事件总线。
