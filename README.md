@@ -24,13 +24,14 @@
 ### 当前版本与状态
 
 - `mod_version`：`0.0.7i`
-- 最近版本提交：`0.0.7i'B_261119_a`
+- 最近版本提交：`0.0.7i|C_261119_b`
 - 最后更新：2026-11-19
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.7i|C_261119_b`：修复器械组合仪原料竞争时的匹配与扣除逻辑，改用最大流分配；增加能耗非负校验；将 `insassemble` 配方路径更正为 `instrument_assembling`，并清理旧资源。
 - `0.0.7i'B_261119_a`：注册能量中心芯片 LV0–LV3；将扳手重命名为配置手柄，更新物品 ID、类名、网络包与纹理；新增配置手柄合成配方。
 - `0.0.7i'A_261118_c`：将公共代码移动到 `aestastel.coraconic.common` 包，保留根包入口类与 `client` 包；将数据生成器按 `recipe`、`tag`、`model`、`loot` 分类；主版本号提升为 `0.0.7i`。
 - `0.0.7h'B_261118_b`：添加烬龙金属锭、烬龙金属粒与烬龙金属块的压缩和分解配方。
@@ -40,7 +41,6 @@
 - `0.0.7fr_261117_c`：将玫瑰金块与琥珀金块的合金配方总耗能调整为 `51,400 FE`；主版本号提升为 `0.0.7f`。
 - `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
 - `0.0.7fp_261114_a`：注册玫瑰金与琥珀金材料，新增锭、粒、存储块、通用标签、创造栏与四语名称；加入玫瑰金合金配方，并修正玫瑰金配方 ID 冲突。
-- `0.0.7et_261113_e`：热力发电机支持流体容器燃料，每次消耗 `1000 mB` 并按对应桶装物品的燃烧时间转化为热量；热量不足 `40` 时按剩余热量发电并消耗至 `0`，热量耗尽后才进入 `Passive`。
 ### 快速开始
 
 1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 MK1 / MK2、共振晶化仪、熔炼冶金仪 MK1、器械组合仪、热力发电机 MK0、太阳能发电机 MK0–MK3 及地磁发电机 MK0–MK3。
@@ -371,13 +371,14 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 ### Current Version and Status
 
 - `mod_version`: `0.0.7i`
-- Latest version commit: `0.0.7i'B_261119_a`
+- Latest version commit: `0.0.7i|C_261119_b`
 - Last updated: 2026-11-19
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.7i|C_261119_b`: fixed Instrument Assembling Machine ingredient matching and consumption under item competition with a max-flow assignment; added non-negative energy validation; corrected the `insassemble` recipe path to `instrument_assembling` and cleaned up old resources.
 - `0.0.7i'B_261119_a`: registered Energy Center Chips LV0–LV3; renamed the Spanner to Configurance Handle with updated item ID, classes, network payload, and texture; added a Configurance Handle crafting recipe.
 - `0.0.7i'A_261118_c`: moved common code into `aestastel.coraconic.common` while keeping the root entry classes and `client` package in place; split data generators into `recipe`, `tag`, `model`, and `loot` packages; raised the main mod version to `0.0.7i`.
 - `0.0.7h'B_261118_b`: added packing and unpacking recipes for emberaconic ingots, nuggets, and the metal block.
@@ -387,7 +388,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7fr_261117_c`: raised the total energy cost of the rose gold block and amber gold block alloying recipes to `51,400 FE`; raised the main mod version to `0.0.7f`.
 - `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
 - `0.0.7fp_261114_a`: registered rose gold and amber gold materials with ingots, nuggets, storage blocks, common tags, creative-tab entries, and four-language names; added rose gold alloying recipes and fixed their recipe ID collisions.
-- `0.0.7et_261113_e`: added fluid-container fuel support to the Heat Generator, consuming `1000 mB` at a time and deriving heat from the matching bucket item's burn time; partial heat below `40` is now consumed proportionally down to `0`, and `Passive` is used only after heat is exhausted.
 ### Quick Start
 
 1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machines MK1 and MK2, Resonance Crystallizing Machine, Smelting-Metallurgy Machine MK1, Instrument Assembling Machine, Heat Generator MK0, Solar Generators MK0–MK3, and Geomagnetic Generators MK0–MK3.

@@ -47,7 +47,7 @@ public class ModInstrumentAssemblingRecipesProvider extends RecipeProvider {
     recipeOutput.accept(
       ResourceLocation.fromNamespaceAndPath(
         CoraconicTech.MODID,
-        "insassemble/solar_generator_mk0"
+        "instrument_assembling/solar_generator_mk0"
       ),
       new InstrumentAssemblingRecipe(
         List.of(

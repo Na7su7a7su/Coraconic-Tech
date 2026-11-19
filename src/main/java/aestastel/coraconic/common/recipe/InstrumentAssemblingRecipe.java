@@ -12,7 +12,9 @@ package aestastel.coraconic.common.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -54,7 +56,7 @@ public record InstrumentAssemblingRecipe(
           ItemStack.STRICT_CODEC
             .fieldOf("result")
             .forGetter(InstrumentAssemblingRecipe::result),
-          Codec.INT
+          Codec.intRange(0, Integer.MAX_VALUE)
             .optionalFieldOf("energy", 20_000)
             .forGetter(InstrumentAssemblingRecipe::energy),
           Codec.intRange(1, 72_000)
@@ -79,6 +81,11 @@ public record InstrumentAssemblingRecipe(
         "Instrument assembling recipes require 1 to 5 ingredient groups"
       );
     }
+    if (energy < 0) {
+      throw new IllegalArgumentException(
+        "Instrument assembling recipe energy must not be negative"
+      );
+    }
     if (time < 1) {
       throw new IllegalArgumentException(
         "Instrument assembling recipe time must be positive"
@@ -91,53 +98,143 @@ public record InstrumentAssemblingRecipe(
     InstrumentAssemblingRecipeInput input,
     Level level
   ) {
-    int[] available = new int[input.size()];
-    for (int index = 0; index < input.size(); index++) {
-      available[index] = input.getItem(index).getCount();
+    return findAssignment(input.items()) != null;
+  }
+
+  /**
+   * 为当前输入计算一个完整原料分配。
+   *
+   * <p>使用二分图最大流，而不是按槽位贪心占用：输入槽作为容量来源，原料组
+   * 作为需求节点，只要所有需求都能被满足就返回槽位到原料组的分配矩阵。
+   *
+   * <p>Computes a complete ingredient assignment using bipartite max flow.
+   * Slots are supply nodes and recipe groups are demand nodes. Returns a
+   * slot-to-group allocation matrix only when every requirement can be met.
+   */
+  private int[][] findAssignment(List<ItemStack> stacks) {
+    int slotCount = stacks.size();
+    int ingredientCount = this.ingredients.size();
+    if (slotCount == 0 || ingredientCount == 0) {
+      return null;
     }
 
-    for (InstrumentAssemblingIngredient required : this.ingredients) {
-      int remaining = required.count();
-      for (int index = 0; index < input.size(); index++) {
-        ItemStack stack = input.getItem(index);
-        if (
-          available[index] <= 0 ||
-          stack.isEmpty() ||
-          !required.test(stack)
-        ) {
+    int source = 0;
+    int slotBase = 1;
+    int ingredientBase = slotBase + slotCount;
+    int sink = ingredientBase + ingredientCount;
+    int nodeCount = sink + 1;
+
+    int[][] capacity = new int[nodeCount][nodeCount];
+    int[][] edgeCapacity = new int[slotCount][ingredientCount];
+    int demand = 0;
+
+    for (int slot = 0; slot < slotCount; slot++) {
+      ItemStack stack = stacks.get(slot);
+      int count = stack.getCount();
+      if (stack.isEmpty() || count <= 0) {
+        continue;
+      }
+
+      capacity[source][slotBase + slot] = count;
+      for (int index = 0; index < ingredientCount; index++) {
+        InstrumentAssemblingIngredient required = this.ingredients.get(
+          index
+        );
+        if (!required.test(stack)) {
           continue;
         }
-        int used = Math.min(remaining, available[index]);
-        available[index] -= used;
-        remaining -= used;
-        if (remaining <= 0) {
-          break;
-        }
-      }
-      if (remaining > 0) {
-        return false;
+        int edge = Math.min(count, required.count());
+        capacity[slotBase + slot][ingredientBase + index] = edge;
+        edgeCapacity[slot][index] = edge;
       }
     }
-    return true;
+
+    for (int index = 0; index < ingredientCount; index++) {
+      int count = this.ingredients.get(index).count();
+      capacity[ingredientBase + index][sink] = count;
+      demand += count;
+    }
+
+    int flow = 0;
+    int[] parent = new int[nodeCount];
+    while (true) {
+      Arrays.fill(parent, -1);
+      parent[source] = source;
+      ArrayDeque<Integer> queue = new ArrayDeque<>();
+      queue.addLast(source);
+
+      while (!queue.isEmpty() && parent[sink] == -1) {
+        int current = queue.removeFirst();
+        for (int next = 0; next < nodeCount; next++) {
+          if (
+            parent[next] == -1 && capacity[current][next] > 0
+          ) {
+            parent[next] = current;
+            queue.addLast(next);
+          }
+        }
+      }
+
+      if (parent[sink] == -1) {
+        break;
+      }
+
+      int added = Integer.MAX_VALUE;
+      for (int node = sink; node != source; node = parent[node]) {
+        added = Math.min(added, capacity[parent[node]][node]);
+      }
+      for (int node = sink; node != source; node = parent[node]) {
+        capacity[parent[node]][node] -= added;
+        capacity[node][parent[node]] += added;
+      }
+      flow += added;
+    }
+
+    if (flow != demand) {
+      return null;
+    }
+
+    int[][] allocation = new int[slotCount][ingredientCount];
+    for (int slot = 0; slot < slotCount; slot++) {
+      for (int index = 0; index < ingredientCount; index++) {
+        allocation[slot][index] =
+          edgeCapacity[slot][index] -
+          capacity[slotBase + slot][ingredientBase + index];
+      }
+    }
+    return allocation;
   }
 
   /**
    * 从五个原料槽扣除本配方所需的物品。
    *
-   * <p>Consumes this recipe's ingredients from the five input slots.
+   * <p>扣除时复用与匹配阶段相同的最大流分配，避免两个阶段选择不同物品。
+   *
+   * <p>Consumes this recipe's ingredients using the same max-flow allocation as
+   * matching, preventing the two phases from choosing different items.
    */
   public void consume(Container container) {
-    int inputSlots = Math.min(5, container.getContainerSize());
-    for (InstrumentAssemblingIngredient required : this.ingredients) {
-      int remaining = required.count();
-      for (int slot = 0; slot < inputSlots && remaining > 0; slot++) {
-        ItemStack stack = container.getItem(slot);
-        if (stack.isEmpty() || !required.test(stack)) {
-          continue;
-        }
-        int used = Math.min(remaining, stack.getCount());
-        container.removeItem(slot, used);
-        remaining -= used;
+    List<ItemStack> stacks = new ArrayList<>(5);
+    for (int slot = 0; slot < 5; slot++) {
+      stacks.add(
+        slot < container.getContainerSize()
+          ? container.getItem(slot)
+          : ItemStack.EMPTY
+      );
+    }
+
+    int[][] allocation = findAssignment(stacks);
+    if (allocation == null) {
+      return;
+    }
+
+    for (int slot = 0; slot < 5; slot++) {
+      int amount = 0;
+      for (int index = 0; index < this.ingredients.size(); index++) {
+        amount += allocation[slot][index];
+      }
+      if (amount > 0) {
+        container.removeItem(slot, amount);
       }
     }
   }
