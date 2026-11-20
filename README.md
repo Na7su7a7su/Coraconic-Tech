@@ -23,14 +23,15 @@
 
 ### 当前版本与状态
 
-- `mod_version`：`0.0.8a`
-- 最近版本提交：`0.0.8a_A_261119_d`
-- 最后更新：2026-11-19
+- `mod_version`：`0.0.8b`
+- 最近版本提交：`0.0.8b_A_261120_a`
+- 最后更新：2026-11-20
 - 仍处于早期开发阶段，注册名、配方、数值、纹理与数据格式可能继续调整
 - **本版本不兼容过去存档**
 
 ### 最近更新
 
+- `0.0.8b_A_261120_a`：注册运算电路 初始/精善/强化/卓越，使用现有贴图并加入主创造栏；新增 `c:circuits` 总标签与 `c:circuits/basic`、`primitive`、`advanced`、`refined`、`elite`、`enhanced`、`ultimate`、`superior` 等级标签；主版本号提升为 `0.0.8b`。
 - `0.0.8a_A_261119_d`：完成机器 Tier 迁移与语义化命名；移除机器、存储单元、语言键、纹理与配方中的 MK 命名；统一中英文为“机器名 + 等级后缀”，中文等级为初始/精善/强化/卓越，英文为 Primitive/Refined/Enhanced/Superior；物品存储单元改用 `item_storage_unit_primitive` / `refined` / `enhanced`，但不接入 Tier 系统；新增 NeoForge GameTest 覆盖 Tier、持久化、Capability 与生产线布局；主版本号提升为 `0.0.8a`。
 - `0.0.7i|C_261119_b`：修复器械组合仪原料竞争时的匹配与扣除逻辑，改用最大流分配；增加能耗非负校验；将 `insassemble` 配方路径更正为 `instrument_assembling`，并清理旧资源。
 - `0.0.7i'B_261119_a`：注册能量中心芯片 LV0–LV3；将扳手重命名为配置手柄，更新物品 ID、类名、网络包与纹理；新增配置手柄合成配方。
@@ -40,7 +41,6 @@
 - `0.0.7'B_261117_b`：更新 README 中的版本提交记录。
 - `0.0.7g'A_261117_a`：新增器械组合仪，提供 `256,000,000 FE` 缓存、`19,600 FE/t` 最大输入、5 个原料槽、1 个成品槽和 1 个充电槽；新增 `coraconic:instrument_assembling` 配方类型、独立原料类、JEI 分类与数据生成接入点；加入太阳能发电机 初始的器械组合配方；主版本号提升为 `0.0.7g`。
 - `0.0.7fr_261117_c`：将玫瑰金块与琥珀金块的合金配方总耗能调整为 `51,400 FE`；主版本号提升为 `0.0.7f`。
-- `0.0.7fq_261114_b`：注册银材料，新增银锭、银粒、粗银、银块、银矿石与深层银矿石，补齐通用标签、创造栏、四语名称、`1–2` 粗银掉落、熔炼/高炉与压缩/分解配方；为玫瑰金与琥珀金补齐压缩/分解配方，并加入银参与的琥珀金合金配方。
 ### 快速开始
 
 1. 在创造模式中打开 `核龙科技` 创造栏，可找到材料、晶体、矿石方块、两类存储单元、合金仪 精善 / 合金仪 强化、共振晶化仪 精善、熔炼冶金仪 精善、器械组合仪 精善、热力发电机 初始、太阳能发电机 初始至卓越、地磁发电机 初始至卓越。
@@ -57,6 +57,7 @@
 - 常金属核心、核龙金属核心、腾龙金属核心、烬龙核心、效应放大核心、空间放缩核心、相位同步核心、质能补偿核心、中枢计算核心
 - 五个特殊核心当前仅通过创造模式获取，暂未添加合成配方
 - 能量中心芯片 LV0–LV3
+- 运算电路 初始–卓越
 - 核龙元素、腾龙元素、烬龙元素
 - 核龙金刚晶体、腾龙金刚晶体、烬龙金刚晶体
 - 烬龙系列物品与方块物品具有抗火属性
@@ -371,14 +372,15 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 
 ### Current Version and Status
 
-- `mod_version`: `0.0.8a`
-- Latest version commit: `0.0.8a_A_261119_d`
-- Last updated: 2026-11-19
+- `mod_version`: `0.0.8b`
+- Latest version commit: `0.0.8b_A_261120_a`
+- Last updated: 2026-11-20
 - Early development: registry names, recipes, stats, textures, and data formats may still change
 - **This version is not compatible with previous saves**
 
 ### Recent Changes
 
+- `0.0.8b_A_261120_a`: registered Computation Circuits Primitive/Refined/Enhanced/Superior, used the existing textures, and added them to the main creative tab; added the `c:circuits` parent tag and `c:circuits/basic`, `primitive`, `advanced`, `refined`, `elite`, `enhanced`, `ultimate`, and `superior` tier tags; raised the main mod version to `0.0.8b`.
 - `0.0.8a_A_261119_d`: completed the machine Tier migration and semantic naming; removed MK naming from machines, storage units, language keys, textures, and recipes; standardized Chinese and English names to `<machine> <tier>` with 初始/精善/强化/卓越 and Primitive/Refined/Enhanced/Superior; changed item storage IDs to `item_storage_unit_primitive` / `refined` / `enhanced` without connecting them to the Tier system; added NeoForge GameTests for tiers, persistence, capabilities, and production-line layout; raised the main mod version to `0.0.8a`.
 - `0.0.7i|C_261119_b`: fixed Instrument Assembling Machine ingredient matching and consumption under item competition with a max-flow assignment; added non-negative energy validation; corrected the `insassemble` recipe path to `instrument_assembling` and cleaned up old resources.
 - `0.0.7i'B_261119_a`: registered Energy Center Chips LV0–LV3; renamed the Spanner to Configurance Handle with updated item ID, classes, network payload, and texture; added a Configurance Handle crafting recipe.
@@ -388,7 +390,6 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - `0.0.7'B_261117_b`: updated the release metadata in README.
 - `0.0.7g'A_261117_a`: added the Instrument Assembling Machine with a `256,000,000 FE` buffer, `19,600 FE/t` maximum input, five input slots, one output slot, and one charging slot; added the `coraconic:instrument_assembling` recipe type, a dedicated ingredient class, JEI category, and data-generation integration; added the Solar Generator Primitive instrument assembling recipe; raised the main mod version to `0.0.7g`.
 - `0.0.7fr_261117_c`: raised the total energy cost of the rose gold block and amber gold block alloying recipes to `51,400 FE`; raised the main mod version to `0.0.7f`.
-- `0.0.7fq_261114_b`: registered silver with ingots, nuggets, raw silver, storage block, ore, and deepslate ore, including common tags, creative-tab entries, four-language names, `1–2` raw silver ore drops, smelting/blasting, and packing/unpacking recipes; added packing/unpacking recipes for rose gold and amber gold, plus silver-based amber gold alloying recipes.
 ### Quick Start
 
 1. Open the `Coraconic Tech` creative tab to find materials, crystals, ore blocks, both storage-unit families, Alloying Machine Refined, Alloying Machine Enhanced, Resonance Crystallizing Machine Refined, Smelting-Metallurgy Machine Refined, Instrument Assembling Machine Refined, Heat Generator Primitive, Solar Generators Primitive–Superior, and Geomagnetic Generators Primitive–Superior.
@@ -405,6 +406,7 @@ Coraconic Tech is an early-development NeoForge tech mod for Minecraft 1.21.1. I
 - Common-metal, coraconic, aviraconic, emberaconic, effect amplification, spatial scaling, phase synchronization, mass-energy compensation, and central computation cores
 - The five special cores are currently creative-only and do not have crafting recipes yet
 - Energy Center Chips LV0–LV3
+- Computation Circuits Primitive–Superior
 - Coraconic, aviraconic, and emberaconic elements
 - Coraconic, aviraconic, and emberaconic diamond-structured crystals
 - Emberaconic items and block items are fire-resistant

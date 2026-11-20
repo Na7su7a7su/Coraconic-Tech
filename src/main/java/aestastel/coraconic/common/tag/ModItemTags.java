@@ -121,6 +121,32 @@ public class ModItemTags {
     "gems/emberaconic-diamond-structured"
   );
 
+  public static final TagKey<Item> CIRCUITS = commonTag("circuits");
+  public static final TagKey<Item> CIRCUITS_BASIC = commonTag(
+    "circuits/basic"
+  );
+  public static final TagKey<Item> CIRCUITS_PRIMITIVE = commonTag(
+    "circuits/primitive"
+  );
+  public static final TagKey<Item> CIRCUITS_ADVANCED = commonTag(
+    "circuits/advanced"
+  );
+  public static final TagKey<Item> CIRCUITS_REFINED = commonTag(
+    "circuits/refined"
+  );
+  public static final TagKey<Item> CIRCUITS_ELITE = commonTag(
+    "circuits/elite"
+  );
+  public static final TagKey<Item> CIRCUITS_ENHANCED = commonTag(
+    "circuits/enhanced"
+  );
+  public static final TagKey<Item> CIRCUITS_ULTIMATE = commonTag(
+    "circuits/ultimate"
+  );
+  public static final TagKey<Item> CIRCUITS_SUPERIOR = commonTag(
+    "circuits/superior"
+  );
+
   private ModItemTags() {}
 
   private static TagKey<Item> commonTag(String path) {

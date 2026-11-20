@@ -195,6 +195,38 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.GEMS_AVIRACONIC_DS)
       .addTag(ModItemTags.GEMS_EMBERACONIC_DS);
 
+    // 电路板：注册总标签、等级别名标签与兼容标签。
+    // Circuits: register the parent tag, tier aliases, and compatibility tags.
+    tag(ModItemTags.CIRCUITS_BASIC).add(
+      ModItems.PRIMITIVE_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_PRIMITIVE).add(
+      ModItems.PRIMITIVE_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_ADVANCED).add(
+      ModItems.REFINED_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_REFINED).add(
+      ModItems.REFINED_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_ELITE).add(
+      ModItems.ENHANCED_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_ENHANCED).add(
+      ModItems.ENHANCED_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_ULTIMATE).add(
+      ModItems.SUPERIOR_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS_SUPERIOR).add(
+      ModItems.SUPERIOR_COMPUTATION_CIRCUIT.get()
+    );
+    tag(ModItemTags.CIRCUITS)
+      .add(ModItems.PRIMITIVE_COMPUTATION_CIRCUIT.get())
+      .add(ModItems.REFINED_COMPUTATION_CIRCUIT.get())
+      .add(ModItems.ENHANCED_COMPUTATION_CIRCUIT.get())
+      .add(ModItems.SUPERIOR_COMPUTATION_CIRCUIT.get());
+
     // 工具：将锡、铅、核龙金属与腾龙金属四套工具挂到原版工具标签。
     // Tools: attach the tin, lead, coraconic, and aviraconic tool sets to vanilla tool tags.
     tag(ItemTags.SWORDS)

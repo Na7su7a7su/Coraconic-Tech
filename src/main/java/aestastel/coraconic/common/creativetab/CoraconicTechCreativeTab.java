@@ -68,6 +68,10 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.ENERGY_CENTER_CHIP_LV1);
           output.accept(ModItems.ENERGY_CENTER_CHIP_LV2);
           output.accept(ModItems.ENERGY_CENTER_CHIP_LV3);
+          output.accept(ModItems.PRIMITIVE_COMPUTATION_CIRCUIT);
+          output.accept(ModItems.REFINED_COMPUTATION_CIRCUIT);
+          output.accept(ModItems.ENHANCED_COMPUTATION_CIRCUIT);
+          output.accept(ModItems.SUPERIOR_COMPUTATION_CIRCUIT);
           output.accept(ModItems.RAW_LEAD);
           output.accept(ModItems.RAW_TIN);
           output.accept(ModItems.RAW_SILVER);

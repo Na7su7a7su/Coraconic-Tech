@@ -424,6 +424,23 @@ public class ModItems {
       new Item(new Item.Properties())
     );
 
+  public static final DeferredItem<Item> PRIMITIVE_COMPUTATION_CIRCUIT =
+    ITEMS.register("primitive_computation_circuit", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> REFINED_COMPUTATION_CIRCUIT =
+    ITEMS.register("refined_computation_circuit", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> ENHANCED_COMPUTATION_CIRCUIT =
+    ITEMS.register("enhanced_computation_circuit", () ->
+      new Item(new Item.Properties())
+    );
+  public static final DeferredItem<Item> SUPERIOR_COMPUTATION_CIRCUIT =
+    ITEMS.register("superior_computation_circuit", () ->
+      new Item(new Item.Properties())
+    );
+
   /**
    * 将物品延迟注册器挂到模组事件总线。
    *
