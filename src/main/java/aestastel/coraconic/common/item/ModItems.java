@@ -407,6 +407,16 @@ public class ModItems {
     () -> new Item(new Item.Properties())
   );
 
+  public static final DeferredItem<Item> WAFER = ITEMS.register(
+    "wafer",
+    () -> new Item(new Item.Properties())
+  );
+
+  public static final DeferredItem<Item> CLEAR_WAFER = ITEMS.register(
+    "clear_wafer",
+    () -> new Item(new Item.Properties())
+  );
+
   public static final DeferredItem<Item> ENERGY_CENTER_CHIP_LV0 =
     ITEMS.register("energy_center_chip_lv0", () ->
       new Item(new Item.Properties())

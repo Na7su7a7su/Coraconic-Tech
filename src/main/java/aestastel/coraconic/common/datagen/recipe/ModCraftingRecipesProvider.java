@@ -186,5 +186,14 @@ public class ModCraftingRecipesProvider extends RecipeProvider {
         has(ModItems.EMBERACONIC_ELEMENT.get())
       )
       .save(recipeOutput);
+    ShapelessRecipeBuilder.shapeless(
+      RecipeCategory.MISC,
+      ModItems.WAFER.get(),
+      4
+    )
+      .requires(ModItemTags.SILICON)
+      .requires(ModItemTags.SILICON)
+      .unlockedBy("has_silicon", has(ModItemTags.SILICON))
+      .save(recipeOutput);
   }
 }

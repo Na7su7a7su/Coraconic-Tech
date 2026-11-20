@@ -167,9 +167,17 @@ public class ModItemTagsProvider extends ItemTagsProvider {
       .addTag(ModItemTags.STORAGE_BLOCKS_ROSE_GOLD)
       .addTag(ModItemTags.STORAGE_BLOCKS_AMBER_GOLD);
 
-    // 硅：注册通用硅标签。
-    // Silicon: register the common silicon tag.
+    // 硅与晶圆：注册通用材料标签。
+    // Silicon and wafers: register their common material tags.
     tag(ModItemTags.SILICON).add(ModItems.SILICON.get());
+    tag(ModItemTags.WAFER)
+      .add(ModItems.WAFER.get())
+      .add(ModItems.CLEAR_WAFER.get());
+    tag(ModItemTags.WAFERS)
+      .add(ModItems.WAFER.get())
+      .add(ModItems.CLEAR_WAFER.get());
+    tag(ModItemTags.WAFER_BASIC).add(ModItems.WAFER.get());
+    tag(ModItemTags.WAFER_CLEAR).add(ModItems.CLEAR_WAFER.get());
 
     // 元素：注册核龙元素与腾龙元素的通用标签。
     // Elements: register common tags for coraconic and aviraconic elements.

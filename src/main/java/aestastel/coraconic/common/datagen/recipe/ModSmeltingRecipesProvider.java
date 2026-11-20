@@ -192,6 +192,29 @@ public class ModSmeltingRecipesProvider extends RecipeProvider {
         recipeOutput,
         CoraconicTech.MODID + ":silver_ingot_from_blasting_silver_ore"
       );
-
+    SimpleCookingRecipeBuilder.blasting(
+      Ingredient.of(ModItemTags.WAFER_BASIC),
+      RecipeCategory.MISC,
+      ModItems.CLEAR_WAFER,
+      0.2F,
+      300
+    )
+      .unlockedBy("has_wafer", has(ModItems.WAFER.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":clear_wafer_from_blasting_wafer"
+      );
+    SimpleCookingRecipeBuilder.smelting(
+      Ingredient.of(ModItemTags.WAFER_BASIC),
+      RecipeCategory.MISC,
+      ModItems.CLEAR_WAFER,
+      0.2F,
+      300
+    )
+      .unlockedBy("has_wafer", has(ModItems.WAFER.get()))
+      .save(
+        recipeOutput,
+        CoraconicTech.MODID + ":clear_wafer_from_smelting_wafer"
+      );
   }
 }

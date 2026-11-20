@@ -100,6 +100,10 @@ public class ModItemTags {
     "storage_blocks/amber_gold"
   );
   public static final TagKey<Item> SILICON = commonTag("silicon");
+  public static final TagKey<Item> WAFER = commonTag("wafer");
+  public static final TagKey<Item> WAFERS = commonTag("wafers");
+  public static final TagKey<Item> WAFER_BASIC = commonTag("wafer/basic");
+  public static final TagKey<Item> WAFER_CLEAR = commonTag("wafer/clear");
 
   public static final TagKey<Item> ELEMENTS_CORACONIC = commonTag(
     "elements/coraconic"

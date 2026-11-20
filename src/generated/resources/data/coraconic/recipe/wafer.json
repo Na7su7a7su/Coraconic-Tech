@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:silicon"
+    },
+    {
+      "tag": "c:silicon"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "coraconic:wafer"
+  }
+}

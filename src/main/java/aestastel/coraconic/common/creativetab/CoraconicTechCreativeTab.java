@@ -79,6 +79,8 @@ public final class CoraconicTechCreativeTab {
           output.accept(ModItems.AVIRACONIC_ELEMENT);
           output.accept(ModItems.EMBERACONIC_ELEMENT);
           output.accept(ModItems.SILICON);
+          output.accept(ModItems.WAFER);
+          output.accept(ModItems.CLEAR_WAFER);
           output.accept(ModItems.CORACONIC_DIAMOND_STRUCTURED_CRYSTAL);
           output.accept(ModItems.AVIRACONIC_DIAMOND_STRUCTURED_CRYSTAL);
           output.accept(
